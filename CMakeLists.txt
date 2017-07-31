@@ -29,6 +29,12 @@ message(STATUS "xwidgets v${${PROJECT_NAME}_VERSION}")
 # Build
 # =====
 
+find_package(xeus REQUIRED)
+include_directories(${xeus_INCLUDE_DIRS})
+
+find_package(xproperty REQUIRED)
+include_directories(${xproperty_INCLUDE_DIRS})
+
 set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xobject.hpp
