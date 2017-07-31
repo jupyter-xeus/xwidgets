@@ -5,31 +5,19 @@
 
 namespace xeus
 {
-    class layout final : public xobject<layout>
+    class xlayout final : public xobject<xlayout>
     {
     public:
 
-        using base_type = xobject<layout>;
+        using base_type = xobject<xlayout>;
 
-        layout() : base_type()
-        {
-            set_defaults();
-            this->open();
-        }
+        xlayout();
 
-        inline xjson get_state() const
-        {
-            xjson state = base_type::get_state();
-            return state;
-        }
+        xjson get_state() const;
 
     private:
 
-        inline void set_defaults()
-        {
-            base_type::_model_name.raw_value() = "LayoutModel";
-            base_type::_view_name.raw_value() = "LayoutView";
-        }
+        void set_defaults();
     };
 
     template <class D>
@@ -40,29 +28,66 @@ namespace xeus
         using base_type = xobject<D>;
         using derived_type = D;
 
-        xwidget() : base_type()
-        {
-            set_defaults();
-        }
+        xwidget();
     
-        XPROPERTY(::xeus::layout, derived_type, layout);
+        XPROPERTY(::xeus::xlayout, derived_type, layout);
 
-        inline xjson get_state() const
-        {
-            xjson state = base_type::get_state();
-            state["layout"] = layout.raw_value();
-            return state;
-        }        
+        xjson get_state() const;
 
     private:
 
-        inline void set_defaults()
-        {
-            base_type::_model_name.raw_value() = "DOMWidgetModel";
-            base_type::_view_name.raw_value() = "DOMWidgetView";
-            layout.raw_value() = ::xeus::layout();
-        }
+        void set_defaults();
     };
+
+    /**************************
+     * xlayout implementation *
+     **************************/
+
+    inline xlayout::xlayout()
+        : base_type()
+    {
+        set_defaults();
+        this->open();
+    }
+
+    inline xjson xlayout::get_state() const
+    {
+        xjson state = base_type::get_state();
+        return state;
+    }
+
+    inline void xlayout::set_defaults()
+    {
+        base_type::_model_name.raw_value() = "LayoutModel";
+        base_type::_view_name.raw_value() = "LayoutView";
+    }
+
+    /**************************
+     * xwidget implementation *
+     **************************/
+
+    template <class D>
+    inline xwidget<D>::xwidget()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
+    inline xjson xwidget<D>::get_state() const
+    {
+        xjson state = base_type::get_state();
+        state["layout"] = xlayout();
+        return state;
+    }
+
+    template <class D>
+    inline void xwidget<D>::set_defaults()
+    {
+        base_type::_model_name() = "DOMWidgetModel";
+        base_type::_view_name() = "DOMWidgetView";
+        layout() = ::xeus::xlayout();
+    }
 }
 
 #endif
