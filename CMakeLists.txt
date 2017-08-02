@@ -35,11 +35,14 @@ include_directories(${xeus_INCLUDE_DIRS})
 find_package(xproperty REQUIRED)
 include_directories(${xproperty_INCLUDE_DIRS})
 
+set(XWIDGETS_DEPENDENCIES ${xeus_LIBRARY})
+
 set(XWIDGETS_HEADERS
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmock_interpreter.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xobject.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xslider.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
 )
 
 OPTION(BUILD_TESTS "xwidgets test suite" OFF)

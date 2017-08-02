@@ -8,6 +8,7 @@
 
 #include "xeus/xcomm.hpp"
 #include "xproperty/xobserved.hpp"
+#include "xmock_interpreter.hpp"
 
 using namespace std::placeholders;
 
@@ -149,7 +150,7 @@ namespace xeus
     inline void xobject<D>::notify(const P& property) const
     {
         xjson state;
-        state[property.name()] = property.raw_value();
+        state[property.name()] = property();
         send_state(std::move(state));
     }
 
@@ -170,15 +171,15 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xobject<D>:get_state() const
+    inline xjson xobject<D>::get_state() const
     {
         xjson state;
-        state["_model_module"] = _model_module.raw_value();
-        state["_model_module_version"] = _model_module_version.raw_value();
-        state["_model_name"] = _model_name.raw_value();
-        state["_view_module"] = _view_module.raw_value();
-        state["_view_module_version"] = _view_module_version.raw_value();
-        state["_view_name"] = _view_name.raw_value();
+        state["_model_module"] = _model_module();
+        state["_model_module_version"] = _model_module_version();
+        state["_model_name"] = _model_name();
+        state["_view_module"] = _view_module();
+        state["_view_module_version"] = _view_module_version();
+        state["_view_name"] = _view_name();
         return state;
     }
 

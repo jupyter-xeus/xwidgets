@@ -34,7 +34,9 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
 endif()
 
 if(MSVC)
+    add_definitions(-DNOMINMAX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc /MP /bigobj")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251 /wd4996")
     set(CMAKE_EXE_LINKER_FLAGS /MANIFEST:NO)
     foreach(flag_var
             CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
@@ -80,8 +82,11 @@ find_package(Threads)
 include_directories(${XWIDGETS_INCLUDE_DIR})
 include_directories(${GTEST_INCLUDE_DIRS})
 
+add_definitions(-DSTANDALONE_WIDGETS)
+
 set(XWIDGETS_TESTS
     main.cpp
+    test_xslider.cpp
 )
 
 set(XWIDGETS_TARGET test_xwidgets)
@@ -90,7 +95,7 @@ add_executable(${XWIDGETS_TARGET} ${XWIDGETS_TESTS} ${XWIDGETS_HEADERS})
 if(DOWNLOAD_GTEST OR GTEST_SRC_DIR)
     add_dependencies(${XWIDGETS_TARGET} gtest_main)
 endif()
-target_link_libraries(${XWIDGETS_TARGET} ${GTEST_BOTH_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${XWIDGETS_TARGET} ${GTEST_BOTH_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} ${XWIDGETS_DEPENDENCIES})
 
 add_custom_target(xtest COMMAND test_xwidgets DEPENDS ${XWIDGETS_TARGET})
 
