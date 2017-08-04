@@ -13,4 +13,14 @@
 #define XWIDGETS_VERSION_MINOR 1
 #define XWIDGETS_VERSION_PATCH 0
 
+#ifdef _WIN32
+    #ifdef XWIDGETS_EXPORTS
+        #define XWIDGETS_API __declspec(dllexport)
+    #else
+        #define XWIDGETS_API __declspec(dllimport)
+    #endif
+#else
+    #define XWIDGETS_API
+#endif
+
 #endif

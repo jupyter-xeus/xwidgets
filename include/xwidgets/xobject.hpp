@@ -8,12 +8,15 @@
 
 #include "xeus/xcomm.hpp"
 #include "xproperty/xobserved.hpp"
-#include "xmock_interpreter.hpp"
+#include "xwidgets_config.hpp"
+#include "xwidgets_interpreter.hpp"
 
 using namespace std::placeholders;
 
 namespace xeus
 {
+    XWIDGETS_API const char* get_widget_target_name();
+    XWIDGETS_API xtarget* get_widget_target();
 
     void xobject_comm_opened(const xcomm& comm, const xmessage& msg);
 
@@ -60,13 +63,7 @@ namespace xeus
         void set_defaults();
 
         xcomm m_comm;
-
-        static const char* target_name;
     };
-
-    // In the cpp (multiple inheritance)
-    template <class D>
-    const char* xeus::xobject<D>::target_name = "jupyter.widget";
     
     template <class D>
     void to_json(xjson& j, const xobject<D>& o);
@@ -75,13 +72,9 @@ namespace xeus
      * xobject implementation *
      **************************/
 
-    inline void xobject_comm_opened(const xcomm& comm, const xmessage& msg)
-    {
-    }
-
     template <class D>
     inline xobject<D>::xobject()
-        : m_comm(get_interpreter().comm_manager().target(target_name), xguid())
+        : m_comm(get_widget_target(), xguid())
     {
         m_comm.on_message(std::bind(&xobject::handle_message, this, _1));
         set_defaults();
@@ -167,7 +160,7 @@ namespace xeus
 
         data["comm_id"] =  xeus::guid_to_hex(this->derived_cast().id());
         data["data"]["state"] = state;
-        get_interpreter().comm_manager().target(target_name)->publish_message("comm_msg", xeus::xjson::object(), std::move(data));  
+        get_widget_target()->publish_message("comm_msg", xeus::xjson::object(), std::move(data));
     }
 
     template <class D>

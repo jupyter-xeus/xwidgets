@@ -6,16 +6,15 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XMOCK_INTERPRETER_HPP
-#define XMOCK_INTERPRETER_HPP
+#ifndef XWIDGETS_INTERPRETER_HPP
+#define XWIDGETS_INTERPRETER_HPP
 
 #include "xeus/xinterpreter.hpp"
+#include "xwidgets_config.hpp"
 
 namespace xeus
 {
-
-#ifdef STANDALONE_WIDGETS
-
+    XWIDGETS_API bool register_interpreter(xinterpreter* interpreter);
     xinterpreter& get_interpreter();
 
     class xmock_interpreter : public xinterpreter
@@ -63,23 +62,6 @@ namespace xeus
         xcomm_manager m_comm_manager;
     };
 
-    inline xinterpreter& get_interpreter()
-    {
-        static xmock_interpreter interpreter;
-        return interpreter;
-    }
-
-    inline xmock_interpreter::xmock_interpreter()
-        : base_type(), m_comm_manager(nullptr)
-    {
-        base_type::register_publisher(base_type::publisher_type());
-        base_type::register_stdin_sender(base_type::stdin_sender_type());
-        base_type::register_comm_manager(&m_comm_manager);
-    }
-
-#endif //STANDALONE_WIDGET
-
 }
 
 #endif
-

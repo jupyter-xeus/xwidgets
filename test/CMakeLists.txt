@@ -15,6 +15,9 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     set(XWIDGETS_INCLUDE_DIR ${xwidgets_INCLUDE_DIRS})
 endif ()
 
+# Compilation flags
+# =================
+
 message(STATUS "Forcing tests build type to Release")
 set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
 
@@ -44,6 +47,9 @@ if(MSVC)
         string(REPLACE "/MD" "-MT" ${flag_var} "${${flag_var}}")
     endforeach()
 endif()
+
+# Dependencies
+# ============
 
 if(DOWNLOAD_GTEST OR GTEST_SRC_DIR)
     if(DOWNLOAD_GTEST)
@@ -79,23 +85,35 @@ endif()
 
 find_package(Threads)
 
+# Source files
+# ============
+
 include_directories(${XWIDGETS_INCLUDE_DIR})
 include_directories(${GTEST_INCLUDE_DIRS})
-
-add_definitions(-DSTANDALONE_WIDGETS)
 
 set(XWIDGETS_TESTS
     main.cpp
     test_xslider.cpp
 )
 
-set(XWIDGETS_TARGET test_xwidgets)
+# Output
+# ======
 
-add_executable(${XWIDGETS_TARGET} ${XWIDGETS_TESTS} ${XWIDGETS_HEADERS})
+set(CMAKE_SKIP_BUILD_RPATH FALSE)
+set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
+if("${isSystemDir}" STREQUAL "-1")
+   set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+endif("${isSystemDir}" STREQUAL "-1")
+
+set(XWIDGETS_TEST_TARGET test_xwidgets)
+
+add_executable(${XWIDGETS_TEST_TARGET} ${XWIDGETS_TESTS} ${XWIDGETS_HEADERS})
 if(DOWNLOAD_GTEST OR GTEST_SRC_DIR)
-    add_dependencies(${XWIDGETS_TARGET} gtest_main)
+    add_dependencies(${XWIDGETS_TEST_TARGET} gtest_main)
 endif()
-target_link_libraries(${XWIDGETS_TARGET} ${GTEST_BOTH_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} ${XWIDGETS_DEPENDENCIES})
-
-add_custom_target(xtest COMMAND test_xwidgets DEPENDS ${XWIDGETS_TARGET})
+target_link_libraries(${XWIDGETS_TEST_TARGET} ${GTEST_BOTH_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT}
+                      ${XWIDGETS_TARGET} ${XWIDGETS_DEPENDENCIES})
 
