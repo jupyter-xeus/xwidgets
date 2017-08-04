@@ -1,26 +1,22 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay, Johan Mabille and Loic Gouarin       *
+* Copyright (c) 2016, Johan Mabille and Sylvain Corlay                     *
 *                                                                          *
 * Distributed under the terms of the BSD 3-Clause License.                 *
 *                                                                          *
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_CONFIG_HPP
-#define XWIDGETS_CONFIG_HPP
+#include "gtest/gtest.h"
 
-#define XWIDGETS_VERSION_MAJOR 0
-#define XWIDGETS_VERSION_MINOR 1
-#define XWIDGETS_VERSION_PATCH 0
+#include "xwidgets/xslider.hpp"
 
-#ifdef _WIN32
-    #ifdef XWIDGETS_EXPORTS
-        #define XWIDGETS_API __declspec(dllexport)
-    #else
-        #define XWIDGETS_API __declspec(dllimport)
-    #endif
-#else
-    #define XWIDGETS_API
-#endif
+namespace xeus
+{
+    TEST(xslider, basic)
+    {
+        xslider<double> slider;
+        slider.value = 2.0;
+        ASSERT_EQ(2., slider.value());
+    }
+}
 
-#endif

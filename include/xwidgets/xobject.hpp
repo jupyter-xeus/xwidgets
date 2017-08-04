@@ -8,11 +8,15 @@
 
 #include "xeus/xcomm.hpp"
 #include "xproperty/xobserved.hpp"
+#include "xwidgets_config.hpp"
+#include "xwidgets_interpreter.hpp"
 
 using namespace std::placeholders;
 
 namespace xeus
 {
+    XWIDGETS_API const char* get_widget_target_name();
+    XWIDGETS_API xtarget* get_widget_target();
 
     void xobject_comm_opened(const xcomm& comm, const xmessage& msg);
 
@@ -59,13 +63,7 @@ namespace xeus
         void set_defaults();
 
         xcomm m_comm;
-
-        static const char* target_name;
     };
-
-    // In the cpp (multiple inheritance)
-    template <class D>
-    const char* xeus::xobject<D>::target_name = "jupyter.widget";
     
     template <class D>
     void to_json(xjson& j, const xobject<D>& o);
@@ -74,13 +72,9 @@ namespace xeus
      * xobject implementation *
      **************************/
 
-    inline void xobject_comm_opened(const xcomm& comm, const xmessage& msg)
-    {
-    }
-
     template <class D>
     inline xobject<D>::xobject()
-        : m_comm(get_interpreter().comm_manager().target(target_name), xguid())
+        : m_comm(get_widget_target(), xguid())
     {
         m_comm.on_message(std::bind(&xobject::handle_message, this, _1));
         set_defaults();
@@ -149,7 +143,7 @@ namespace xeus
     inline void xobject<D>::notify(const P& property) const
     {
         xjson state;
-        state[property.name()] = property.raw_value();
+        state[property.name()] = property();
         send_state(std::move(state));
     }
 
@@ -166,19 +160,19 @@ namespace xeus
 
         data["comm_id"] =  xeus::guid_to_hex(this->derived_cast().id());
         data["data"]["state"] = state;
-        get_interpreter().comm_manager().target(target_name)->publish_message("comm_msg", xeus::xjson::object(), std::move(data));  
+        get_widget_target()->publish_message("comm_msg", xeus::xjson::object(), std::move(data));
     }
 
     template <class D>
-    inline xjson xobject<D>:get_state() const
+    inline xjson xobject<D>::get_state() const
     {
         xjson state;
-        state["_model_module"] = _model_module.raw_value();
-        state["_model_module_version"] = _model_module_version.raw_value();
-        state["_model_name"] = _model_name.raw_value();
-        state["_view_module"] = _view_module.raw_value();
-        state["_view_module_version"] = _view_module_version.raw_value();
-        state["_view_name"] = _view_name.raw_value();
+        state["_model_module"] = _model_module();
+        state["_model_module_version"] = _model_module_version();
+        state["_model_name"] = _model_name();
+        state["_view_module"] = _view_module();
+        state["_view_module_version"] = _view_module_version();
+        state["_view_name"] = _view_name();
         return state;
     }
 
