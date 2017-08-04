@@ -69,9 +69,9 @@ matrix:
           packages:
             - clang-3.9
       env: COMPILER=clang CLANG=3.9
-    - os: osx
-      osx_image: xcode8
-      compiler: clang
+#    - os: osx
+      #osx_image: xcode8
+      #compiler: clang
 env:
   global:
     - MINCONDA_VERSION="latest"
@@ -103,9 +103,12 @@ install:
     - hash -r
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
-    - conda install gtest cmake -c conda-forge 
+    - conda install gtest cmake xeus xproperty -c QuantStack -c conda-forge 
     # Testing
     - mkdir build
     - cd build
+    - cmake -DBUILD_TESTS=ON .
+    - make -j2 test_xwidgets
+    - cd test
 script:
-    #- ./test_xwidgets
+    - ./test_xwidgets
