@@ -72,6 +72,7 @@ namespace xeus
         void handle_message(const xmessage& message);
         void set_defaults();
 
+        const xjson* m_hold;
         xcomm m_comm;
     };
     
@@ -84,7 +85,7 @@ namespace xeus
 
     template <class D>
     inline xobject<D>::xobject()
-        : m_comm(::xeus::get_widget_target(), xguid())
+        : m_comm(::xeus::get_widget_target(), xguid()), m_hold(nullptr)
     {
         m_comm.on_message(std::bind(&xobject::handle_message, this, _1));
         set_defaults();
@@ -152,9 +153,12 @@ namespace xeus
     template <class P>
     inline void xobject<D>::notify(const P& property) const
     {
-        xjson state;
-        state[property.name()] = property();
-        send_state(std::move(state));
+        if (m_hold == nullptr || m_hold->find(property.name()) == m_hold->end() || m_hold.value() != property())
+        {
+            xjson state;
+            state[property.name()] = property();
+            send_state(std::move(state));
+        }
     }
 
     template <class D>
@@ -208,7 +212,9 @@ namespace xeus
             auto it = data.find("sync_data");
             if (it != data.end())
             {
+                m_hold = &(it.value());
                 derived_cast().set_state(it.value());
+                m_hold = nullptr;
             }
         }
         else if (method == "request_state")
