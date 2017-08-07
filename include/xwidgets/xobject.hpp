@@ -7,18 +7,28 @@
 #include <utility>
 
 #include "xeus/xcomm.hpp"
+#include "xeus/xinterpreter.hpp"
+
 #include "xproperty/xobserved.hpp"
 #include "xwidgets_config.hpp"
-#include "xwidgets_interpreter.hpp"
 
 using namespace std::placeholders;
 
 namespace xeus
 {
-    XWIDGETS_API const char* get_widget_target_name();
-    XWIDGETS_API xtarget* get_widget_target();
+    inline const char* get_widget_target_name()
+    {
+        return "jupyter.widget";
+    }
 
-    void xobject_comm_opened(const xcomm& comm, const xmessage& msg);
+    inline xtarget* get_widget_target()
+    {
+        return ::xeus::get_interpreter().comm_manager().target(::xeus::get_widget_target_name());
+    }
+
+    inline void xobject_comm_opened(const xcomm& /*comm*/, const xmessage& /*msg*/)
+    {
+    }
 
     template <class D>
     class xobject : public xp::xobserved<D>
@@ -74,7 +84,7 @@ namespace xeus
 
     template <class D>
     inline xobject<D>::xobject()
-        : m_comm(get_widget_target(), xguid())
+        : m_comm(::xeus::get_widget_target(), xguid())
     {
         m_comm.on_message(std::bind(&xobject::handle_message, this, _1));
         set_defaults();
@@ -119,7 +129,7 @@ namespace xeus
         display_data["application/vnd.jupyter.widget-view+json"]["model_id"] = 
             xeus::guid_to_hex(this->derived_cast().id());
             
-        get_interpreter().display_data(
+        ::xeus::get_interpreter().display_data(
             std::move(display_data),
             xeus::xjson::object(),
             xeus::xjson::object()
@@ -135,7 +145,7 @@ namespace xeus
 
         comm_display["comm_id"] =  xeus::guid_to_hex(this->derived_cast().id());
 
-        get_interpreter().comm_manager().target(target_name)->publish_message("comm_msg", xeus::xjson::object(), std::move(comm_display));  
+        ::xeus::get_interpreter().comm_manager().target(::xeus::get_widget_target_name())->publish_message("comm_msg", xeus::xjson::object(), std::move(comm_display));  
     }
 
     template <class D>
@@ -160,7 +170,7 @@ namespace xeus
 
         data["comm_id"] =  xeus::guid_to_hex(this->derived_cast().id());
         data["data"]["state"] = state;
-        get_widget_target()->publish_message("comm_msg", xeus::xjson::object(), std::move(data));
+        ::xeus::get_widget_target()->publish_message("comm_msg", xeus::xjson::object(), std::move(data));
     }
 
     template <class D>
