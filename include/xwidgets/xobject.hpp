@@ -153,12 +153,17 @@ namespace xeus
     template <class P>
     inline void xobject<D>::notify(const P& property) const
     {
-        if (m_hold == nullptr || m_hold->find(property.name()) == m_hold->end() || m_hold.value() != property())
+        if (m_hold != nullptr)
         {
-            xjson state;
-            state[property.name()] = property();
-            send_state(std::move(state));
+            auto it = m_hold->find(property.name());
+            if (it != m_hold->end() && it.value() == property())
+            {
+                return;
+            }
         }
+        xjson state;
+        state[property.name()] = property();
+        send_state(std::move(state));
     }
 
     template <class D>
