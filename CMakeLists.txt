@@ -46,9 +46,9 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
     CHECK_CXX_COMPILER_FLAG("-std=c++11" HAS_CPP11_FLAG)
 
     if (HAS_CPP11_FLAG)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
     else()
-        message(FATAL_ERROR "Unsupported compiler -- xeux requires C++11 support!")
+        message(FATAL_ERROR "Unsupported compiler -- xeux requires c++14 support!")
     endif()
 
     # Enable link time optimization and set the default symbol
@@ -105,33 +105,28 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xslider.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_interpreter.hpp
 )
 
-set(XWIDGETS_SOURCES
-    ${XWIDGETS_SOURCE_DIR}/xobject.cpp
-    ${XWIDGETS_SOURCE_DIR}/xwidgets_interpreter.cpp)
-
-# Output
-# ======
-
-set(XWIDGETS_TARGET xwidgets)
-add_library(${XWIDGETS_TARGET} SHARED ${XWIDGETS_SOURCES} ${XWIDGETS_HEADERS})
-target_link_libraries(${XWIDGETS_TARGET} ${XWIDGETS_DEPENDENCIES})
-set_target_properties(${XWIDGETS_TARGET} PROPERTIES
-                      PUBLIC_HEADER "${XWIDGETS_HEADERS}"
-                      COMPILE_DEFINITIONS "XWIDGETS_EXPORTS"
-                      PREFIX ""
-                      OUTPUT_NAME "libxwidgets")
-
-get_property(XWIDGETS_NAME TARGET ${XWIDGETS_TARGET} PROPERTY OUTPUT_NAME)
-if(MSVC)
-    set(XWIDGETS_LINK_FILE ${XWIDGETS_NAME}${CMAKE_LINK_LIBRARY_SUFFIX})
-    set(XWIDGETS_RUNTIME_FILE ${XWIDGETS_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
-else()
-    set(XWIDGETS_LINK_FILE ${XWIDGETS_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
-    set(XWIDGETS_RUNTIME_FILE ${XWIDGETS_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
-endif()
+# # Output
+# # ======
+# 
+# set(XWIDGETS_TARGET xwidgets)
+# add_library(${XWIDGETS_TARGET} SHARED ${XWIDGETS_SOURCES} ${XWIDGETS_HEADERS})
+# target_link_libraries(${XWIDGETS_TARGET} ${XWIDGETS_DEPENDENCIES})
+# set_target_properties(${XWIDGETS_TARGET} PROPERTIES
+#                       PUBLIC_HEADER "${XWIDGETS_HEADERS}"
+#                       COMPILE_DEFINITIONS "XWIDGETS_EXPORTS"
+#                       PREFIX ""
+#                       OUTPUT_NAME "libxwidgets")
+# 
+# get_property(XWIDGETS_NAME TARGET ${XWIDGETS_TARGET} PROPERTY OUTPUT_NAME)
+# if(MSVC)
+#     set(XWIDGETS_LINK_FILE ${XWIDGETS_NAME}${CMAKE_LINK_LIBRARY_SUFFIX})
+#     set(XWIDGETS_RUNTIME_FILE ${XWIDGETS_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
+# else()
+#     set(XWIDGETS_LINK_FILE ${XWIDGETS_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
+#     set(XWIDGETS_RUNTIME_FILE ${XWIDGETS_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
+# endif()
 
 # Tests
 # =====
@@ -152,6 +147,9 @@ endif()
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+
+install(FILES ${XWIDGETS_HEADERS}
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/xwidgets)
 
 install(TARGETS ${XWIDGETS_TARGET}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
