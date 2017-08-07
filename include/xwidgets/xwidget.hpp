@@ -58,6 +58,8 @@ namespace xeus
 
     inline void xlayout::set_defaults()
     {
+        base_type::_model_module() = "@jupyter-widgets/base";
+        base_type::_view_module() = "@jupyter-widgets/base";
         base_type::_model_name() = "LayoutModel";
         base_type::_view_name() = "LayoutView";
     }
