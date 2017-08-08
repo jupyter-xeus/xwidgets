@@ -77,7 +77,7 @@ namespace xeus
     inline xjson xwidget<D>::get_state() const
     {
         xjson state = base_type::get_state();
-        state["layout"] = xlayout();
+        state["layout"] = layout();
         return state;
     }
 
@@ -86,7 +86,6 @@ namespace xeus
     {
         base_type::_model_name() = "DOMWidgetModel";
         base_type::_view_name() = "DOMWidgetView";
-        layout() = ::xeus::xlayout();
     }
 }
 
