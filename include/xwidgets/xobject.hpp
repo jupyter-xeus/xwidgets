@@ -2,6 +2,7 @@
 #define XOBJECT_HPP
 
 #include <functional>
+#include <list>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -40,6 +41,8 @@ namespace xeus
     {
     public:
 
+        using message_callback_type = std::function<void(const xjson&)>;
+
         using base_type = xp::xobserved<D>;
         using derived_type = D;
 
@@ -68,6 +71,8 @@ namespace xeus
         xjson get_state() const;
         void set_state(const xjson& state);
 
+        void on_message(message_callback_type);
+
     protected:
         
         void open();
@@ -75,8 +80,10 @@ namespace xeus
     private:
     
         void handle_message(const xmessage& message);
+        void handle_custom_message(const xjson& content);
         void set_defaults();
 
+        std::list<message_callback_type> m_message_callbacks;
         const xjson* m_hold;
         xcomm m_comm;
     };
@@ -194,6 +201,12 @@ namespace xeus
     }
 
     template <class D>
+    inline void xobject<D>::on_message(message_callback_type cb)
+    {
+         m_message_callbacks.emplace_back(std::move(cb));
+    }
+
+    template <class D>
     inline void xobject<D>::open()
     {
         xjson metadata;
@@ -226,8 +239,17 @@ namespace xeus
             auto it = data.find("content");
             if (it != data.end())
             {
-                // handle_custom_message(it.value());
+                handle_custom_message(it.value());
             }
+        }
+    }
+
+    template <class D>
+    inline void xobject<D>::handle_custom_message(const xjson& content)
+    {
+        for (auto it = m_message_callbacks.begin(); it != m_message_callbacks.end(); ++it)
+        {
+            it->operator()(content);
         }
     }
 
