@@ -56,6 +56,8 @@ namespace xeus
     template <class T>
     inline void xslider<T>::set_defaults()
     {
+        base_type::_model_module() = "@jupyter-widgets/controls";
+        base_type::_view_module() = "@jupyter-widgets/controls";
         base_type::_model_name() = "FloatSliderModel";
         base_type::_view_name() = "FloatSliderView";
     }

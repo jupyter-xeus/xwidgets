@@ -21,6 +21,11 @@ namespace xeus
         return "jupyter.widget";
     }
 
+    inline const char* get_widget_protocol_version()
+    {
+        return "2.0.0";
+    }
+
     inline xtarget* get_widget_target()
     {
         return ::xeus::get_interpreter().comm_manager().target(::xeus::get_widget_target_name());
@@ -118,9 +123,9 @@ namespace xeus
     template <class D>
     inline void xobject<D>::display() const
     {
-        // Send display_data message
         xeus::xjson mime_bundle = R"(
         {
+            "text/plain": "A Jupyter widget",
             "application/vnd.jupyter.widget-view+json": {
                 "version_major": "2",
                 "version_minor": "0"
@@ -136,15 +141,6 @@ namespace xeus
             xeus::xjson::object(),
             xeus::xjson::object()
         );
- 
-        // Send comm message with "display" method
-        xeus::xjson content;
-        content["comm_id"] = xeus::guid_to_hex(this->derived_cast().id());
-        content["data"] = R"({
-            "method": "display"
-        })"_json;
-
-        m_comm.target().publish_message("comm_msg", xeus::xjson::object(), std::move(content));
     }
 
     template <class D>
@@ -167,6 +163,8 @@ namespace xeus
     template <class D>
     inline void xobject<D>::send_state(xjson&& state) const
     {
+        xjson metadata;
+        metadata["version"] = get_widget_protocol_version();
         xeus::xjson content;
         content["comm_id"] = xeus::guid_to_hex(this->derived_cast().id());
         content["data"] = R"({
@@ -174,7 +172,7 @@ namespace xeus
         })"_json;
         content["data"]["state"] = state;
 
-        m_comm.target().publish_message("comm_msg", xeus::xjson::object(), std::move(content));
+        m_comm.target().publish_message("comm_msg", std::move(metadata), std::move(content));
     }
 
     template <class D>
@@ -198,7 +196,11 @@ namespace xeus
     template <class D>
     inline void xobject<D>::open()
     {
-        m_comm.open(xjson::object(), derived_cast().get_state());
+        xjson metadata;
+        metadata["version"] = get_widget_protocol_version();
+        xeus::xjson data;
+        data["state"] = derived_cast().get_state();
+        m_comm.open(std::move(metadata), std::move(data));
     }
 
     template <class D>
@@ -207,14 +209,12 @@ namespace xeus
         const xjson& content = message.content();
         const xjson& data = content["data"];
         std::string method = data["method"];
-        if (method == "backbone")
+        if (method == "update")
         {
-            auto it = data.find("sync_data");
+            auto it = data.find("state");
             if (it != data.end())
             {
-                m_hold = &(it.value());
                 derived_cast().set_state(it.value());
-                m_hold = nullptr;
             }
         }
         else if (method == "request_state")
