@@ -41,7 +41,7 @@ namespace xeus
         xobject();
 
         derived_type& derived_cast() & noexcept;
-        const derived_type& derived_cast() const& noexcept;
+        const derived_type& derived_cast() const & noexcept;
         derived_type derived_cast() && noexcept;
 
         xguid id() const noexcept;
@@ -52,7 +52,7 @@ namespace xeus
 
         void send_state(xjson&& state) const;
 
-        // TODO: make these property optional (allow none)
+        // TODO: make these properties optional (allow none)
         XPROPERTY(std::string, derived_type, _model_module);
         XPROPERTY(std::string, derived_type, _model_module_version);
         XPROPERTY(std::string, derived_type, _model_name);
@@ -118,7 +118,8 @@ namespace xeus
     template <class D>
     inline void xobject<D>::display() const
     {
-        xeus::xjson display_data = R"(
+        // Send display_data message
+        xeus::xjson mime_bundle = R"(
         {
             "application/vnd.jupyter.widget-view+json": {
                 "version_major": "2",
@@ -127,26 +128,23 @@ namespace xeus
         }
         )"_json;
 
-        display_data["application/vnd.jupyter.widget-view+json"]["model_id"] = 
+        mime_bundle["application/vnd.jupyter.widget-view+json"]["model_id"] = 
             xeus::guid_to_hex(this->derived_cast().id());
             
         ::xeus::get_interpreter().display_data(
-            std::move(display_data),
+            std::move(mime_bundle),
             xeus::xjson::object(),
             xeus::xjson::object()
         );
-            
-        xeus::xjson comm_display = R"(
-        {
-            "data": {
-                "method": "display"
-            }
-        }
-        )"_json;
+ 
+        // Send comm message with "display" method
+        xeus::xjson content;
+        content["comm_id"] = xeus::guid_to_hex(this->derived_cast().id());
+        content["data"] = R"({
+            "method": "display"
+        })"_json;
 
-        comm_display["comm_id"] =  xeus::guid_to_hex(this->derived_cast().id());
-
-        ::xeus::get_interpreter().comm_manager().target(::xeus::get_widget_target_name())->publish_message("comm_msg", xeus::xjson::object(), std::move(comm_display));  
+        m_comm.target().publish_message("comm_msg", xeus::xjson::object(), std::move(content));
     }
 
     template <class D>
@@ -169,17 +167,14 @@ namespace xeus
     template <class D>
     inline void xobject<D>::send_state(xjson&& state) const
     {
-        xeus::xjson data = R"(
-        {
-            "data": {
-                "method": "update"
-            }
-        }
-        )"_json;
+        xeus::xjson content;
+        content["comm_id"] = xeus::guid_to_hex(this->derived_cast().id());
+        content["data"] = R"({
+            "method": "update"
+        })"_json;
+        content["data"]["state"] = state;
 
-        data["comm_id"] =  xeus::guid_to_hex(this->derived_cast().id());
-        data["data"]["state"] = state;
-        ::xeus::get_widget_target()->publish_message("comm_msg", xeus::xjson::object(), std::move(data));
+        m_comm.target().publish_message("comm_msg", xeus::xjson::object(), std::move(content));
     }
 
     template <class D>
@@ -231,7 +226,7 @@ namespace xeus
             auto it = data.find("content");
             if (it != data.end())
             {
-                // handle_custom_msg(it.value());
+                // handle_custom_message(it.value());
             }
         }
     }
