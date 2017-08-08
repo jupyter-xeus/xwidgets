@@ -101,6 +101,7 @@ set(XWIDGETS_DEPENDENCIES ${xeus_LIBRARY})
 include_directories(${XWIDGETS_INCLUDE_DIR}/xwidgets)
 
 set(XWIDGETS_HEADERS
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbutton.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xobject.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xslider.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
