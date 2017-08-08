@@ -48,7 +48,9 @@ namespace xeus
     inline void xslider<T>::set_state(const xjson& state)
     {
         if (state.find("value") != state.end())
+        {
             value = state.at("value").get<double>();
+        }
     }
 
     template <class T>
