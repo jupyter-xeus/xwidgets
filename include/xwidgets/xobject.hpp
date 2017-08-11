@@ -18,11 +18,9 @@ using namespace std::placeholders;
 namespace xeus
 {
 
-    #define XOBJECT_SET_PROPERTY_FROM_PATCH(name, patch)                   \
-    if (patch.find(#name) != patch.end())                                  \
-    {                                                                      \
-        name = patch.at(#name).get<typename decltype(name)::value_type>(); \
-    }
+    /**********************************
+     * Comm target handling functions *
+     **********************************/
 
     inline const char* get_widget_target_name()
     {
@@ -52,6 +50,10 @@ namespace xeus
         return "2.0.0";
     }
 
+    /***********************
+     * xobject declaration *
+     ***********************/
+
     template <class D>
     class xobject : public xp::xobserved<D>
     {
@@ -74,9 +76,8 @@ namespace xeus
         template <class P>
         void notify(const P& property) const;
 
-        void send_state(xjson&& state) const;
+        void send_patch(xjson&& state) const;
 
-        // TODO: make these properties optional (allow none)
         XPROPERTY(std::string, derived_type, _model_module);
         XPROPERTY(std::string, derived_type, _model_module_version);
         XPROPERTY(std::string, derived_type, _model_name);
@@ -110,6 +111,20 @@ namespace xeus
     /**************************
      * xobject implementation *
      **************************/
+
+    #define XOBJECT_SET_PROPERTY_FROM_PATCH(name, patch)                   \
+    if (patch.find(#name) != patch.end())                                  \
+    {                                                                      \
+        name = patch.at(#name).get<typename decltype(name)::value_type>(); \
+    }
+
+    #define XOBJECT_SET_PATCH_FROM_PROPERTY(name, patch)                   \
+        patch[#name] = this->name(); 
+
+    // TODO: Generate an enum type with
+    //  - operator=() allowing string assignment
+    //  - to_json and from_json overload converting from and to the corresponding strings.
+    #define X_CASELESS_STR_ENUM(...) std::string
 
     template <class D>
     inline xobject<D>::xobject()
@@ -180,11 +195,11 @@ namespace xeus
         }
         xjson state;
         state[property.name()] = property();
-        send_state(std::move(state));
+        send_patch(std::move(state));
     }
 
     template <class D>
-    inline void xobject<D>::send_state(xjson&& state) const
+    inline void xobject<D>::send_patch(xjson&& patch) const
     {
         xjson metadata;
         metadata["version"] = get_widget_protocol_version();
@@ -193,8 +208,7 @@ namespace xeus
         content["data"] = R"({
             "method": "update"
         })"_json;
-        content["data"]["state"] = state;
-
+        content["data"]["state"] = patch;
         m_comm.target().publish_message("comm_msg", std::move(metadata), std::move(content));
     }
 
@@ -202,12 +216,12 @@ namespace xeus
     inline xjson xobject<D>::get_state() const
     {
         xjson state;
-        state["_model_module"] = _model_module();
-        state["_model_module_version"] = _model_module_version();
-        state["_model_name"] = _model_name();
-        state["_view_module"] = _view_module();
-        state["_view_module_version"] = _view_module_version();
-        state["_view_name"] = _view_name();
+        XOBJECT_SET_PATCH_FROM_PROPERTY(_model_module, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(_model_module_version, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(_model_name, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(_view_module, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(_view_module_version, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(_view_name, state);
         return state;
     }
 
@@ -248,7 +262,7 @@ namespace xeus
         }
         else if (method == "request_state")
         {
-            send_state(derived_cast().get_state());
+            send_patch(derived_cast().get_state());
         }
         else if (method == "custom")
         {

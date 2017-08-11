@@ -40,7 +40,9 @@ namespace xeus
     inline xjson xslider<T>::get_state() const
     {
         xjson state = base_type::get_state();
-        state["value"] = value();
+
+        XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
+
         return state;
     }
 
@@ -54,10 +56,10 @@ namespace xeus
     template <class T>
     inline void xslider<T>::set_defaults()
     {
-        base_type::_model_module() = "@jupyter-widgets/controls";
-        base_type::_view_module() = "@jupyter-widgets/controls";
-        base_type::_model_name() = "FloatSliderModel";
-        base_type::_view_name() = "FloatSliderView";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_name() = "FloatSliderModel";
+        this->_view_name() = "FloatSliderView";
     }
 }
 
