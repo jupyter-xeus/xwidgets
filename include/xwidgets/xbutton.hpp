@@ -16,7 +16,7 @@ namespace xeus
         xbutton();
 
         xjson get_state() const;
-        void set_state(const xjson& state);
+        void apply_patch(const xjson& patch);
 
         void on_click(std::function<void()>);
 
@@ -45,7 +45,7 @@ namespace xeus
         return base_type::get_state();
     }
 
-    inline void xbutton::set_state(const xjson& state)
+    inline void xbutton::apply_patch(const xjson& patch)
     {
     }
 

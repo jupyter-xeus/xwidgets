@@ -17,7 +17,7 @@ namespace xeus
         XPROPERTY(double, xslider, value);
 
         xjson get_state() const;
-        void set_state(const xjson& state);
+        void apply_patch(const xjson& patch);
 
     private:
 
@@ -45,12 +45,10 @@ namespace xeus
     }
 
     template <class T>
-    inline void xslider<T>::set_state(const xjson& state)
+    inline void xslider<T>::apply_patch(const xjson& patch)
     {
-        if (state.find("value") != state.end())
-        {
-            value = state.at("value").get<double>();
-        }
+        base_type::apply_patch(patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch)
     }
 
     template <class T>
