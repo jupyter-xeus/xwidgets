@@ -17,23 +17,34 @@ using namespace std::placeholders;
 
 namespace xeus
 {
+
+
     inline const char* get_widget_target_name()
     {
         return "jupyter.widget";
     }
 
-    inline const char* get_widget_protocol_version()
+    inline void xobject_comm_opened(const xcomm& /*comm*/, const xmessage& /*msg*/)
     {
-        return "2.0.0";
+    }
+
+    inline int register_widget_target()
+    {
+        xeus::get_interpreter()
+            .comm_manager()
+        .register_comm_target(get_widget_target_name(), xeus::xobject_comm_opened);
+        return 0;
     }
 
     inline xtarget* get_widget_target()
     {
+        static int registered = register_widget_target();
         return ::xeus::get_interpreter().comm_manager().target(::xeus::get_widget_target_name());
     }
 
-    inline void xobject_comm_opened(const xcomm& /*comm*/, const xmessage& /*msg*/)
+    inline const char* get_widget_protocol_version()
     {
+        return "2.0.0";
     }
 
     template <class D>
