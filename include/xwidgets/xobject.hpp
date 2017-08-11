@@ -18,6 +18,11 @@ using namespace std::placeholders;
 namespace xeus
 {
 
+    #define XOBJECT_SET_PROPERTY_FROM_PATCH(name, patch)                   \
+    if (patch.find(#name) != patch.end())                                  \
+    {                                                                      \
+        name = patch.at(#name).get<typename decltype(name)::value_type>(); \
+    }
 
     inline const char* get_widget_target_name()
     {
@@ -80,7 +85,7 @@ namespace xeus
         XPROPERTY(std::string, derived_type, _view_name);
 
         xjson get_state() const;
-        void set_state(const xjson& state);
+        void apply_patch(const xjson& patch);
 
         void on_message(message_callback_type);
 
@@ -207,7 +212,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xobject<D>::set_state(const xjson& state)
+    inline void xobject<D>::apply_patch(const xjson& patch)
     {
     }
 
@@ -238,7 +243,7 @@ namespace xeus
             auto it = data.find("state");
             if (it != data.end())
             {
-                derived_cast().set_state(it.value());
+                derived_cast().apply_patch(it.value());
             }
         }
         else if (method == "request_state")
