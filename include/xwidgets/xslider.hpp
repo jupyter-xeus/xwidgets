@@ -16,7 +16,7 @@ namespace xeus
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(std::string, xslider_style, handle_color); // allow_none
+        XPROPERTY(xt::xoptional<std::string>, xslider_style, handle_color);
 
     private:
 
