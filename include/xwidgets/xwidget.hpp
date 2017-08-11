@@ -1,10 +1,13 @@
 #ifndef XWIDGET_HPP
 #define XWIDGET_HPP
 
+#include <string>
+
 #include "xobject.hpp"
 
 namespace xeus
 {
+
     class xlayout final : public xobject<xlayout>
     {
     public:
@@ -14,6 +17,33 @@ namespace xeus
         xlayout();
 
         xjson get_state() const;
+        void apply_patch(const xjson& patch);
+
+        XPROPERTY(X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, space-evenly, stretch, inherit, inital, unset), xlayout, align_content);
+        XPROPERTY(X_CASELESS_STR_ENUM(flex-start, flex-end, center, baseline, stretch, inherit, inital, unset), xlayout, align_items);
+        XPROPERTY(X_CASELESS_STR_ENUM(auto, flex-start, flex-end, center, baseline, stretch, inherit, inital, unset), xlayout, align_self);
+        XPROPERTY(std::string, xlayout, bottom);
+        XPROPERTY(std::string, xlayout, border);
+        XPROPERTY(std::string, xlayout, display);
+        XPROPERTY(std::string, xlayout, flex);
+        XPROPERTY(std::string, xlayout, flex_flow);
+        XPROPERTY(std::string, xlayout, height);
+        XPROPERTY(X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, inherit, inital, unset), xlayout, justify_content);
+        XPROPERTY(std::string, xlayout, left);
+        XPROPERTY(std::string, xlayout, margin);
+        XPROPERTY(std::string, xlayout, max_height);
+        XPROPERTY(std::string, xlayout, max_width);
+        XPROPERTY(std::string, xlayout, min_height);
+        XPROPERTY(std::string, xlayout, min_width);
+        XPROPERTY(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset), xlayout, overflow);
+        XPROPERTY(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset), xlayout, overflow_x);
+        XPROPERTY(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset), xlayout, overflow_y);
+        XPROPERTY(std::string, xlayout, order);
+        XPROPERTY(std::string, xlayout, padding);
+        XPROPERTY(std::string, xlayout, right);
+        XPROPERTY(std::string, xlayout, top);
+        XPROPERTY(std::string, xlayout, visibility);
+        XPROPERTY(std::string, xlayout, width);
 
     private:
 
@@ -50,18 +80,51 @@ namespace xeus
         this->open();
     }
 
+    inline void xlayout::apply_patch(const xjson& patch)
+    {
+        base_type::apply_patch(patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(align_content, patch)
+    }
+
     inline xjson xlayout::get_state() const
     {
         xjson state = base_type::get_state();
+
+        XOBJECT_SET_PATCH_FROM_PROPERTY(_model_module, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(align_content, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(align_items, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(align_self, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(bottom, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(border, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(display, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(flex, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(flex_flow, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(height, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(justify_content, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(left, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(margin, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(max_height, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(max_width, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(min_height, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(min_width, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(overflow, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(overflow_x, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(overflow_y, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(order, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(padding, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(right, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(top, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(width, state);
+
         return state;
     }
 
     inline void xlayout::set_defaults()
     {
-        base_type::_model_module() = "@jupyter-widgets/base";
-        base_type::_view_module() = "@jupyter-widgets/base";
-        base_type::_model_name() = "LayoutModel";
-        base_type::_view_name() = "LayoutView";
+        this->_model_module() = "@jupyter-widgets/base";
+        this->_view_module() = "@jupyter-widgets/base";
+        this->_model_name() = "LayoutModel";
+        this->_view_name() = "LayoutView";
     }
 
     /**************************
@@ -79,15 +142,17 @@ namespace xeus
     inline xjson xwidget<D>::get_state() const
     {
         xjson state = base_type::get_state();
-        state["layout"] = layout();
+
+        XOBJECT_SET_PATCH_FROM_PROPERTY(layout, state);
+
         return state;
     }
 
     template <class D>
     inline void xwidget<D>::set_defaults()
     {
-        base_type::_model_name() = "DOMWidgetModel";
-        base_type::_view_name() = "DOMWidgetView";
+        this->_model_name() = "DOMWidgetModel";
+        this->_view_name() = "DOMWidgetView";
     }
 }
 
