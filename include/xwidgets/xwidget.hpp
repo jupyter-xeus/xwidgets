@@ -83,14 +83,35 @@ namespace xeus
     inline void xlayout::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(align_content, patch)
+
+        XOBJECT_SET_PROPERTY_FROM_PATCH(align_content, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(align_items, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(align_self, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(bottom, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(border, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(display, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(flex, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(flex_flow, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(height, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(justify_content, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(left, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(margin, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(max_height, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(max_width, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(overflow, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(overflow_x, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(overflow_y, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(order, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(padding, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(right, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(top, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(width, patch);
     }
 
     inline xjson xlayout::get_state() const
     {
         xjson state = base_type::get_state();
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_model_module, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(align_content, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(align_items, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(align_self, state);

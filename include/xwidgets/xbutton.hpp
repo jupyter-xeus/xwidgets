@@ -20,6 +20,13 @@ namespace xeus
 
         void on_click(std::function<void()>);
 
+        XPROPERTY(std::string, xbutton, description);
+        XPROPERTY(std::string, xbutton, tooltip);
+        XPROPERTY(bool, xbutton, disabled);
+        XPROPERTY(std::string, xbutton, icon);
+        XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger,), xbutton, button_style);
+        //XPROPERTY(xbutton_style, xbutton, style);
+
     private:
 
         void handle_button_message(const xjson&);
@@ -42,11 +49,28 @@ namespace xeus
 
     inline xjson xbutton::get_state() const
     {
-        return base_type::get_state();
+        xjson state = base_type::get_state();
+
+        XOBJECT_SET_PATCH_FROM_PROPERTY(description, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(tooltip, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(icon, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(button_style, state);
+        // XOBJECT_SET_PATCH_FROM_PROPERTY(style, state);
+
+        return state;
     }
 
     inline void xbutton::apply_patch(const xjson& patch)
     {
+        base_type::apply_patch(patch);
+
+        XOBJECT_SET_PROPERTY_FROM_PATCH(description, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(tooltip, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(icon, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(button_style, patch);
+        // XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch);
     }
 
     inline void xbutton::on_click(click_callback_type cb)
