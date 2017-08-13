@@ -93,6 +93,7 @@ namespace xeus
     protected:
         
         void open();
+        void close();
 
     private:
     
@@ -244,6 +245,12 @@ namespace xeus
         xeus::xjson data;
         data["state"] = derived_cast().get_state();
         m_comm.open(std::move(metadata), std::move(data));
+    }
+
+    template <class D>
+    inline void xobject<D>::close()
+    {
+        m_comm.close(xjson::object(), xjson::object());
     }
 
     template <class D>
