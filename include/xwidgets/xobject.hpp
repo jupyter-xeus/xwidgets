@@ -78,17 +78,17 @@ namespace xeus
 
         void send_patch(xjson&& state) const;
 
+        xjson get_state() const;
+        void apply_patch(const xjson& patch);
+
+        void on_message(message_callback_type);
+
         XPROPERTY(std::string, derived_type, _model_module);
         XPROPERTY(std::string, derived_type, _model_module_version);
         XPROPERTY(std::string, derived_type, _model_name);
         XPROPERTY(std::string, derived_type, _view_module);
         XPROPERTY(std::string, derived_type, _view_module_version);
         XPROPERTY(std::string, derived_type, _view_name);
-
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
-
-        void on_message(message_callback_type);
 
     protected:
         
@@ -298,6 +298,12 @@ namespace xeus
     inline void to_json(xjson& j, const xobject<D>& o)
     {
         j = "IPY_MODEL_" + guid_to_hex(o.id());
+    }
+
+    template <class D>
+    inline void from_json(const xjson& j, xobject<D>& o)
+    {
+        // TODO: use a backend widgets instance registry
     }
 }
 

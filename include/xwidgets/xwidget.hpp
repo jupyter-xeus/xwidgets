@@ -8,6 +8,20 @@
 namespace xeus
 {
 
+    template <class D>
+    class xstyle : public xobject<xstyle<D>>
+    {
+    public:
+
+        using base_type = xobject<xstyle<D>>;
+
+        xstyle();
+
+    private:
+
+        void set_defaults();
+    };
+
     class xlayout final : public xobject<xlayout>
     {
     public:
@@ -60,14 +74,35 @@ namespace xeus
 
         xwidget();
     
-        XPROPERTY(::xeus::xlayout, derived_type, layout);
-
         xjson get_state() const;
+        void apply_patch(const xjson& patch);
+
+        XPROPERTY(xlayout, derived_type, layout);
 
     private:
 
         void set_defaults();
     };
+
+    /*************************
+     * xstyle implementation *
+     *************************/
+
+    template <class D>
+    inline xstyle<D>::xstyle()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
+    inline void xstyle<D>::set_defaults()
+    {
+        this->_model_module() = "@jupyter-widgets/base";
+        this->_view_module() = "@jupyter-widgets/base";
+        this->_model_name() = "StyleModel";
+        this->_view_name() = "StyleView";
+    }
 
     /**************************
      * xlayout implementation *
@@ -157,6 +192,14 @@ namespace xeus
         : base_type()
     {
         set_defaults();
+    }
+
+    template <class D>
+    inline void xwidget<D>::apply_patch(const xjson& patch)
+    {
+        base_type::apply_patch(patch);
+
+        XOBJECT_SET_PROPERTY_FROM_PATCH(layout, patch);
     }
 
     template <class D>

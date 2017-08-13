@@ -5,6 +5,25 @@
 
 namespace xeus
 {
+    class xbutton_style final : public xstyle<xbutton_style>
+    {
+    public:
+
+        using base_type = xstyle<xbutton_style>;
+
+        xbutton_style();
+
+        xjson get_state() const;
+        void apply_patch(const xjson& patch);
+
+        XPROPERTY(std::string, xbutton_style, button_color);
+        XPROPERTY(std::string, xbutton_style, font_weight);
+
+    private:
+
+        void set_defaults();
+    };
+
     class xbutton final : public xwidget<xbutton>
     {
     public:
@@ -25,7 +44,7 @@ namespace xeus
         XPROPERTY(bool, xbutton, disabled);
         XPROPERTY(std::string, xbutton, icon);
         XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger,), xbutton, button_style);
-        //XPROPERTY(xbutton_style, xbutton, style);
+        XPROPERTY(xbutton_style, xbutton, style);
 
     private:
 
@@ -34,6 +53,41 @@ namespace xeus
 
         std::list<click_callback_type> m_click_callbacks;
     };
+
+    /********************************
+     * xbutton_style implementation *
+     ********************************/
+
+    inline xbutton_style::xbutton_style()
+        : base_type()
+    {
+        set_defaults();
+        this->open();
+    }
+
+    inline void xbutton_style::set_defaults()
+    {
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_name() = "ButtonStyleModel";
+    }
+
+    inline xjson xbutton_style::get_state() const
+    {
+        xjson state = base_type::get_state();
+
+        XOBJECT_SET_PATCH_FROM_PROPERTY(button_color, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(font_weight, state);
+
+        return state;
+    }
+
+    inline void xbutton_style::apply_patch(const xjson& patch)
+    {
+        base_type::apply_patch(patch);
+
+        XOBJECT_SET_PROPERTY_FROM_PATCH(button_color, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(font_weight, patch);
+    }
 
     /**************************
      * xbutton implementation *
@@ -56,7 +110,7 @@ namespace xeus
         XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(icon, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(button_style, state);
-        // XOBJECT_SET_PATCH_FROM_PROPERTY(style, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(style, state);
 
         return state;
     }
@@ -70,7 +124,7 @@ namespace xeus
         XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(icon, patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(button_style, patch);
-        // XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch);
     }
 
     inline void xbutton::on_click(click_callback_type cb)
@@ -80,10 +134,10 @@ namespace xeus
 
     inline void xbutton::set_defaults()
     {
-        base_type::_model_module() = "@jupyter-widgets/controls";
-        base_type::_view_module() = "@jupyter-widgets/controls";
-        base_type::_model_name() = "ButtonModel";
-        base_type::_view_name() = "ButtonView";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_name() = "ButtonModel";
+        this->_view_name() = "ButtonView";
     }
 
     inline void xbutton::handle_button_message(const xjson& content)
