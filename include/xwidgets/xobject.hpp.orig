@@ -111,19 +111,27 @@ namespace xeus
         void notify(const P& property) const;
 
         void send_patch(xjson&& state) const;
-        void send(xjson&& content) const;
 
+<<<<<<< 13924ea0a04979ec3e1030828667b0bb31d6ce87
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
         void on_message(message_callback_type);
 
+        XPROPERTY(std::string, derived_type, _model_module);
+        XPROPERTY(std::string, derived_type, _model_module_version);
+        XPROPERTY(std::string, derived_type, _model_name);
+        XPROPERTY(std::string, derived_type, _view_module);
+        XPROPERTY(std::string, derived_type, _view_module_version);
+        XPROPERTY(std::string, derived_type, _view_name);
+=======
         XPROPERTY(xt::xoptional<std::string>, derived_type, _model_module);
         XPROPERTY(xt::xoptional<std::string>, derived_type, _model_module_version);
         XPROPERTY(xt::xoptional<std::string>, derived_type, _model_name);
         XPROPERTY(xt::xoptional<std::string>, derived_type, _view_module);
         XPROPERTY(xt::xoptional<std::string>, derived_type, _view_module_version);
         XPROPERTY(xt::xoptional<std::string>, derived_type, _view_name);
+>>>>>>> Expose all layout properties
 
     protected:
         
@@ -242,17 +250,6 @@ namespace xeus
         xjson data;
         data["method"] = "update";
         data["state"] = std::move(patch);
-        m_comm.send(std::move(metadata), std::move(data));
-    }
-
-    template <class D>
-    inline void xobject<D>::send(xjson&& content) const
-    {
-        xjson metadata;
-        metadata["version"] = get_widget_protocol_version();
-        xjson data;
-        data["method"] = "custom";
-        data["content"] = std::move(content);
         m_comm.send(std::move(metadata), std::move(data));
     }
 
