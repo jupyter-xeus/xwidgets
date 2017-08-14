@@ -77,6 +77,7 @@ namespace xeus
         void notify(const P& property) const;
 
         void send_patch(xjson&& state) const;
+        void send(xjson&& content) const;
 
         xjson get_state() const;
         void apply_patch(const xjson& patch);
@@ -207,6 +208,17 @@ namespace xeus
         xjson data;
         data["method"] = "update";
         data["state"] = std::move(patch);
+        m_comm.send(std::move(metadata), std::move(data));
+    }
+
+    template <class D>
+    inline void xobject<D>::send(xjson&& content) const
+    {
+        xjson metadata;
+        metadata["version"] = get_widget_protocol_version();
+        xjson data;
+        data["method"] = "custom";
+        data["content"] = std::move(content);
         m_comm.send(std::move(metadata), std::move(data));
     }
 
