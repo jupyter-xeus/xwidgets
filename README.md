@@ -5,5 +5,5 @@
 Requires:
 
  - widgetsnbextension ~3.0.0 beta7
- - xeus ~0.5.2
+ - xeus ~0.5.3
  - xproperty 0.2.1

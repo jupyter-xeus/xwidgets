@@ -204,13 +204,10 @@ namespace xeus
     {
         xjson metadata;
         metadata["version"] = get_widget_protocol_version();
-        xeus::xjson content;
-        content["comm_id"] = xeus::guid_to_hex(this->derived_cast().id());
-        content["data"] = R"({
-            "method": "update"
-        })"_json;
-        content["data"]["state"] = patch;
-        m_comm.target().publish_message("comm_msg", std::move(metadata), std::move(content));
+        xjson data;
+        data["method"] = "update";
+        data["state"] = std::move(patch);
+        m_comm.send(std::move(metadata), std::move(data));
     }
 
     template <class D>
