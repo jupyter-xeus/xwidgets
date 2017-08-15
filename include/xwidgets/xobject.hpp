@@ -166,19 +166,18 @@ namespace xeus
     template <class D>
     inline void xobject<D>::display() const
     {
-        xeus::xjson mime_bundle = R"(
-        {
-            "text/plain": "A Jupyter widget",
-            "application/vnd.jupyter.widget-view+json": {
-                "version_major": "2",
-                "version_minor": "0"
-            }
-        }
-        )"_json;
+        xeus::xjson mime_bundle;
 
-        mime_bundle["application/vnd.jupyter.widget-view+json"]["model_id"] = 
-            xeus::guid_to_hex(this->derived_cast().id());
-            
+        // application/vnd.jupyter.widget-view+json
+        xeus::xjson widgets_json;
+        widgets_json["version_major"] = "2";
+        widgets_json["version_minor"] = "0";
+        widgets_json["model_id"] = xeus::guid_to_hex(this->derived_cast().id());
+        mime_bundle["application/vnd.jupyter.widget-view+json"] = std::move(widgets_json);
+
+        // text/plain
+        mime_bundle["text/plain"] = "A Jupyter widget";
+
         ::xeus::get_interpreter().display_data(
             std::move(mime_bundle),
             xeus::xjson::object(),
