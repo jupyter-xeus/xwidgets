@@ -33,31 +33,31 @@ namespace xeus
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, space-evenly, stretch, inherit, inital, unset), xlayout, align_content);
-        XPROPERTY(X_CASELESS_STR_ENUM(flex-start, flex-end, center, baseline, stretch, inherit, inital, unset), xlayout, align_items);
-        XPROPERTY(X_CASELESS_STR_ENUM(auto, flex-start, flex-end, center, baseline, stretch, inherit, inital, unset), xlayout, align_self);
-        XPROPERTY(std::string, xlayout, bottom);
-        XPROPERTY(std::string, xlayout, border);
-        XPROPERTY(std::string, xlayout, display);
-        XPROPERTY(std::string, xlayout, flex);
-        XPROPERTY(std::string, xlayout, flex_flow);
-        XPROPERTY(std::string, xlayout, height);
-        XPROPERTY(X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, inherit, inital, unset), xlayout, justify_content);
-        XPROPERTY(std::string, xlayout, left);
-        XPROPERTY(std::string, xlayout, margin);
-        XPROPERTY(std::string, xlayout, max_height);
-        XPROPERTY(std::string, xlayout, max_width);
-        XPROPERTY(std::string, xlayout, min_height);
-        XPROPERTY(std::string, xlayout, min_width);
-        XPROPERTY(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset), xlayout, overflow);
-        XPROPERTY(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset), xlayout, overflow_x);
-        XPROPERTY(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset), xlayout, overflow_y);
-        XPROPERTY(std::string, xlayout, order);
-        XPROPERTY(std::string, xlayout, padding);
-        XPROPERTY(std::string, xlayout, right);
-        XPROPERTY(std::string, xlayout, top);
-        XPROPERTY(std::string, xlayout, visibility);
-        XPROPERTY(std::string, xlayout, width);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, space-evenly, stretch, inherit, inital, unset)), xlayout, align_content);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(flex-start, flex-end, center, baseline, stretch, inherit, inital, unset)), xlayout, align_items);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(auto, flex-start, flex-end, center, baseline, stretch, inherit, inital, unset)), xlayout, align_self);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, bottom);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, border);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, display);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, flex);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, flex_flow);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, height);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, inherit, inital, unset)), xlayout, justify_content);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, left);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, margin);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, max_height);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, max_width);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, min_height);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, min_width);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)), xlayout, overflow);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)), xlayout, overflow_x);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)), xlayout, overflow_y);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, order);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, padding);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, right);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, top);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, visibility);
+        XPROPERTY(XOPTIONAL(std::string), xlayout, width);
 
     private:
 

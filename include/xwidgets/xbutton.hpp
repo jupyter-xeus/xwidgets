@@ -16,7 +16,7 @@ namespace xeus
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(std::string, xbutton_style, button_color);
+        XPROPERTY(XOPTIONAL(std::string), xbutton_style, button_color);
         XPROPERTY(std::string, xbutton_style, font_weight);
 
     private:

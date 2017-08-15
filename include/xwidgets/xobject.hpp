@@ -54,6 +54,14 @@ namespace xeus
      * xobject declaration *
      ***********************/
 
+    // TODO: Generate an enum type with
+    //  - operator=() allowing string assignment
+    //  - to_json and from_json overload converting from and to the corresponding strings.
+    #define X_CASELESS_STR_ENUM(...) std::string
+
+    // TODO: Use an optional type such as xtensor optionals
+    #define XOPTIONAL(x) x
+
     template <class D>
     class xobject : public xp::xobserved<D>
     {
@@ -84,12 +92,12 @@ namespace xeus
 
         void on_message(message_callback_type);
 
-        XPROPERTY(std::string, derived_type, _model_module);
-        XPROPERTY(std::string, derived_type, _model_module_version);
-        XPROPERTY(std::string, derived_type, _model_name);
-        XPROPERTY(std::string, derived_type, _view_module);
-        XPROPERTY(std::string, derived_type, _view_module_version);
-        XPROPERTY(std::string, derived_type, _view_name);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_module);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_module_version);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_name);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_module);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_module_version);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_name);
 
     protected:
         
@@ -122,11 +130,6 @@ namespace xeus
 
     #define XOBJECT_SET_PATCH_FROM_PROPERTY(name, patch)                   \
         patch[#name] = this->name(); 
-
-    // TODO: Generate an enum type with
-    //  - operator=() allowing string assignment
-    //  - to_json and from_json overload converting from and to the corresponding strings.
-    #define X_CASELESS_STR_ENUM(...) std::string
 
     template <class D>
     inline xobject<D>::xobject()
