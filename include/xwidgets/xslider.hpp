@@ -39,6 +39,11 @@ namespace xeus
             this->open();
         }
 
+        ~slider_style()
+        {
+            this->close();
+        }
+
         slider_style(const slider_style& other) : base_type(other)
         {
             this->open();
@@ -105,6 +110,11 @@ namespace xeus
         slider() : base_type()
         {
             this->open();
+        }
+
+        ~slider()
+        {
+            this->close();
         }
 
         slider(const slider& other) : base_type(other)
