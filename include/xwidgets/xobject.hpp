@@ -50,9 +50,9 @@ namespace xeus
         return "2.0.0";
     }
 
-    /***********************
-     * xobject declaration *
-     ***********************/
+    /****************************
+     * base xobject declaration *
+     ***************************/
 
     // TODO: Generate an enum type with
     //  - operator=() allowing string assignment
@@ -118,9 +118,9 @@ namespace xeus
     template <class D>
     void to_json(xjson& j, const xobject<D>& o);
 
-    /**************************
-     * xobject implementation *
-     **************************/
+    /*******************************
+     * base xobject implementation *
+     *******************************/
 
     #define XOBJECT_SET_PROPERTY_FROM_PATCH(name, patch)                   \
     if (patch.find(#name) != patch.end())                                  \

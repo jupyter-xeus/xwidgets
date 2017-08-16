@@ -5,18 +5,90 @@
 
 namespace xeus
 {
-    class xslider_style final : public xstyle<xslider_style>
+    /****************************
+     * slider_style declaration *
+     ****************************/
+
+    template <class D>
+    class xslider_style : public xstyle<D>
     {
     public:
 
-        using base_type = xstyle<xslider_style>;
+        using base_type = xstyle<D>;
+        using derived_type = D;
 
         xslider_style();
-
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(XOPTIONAL(std::string), xslider_style, handle_color);
+        XPROPERTY(XOPTIONAL(std::string), D, handle_color);
+
+    private:
+
+        void set_defaults();
+    };
+
+    class slider_style final : public xslider_style<slider_style>
+    {
+    public:
+
+        using base_type = xslider_style<slider_style>;
+
+        slider_style() : base_type()
+        {
+            this->open();
+        }
+
+        slider_style(const slider_style& other) : base_type(other)
+        {
+            this->open();
+        }
+
+        slider_style(slider_style&&) = default;
+
+        slider_style& operator=(const slider_style& other)
+        {
+            base_type::operator=(other);
+            this->open();
+            return *this;
+        }
+
+        slider_style& operator=(slider_style&&) = default;
+    };
+
+    /**********************
+     * slider declaration *
+     **********************/
+
+    template <class D> 
+    struct xslider_traits;
+
+    template <class D>
+    class xslider : public xwidget<D>
+    {
+    public:
+
+        using base_type = xwidget<D>;
+        using derived_type = D;
+
+        xslider();
+        xjson get_state() const;
+        void apply_patch(const xjson& patch);
+
+        using value_type = typename xslider_traits<derived_type>::value_type;
+
+        // TODO value, min, max should be in a base numerical widget
+        XPROPERTY(value_type, derived_type, value);
+        XPROPERTY(value_type, derived_type, min);
+        XPROPERTY(value_type, derived_type, max, value_type(100));
+
+        XPROPERTY(value_type, derived_type, step, value_type(1));
+        XPROPERTY(X_CASELESS_STR_ENUM(horizontal, vertical), derived_type, orientation, "horizontal");
+        XPROPERTY(bool, derived_type, readout, true);
+        XPROPERTY(std::string, derived_type, readout_format, ".2f");
+        XPROPERTY(bool, derived_type, continuous_update, true);
+        XPROPERTY(bool, derived_type, disabled);
+        XPROPERTY(::xeus::slider_style, derived_type, style);
 
     private:
 
@@ -24,53 +96,53 @@ namespace xeus
     };
 
     template <class T>
-    class xslider final : public xwidget<xslider<T>>
+    class slider final : public xslider<slider<T>>
     {
     public:
 
-        using base_type = xwidget<xslider<T>>;
+        using base_type = xslider<slider<T>>;
 
-        xslider();
+        slider() : base_type()
+        {
+            this->open();
+        }
 
-        // TODO value, min, max should be in a base numerical widget
-        XPROPERTY(T, xslider, value);
-        XPROPERTY(T, xslider, min);
-        XPROPERTY(T, xslider, max);
+        slider(const slider& other) : base_type(other)
+        {
+            this->open();
+        }
 
-        XPROPERTY(T, xslider, step);
-        XPROPERTY(X_CASELESS_STR_ENUM(horizontal, vertical), xslider, orientation);
-        XPROPERTY(bool, xslider, readout);
-        XPROPERTY(std::string, xslider, readout_format);
-        XPROPERTY(bool, xslider, continuous_update);
-        XPROPERTY(bool, xslider, disabled);
-        XPROPERTY(xslider_style, xslider, style);
+        slider(slider&&) = default;
 
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        slider& operator=(const slider& other)
+        {
+            base_type::operator=(other);
+            this->open();
+            return *this;
+        }
 
-    private:
-
-        void set_defaults();
+        slider& operator=(slider&&) = default;
     };
 
-    /********************************
-     * xslider_style implementation *
-     ********************************/
+    template <class T> 
+    struct xslider_traits<slider<T>>
+    {
+        using value_type = T;
+    };
 
-    inline xslider_style::xslider_style()
+    /*******************************
+     * slider_style implementation *
+     *******************************/
+
+    template <class D>
+    inline xslider_style<D>::xslider_style()
         : base_type()
     {
         set_defaults();
-        this->open();
     }
 
-    inline void xslider_style::set_defaults()
-    {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_model_name() = "SliderStyleModel";
-    }
-
-    inline xjson xslider_style::get_state() const
+    template <class D>
+    inline xjson xslider_style<D>::get_state() const
     {
         xjson state = base_type::get_state();
 
@@ -79,26 +151,33 @@ namespace xeus
         return state;
     }
 
-    inline void xslider_style::apply_patch(const xjson& patch)
+    template <class D>
+    inline void xslider_style<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(handle_color, patch);
     }
 
-    /**************************
-     * xslider implementation *
-     **************************/
+    template <class D>
+    inline void xslider_style<D>::set_defaults()
+    {
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_name() = "SliderStyleModel";
+    }
 
-    template <class T>
-    inline xslider<T>::xslider()
+    /*************************
+     * slider implementation *
+     *************************/
+
+    template <class D>
+    inline xslider<D>::xslider()
         : base_type()
     {
         set_defaults();
-        this->open();
     }
 
-    template <class T>
-    inline xjson xslider<T>::get_state() const
+    template <class D>
+    inline xjson xslider<D>::get_state() const
     {
         xjson state = base_type::get_state();
 
@@ -118,8 +197,8 @@ namespace xeus
         return state;
     }
 
-    template <class T>
-    inline void xslider<T>::apply_patch(const xjson& patch)
+    template <class D>
+    inline void xslider<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
 
@@ -137,21 +216,13 @@ namespace xeus
         XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch)
     }
 
-    template <class T>
-    inline void xslider<T>::set_defaults()
+    template <class D>
+    inline void xslider<D>::set_defaults()
     {
         this->_model_module() = "@jupyter-widgets/controls";
         this->_view_module() = "@jupyter-widgets/controls";
         this->_model_name() = "FloatSliderModel";
         this->_view_name() = "FloatSliderView";
-
-        this->max() = T(100);
-        this->step() = T(1);
-
-        this->orientation() = "horizontal";
-        this->readout() = true;
-        this->readout_format() = ".2f";
-        this->continuous_update() = true;
     }
 }
 

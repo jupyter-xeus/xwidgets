@@ -5,46 +5,84 @@
 
 namespace xeus
 {
-    class xbutton_style final : public xstyle<xbutton_style>
+    /****************************
+     * button_style declaration *
+     ****************************/
+
+    template <class D>
+    class xbutton_style : public xstyle<D>
     {
     public:
 
-        using base_type = xstyle<xbutton_style>;
+        using base_type = xstyle<D>;
+        using derived_type = D;
 
         xbutton_style();
-
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(XOPTIONAL(std::string), xbutton_style, button_color);
-        XPROPERTY(std::string, xbutton_style, font_weight);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, button_color);
+        XPROPERTY(std::string, derived_type, font_weight);
 
     private:
 
         void set_defaults();
     };
 
-    class xbutton final : public xwidget<xbutton>
+    class button_style final : public xbutton_style<button_style>
+    {
+    public:
+
+        using base_type = xbutton_style<button_style>;
+
+        button_style() : base_type()
+        {
+            this->open();
+        }
+
+        button_style(const button_style& other) : base_type(other)
+        {
+            this->open();
+        }
+
+        button_style(button_style&&) = default;
+
+        button_style& operator=(const button_style& other)
+        {
+            base_type::operator=(other);
+            this->open();
+            return *this;
+        }
+
+        button_style& operator=(button_style&&) = default;
+    };
+
+    /**********************
+     * button declaration *
+     **********************/
+
+    template <class D>
+    class xbutton : public xwidget<D>
     {
     public:
 
         using click_callback_type = std::function<void()>;
 
-        using base_type = xwidget<xbutton>;
+        using base_type = xwidget<D>;
+        using derived_type = D;
 
         xbutton();
-
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
         void on_click(std::function<void()>);
 
-        XPROPERTY(std::string, xbutton, description);
-        XPROPERTY(std::string, xbutton, tooltip);
-        XPROPERTY(bool, xbutton, disabled);
-        XPROPERTY(std::string, xbutton, icon);
-        XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger,), xbutton, button_style);
-        XPROPERTY(xbutton_style, xbutton, style);
+        XPROPERTY(std::string, derived_type, description);
+        XPROPERTY(std::string, derived_type, tooltip);
+        XPROPERTY(bool, derived_type, disabled);
+        XPROPERTY(std::string, derived_type, icon);
+        XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger,), derived_type, button_style);
+        XPROPERTY(::xeus::button_style, derived_type, style);
 
     private:
 
@@ -54,24 +92,47 @@ namespace xeus
         std::list<click_callback_type> m_click_callbacks;
     };
 
-    /********************************
-     * xbutton_style implementation *
-     ********************************/
+    class button final : public xbutton<button>
+    {
+    public:
 
-    inline xbutton_style::xbutton_style()
+        using base_type = xbutton<button>;
+
+        button() : base_type()
+        {
+            this->open();
+        }
+
+        button(const button& other) : base_type(other)
+        {
+            this->open();
+        }
+
+        button(button&&) = default;
+
+        button& operator=(const button& other)
+        {
+            base_type::operator=(other);
+            this->open();
+            return *this;
+        }
+
+        button& operator=(button&&) = default;
+    };
+
+    /*******************************
+     * button_style implementation *
+     *******************************/
+
+    template <class D>
+    inline xbutton_style<D>::xbutton_style()
         : base_type()
     {
         set_defaults();
-        this->open();
     }
 
-    inline void xbutton_style::set_defaults()
-    {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_model_name() = "ButtonStyleModel";
-    }
-
-    inline xjson xbutton_style::get_state() const
+    template <class D>
+    inline xjson xbutton_style<D>::get_state() const
     {
         xjson state = base_type::get_state();
 
@@ -81,7 +142,8 @@ namespace xeus
         return state;
     }
 
-    inline void xbutton_style::apply_patch(const xjson& patch)
+    template <class D>
+    inline void xbutton_style<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
 
@@ -89,19 +151,27 @@ namespace xeus
         XOBJECT_SET_PROPERTY_FROM_PATCH(font_weight, patch);
     }
 
-    /**************************
-     * xbutton implementation *
-     **************************/
+    template <class D>
+    inline void xbutton_style<D>::set_defaults()
+    {
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_name() = "ButtonStyleModel";
+    }
 
-    inline xbutton::xbutton()
+    /*************************
+     * button implementation *
+     *************************/
+
+    template <class D>
+    inline xbutton<D>::xbutton()
         : base_type()
     {
         set_defaults();
         this->on_message(std::bind(&xbutton::handle_button_message, this, _1));
-        this->open();
     }
 
-    inline xjson xbutton::get_state() const
+    template <class D>
+    inline xjson xbutton<D>::get_state() const
     {
         xjson state = base_type::get_state();
 
@@ -115,7 +185,8 @@ namespace xeus
         return state;
     }
 
-    inline void xbutton::apply_patch(const xjson& patch)
+    template <class D>
+    inline void xbutton<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
 
@@ -127,12 +198,14 @@ namespace xeus
         XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch);
     }
 
-    inline void xbutton::on_click(click_callback_type cb)
+    template <class D>
+    inline void xbutton<D>::on_click(click_callback_type cb)
     {
         m_click_callbacks.emplace_back(std::move(cb));
     }
 
-    inline void xbutton::set_defaults()
+    template <class D>
+    inline void xbutton<D>::set_defaults()
     {
         this->_model_module() = "@jupyter-widgets/controls";
         this->_view_module() = "@jupyter-widgets/controls";
@@ -140,7 +213,8 @@ namespace xeus
         this->_view_name() = "ButtonView";
     }
 
-    inline void xbutton::handle_button_message(const xjson& content)
+    template <class D>
+    inline void xbutton<D>::handle_button_message(const xjson& content)
     {
         auto it = content.find("event");
         if (it != content.end() && it.value() == "click")
