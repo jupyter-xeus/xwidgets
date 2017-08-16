@@ -7,57 +7,96 @@
 
 namespace xeus
 {
+    /**********************
+     * layout declaration *
+     **********************/
 
     template <class D>
-    class xstyle : public xobject<xstyle<D>>
+    class xlayout : public xobject<D>
     {
     public:
 
-        using base_type = xobject<xstyle<D>>;
+        using base_type = xobject<D>;
+        using derived_type = D;
 
-        xstyle();
+        xlayout();
+        xjson get_state() const;
+        void apply_patch(const xjson& patch);
+
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, space-evenly, stretch, inherit, inital, unset)), derived_type, align_content);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(flex-start, flex-end, center, baseline, stretch, inherit, inital, unset)), derived_type, align_items);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(auto, flex-start, flex-end, center, baseline, stretch, inherit, inital, unset)), derived_type, align_self);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, bottom);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, border);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, display);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, flex);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, flex_flow);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, height);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, inherit, inital, unset)), derived_type, justify_content);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, left);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, margin);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, max_height);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, max_width);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, min_height);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, min_width);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)), derived_type, overflow);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)), derived_type, overflow_x);
+        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)), derived_type, overflow_y);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, order);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, padding);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, right);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, top);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, visibility);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, width);
 
     private:
 
         void set_defaults();
     };
 
-    class xlayout final : public xobject<xlayout>
+    class layout final : public xlayout<layout>
     {
     public:
 
-        using base_type = xobject<xlayout>;
+        using base_type = xlayout<layout>;
 
-        xlayout();
+        layout() : base_type()
+        {
+            this->open();
+        }
 
+        layout(const layout& other) : base_type(other)
+        {
+           this->open();
+        }
+
+        layout(layout&&) = default;
+
+        layout& operator=(const layout& other)
+        {
+            base_type::operator=(other);
+            this->open();
+            return *this;
+        }
+
+        layout& operator=(layout&&) = default;
+    };
+
+    /*****************************************
+     * base xstyle and xwidgets declarations *
+     *****************************************/
+
+    template <class D>
+    class xstyle : public xobject<D>
+    {
+    public:
+
+        using base_type = xobject<D>;
+        using derived_type = D;
+
+        xstyle();
         xjson get_state() const;
         void apply_patch(const xjson& patch);
-
-        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, space-evenly, stretch, inherit, inital, unset)), xlayout, align_content);
-        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(flex-start, flex-end, center, baseline, stretch, inherit, inital, unset)), xlayout, align_items);
-        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(auto, flex-start, flex-end, center, baseline, stretch, inherit, inital, unset)), xlayout, align_self);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, bottom);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, border);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, display);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, flex);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, flex_flow);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, height);
-        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, inherit, inital, unset)), xlayout, justify_content);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, left);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, margin);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, max_height);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, max_width);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, min_height);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, min_width);
-        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)), xlayout, overflow);
-        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)), xlayout, overflow_x);
-        XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)), xlayout, overflow_y);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, order);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, padding);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, right);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, top);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, visibility);
-        XPROPERTY(XOPTIONAL(std::string), xlayout, width);
 
     private:
 
@@ -73,11 +112,10 @@ namespace xeus
         using derived_type = D;
 
         xwidget();
-    
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(xlayout, derived_type, layout);
+        XPROPERTY(::xeus::layout, derived_type, layout);
 
     private:
 
@@ -85,37 +123,18 @@ namespace xeus
     };
 
     /*************************
-     * xstyle implementation *
+     * layout implementation *
      *************************/
 
     template <class D>
-    inline xstyle<D>::xstyle()
+    inline xlayout<D>::xlayout()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline void xstyle<D>::set_defaults()
-    {
-        this->_model_module() = "@jupyter-widgets/base";
-        this->_view_module() = "@jupyter-widgets/base";
-        this->_model_name() = "StyleModel";
-        this->_view_name() = "StyleView";
-    }
-
-    /**************************
-     * xlayout implementation *
-     **************************/
-
-    inline xlayout::xlayout()
-        : base_type()
-    {
-        set_defaults();
-        this->open();
-    }
-
-    inline void xlayout::apply_patch(const xjson& patch)
+    inline void xlayout<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
 
@@ -143,7 +162,8 @@ namespace xeus
         XOBJECT_SET_PROPERTY_FROM_PATCH(width, patch);
     }
 
-    inline xjson xlayout::get_state() const
+    template <class D>
+    inline xjson xlayout<D>::get_state() const
     {
         xjson state = base_type::get_state();
 
@@ -175,7 +195,8 @@ namespace xeus
         return state;
     }
 
-    inline void xlayout::set_defaults()
+    template <class D>
+    inline void xlayout<D>::set_defaults()
     {
         this->_model_module() = "@jupyter-widgets/base";
         this->_view_module() = "@jupyter-widgets/base";
@@ -183,9 +204,38 @@ namespace xeus
         this->_view_name() = "LayoutView";
     }
 
-    /**************************
-     * xwidget implementation *
-     **************************/
+    /********************************************
+     * base xstyle and xwidgets implementations *
+     ********************************************/
+
+    template <class D>
+    inline xstyle<D>::xstyle()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
+    inline void xstyle<D>::apply_patch(const xjson& patch)
+    {
+        base_type::apply_patch(patch);
+    }
+
+    template <class D>
+    inline xjson xstyle<D>::get_state() const
+    {
+        xjson state = base_type::get_state();
+        return state;
+    }
+
+    template <class D>
+    inline void xstyle<D>::set_defaults()
+    {
+        this->_model_module() = "@jupyter-widgets/base";
+        this->_view_module() = "@jupyter-widgets/base";
+        this->_model_name() = "StyleModel";
+        this->_view_name() = "StyleView";
+    }
 
     template <class D>
     inline xwidget<D>::xwidget()
