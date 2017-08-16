@@ -39,12 +39,23 @@ namespace xeus
             this->open();
         }
 
+        ~slider_style()
+        {
+            if (!m_moved)
+            {
+                this->close();
+            }
+        }
+
         slider_style(const slider_style& other) : base_type(other)
         {
             this->open();
         }
 
-        slider_style(slider_style&&) = default;
+        slider_style(slider_style&& other) : base_type(std::move(other))
+        {
+            other.m_moved = true;
+        }
 
         slider_style& operator=(const slider_style& other)
         {
@@ -53,7 +64,16 @@ namespace xeus
             return *this;
         }
 
-        slider_style& operator=(slider_style&&) = default;
+        slider_style& operator=(slider_style&& other)
+        {
+            base_type::operator=(std::move(other));
+            other.m_moved = true;
+            return *this;
+        }
+
+    private:
+
+        bool m_moved;
     };
 
     /**********************
@@ -107,12 +127,23 @@ namespace xeus
             this->open();
         }
 
+        ~slider()
+        {
+            if (!m_moved)
+            {
+                this->close();
+            }
+        }
+
         slider(const slider& other) : base_type(other)
         {
             this->open();
         }
 
-        slider(slider&&) = default;
+        slider(slider&& other) : base_type(std::move(other))
+        {
+            other.m_moved = true;
+        }
 
         slider& operator=(const slider& other)
         {
@@ -121,7 +152,16 @@ namespace xeus
             return *this;
         }
 
-        slider& operator=(slider&&) = default;
+        slider& operator=(slider&& other)
+        {
+            base_type::operator=(std::move(other));
+            other.m_moved = true;
+            return *this;
+        }
+
+    private:
+
+        bool m_moved;
     };
 
     template <class T> 
