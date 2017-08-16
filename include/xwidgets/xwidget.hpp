@@ -65,9 +65,14 @@ namespace xeus
             this->open();
         }
 
+        ~layout()
+        {
+            this->close();
+        }
+
         layout(const layout& other) : base_type(other)
         {
-           this->open();
+            this->open();
         }
 
         layout(layout&&) = default;

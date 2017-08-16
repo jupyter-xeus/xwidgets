@@ -40,6 +40,11 @@ namespace xeus
             this->open();
         }
 
+        ~button_style()
+        {
+            this->close();
+        }
+
         button_style(const button_style& other) : base_type(other)
         {
             this->open();
@@ -101,6 +106,11 @@ namespace xeus
         button() : base_type()
         {
             this->open();
+        }
+
+        ~button()
+        {
+            this->close();
         }
 
         button(const button& other) : base_type(other)
