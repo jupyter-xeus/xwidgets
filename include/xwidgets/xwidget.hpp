@@ -65,12 +65,23 @@ namespace xeus
             this->open();
         }
 
-        layout(const layout& other) : base_type(other)
+        ~layout()
         {
-           this->open();
+            if (!m_moved)
+            {
+                this->close();
+            }
         }
 
-        layout(layout&&) = default;
+        layout(const layout& other) : base_type(other)
+        {
+            this->open();
+        }
+
+        layout(layout&& other) : base_type(std::move(other))
+        {
+            other.m_moved = true;
+        }
 
         layout& operator=(const layout& other)
         {
@@ -79,7 +90,16 @@ namespace xeus
             return *this;
         }
 
-        layout& operator=(layout&&) = default;
+        layout& operator=(layout&& other)
+        {
+            base_type::operator=(std::move(other));
+            other.m_moved = true;
+            return *this;
+        }
+
+    private:
+
+        bool m_moved;
     };
 
     /*****************************************
