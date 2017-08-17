@@ -105,6 +105,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlayout.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xobject.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xslider.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtransport.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstyle.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
