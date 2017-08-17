@@ -1,5 +1,5 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay, Johan Mabille and Loic Gouarin       *
+* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
 *                                                                          *
 * Distributed under the terms of the BSD 3-Clause License.                 *
 *                                                                          *

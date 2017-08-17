@@ -6,73 +6,67 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_WIDGET_HPP
-#define XWIDGETS_WIDGET_HPP
+#ifndef XWIDGETS_STYLE_HPP
+#define XWIDGETS_STYLE_HPP
 
 #include <string>
 
 #include "xobject.hpp"
-#include "xlayout.hpp"
 
 namespace xeus
 {
-    /******************************
-     * base xwidgets declarations *
-     ******************************/
+    /***************************
+     * base xstyle declaration *
+     ***************************/
 
     template <class D>
-    class xwidget : public xobject<D>
+    class xstyle : public xobject<D>
     {
     public:
 
         using base_type = xobject<D>;
         using derived_type = D;
 
-        xwidget();
+        xstyle();
         xjson get_state() const;
         void apply_patch(const xjson& patch);
-
-        XPROPERTY(::xeus::layout, derived_type, layout);
 
     private:
 
         void set_defaults();
     };
 
-    /********************************
-     * base xwidgets implementation *
-     ********************************/
+    /******************************
+     * base xstyle implementation *
+     ******************************/
 
     template <class D>
-    inline xwidget<D>::xwidget()
+    inline xstyle<D>::xstyle()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline void xwidget<D>::apply_patch(const xjson& patch)
+    inline void xstyle<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
-
-        XOBJECT_SET_PROPERTY_FROM_PATCH(layout, patch);
     }
 
     template <class D>
-    inline xjson xwidget<D>::get_state() const
+    inline xjson xstyle<D>::get_state() const
     {
         xjson state = base_type::get_state();
-
-        XOBJECT_SET_PATCH_FROM_PROPERTY(layout, state);
-
         return state;
     }
 
     template <class D>
-    inline void xwidget<D>::set_defaults()
+    inline void xstyle<D>::set_defaults()
     {
-        this->_model_name() = "DOMWidgetModel";
-        this->_view_name() = "DOMWidgetView";
+        this->_model_module() = "@jupyter-widgets/base";
+        this->_view_module() = "@jupyter-widgets/base";
+        this->_model_name() = "StyleModel";
+        this->_view_name() = "StyleView";
     }
 }
 
