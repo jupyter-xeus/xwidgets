@@ -37,23 +37,17 @@ namespace xeus
         using base_type = xtransport<D>;
         using derived_type = D;
 
-        xobject();
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_module);
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_module_version);
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_name);
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_module);
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_module_version);
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_name);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_module, "jupyter-js-widgets");
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_module_version, "~2.1.4");
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_name, "WidgetModel");
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_module, "jupyter-js-widgets");
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_module_version, "~2.1.4");
+        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_name, "WidgetView");
 
-        template <class P>
-        void notify(const P& property) const;
-
-    private:
-
-        void set_defaults();
+        using base_type::notify;
     };
 
     /*******************************
@@ -68,13 +62,6 @@ namespace xeus
 
     #define XOBJECT_SET_PATCH_FROM_PROPERTY(name, patch)                   \
         patch[#name] = this->name(); 
-
-    template <class D>
-    inline xobject<D>::xobject()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline void xobject<D>::apply_patch(const xjson& patch)
@@ -98,24 +85,6 @@ namespace xeus
         XOBJECT_SET_PATCH_FROM_PROPERTY(_view_module_version, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(_view_name, state);
         return state;
-    }
-
-    template <class D>
-    inline void xobject<D>::set_defaults()
-    {
-        _model_module() = "jupyter-js-widgets";
-        _model_module_version() = "~2.1.4";
-        _model_name() = "WidgetModel";
-        _view_module() = "jupyter-js-widgets";
-        _view_module_version() = "~2.1.4";
-        _view_name() = "WidgetView";
-    }
-
-    template <class D>
-    template <class P>
-    inline void xobject<D>::notify(const P& property) const
-    {
-        base_type::notify(property);
     }
 }
 
