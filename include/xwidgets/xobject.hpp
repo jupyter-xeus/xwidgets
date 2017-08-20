@@ -10,6 +10,7 @@
 #define XOBJECT_HPP
 
 #include <string>
+#include <unordered_map>
 
 #include "xtransport.hpp"
 #include "xproperty/xobserved.hpp"
@@ -85,6 +86,22 @@ namespace xeus
         XOBJECT_SET_PATCH_FROM_PROPERTY(_view_module_version, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(_view_name, state);
         return state;
+    }
+
+    /****************************************
+     * to_json and from_json implementation *
+     ****************************************/
+
+    template <class D>
+    inline void to_json(xjson& j, const xobject<D>& o)
+    {
+        j = "IPY_MODEL_" + guid_to_hex(o.id());
+    }
+
+    template <class D>
+    inline void from_json(const xjson& j, xobject<D>& o)
+    {
+        // TODO: use a backend widgets instance registry
     }
 }
 

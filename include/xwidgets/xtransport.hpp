@@ -92,6 +92,7 @@ namespace xeus
 
     protected:
         
+        bool moved_from() const noexcept;
         void open();
         void close();
 
@@ -102,6 +103,8 @@ namespace xeus
     
         void handle_message(const xmessage& message);
         void handle_custom_message(const xjson& content);
+
+        bool m_moved_from;
         std::list<message_callback_type> m_message_callbacks;
         const xjson* m_hold;
         xcomm m_comm;
@@ -119,14 +122,17 @@ namespace xeus
 
     template <class D>
     inline xtransport<D>::xtransport()
-        : m_comm(::xeus::get_widget_target(), xguid()), m_hold(nullptr)
+        : m_moved_from(false),
+          m_hold(nullptr), 
+          m_comm(::xeus::get_widget_target(), xguid())
     {
         m_comm.on_message(std::bind(&xtransport::handle_message, this, _1));
     }
 
     template <class D>
     inline xtransport<D>::xtransport(const xtransport& other)
-        : m_message_callbacks(other.m_message_callbacks),
+        : m_moved_from(false),
+          m_message_callbacks(other.m_message_callbacks),
           m_hold(other.m_hold),
           m_comm(other.m_comm)
     {
@@ -135,16 +141,19 @@ namespace xeus
 
     template <class D>
     inline xtransport<D>::xtransport(xtransport&& other)
-        : m_message_callbacks(std::move(other.m_message_callbacks)),
+        : m_moved_from(false),
+          m_message_callbacks(std::move(other.m_message_callbacks)),
           m_hold(std::move(other.m_hold)),
           m_comm(std::move(other.m_comm))
     {
+        other.m_moved_from = true;
         m_comm.on_message(std::bind(&xtransport::handle_message, this, _1));
     }
 
     template <class D>
     inline xtransport<D>& xtransport<D>::operator=(const xtransport& other)
     {
+        m_moved_from = false;
         m_message_callbacks = other.m_message_callbacks;
         m_hold = other.m_hold;
         m_comm = other.m_comm;
@@ -155,6 +164,8 @@ namespace xeus
     template <class D>
     inline xtransport<D>& xtransport<D>::operator=(xtransport&& other)
     {
+        other.m_moved_from = true;
+        m_moved_from = false;
         m_message_callbacks = std::move(other.m_message_callbacks);
         m_hold = std::move(other.m_hold);
         m_comm = std::move(other.m_comm);
@@ -254,6 +265,12 @@ namespace xeus
     }
 
     template <class D>
+    inline bool xtransport<D>::moved_from() const noexcept
+    {
+         return m_moved_from;
+    }
+
+    template <class D>
     inline void xtransport<D>::open()
     {
         xjson metadata;
@@ -304,22 +321,6 @@ namespace xeus
         {
             it->operator()(content);
         }
-    }
-
-    /****************************************
-     * to_json and from_json implementation *
-     ****************************************/
-
-    template <class D>
-    inline void to_json(xjson& j, const xtransport<D>& o)
-    {
-        j = "IPY_MODEL_" + guid_to_hex(o.id());
-    }
-
-    template <class D>
-    inline void from_json(const xjson& j, xtransport<D>& o)
-    {
-        // TODO: use a backend widgets instance registry
     }
 }
 

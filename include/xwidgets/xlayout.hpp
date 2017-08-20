@@ -75,7 +75,7 @@ namespace xeus
 
         ~layout()
         {
-            if (!m_moved)
+            if (!this->moved_from())
             {
                 this->close();
             }
@@ -88,7 +88,6 @@ namespace xeus
 
         layout(layout&& other) : base_type(std::move(other))
         {
-            other.m_moved = true;
         }
 
         layout& operator=(const layout& other)
@@ -101,13 +100,8 @@ namespace xeus
         layout& operator=(layout&& other)
         {
             base_type::operator=(std::move(other));
-            other.m_moved = true;
             return *this;
         }
-
-    private:
-
-        bool m_moved;
     };
 
     /*************************

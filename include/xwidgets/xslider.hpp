@@ -50,7 +50,7 @@ namespace xeus
 
         ~slider_style()
         {
-            if (!m_moved)
+            if (!this->moved_from())
             {
                 this->close();
             }
@@ -63,7 +63,6 @@ namespace xeus
 
         slider_style(slider_style&& other) : base_type(std::move(other))
         {
-            other.m_moved = true;
         }
 
         slider_style& operator=(const slider_style& other)
@@ -76,13 +75,8 @@ namespace xeus
         slider_style& operator=(slider_style&& other)
         {
             base_type::operator=(std::move(other));
-            other.m_moved = true;
             return *this;
         }
-
-    private:
-
-        bool m_moved;
     };
 
     /**********************
@@ -138,7 +132,7 @@ namespace xeus
 
         ~slider()
         {
-            if (!m_moved)
+            if (!this->moved_from())
             {
                 this->close();
             }
@@ -149,28 +143,12 @@ namespace xeus
             this->open();
         }
 
-        slider(slider&& other) : base_type(std::move(other))
-        {
-            other.m_moved = true;
-        }
-
         slider& operator=(const slider& other)
         {
             base_type::operator=(other);
             this->open();
             return *this;
         }
-
-        slider& operator=(slider&& other)
-        {
-            base_type::operator=(std::move(other));
-            other.m_moved = true;
-            return *this;
-        }
-
-    private:
-
-        bool m_moved;
     };
 
     template <class T> 
