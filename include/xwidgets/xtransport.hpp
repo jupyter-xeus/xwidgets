@@ -86,8 +86,6 @@ namespace xeus
         void send_patch(xjson&& state) const;
         void send(xjson&& content) const;
 
-        void on_message(message_callback_type);
-
     protected:
         
         bool moved_from() const noexcept;
@@ -257,12 +255,6 @@ namespace xeus
     }
 
     template <class D>
-    inline void xtransport<D>::on_message(message_callback_type cb)
-    {
-         m_message_callbacks.emplace_back(std::move(cb));
-    }
-
-    template <class D>
     inline bool xtransport<D>::moved_from() const noexcept
     {
          return m_moved_from;
@@ -307,7 +299,7 @@ namespace xeus
             auto it = data.find("content");
             if (it != data.end())
             {
-                handle_custom_message(it.value());
+                derived_cast().handle_custom_message(it.value());
             }
         }
     }
@@ -315,10 +307,6 @@ namespace xeus
     template <class D>
     inline void xtransport<D>::handle_custom_message(const xjson& content)
     {
-        for (auto it = m_message_callbacks.begin(); it != m_message_callbacks.end(); ++it)
-        {
-            it->operator()(content);
-        }
     }
 }
 
