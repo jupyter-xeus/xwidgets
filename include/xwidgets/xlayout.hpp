@@ -86,20 +86,10 @@ namespace xeus
             this->open();
         }
 
-        layout(layout&& other) : base_type(std::move(other))
-        {
-        }
-
         layout& operator=(const layout& other)
         {
             base_type::operator=(other);
             this->open();
-            return *this;
-        }
-
-        layout& operator=(layout&& other)
-        {
-            base_type::operator=(std::move(other));
             return *this;
         }
     };

@@ -62,20 +62,10 @@ namespace xeus
             this->open();
         }
 
-        button_style(button_style&& other) : base_type(std::move(other))
-        {
-        }
-
         button_style& operator=(const button_style& other)
         {
             base_type::operator=(other);
             this->open();
-            return *this;
-        }
-
-        button_style& operator=(button_style&& other)
-        {
-            base_type::operator=(std::move(other));
             return *this;
         }
     };
@@ -107,9 +97,10 @@ namespace xeus
         XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger,), derived_type, button_style);
         XPROPERTY(::xeus::button_style, derived_type, style);
 
+        void handle_custom_message(const xjson&);
+
     private:
 
-        void handle_button_message(const xjson&);
         void set_defaults();
 
         std::list<click_callback_type> m_click_callbacks;
@@ -139,20 +130,10 @@ namespace xeus
             this->open();
         }
 
-        button(button&& other) : base_type(std::move(other))
-        {
-        }
-
         button& operator=(const button& other)
         {
             base_type::operator=(other);
             this->open();
-            return *this;
-        }
-
-        button& operator=(button&& other)
-        {
-            base_type::operator=(std::move(other));
             return *this;
         }
     };
@@ -204,7 +185,6 @@ namespace xeus
         : base_type()
     {
         set_defaults();
-        this->on_message(std::bind(&xbutton::handle_button_message, this, std::placeholders::_1));
     }
 
     template <class D>
@@ -251,7 +231,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xbutton<D>::handle_button_message(const xjson& content)
+    inline void xbutton<D>::handle_custom_message(const xjson& content)
     {
         auto it = content.find("event");
         if (it != content.end() && it.value() == "click")

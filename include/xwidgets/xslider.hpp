@@ -61,20 +61,10 @@ namespace xeus
             this->open();
         }
 
-        slider_style(slider_style&& other) : base_type(std::move(other))
-        {
-        }
-
         slider_style& operator=(const slider_style& other)
         {
             base_type::operator=(other);
             this->open();
-            return *this;
-        }
-
-        slider_style& operator=(slider_style&& other)
-        {
-            base_type::operator=(std::move(other));
             return *this;
         }
     };
