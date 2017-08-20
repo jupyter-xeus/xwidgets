@@ -6,19 +6,19 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_PLAY_HPP
-#define XWIDGETS_PLAY_HPP
+#ifndef XWIDGETS_NUMERAL_HPP
+#define XWIDGETS_NUMERAL_HPP
 
 #include "xnumber.hpp"
 
 namespace xeus
 {
-    /********************
-     * play declaration *
-     ********************/
+    /***********************
+     * numeral declaration *
+     ***********************/
 
     template <class D>
-    class xplay : public xnumber<D>
+    class xnumeral : public xnumber<D>
     {
     public:
 
@@ -26,43 +26,33 @@ namespace xeus
         using derived_type = D;
         using value_type = typename base_type::value_type;
 
-        xplay();
+        xnumeral();
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(value_type, derived_type, interval, value_type(100));
-        XPROPERTY(value_type, derived_type, step, value_type(1));
+        XPROPERTY(value_type, derived_type, step);
         XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(bool, derived_type, _playing);
-        XPROPERTY(bool, derived_type, _repeat);
-        XPROPERTY(bool, derived_type, show_repeat, true);
+        XPROPERTY(bool, derived_type, continuous_update);
 
     private:
 
         void set_defaults();
     };
 
-    class play;
-
-    template <>
-    struct xnumber_traits<play>
-    {
-        using value_type = int;
-    };
-
-    class play final : public xplay<play>
+    template <class T>
+    class numeral final : public xnumeral<numeral<T>>
     {
     public:
 
-        using base_type = xplay<play>;
+        using base_type = xnumeral<numeral<T>>;
 
-        play()
+        numeral()
             : base_type()
         {
             this->open();
         }
 
-        ~play()
+        ~numeral()
         {
             if (!this->moved_from())
             {
@@ -70,13 +60,13 @@ namespace xeus
             }
         }
 
-        play(const play& other)
+        numeral(const numeral& other)
             : base_type(other)
         {
             this->open();
         }
 
-        play& operator=(const play& other)
+        numeral& operator=(const numeral& other)
         {
             base_type::operator=(other);
             this->open();
@@ -84,50 +74,51 @@ namespace xeus
         }
     };
 
-    /************************
-     * xplay implementation *
-     ************************/
+
+    template <class T>
+    struct xnumber_traits<numeral<T>>
+    {
+        using value_type = T;
+    };
+
+    /***************************
+     * xnumeral implementation *
+     ***************************/
 
     template <class D>
-    inline xplay<D>::xplay()
+    inline xnumeral<D>::xnumeral()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline xjson xplay<D>::get_state() const
+    inline xjson xnumeral<D>::get_state() const
     {
         xjson state = base_type::get_state();
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(interval, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(step, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_playing, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_repeat, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(show_repeat, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(continuous_update, state);
 
         return state;
     }
 
     template <class D>
-    inline void xplay<D>::apply_patch(const xjson& patch)
+    inline void xnumeral<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(interval, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(step, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_playing, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_repeat, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(show_repeat, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch)
     }
 
     template <class D>
-    inline void xplay<D>::set_defaults()
+    inline void xnumeral<D>::set_defaults()
     {
-        this->_model_name() = "PlayModel";
-        this->_view_name() = "PlayView";
+        this->_model_name() = "FloatTextModel";
+        this->_view_name() = "FloatTextView";
     }
 }
 

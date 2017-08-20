@@ -9,8 +9,8 @@
 #ifndef XWIDGETS_PROGRESS_HPP
 #define XWIDGETS_PROGRESS_HPP
 
-#include "xstyle.hpp"
 #include "xnumber.hpp"
+#include "xstyle.hpp"
 
 namespace xeus
 {
@@ -43,7 +43,8 @@ namespace xeus
 
         using base_type = xprogress_style<progress_style>;
 
-        progress_style() : base_type()
+        progress_style()
+            : base_type()
         {
             this->open();
         }
@@ -56,7 +57,8 @@ namespace xeus
             }
         }
 
-        progress_style(const progress_style& other) : base_type(other)
+        progress_style(const progress_style& other)
+            : base_type(other)
         {
             this->open();
         }
@@ -87,7 +89,7 @@ namespace xeus
         void apply_patch(const xjson& patch);
 
         XPROPERTY(X_CASELESS_STR_ENUM(horizontal, vertical), derived_type, orientation, "horizontal");
-        XPROPERTY(X_CASELESS_STR_ENUM(success, info, warning, danger,), derived_type, bar_style);
+        XPROPERTY(X_CASELESS_STR_ENUM(success, info, warning, danger, ), derived_type, bar_style);
         XPROPERTY(::xeus::progress_style, derived_type, style);
 
     private:
@@ -102,7 +104,8 @@ namespace xeus
 
         using base_type = xprogress<progress<T>>;
 
-        progress() : base_type()
+        progress()
+            : base_type()
         {
             this->open();
         }
@@ -115,7 +118,8 @@ namespace xeus
             }
         }
 
-        progress(const progress& other) : base_type(other)
+        progress(const progress& other)
+            : base_type(other)
         {
             this->open();
         }
@@ -128,7 +132,7 @@ namespace xeus
         }
     };
 
-    template <class T> 
+    template <class T>
     struct xnumber_traits<progress<T>>
     {
         using value_type = T;

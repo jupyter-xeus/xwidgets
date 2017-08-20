@@ -68,7 +68,8 @@ namespace xeus
 
         using base_type = xlayout<layout>;
 
-        layout() : base_type()
+        layout()
+            : base_type()
         {
             this->open();
         }
@@ -81,7 +82,8 @@ namespace xeus
             }
         }
 
-        layout(const layout& other) : base_type(other)
+        layout(const layout& other)
+            : base_type(other)
         {
             this->open();
         }
@@ -177,4 +179,3 @@ namespace xeus
     }
 }
 #endif
-

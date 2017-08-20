@@ -104,6 +104,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbutton.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlayout.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumeral.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xobject.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xplay.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprogress.hpp

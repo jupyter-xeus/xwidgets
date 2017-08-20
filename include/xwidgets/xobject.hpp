@@ -12,8 +12,8 @@
 #include <string>
 #include <unordered_map>
 
-#include "xtransport.hpp"
 #include "xproperty/xobserved.hpp"
+#include "xtransport.hpp"
 
 namespace xeus
 {
@@ -61,8 +61,8 @@ namespace xeus
         name = patch.at(#name).get<typename decltype(name)::value_type>(); \
     }
 
-    #define XOBJECT_SET_PATCH_FROM_PROPERTY(name, patch)                   \
-        patch[#name] = this->name(); 
+    #define XOBJECT_SET_PATCH_FROM_PROPERTY(name, patch) \
+    patch[#name] = this->name();
 
     template <class D>
     inline void xobject<D>::apply_patch(const xjson& patch)
@@ -106,4 +106,3 @@ namespace xeus
 }
 
 #endif
-
