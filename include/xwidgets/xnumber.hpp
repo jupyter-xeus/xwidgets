@@ -18,7 +18,7 @@ namespace xeus
      * base xnumber declaration *
      ****************************/
 
-    template <class D> 
+    template <class D>
     struct xnumber_traits;
 
     template <class D>

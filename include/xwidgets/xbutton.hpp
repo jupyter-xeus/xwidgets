@@ -44,7 +44,8 @@ namespace xeus
 
         using base_type = xbutton_style<button_style>;
 
-        button_style() : base_type()
+        button_style()
+            : base_type()
         {
             this->open();
         }
@@ -57,7 +58,8 @@ namespace xeus
             }
         }
 
-        button_style(const button_style& other) : base_type(other)
+        button_style(const button_style& other)
+            : base_type(other)
         {
             this->open();
         }
@@ -94,7 +96,7 @@ namespace xeus
         XPROPERTY(std::string, derived_type, tooltip);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(std::string, derived_type, icon);
-        XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger,), derived_type, button_style);
+        XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger, ), derived_type, button_style);
         XPROPERTY(::xeus::button_style, derived_type, style);
 
         void handle_custom_message(const xjson&);
@@ -112,7 +114,8 @@ namespace xeus
 
         using base_type = xbutton<button>;
 
-        button() : base_type()
+        button()
+            : base_type()
         {
             this->open();
         }
@@ -125,7 +128,8 @@ namespace xeus
             }
         }
 
-        button(const button& other) : base_type(other)
+        button(const button& other)
+            : base_type(other)
         {
             this->open();
         }
@@ -244,4 +248,3 @@ namespace xeus
     }
 }
 #endif
-

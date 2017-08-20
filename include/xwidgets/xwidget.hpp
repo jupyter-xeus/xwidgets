@@ -11,8 +11,8 @@
 
 #include <string>
 
-#include "xobject.hpp"
 #include "xlayout.hpp"
+#include "xobject.hpp"
 
 namespace xeus
 {

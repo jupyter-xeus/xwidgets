@@ -9,8 +9,8 @@
 #ifndef XWIDGETS_SLIDER_HPP
 #define XWIDGETS_SLIDER_HPP
 
-#include "xstyle.hpp"
 #include "xnumber.hpp"
+#include "xstyle.hpp"
 
 namespace xeus
 {
@@ -43,7 +43,8 @@ namespace xeus
 
         using base_type = xslider_style<slider_style>;
 
-        slider_style() : base_type()
+        slider_style()
+            : base_type()
         {
             this->open();
         }
@@ -56,7 +57,8 @@ namespace xeus
             }
         }
 
-        slider_style(const slider_style& other) : base_type(other)
+        slider_style(const slider_style& other)
+            : base_type(other)
         {
             this->open();
         }
@@ -106,7 +108,8 @@ namespace xeus
 
         using base_type = xslider<slider<T>>;
 
-        slider() : base_type()
+        slider()
+            : base_type()
         {
             this->open();
         }
@@ -119,7 +122,8 @@ namespace xeus
             }
         }
 
-        slider(const slider& other) : base_type(other)
+        slider(const slider& other)
+            : base_type(other)
         {
             this->open();
         }
@@ -132,7 +136,7 @@ namespace xeus
         }
     };
 
-    template <class T> 
+    template <class T>
     struct xnumber_traits<slider<T>>
     {
         using value_type = T;

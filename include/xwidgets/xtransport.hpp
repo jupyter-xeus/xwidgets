@@ -39,8 +39,8 @@ namespace xeus
     inline int register_widget_target()
     {
         xeus::get_interpreter()
-          .comm_manager()
-          .register_comm_target(get_widget_target_name(), xeus::xobject_comm_opened);
+            .comm_manager()
+            .register_comm_target(get_widget_target_name(), xeus::xobject_comm_opened);
         return 0;
     }
 
@@ -48,8 +48,8 @@ namespace xeus
     {
         static int registered = register_widget_target();
         return ::xeus::get_interpreter()
-          .comm_manager()
-          .target(::xeus::get_widget_target_name());
+            .comm_manager()
+            .target(::xeus::get_widget_target_name());
     }
 
     inline const char* get_widget_protocol_version()
@@ -105,7 +105,7 @@ namespace xeus
         const xjson* m_hold;
         xcomm m_comm;
     };
-    
+
     template <class D>
     void to_json(xjson& j, const xtransport<D>& o);
 
@@ -119,7 +119,7 @@ namespace xeus
     template <class D>
     inline xtransport<D>::xtransport()
         : m_moved_from(false),
-          m_hold(nullptr), 
+          m_hold(nullptr),
           m_comm(::xeus::get_widget_target(), xguid())
     {
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
@@ -176,12 +176,12 @@ namespace xeus
     }
 
     template <class D>
-    inline auto xtransport<D>::derived_cast() const& noexcept -> const derived_type& 
+    inline auto xtransport<D>::derived_cast() const & noexcept -> const derived_type&
     {
         return *static_cast<const derived_type*>(this);
     }
-    
-    template <class D>    
+
+    template <class D>
     inline auto xtransport<D>::derived_cast() && noexcept -> derived_type
     {
         return *static_cast<derived_type*>(this);
@@ -211,8 +211,7 @@ namespace xeus
         ::xeus::get_interpreter().display_data(
             std::move(mime_bundle),
             xeus::xjson::object(),
-            xeus::xjson::object()
-        );
+            xeus::xjson::object());
     }
 
     template <class D>
@@ -257,7 +256,7 @@ namespace xeus
     template <class D>
     inline bool xtransport<D>::moved_from() const noexcept
     {
-         return m_moved_from;
+        return m_moved_from;
     }
 
     template <class D>
@@ -311,4 +310,3 @@ namespace xeus
 }
 
 #endif
-
