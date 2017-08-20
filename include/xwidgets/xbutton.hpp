@@ -51,7 +51,7 @@ namespace xeus
 
         ~button_style()
         {
-            if (!m_moved)
+            if (!this->moved_from())
             {
                 this->close();
             }
@@ -64,7 +64,6 @@ namespace xeus
 
         button_style(button_style&& other) : base_type(std::move(other))
         {
-            other.m_moved = true;
         }
 
         button_style& operator=(const button_style& other)
@@ -77,13 +76,8 @@ namespace xeus
         button_style& operator=(button_style&& other)
         {
             base_type::operator=(std::move(other));
-            other.m_moved = true;
             return *this;
         }
-
-    private:
-
-        bool m_moved;
     };
 
     /**********************
@@ -134,7 +128,7 @@ namespace xeus
 
         ~button()
         {
-            if (!m_moved)
+            if (!this->moved_from())
             {
                 this->close();
             }
@@ -147,7 +141,6 @@ namespace xeus
 
         button(button&& other) : base_type(std::move(other))
         {
-            other.m_moved = true;
         }
 
         button& operator=(const button& other)
@@ -160,13 +153,8 @@ namespace xeus
         button& operator=(button&& other)
         {
             base_type::operator=(std::move(other));
-            other.m_moved = true;
             return *this;
         }
-
-    private:
-
-        bool m_moved;
     };
 
     /*******************************
