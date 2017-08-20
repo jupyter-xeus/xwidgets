@@ -18,6 +18,7 @@
 #include "xeus/xcomm.hpp"
 #include "xeus/xinterpreter.hpp"
 
+#include "xregistry.hpp"
 #include "xwidgets_config.hpp"
 
 namespace xeus
@@ -106,6 +107,10 @@ namespace xeus
         xcomm m_comm;
     };
 
+    /*************************************
+     * to_json and from_json declaration *
+     *************************************/
+
     template <class D>
     void to_json(xjson& j, const xtransport<D>& o);
 
@@ -123,6 +128,7 @@ namespace xeus
           m_comm(::xeus::get_widget_target(), xguid())
     {
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        ::xeus::get_transport_registry().register_weak(this);
     }
 
     template <class D>
@@ -133,6 +139,7 @@ namespace xeus
           m_comm(other.m_comm)
     {
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        ::xeus::get_transport_registry().register_weak(this);
     }
 
     template <class D>
@@ -144,6 +151,7 @@ namespace xeus
     {
         other.m_moved_from = true;
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        ::xeus::get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
     }
 
     template <class D>
@@ -151,9 +159,11 @@ namespace xeus
     {
         m_moved_from = false;
         m_message_callbacks = other.m_message_callbacks;
+        ::xeus::get_transport_registry().unregister(this->id());
         m_hold = other.m_hold;
         m_comm = other.m_comm;
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        ::xeus::get_transport_registry().register_weak(this);
         return *this;
     }
 
@@ -163,9 +173,11 @@ namespace xeus
         other.m_moved_from = true;
         m_moved_from = false;
         m_message_callbacks = std::move(other.m_message_callbacks);
+        ::xeus::get_transport_registry().unregister(this->id());
         m_hold = std::move(other.m_hold);
         m_comm = std::move(other.m_comm);
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        ::xeus::get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
         return *this;
     }
 
@@ -321,7 +333,12 @@ namespace xeus
     template <class D>
     inline void from_json(const xjson& j, xtransport<D>& o)
     {
-        // TODO: use a backend widgets instance registry
+        /*
+        std::string prefixed_guid = j;
+        xguid guid = hex_to_guid(prefixed_guid.substr(10).c_str());
+        auto& holder = ::xeus::get_transport_registry().find(guid);
+        o = holder.template get<D>();  // TODO: move?
+        */
     }
 }
 

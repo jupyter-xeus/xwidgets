@@ -24,4 +24,4 @@ jupyter nbextension enable --py --sys-prefix widgetsnbextension
 
  - widgetsnbextension ~3.0.0
  - xeus ~0.5.3
- - xproperty 0.2.2
+ - xproperty 0.3.0
