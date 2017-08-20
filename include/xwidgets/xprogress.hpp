@@ -6,49 +6,49 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_SLIDER_HPP
-#define XWIDGETS_SLIDER_HPP
+#ifndef XWIDGETS_PROGRESS_HPP
+#define XWIDGETS_PROGRESS_HPP
 
 #include "xstyle.hpp"
 #include "xnumber.hpp"
 
 namespace xeus
 {
-    /****************************
-     * slider_style declaration *
-     ****************************/
+    /******************************
+     * progress_style declaration *
+     *****************************/
 
     template <class D>
-    class xslider_style : public xstyle<D>
+    class xprogress_style : public xstyle<D>
     {
     public:
 
         using base_type = xstyle<D>;
         using derived_type = D;
 
-        xslider_style();
+        xprogress_style();
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(XOPTIONAL(std::string), D, handle_color);
+        XPROPERTY(XOPTIONAL(std::string), D, bar_color);
 
     private:
 
         void set_defaults();
     };
 
-    class slider_style final : public xslider_style<slider_style>
+    class progress_style final : public xprogress_style<progress_style>
     {
     public:
 
-        using base_type = xslider_style<slider_style>;
+        using base_type = xprogress_style<progress_style>;
 
-        slider_style() : base_type()
+        progress_style() : base_type()
         {
             this->open();
         }
 
-        ~slider_style()
+        ~progress_style()
         {
             if (!this->moved_from())
             {
@@ -56,12 +56,12 @@ namespace xeus
             }
         }
 
-        slider_style(const slider_style& other) : base_type(other)
+        progress_style(const progress_style& other) : base_type(other)
         {
             this->open();
         }
 
-        slider_style& operator=(const slider_style& other)
+        progress_style& operator=(const progress_style& other)
         {
             base_type::operator=(other);
             this->open();
@@ -69,12 +69,12 @@ namespace xeus
         }
     };
 
-    /**********************
-     * slider declaration *
-     **********************/
+    /***********************
+     * progress declaration *
+     ***********************/
 
     template <class D>
-    class xslider : public xnumber<D>
+    class xprogress : public xnumber<D>
     {
     public:
 
@@ -82,17 +82,13 @@ namespace xeus
         using derived_type = D;
         using value_type = typename base_type::value_type;
 
-        xslider();
+        xprogress();
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(value_type, derived_type, step, value_type(1));
         XPROPERTY(X_CASELESS_STR_ENUM(horizontal, vertical), derived_type, orientation, "horizontal");
-        XPROPERTY(bool, derived_type, readout, true);
-        XPROPERTY(std::string, derived_type, readout_format, ".2f");
-        XPROPERTY(bool, derived_type, continuous_update, true);
-        XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(::xeus::slider_style, derived_type, style);
+        XPROPERTY(X_CASELESS_STR_ENUM(success, info, warning, danger,), derived_type, bar_style);
+        XPROPERTY(::xeus::progress_style, derived_type, style);
 
     private:
 
@@ -100,18 +96,18 @@ namespace xeus
     };
 
     template <class T>
-    class slider final : public xslider<slider<T>>
+    class progress final : public xprogress<progress<T>>
     {
     public:
 
-        using base_type = xslider<slider<T>>;
+        using base_type = xprogress<progress<T>>;
 
-        slider() : base_type()
+        progress() : base_type()
         {
             this->open();
         }
 
-        ~slider()
+        ~progress()
         {
             if (!this->moved_from())
             {
@@ -119,12 +115,12 @@ namespace xeus
             }
         }
 
-        slider(const slider& other) : base_type(other)
+        progress(const progress& other) : base_type(other)
         {
             this->open();
         }
 
-        slider& operator=(const slider& other)
+        progress& operator=(const progress& other)
         {
             base_type::operator=(other);
             this->open();
@@ -133,92 +129,84 @@ namespace xeus
     };
 
     template <class T> 
-    struct xnumber_traits<slider<T>>
+    struct xnumber_traits<progress<T>>
     {
         using value_type = T;
     };
 
-    /********************************
-     * xslider_style implementation *
-     ********************************/
+    /**********************************
+     * xprogress_style implementation *
+     **********************************/
 
     template <class D>
-    inline xslider_style<D>::xslider_style()
+    inline xprogress_style<D>::xprogress_style()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline xjson xslider_style<D>::get_state() const
+    inline xjson xprogress_style<D>::get_state() const
     {
         xjson state = base_type::get_state();
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(handle_color, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(bar_color, state);
 
         return state;
     }
 
     template <class D>
-    inline void xslider_style<D>::apply_patch(const xjson& patch)
+    inline void xprogress_style<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(handle_color, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(bar_color, patch);
     }
 
     template <class D>
-    inline void xslider_style<D>::set_defaults()
+    inline void xprogress_style<D>::set_defaults()
     {
         this->_model_module() = "@jupyter-widgets/controls";
-        this->_model_name() = "SliderStyleModel";
+        this->_model_name() = "ProgressStyleModel";
     }
 
-    /**************************
-     * xslider implementation *
-     **************************/
+    /****************************
+     * xprogress implementation *
+     ****************************/
 
     template <class D>
-    inline xslider<D>::xslider()
+    inline xprogress<D>::xprogress()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline xjson xslider<D>::get_state() const
+    inline xjson xprogress<D>::get_state() const
     {
         xjson state = base_type::get_state();
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(step, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(orientation, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout_format, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(continuous_update, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(bar_style, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(style, state);
 
         return state;
     }
 
     template <class D>
-    inline void xslider<D>::apply_patch(const xjson& patch)
+    inline void xprogress<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(step, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(orientation, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout_format, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(bar_style, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch)
     }
 
     template <class D>
-    inline void xslider<D>::set_defaults()
+    inline void xprogress<D>::set_defaults()
     {
-        this->_model_name() = "FloatSliderModel";
-        this->_view_name() = "FloatSliderView";
+        this->_model_name() = "FloatProgressModel";
+        this->_view_name() = "ProgressView";
     }
 }
 

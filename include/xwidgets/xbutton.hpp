@@ -138,9 +138,9 @@ namespace xeus
         }
     };
 
-    /*******************************
-     * button_style implementation *
-     *******************************/
+    /********************************
+     * xbutton_style implementation *
+     ********************************/
 
     template <class D>
     inline xbutton_style<D>::xbutton_style()
@@ -176,9 +176,9 @@ namespace xeus
         this->_model_name() = "ButtonStyleModel";
     }
 
-    /*************************
-     * button implementation *
-     *************************/
+    /**************************
+     * xbutton implementation *
+     **************************/
 
     template <class D>
     inline xbutton<D>::xbutton()
