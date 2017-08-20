@@ -20,8 +20,6 @@
 
 #include "xwidgets_config.hpp"
 
-using namespace std::placeholders;
-
 namespace xeus
 {
 
@@ -126,7 +124,7 @@ namespace xeus
           m_hold(nullptr), 
           m_comm(::xeus::get_widget_target(), xguid())
     {
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, _1));
+        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
     }
 
     template <class D>
@@ -136,7 +134,7 @@ namespace xeus
           m_hold(other.m_hold),
           m_comm(other.m_comm)
     {
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, _1));
+        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
     }
 
     template <class D>
@@ -147,7 +145,7 @@ namespace xeus
           m_comm(std::move(other.m_comm))
     {
         other.m_moved_from = true;
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, _1));
+        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
     }
 
     template <class D>
@@ -157,7 +155,7 @@ namespace xeus
         m_message_callbacks = other.m_message_callbacks;
         m_hold = other.m_hold;
         m_comm = other.m_comm;
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, _1));
+        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         return *this;
     }
 
@@ -169,7 +167,7 @@ namespace xeus
         m_message_callbacks = std::move(other.m_message_callbacks);
         m_hold = std::move(other.m_hold);
         m_comm = std::move(other.m_comm);
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, _1));
+        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         return *this;
     }
 

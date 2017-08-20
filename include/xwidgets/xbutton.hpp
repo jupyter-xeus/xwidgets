@@ -204,7 +204,7 @@ namespace xeus
         : base_type()
     {
         set_defaults();
-        this->on_message(std::bind(&xbutton::handle_button_message, this, _1));
+        this->on_message(std::bind(&xbutton::handle_button_message, this, std::placeholders::_1));
     }
 
     template <class D>
