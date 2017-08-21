@@ -29,7 +29,7 @@ namespace xeus
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(int, derived_type, rows);   // allow_none
+        XPROPERTY(XOPTIONAL(int), derived_type, rows);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(bool, derived_type, continuous_update, true);
 

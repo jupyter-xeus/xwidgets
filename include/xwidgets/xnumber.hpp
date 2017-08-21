@@ -13,7 +13,6 @@
 
 namespace xeus
 {
-
     /****************************
      * base xnumber declaration *
      ****************************/

@@ -110,7 +110,7 @@ namespace xeus
     void to_json(xjson& j, const xtransport<D>& o);
 
     template <class D>
-    inline void from_json(const xjson& j, xtransport<D>& o);
+    void from_json(const xjson& j, xtransport<D>& o);
 
     /**********************************
      * base xtransport implementation *
@@ -306,6 +306,22 @@ namespace xeus
     template <class D>
     inline void xtransport<D>::handle_custom_message(const xjson& content)
     {
+    }
+
+    /****************************************
+     * to_json and from_json implementation *
+     ****************************************/
+
+    template <class D>
+    inline void to_json(xjson& j, const xtransport<D>& o)
+    {
+        j = "IPY_MODEL_" + guid_to_hex(o.id());
+    }
+
+    template <class D>
+    inline void from_json(const xjson& j, xtransport<D>& o)
+    {
+        // TODO: use a backend widgets instance registry
     }
 }
 

@@ -31,7 +31,6 @@ namespace xeus
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-
         XPROPERTY(std::string, derived_type, tooltip);
         XPROPERTY(std::string, derived_type, icon);
         XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger, ), derived_type, button_style);

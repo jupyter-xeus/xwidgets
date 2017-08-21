@@ -31,7 +31,6 @@ namespace xeus
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-
         XPROPERTY(bool, derived_type, indent, true);
 
     private:
