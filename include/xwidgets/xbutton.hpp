@@ -90,7 +90,7 @@ namespace xeus
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        void on_click(std::function<void()>);
+        void on_click(click_callback_type);
 
         XPROPERTY(std::string, derived_type, description);
         XPROPERTY(std::string, derived_type, tooltip);

@@ -6,51 +6,51 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_VALID_HPP
-#define XWIDGETS_VALID_HPP
+#ifndef XWIDGETS_TEXTAREA_HPP
+#define XWIDGETS_TEXTAREA_HPP
 
-#include <string>
-
-#include "xboolean.hpp"
+#include "xstring.hpp"
 
 namespace xeus
 {
-    /*********************
-     * valid declaration *
-     *********************/
+    /************************
+     * textarea declaration *
+     ************************/
 
     template <class D>
-    class xvalid : public xboolean<D>
+    class xtextarea : public xstring<D>
     {
     public:
 
-        using base_type = xboolean<D>;
+        using base_type = xstring<D>;
         using derived_type = D;
 
-        xvalid();
+        xtextarea();
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(std::string, derived_type, readout);
+        XPROPERTY(int, derived_type, rows);   // allow_none
+        XPROPERTY(bool, derived_type, disabled);
+        XPROPERTY(bool, derived_type, continuous_update, true);
 
     private:
 
         void set_defaults();
     };
 
-    class valid final : public xvalid<valid>
+    class textarea final : public xtextarea<textarea>
     {
     public:
 
-        using base_type = xvalid<valid>;
+        using base_type = xtextarea<textarea>;
 
-        valid()
+        textarea()
             : base_type()
         {
             this->open();
         }
 
-        ~valid()
+        ~textarea()
         {
             if (!this->moved_from())
             {
@@ -58,13 +58,13 @@ namespace xeus
             }
         }
 
-        valid(const valid& other)
+        textarea(const textarea& other)
             : base_type(other)
         {
             this->open();
         }
 
-        valid& operator=(const valid& other)
+        textarea& operator=(const textarea& other)
         {
             base_type::operator=(other);
             this->open();
@@ -72,40 +72,44 @@ namespace xeus
         }
     };
 
-    /*************************
-     * xvalid implementation *
-     *************************/
+    /****************************
+     * xtextarea implementation *
+     ****************************/
 
     template <class D>
-    inline xvalid<D>::xvalid()
+    inline xtextarea<D>::xtextarea()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline xjson xvalid<D>::get_state() const
+    inline xjson xtextarea<D>::get_state() const
     {
         xjson state = base_type::get_state();
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(rows, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(continuous_update, state);
 
         return state;
     }
 
     template <class D>
-    inline void xvalid<D>::apply_patch(const xjson& patch)
+    inline void xtextarea<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(rows, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch)
     }
 
     template <class D>
-    inline void xvalid<D>::set_defaults()
+    inline void xtextarea<D>::set_defaults()
     {
-        this->_model_name() = "ValidModel";
-        this->_view_name() = "ValidView";
+        this->_model_name() = "TextareaModel";
+        this->_view_name() = "TextareaView";
     }
 }
 

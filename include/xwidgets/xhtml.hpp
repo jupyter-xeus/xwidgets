@@ -6,51 +6,47 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_VALID_HPP
-#define XWIDGETS_VALID_HPP
+#ifndef XWIDGETS_HTML_HPP
+#define XWIDGETS_HTML_HPP
 
-#include <string>
-
-#include "xboolean.hpp"
+#include "xstring.hpp"
 
 namespace xeus
 {
-    /*********************
-     * valid declaration *
-     *********************/
+    /********************
+     * html declaration *
+     ********************/
 
     template <class D>
-    class xvalid : public xboolean<D>
+    class xhtml : public xstring<D>
     {
     public:
 
-        using base_type = xboolean<D>;
+        using base_type = xstring<D>;
         using derived_type = D;
 
-        xvalid();
+        xhtml();
         xjson get_state() const;
         void apply_patch(const xjson& patch);
-
-        XPROPERTY(std::string, derived_type, readout);
 
     private:
 
         void set_defaults();
     };
 
-    class valid final : public xvalid<valid>
+    class html final : public xhtml<html>
     {
     public:
 
-        using base_type = xvalid<valid>;
+        using base_type = xhtml<html>;
 
-        valid()
+        html()
             : base_type()
         {
             this->open();
         }
 
-        ~valid()
+        ~html()
         {
             if (!this->moved_from())
             {
@@ -58,13 +54,13 @@ namespace xeus
             }
         }
 
-        valid(const valid& other)
+        html(const html& other)
             : base_type(other)
         {
             this->open();
         }
 
-        valid& operator=(const valid& other)
+        html& operator=(const html& other)
         {
             base_type::operator=(other);
             this->open();
@@ -72,40 +68,35 @@ namespace xeus
         }
     };
 
-    /*************************
-     * xvalid implementation *
-     *************************/
+    /************************
+     * xhtml implementation *
+     ************************/
 
     template <class D>
-    inline xvalid<D>::xvalid()
+    inline xhtml<D>::xhtml()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline xjson xvalid<D>::get_state() const
+    inline xjson xhtml<D>::get_state() const
     {
         xjson state = base_type::get_state();
-
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout, state);
-
         return state;
     }
 
     template <class D>
-    inline void xvalid<D>::apply_patch(const xjson& patch)
+    inline void xhtml<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
-
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch)
     }
 
     template <class D>
-    inline void xvalid<D>::set_defaults()
+    inline void xhtml<D>::set_defaults()
     {
-        this->_model_name() = "ValidModel";
-        this->_view_name() = "ValidView";
+        this->_model_name() = "HTMLModel";
+        this->_view_name() = "HTMLView";
     }
 }
 
