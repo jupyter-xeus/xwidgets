@@ -101,16 +101,20 @@ set(XWIDGETS_DEPENDENCIES ${xeus_LIBRARY})
 include_directories(${XWIDGETS_INCLUDE_DIR}/xwidgets)
 
 set(XWIDGETS_HEADERS
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xboolean.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbutton.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcheckbox.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlayout.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumeral.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xobject.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xplay.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprogress.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtogglebutton.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtransport.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xslider.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstyle.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvalid.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
 )
