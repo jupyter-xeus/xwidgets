@@ -31,7 +31,7 @@ namespace xeus
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(std::string, derived_type, readout);
+        XPROPERTY(std::string, derived_type, readout, "Invalid");
 
     private:
 

@@ -30,6 +30,8 @@ namespace xeus
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
+        XPROPERTY(std::string, derived_type, description);
+
         XPROPERTY(bool, derived_type, value);
         XPROPERTY(bool, derived_type, disabled);
 

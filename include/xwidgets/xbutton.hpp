@@ -93,6 +93,7 @@ namespace xeus
         void on_click(click_callback_type);
 
         XPROPERTY(std::string, derived_type, description);
+
         XPROPERTY(std::string, derived_type, tooltip);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(std::string, derived_type, icon);
