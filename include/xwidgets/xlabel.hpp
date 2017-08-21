@@ -6,51 +6,47 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_VALID_HPP
-#define XWIDGETS_VALID_HPP
+#ifndef XWIDGETS_LABEL_HPP
+#define XWIDGETS_LABEL_HPP
 
-#include <string>
-
-#include "xboolean.hpp"
+#include "xstring.hpp"
 
 namespace xeus
 {
     /*********************
-     * valid declaration *
+     * label declaration *
      *********************/
 
     template <class D>
-    class xvalid : public xboolean<D>
+    class xlabel : public xstring<D>
     {
     public:
 
-        using base_type = xboolean<D>;
+        using base_type = xstring<D>;
         using derived_type = D;
 
-        xvalid();
+        xlabel();
         xjson get_state() const;
         void apply_patch(const xjson& patch);
-
-        XPROPERTY(std::string, derived_type, readout);
 
     private:
 
         void set_defaults();
     };
 
-    class valid final : public xvalid<valid>
+    class label final : public xlabel<label>
     {
     public:
 
-        using base_type = xvalid<valid>;
+        using base_type = xlabel<label>;
 
-        valid()
+        label()
             : base_type()
         {
             this->open();
         }
 
-        ~valid()
+        ~label()
         {
             if (!this->moved_from())
             {
@@ -58,13 +54,13 @@ namespace xeus
             }
         }
 
-        valid(const valid& other)
+        label(const label& other)
             : base_type(other)
         {
             this->open();
         }
 
-        valid& operator=(const valid& other)
+        label& operator=(const label& other)
         {
             base_type::operator=(other);
             this->open();
@@ -73,39 +69,34 @@ namespace xeus
     };
 
     /*************************
-     * xvalid implementation *
-     *************************/
+     * xlabel implementation *
+     ************************/
 
     template <class D>
-    inline xvalid<D>::xvalid()
+    inline xlabel<D>::xlabel()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline xjson xvalid<D>::get_state() const
+    inline xjson xlabel<D>::get_state() const
     {
         xjson state = base_type::get_state();
-
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout, state);
-
         return state;
     }
 
     template <class D>
-    inline void xvalid<D>::apply_patch(const xjson& patch)
+    inline void xlabel<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
-
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch)
     }
 
     template <class D>
-    inline void xvalid<D>::set_defaults()
+    inline void xlabel<D>::set_defaults()
     {
-        this->_model_name() = "ValidModel";
-        this->_view_name() = "ValidView";
+        this->_model_name() = "HTMLModel";
+        this->_view_name() = "HTMLView";
     }
 }
 

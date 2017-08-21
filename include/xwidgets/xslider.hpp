@@ -30,7 +30,7 @@ namespace xeus
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(XOPTIONAL(std::string), D, handle_color);
+        XPROPERTY(XOPTIONAL(std::string), derived_type, handle_color);
 
     private:
 

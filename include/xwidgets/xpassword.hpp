@@ -6,51 +6,49 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_VALID_HPP
-#define XWIDGETS_VALID_HPP
+#ifndef XWIDGETS_PASSWORD_HPP
+#define XWIDGETS_PASSWORD_HPP
 
-#include <string>
-
-#include "xboolean.hpp"
+#include "xstring.hpp"
 
 namespace xeus
 {
-    /*********************
-     * valid declaration *
-     *********************/
+    /************************
+     * password declaration *
+     ************************/
 
     template <class D>
-    class xvalid : public xboolean<D>
+    class xpassword : public xstring<D>
     {
     public:
 
-        using base_type = xboolean<D>;
+        using base_type = xstring<D>;
         using derived_type = D;
 
-        xvalid();
+        xpassword();
         xjson get_state() const;
         void apply_patch(const xjson& patch);
 
-        XPROPERTY(std::string, derived_type, readout);
+        XPROPERTY(bool, derived_type, disabled);
 
     private:
 
         void set_defaults();
     };
 
-    class valid final : public xvalid<valid>
+    class password final : public xpassword<password>
     {
     public:
 
-        using base_type = xvalid<valid>;
+        using base_type = xpassword<password>;
 
-        valid()
+        password()
             : base_type()
         {
             this->open();
         }
 
-        ~valid()
+        ~password()
         {
             if (!this->moved_from())
             {
@@ -58,13 +56,13 @@ namespace xeus
             }
         }
 
-        valid(const valid& other)
+        password(const password& other)
             : base_type(other)
         {
             this->open();
         }
 
-        valid& operator=(const valid& other)
+        password& operator=(const password& other)
         {
             base_type::operator=(other);
             this->open();
@@ -72,40 +70,40 @@ namespace xeus
         }
     };
 
-    /*************************
-     * xvalid implementation *
-     *************************/
+    /****************************
+     * xpassword implementation *
+     ****************************/
 
     template <class D>
-    inline xvalid<D>::xvalid()
+    inline xpassword<D>::xpassword()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline xjson xvalid<D>::get_state() const
+    inline xjson xpassword<D>::get_state() const
     {
         xjson state = base_type::get_state();
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
 
         return state;
     }
 
     template <class D>
-    inline void xvalid<D>::apply_patch(const xjson& patch)
+    inline void xpassword<D>::apply_patch(const xjson& patch)
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
     }
 
     template <class D>
-    inline void xvalid<D>::set_defaults()
+    inline void xpassword<D>::set_defaults()
     {
-        this->_model_name() = "ValidModel";
-        this->_view_name() = "ValidView";
+        this->_model_name() = "PasswordModel";
+        this->_view_name() = "PasswordView";
     }
 }
 
