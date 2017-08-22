@@ -72,6 +72,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        togglebutton(togglebutton&&) = default;
+        togglebutton& operator=(togglebutton&&) = default;
     };
 
     /********************************

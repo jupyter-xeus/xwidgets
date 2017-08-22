@@ -70,6 +70,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        valid(valid&&) = default;
+        valid& operator=(valid&&) = default;
     };
 
     /*************************

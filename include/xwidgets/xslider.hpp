@@ -70,6 +70,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        slider_style(slider_style&&) = default;
+        slider_style& operator=(slider_style&&) = default;
     };
 
     /**********************
@@ -135,6 +138,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        slider(slider&&) = default;
+        slider& operator=(slider&&) = default;
     };
 
     template <class T>

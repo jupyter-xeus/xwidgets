@@ -66,6 +66,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        html(html&&) = default;
+        html& operator=(html&&) = default;
     };
 
     /************************

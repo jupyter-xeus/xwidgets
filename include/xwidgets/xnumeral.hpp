@@ -72,6 +72,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        numeral(numeral&&) = default;
+        numeral& operator=(numeral&&) = default;
     };
 
 

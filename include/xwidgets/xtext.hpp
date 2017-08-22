@@ -77,6 +77,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        text(text&&) = default;
+        text& operator=(text&&) = default;
     };
 
     /************************
