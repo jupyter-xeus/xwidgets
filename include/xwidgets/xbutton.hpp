@@ -70,6 +70,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        button_style(button_style&&) = default;
+        button_style& operator=(button_style&&) = default;
     };
 
     /**********************
@@ -141,6 +144,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        button(button&&) = default;
+        button& operator=(button&&) = default;
     };
 
     /********************************

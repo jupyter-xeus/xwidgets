@@ -68,6 +68,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        password(password&&) = default;
+        password& operator=(password&&) = default;
     };
 
     /****************************

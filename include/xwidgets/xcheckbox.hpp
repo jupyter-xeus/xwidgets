@@ -70,6 +70,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        checkbox(checkbox&&) = default;
+        checkbox& operator=(checkbox&&) = default;
     };
 
     /****************************

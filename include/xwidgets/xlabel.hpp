@@ -66,6 +66,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        label(label&&) = default;
+        label& operator=(label&&) = default;
     };
 
     /*************************

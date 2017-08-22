@@ -82,6 +82,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        play(play&&) = default;
+        play& operator=(play&&) = default;
     };
 
     /************************

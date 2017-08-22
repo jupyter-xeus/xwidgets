@@ -70,6 +70,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        textarea(textarea&&) = default;
+        textarea& operator=(textarea&&) = default;
     };
 
     /****************************

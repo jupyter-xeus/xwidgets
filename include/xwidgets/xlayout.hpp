@@ -94,6 +94,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        layout(layout&&) = default;
+        layout& operator=(layout&&) = default;
     };
 
     /*************************

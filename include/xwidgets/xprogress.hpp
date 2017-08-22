@@ -70,6 +70,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        progress_style(progress_style&&) = default;
+        progress_style& operator=(progress_style&&) = default;
     };
 
     /***********************
@@ -131,6 +134,9 @@ namespace xeus
             this->open();
             return *this;
         }
+
+        progress(progress&&) = default;
+        progress& operator=(progress&&) = default;
     };
 
     template <class T>
