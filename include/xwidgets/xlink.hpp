@@ -54,8 +54,8 @@ namespace xw
         xlink();
         template <class S, class T>
         xlink(xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn);
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(pair_type, derived_type, source);
         XPROPERTY(pair_type, derived_type, target);
@@ -91,9 +91,9 @@ namespace xw
     }    
 
     template <class D>
-    inline xjson xlink<D>::get_state() const
+    inline xeus::xjson xlink<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(source, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(target, state);
@@ -102,7 +102,7 @@ namespace xw
     }
 
     template <class D>
-    inline void xlink<D>::apply_patch(const xjson& patch)
+    inline void xlink<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 

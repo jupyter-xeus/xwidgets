@@ -32,7 +32,7 @@ namespace xw
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
-        XPROPERTY(wlayout, derived_type, layout);
+        XPROPERTY(::xw::layout, derived_type, layout);
 
     private:
 

@@ -63,7 +63,7 @@ namespace xw
         void set_defaults();
     };
 
-    using wlayout = xmaterialize<xlayout>;
+    using layout = xmaterialize<xlayout>;
 
     /*************************
      * layout implementation *
