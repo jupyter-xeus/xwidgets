@@ -12,7 +12,7 @@
 #include "xmaterialize.hpp"
 #include "xstring.hpp"
 
-namespace xeus
+namespace xw
 {
     /************************
      * textarea declaration *
@@ -27,8 +27,8 @@ namespace xeus
         using derived_type = D;
 
         xtextarea();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(XOPTIONAL(int), derived_type, rows);
         XPROPERTY(bool, derived_type, disabled);
@@ -53,9 +53,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xtextarea<D>::get_state() const
+    inline xeus::xjson xtextarea<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(rows, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
@@ -65,7 +65,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xtextarea<D>::apply_patch(const xjson& patch)
+    inline void xtextarea<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 

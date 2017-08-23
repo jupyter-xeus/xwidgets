@@ -24,7 +24,7 @@
 #include "xwidgets/xtogglebutton.hpp"
 #include "xwidgets/xvalid.hpp"
 
-namespace xeus
+namespace xw
 {
     TEST(xwidgets, hbox)
     {
@@ -85,7 +85,7 @@ namespace xeus
 
     TEST(xwidgets, layout)
     {
-        layout l;
+        wlayout l;
         l.bottom = "bottom";
         ASSERT_EQ("bottom", l.bottom());
     }

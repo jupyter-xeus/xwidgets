@@ -14,7 +14,7 @@
 #include "xboolean.hpp"
 #include "xmaterialize.hpp"
 
-namespace xeus
+namespace xw
 {
     /************************
      * checkbox declaration *
@@ -29,8 +29,8 @@ namespace xeus
         using derived_type = D;
 
         xcheckbox();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(bool, derived_type, indent, true);
 
@@ -53,9 +53,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xcheckbox<D>::get_state() const
+    inline xeus::xjson xcheckbox<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(indent, state);
 
@@ -63,7 +63,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xcheckbox<D>::apply_patch(const xjson& patch)
+    inline void xcheckbox<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 

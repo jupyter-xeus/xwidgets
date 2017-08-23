@@ -13,7 +13,7 @@
 
 #include "xobject.hpp"
 
-namespace xeus
+namespace xw
 {
     /***************************
      * base xstyle declaration *
@@ -28,8 +28,8 @@ namespace xeus
         using derived_type = D;
 
         xstyle();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
     private:
 
@@ -48,15 +48,15 @@ namespace xeus
     }
 
     template <class D>
-    inline void xstyle<D>::apply_patch(const xjson& patch)
+    inline void xstyle<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
     }
 
     template <class D>
-    inline xjson xstyle<D>::get_state() const
+    inline xeus::xjson xstyle<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
         return state;
     }
 

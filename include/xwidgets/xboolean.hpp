@@ -11,7 +11,7 @@
 
 #include "xwidget.hpp"
 
-namespace xeus
+namespace xw
 {
 
     /*****************************
@@ -27,8 +27,8 @@ namespace xeus
         using derived_type = D;
 
         xboolean();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(std::string, derived_type, description);
 
@@ -52,9 +52,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xboolean<D>::get_state() const
+    inline xeus::xjson xboolean<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
@@ -63,7 +63,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xboolean<D>::apply_patch(const xjson& patch)
+    inline void xboolean<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 

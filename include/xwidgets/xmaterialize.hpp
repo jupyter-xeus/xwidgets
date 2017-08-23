@@ -9,7 +9,7 @@
 #ifndef XWIDGETS_MATERIALIZE_HPP
 #define XWIDGETS_MATERIALIZE_HPP
 
-namespace xeus
+namespace xw
 {
 
     /****************************

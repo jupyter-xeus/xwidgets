@@ -14,7 +14,7 @@
 #include "xmaterialize.hpp"
 #include "xobject.hpp"
 
-namespace xeus
+namespace xw
 {
     /**********************
      * layout declaration *
@@ -29,8 +29,8 @@ namespace xeus
         using derived_type = D;
 
         xlayout();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, space-evenly, stretch, inherit, inital, unset)), derived_type, align_content);
         XPROPERTY(XOPTIONAL(X_CASELESS_STR_ENUM(flex-start, flex-end, center, baseline, stretch, inherit, inital, unset)), derived_type, align_items);
@@ -63,7 +63,7 @@ namespace xeus
         void set_defaults();
     };
 
-    using layout = xmaterialize<xlayout>;
+    using wlayout = xmaterialize<xlayout>;
 
     /*************************
      * layout implementation *
@@ -77,7 +77,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xlayout<D>::apply_patch(const xjson& patch)
+    inline void xlayout<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 
@@ -106,9 +106,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xlayout<D>::get_state() const
+    inline xeus::xjson xlayout<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(align_content, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(align_items, state);

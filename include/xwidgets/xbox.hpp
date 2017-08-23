@@ -13,7 +13,7 @@
 #include "xmaterialize.hpp"
 #include "xwidget.hpp"
 
-namespace xeus
+namespace xw
 {
     /********************
      * xbox declaration *
@@ -29,8 +29,8 @@ namespace xeus
         using children_list = std::vector<xholder>;
 
         xbox();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(X_CASELESS_STR_ENUM(success, info, warning, danger,), derived_type, box_style);
         XPROPERTY(children_list, derived_type, children);
@@ -100,9 +100,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xbox<D>::get_state() const
+    inline xeus::xjson xbox<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(box_style, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
@@ -111,7 +111,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xbox<D>::apply_patch(const xjson& patch)
+    inline void xbox<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 
