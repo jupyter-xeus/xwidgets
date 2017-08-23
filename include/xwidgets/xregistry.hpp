@@ -17,7 +17,7 @@ namespace xw
     {
     public:
 
-        using storage_type = std::unordered_map<std::string, xholder>;
+        using storage_type = std::unordered_map<std::string, xholder<xtransport>>;
 
         template <class D>
         void register_weak(xtransport<D>* ptr);

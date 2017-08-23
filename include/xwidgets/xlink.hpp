@@ -15,7 +15,6 @@
 #include "xholder_id.hpp" 
 #include "xmaterialize.hpp" 
 #include "xobject.hpp"
-#include "xholder_id.hpp" 
 
 namespace std
 {
@@ -41,6 +40,8 @@ namespace xw
      * link declaration *
      ********************/
 
+    using xlink_pair_type = std::pair<xholder<xtransport>, std::string>;
+
     template <class D>
     class xlink : public xobject<D>
     {
@@ -49,7 +50,7 @@ namespace xw
         using base_type = xobject<D>;
         using derived_type = D;
 
-        using pair_type = std::pair<xholder, std::string>;
+        using pair_type = xlink_pair_type;
 
         xlink();
         template <class S, class T>
