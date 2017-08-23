@@ -12,7 +12,7 @@
 #include "xpassword.hpp"
 #include "xstring.hpp"
 
-namespace xeus
+namespace xw
 {
     /************************
      * password declaration *
@@ -27,8 +27,8 @@ namespace xeus
         using derived_type = D;
 
         xpassword();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(bool, derived_type, disabled);
 
@@ -51,9 +51,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xpassword<D>::get_state() const
+    inline xeus::xjson xpassword<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
 
@@ -61,7 +61,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xpassword<D>::apply_patch(const xjson& patch)
+    inline void xpassword<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 

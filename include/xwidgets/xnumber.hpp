@@ -11,7 +11,7 @@
 
 #include "xwidget.hpp"
 
-namespace xeus
+namespace xw
 {
     /****************************
      * base xnumber declaration *
@@ -29,8 +29,8 @@ namespace xeus
         using derived_type = D;
 
         xnumber();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         using value_type = typename xnumber_traits<derived_type>::value_type;
 
@@ -57,9 +57,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xnumber<D>::get_state() const
+    inline xeus::xjson xnumber<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(min, state);
@@ -69,7 +69,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xnumber<D>::apply_patch(const xjson& patch)
+    inline void xnumber<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 

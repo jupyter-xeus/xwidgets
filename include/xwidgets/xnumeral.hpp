@@ -12,7 +12,7 @@
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
 
-namespace xeus
+namespace xw
 {
     /***********************
      * numeral declaration *
@@ -28,8 +28,8 @@ namespace xeus
         using value_type = typename base_type::value_type;
 
         xnumeral();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(value_type, derived_type, step);
         XPROPERTY(bool, derived_type, disabled);
@@ -61,9 +61,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xnumeral<D>::get_state() const
+    inline xeus::xjson xnumeral<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(step, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
@@ -73,7 +73,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xnumeral<D>::apply_patch(const xjson& patch)
+    inline void xnumeral<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 

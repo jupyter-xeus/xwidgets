@@ -13,7 +13,7 @@
 #include "xnumber.hpp"
 #include "xstyle.hpp"
 
-namespace xeus
+namespace xw
 {
     /****************************
      * slider_style declaration *
@@ -28,8 +28,8 @@ namespace xeus
         using derived_type = D;
 
         xslider_style();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(std::string, derived_type, description_width);
         XPROPERTY(XOPTIONAL(std::string), derived_type, handle_color);
@@ -55,8 +55,8 @@ namespace xeus
         using value_type = typename base_type::value_type;
 
         xslider();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(value_type, derived_type, step, value_type(1));
         XPROPERTY(X_CASELESS_STR_ENUM(horizontal, vertical), derived_type, orientation, "horizontal");
@@ -64,7 +64,7 @@ namespace xeus
         XPROPERTY(std::string, derived_type, readout_format, ".2f");
         XPROPERTY(bool, derived_type, continuous_update, true);
         XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(::xeus::slider_style, derived_type, style);
+        XPROPERTY(::xw::slider_style, derived_type, style);
 
     private:
 
@@ -92,9 +92,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xslider_style<D>::get_state() const
+    inline xeus::xjson xslider_style<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(handle_color, state);
 
@@ -102,7 +102,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xslider_style<D>::apply_patch(const xjson& patch)
+    inline void xslider_style<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(handle_color, patch);
@@ -127,9 +127,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xslider<D>::get_state() const
+    inline xeus::xjson xslider<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(step, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(orientation, state);
@@ -143,7 +143,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xslider<D>::apply_patch(const xjson& patch)
+    inline void xslider<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 

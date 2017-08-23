@@ -14,7 +14,7 @@
 #include "xboolean.hpp"
 #include "xmaterialize.hpp"
 
-namespace xeus
+namespace xw
 {
     /****************************
      * togglebutton declaration *
@@ -29,8 +29,8 @@ namespace xeus
         using derived_type = D;
 
         xtogglebutton();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(std::string, derived_type, tooltip);
         XPROPERTY(std::string, derived_type, icon);
@@ -55,9 +55,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xtogglebutton<D>::get_state() const
+    inline xeus::xjson xtogglebutton<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(tooltip, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(icon, state);
@@ -67,7 +67,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xtogglebutton<D>::apply_patch(const xjson& patch)
+    inline void xtogglebutton<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 

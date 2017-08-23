@@ -13,7 +13,7 @@
 #include "xnumber.hpp"
 #include "xstyle.hpp"
 
-namespace xeus
+namespace xw
 {
     /******************************
      * progress_style declaration *
@@ -28,8 +28,8 @@ namespace xeus
         using derived_type = D;
 
         xprogress_style();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(std::string, derived_type, description_width);
         XPROPERTY(XOPTIONAL(std::string), derived_type, bar_color);
@@ -55,12 +55,12 @@ namespace xeus
         using value_type = typename base_type::value_type;
 
         xprogress();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(X_CASELESS_STR_ENUM(horizontal, vertical), derived_type, orientation, "horizontal");
         XPROPERTY(X_CASELESS_STR_ENUM(success, info, warning, danger, ), derived_type, bar_style);
-        XPROPERTY(::xeus::progress_style, derived_type, style);
+        XPROPERTY(::xw::progress_style, derived_type, style);
 
     private:
 
@@ -88,9 +88,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xprogress_style<D>::get_state() const
+    inline xeus::xjson xprogress_style<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(bar_color, state);
 
@@ -98,7 +98,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xprogress_style<D>::apply_patch(const xjson& patch)
+    inline void xprogress_style<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(bar_color, patch);
@@ -123,9 +123,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xprogress<D>::get_state() const
+    inline xeus::xjson xprogress<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(orientation, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(bar_style, state);
@@ -135,7 +135,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xprogress<D>::apply_patch(const xjson& patch)
+    inline void xprogress<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 

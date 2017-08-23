@@ -12,7 +12,7 @@
 #include "xmaterialize.hpp"
 #include "xstring.hpp"
 
-namespace xeus
+namespace xw
 {
     /*********************
      * label declaration *
@@ -27,8 +27,8 @@ namespace xeus
         using derived_type = D;
 
         xlabel();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
     private:
 
@@ -49,14 +49,14 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xlabel<D>::get_state() const
+    inline xeus::xjson xlabel<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
         return state;
     }
 
     template <class D>
-    inline void xlabel<D>::apply_patch(const xjson& patch)
+    inline void xlabel<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
     }

@@ -12,7 +12,7 @@
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
 
-namespace xeus
+namespace xw
 {
     /********************
      * play declaration *
@@ -28,8 +28,8 @@ namespace xeus
         using value_type = typename base_type::value_type;
 
         xplay();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(value_type, derived_type, interval, value_type(100));
         XPROPERTY(value_type, derived_type, step, value_type(1));
@@ -63,9 +63,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xplay<D>::get_state() const
+    inline xeus::xjson xplay<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(interval, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(step, state);
@@ -78,7 +78,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xplay<D>::apply_patch(const xjson& patch)
+    inline void xplay<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 

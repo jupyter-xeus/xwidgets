@@ -35,7 +35,7 @@ namespace std
     }
 }
 
-namespace xeus
+namespace xw
 {
     /********************
      * link declaration *

@@ -6,7 +6,7 @@
 #include "xeus/xguid.hpp"
 #include "xeus/xjson.hpp"
 
-namespace xeus
+namespace xw
 {
     template <class D>
     class xtransport;
@@ -42,7 +42,7 @@ namespace xeus
         void swap(xholder& rhs);
 
         void display() const;
-        xguid id() const;
+        xeus::xguid id() const;
 
         template <class D, bool owning>
         D& get() &;
@@ -70,8 +70,8 @@ namespace xeus
      * to_json and from_json declaration *
      *************************************/
 
-    void to_json(xjson& j, const xholder& o);
-    void from_json(const xjson& j, xholder& o);
+    void to_json(xeus::xjson& j, const xholder& o);
+    void from_json(const xeus::xjson& j, xholder& o);
 
     namespace detail
     {
@@ -87,7 +87,7 @@ namespace xeus
             virtual ~xholder_impl() = default;
 
             virtual void display() const = 0;
-            virtual xguid id() const = 0;
+            virtual xeus::xguid id() const = 0;
 
         protected:
 
@@ -127,7 +127,7 @@ namespace xeus
                 m_value.display();
             }
         
-            virtual xguid id() const override
+            virtual xeus::xguid id() const override
             {
                 return m_value.id();
             }
@@ -170,7 +170,7 @@ namespace xeus
                 p_value->display();
             }
         
-            virtual xguid id() const override
+            virtual xeus::xguid id() const override
             {
                 return p_value->id();
             }
@@ -268,7 +268,7 @@ namespace xeus
         }
     }
 
-    xguid xholder::id() const
+    xeus::xguid xholder::id() const
     {
         if (p_holder != nullptr)
         {
@@ -277,7 +277,7 @@ namespace xeus
         else
         {
             // TODO: throw?
-            return xguid();
+            return xeus::xguid();
         }
     }
 
@@ -325,12 +325,12 @@ namespace xeus
      * to_json and from_json implementation *
      ****************************************/
 
-    inline void to_json(xjson& j, const xholder& o)
+    inline void to_json(xeus::xjson& j, const xholder& o)
     {
         j = "IPY_MODEL_" + guid_to_hex(o.id());
     }
 
-    inline void from_json(const xjson& j, xholder& o)
+    inline void from_json(const xeus::xjson& j, xholder& o)
     {
         /*
         std::string prefixed_guid = j;

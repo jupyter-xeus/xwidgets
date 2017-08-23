@@ -15,7 +15,7 @@
 #include "xproperty/xobserved.hpp"
 #include "xtransport.hpp"
 
-namespace xeus
+namespace xw
 {
 
     /****************************
@@ -38,8 +38,8 @@ namespace xeus
         using base_type = xtransport<D>;
         using derived_type = D;
 
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(XOPTIONAL(std::string), derived_type, _model_module, "jupyter-js-widgets");
         XPROPERTY(XOPTIONAL(std::string), derived_type, _model_module_version, "~2.1.4");
@@ -65,7 +65,7 @@ namespace xeus
     patch[#name] = this->name();
 
     template <class D>
-    inline void xobject<D>::apply_patch(const xjson& patch)
+    inline void xobject<D>::apply_patch(const xeus::xjson& patch)
     {
         XOBJECT_SET_PROPERTY_FROM_PATCH(_model_module, patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(_model_module_version, patch);
@@ -76,9 +76,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xobject<D>::get_state() const
+    inline xeus::xjson xobject<D>::get_state() const
     {
-        xjson state;
+        xeus::xjson state;
         XOBJECT_SET_PATCH_FROM_PROPERTY(_model_module, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(_model_module_version, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(_model_name, state);

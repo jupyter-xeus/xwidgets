@@ -21,7 +21,7 @@
 #include "xregistry.hpp"
 #include "xwidgets_config.hpp"
 
-namespace xeus
+namespace xw
 {
 
     /**********************************
@@ -33,7 +33,7 @@ namespace xeus
         return "jupyter.widget";
     }
 
-    inline void xobject_comm_opened(const xcomm&, const xmessage&)
+    inline void xobject_comm_opened(const xeus::xcomm&, const xeus::xmessage&)
     {
     }
 
@@ -41,16 +41,16 @@ namespace xeus
     {
         xeus::get_interpreter()
             .comm_manager()
-            .register_comm_target(get_widget_target_name(), xeus::xobject_comm_opened);
+            .register_comm_target(get_widget_target_name(), xobject_comm_opened);
         return 0;
     }
 
-    inline xtarget* get_widget_target()
+    inline xeus::xtarget* get_widget_target()
     {
         static int registered = register_widget_target();
         return ::xeus::get_interpreter()
             .comm_manager()
-            .target(::xeus::get_widget_target_name());
+            .target(get_widget_target_name());
     }
 
     inline const char* get_widget_protocol_version()
@@ -67,7 +67,7 @@ namespace xeus
     {
     public:
 
-        using message_callback_type = std::function<void(const xjson&)>;
+        using message_callback_type = std::function<void(const xeus::xjson&)>;
 
         using derived_type = D;
 
@@ -81,11 +81,11 @@ namespace xeus
         const derived_type& derived_cast() const & noexcept;
         derived_type derived_cast() && noexcept;
 
-        xguid id() const noexcept;
+        xeus::xguid id() const noexcept;
         void display() const;
 
-        void send_patch(xjson&& state) const;
-        void send(xjson&& content) const;
+        void send_patch(xeus::xjson&& state) const;
+        void send(xeus::xjson&& content) const;
 
     protected:
         
@@ -98,13 +98,13 @@ namespace xeus
 
     private:
     
-        void handle_message(const xmessage& message);
-        void handle_custom_message(const xjson& content);
+        void handle_message(const xeus::xmessage& message);
+        void handle_custom_message(const xeus::xjson& content);
 
         bool m_moved_from;
         std::list<message_callback_type> m_message_callbacks;
-        const xjson* m_hold;
-        xcomm m_comm;
+        const xeus::xjson* m_hold;
+        xeus::xcomm m_comm;
     };
 
     /*************************************
@@ -112,10 +112,10 @@ namespace xeus
      *************************************/
 
     template <class D>
-    void to_json(xjson& j, const xtransport<D>& o);
+    void to_json(xeus::xjson& j, const xtransport<D>& o);
 
     template <class D>
-    void from_json(const xjson& j, xtransport<D>& o);
+    void from_json(const xeus::xjson& j, xtransport<D>& o);
 
     /**********************************
      * base xtransport implementation *
@@ -125,10 +125,10 @@ namespace xeus
     inline xtransport<D>::xtransport()
         : m_moved_from(false),
           m_hold(nullptr),
-          m_comm(::xeus::get_widget_target(), xguid())
+          m_comm(get_widget_target(), xeus::xguid())
     {
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        ::xeus::get_transport_registry().register_weak(this);
+        get_transport_registry().register_weak(this);
     }
 
     template <class D>
@@ -139,7 +139,7 @@ namespace xeus
           m_comm(other.m_comm)
     {
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        ::xeus::get_transport_registry().register_weak(this);
+        get_transport_registry().register_weak(this);
     }
 
     template <class D>
@@ -151,7 +151,7 @@ namespace xeus
     {
         other.m_moved_from = true;
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        ::xeus::get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
+        get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
     }
 
     template <class D>
@@ -159,11 +159,11 @@ namespace xeus
     {
         m_moved_from = false;
         m_message_callbacks = other.m_message_callbacks;
-        ::xeus::get_transport_registry().unregister(this->id());
+        get_transport_registry().unregister(this->id());
         m_hold = other.m_hold;
         m_comm = other.m_comm;
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        ::xeus::get_transport_registry().register_weak(this);
+        get_transport_registry().register_weak(this);
         return *this;
     }
 
@@ -173,11 +173,11 @@ namespace xeus
         other.m_moved_from = true;
         m_moved_from = false;
         m_message_callbacks = std::move(other.m_message_callbacks);
-        ::xeus::get_transport_registry().unregister(this->id());
+        get_transport_registry().unregister(this->id());
         m_hold = std::move(other.m_hold);
         m_comm = std::move(other.m_comm);
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        ::xeus::get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
+        get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
         return *this;
     }
 
@@ -200,7 +200,7 @@ namespace xeus
     }
 
     template <class D>
-    inline auto xtransport<D>::id() const noexcept -> xguid
+    inline auto xtransport<D>::id() const noexcept -> xeus::xguid
     {
         return m_comm.id();
     }
@@ -238,28 +238,28 @@ namespace xeus
                 return;
             }
         }
-        xjson state;
+        xeus::xjson state;
         state[property.name()] = property();
         send_patch(std::move(state));
     }
 
     template <class D>
-    inline void xtransport<D>::send_patch(xjson&& patch) const
+    inline void xtransport<D>::send_patch(xeus::xjson&& patch) const
     {
-        xjson metadata;
+        xeus::xjson metadata;
         metadata["version"] = get_widget_protocol_version();
-        xjson data;
+        xeus::xjson data;
         data["method"] = "update";
         data["state"] = std::move(patch);
         m_comm.send(std::move(metadata), std::move(data));
     }
 
     template <class D>
-    inline void xtransport<D>::send(xjson&& content) const
+    inline void xtransport<D>::send(xeus::xjson&& content) const
     {
-        xjson metadata;
+        xeus::xjson metadata;
         metadata["version"] = get_widget_protocol_version();
-        xjson data;
+        xeus::xjson data;
         data["method"] = "custom";
         data["content"] = std::move(content);
         m_comm.send(std::move(metadata), std::move(data));
@@ -274,7 +274,7 @@ namespace xeus
     template <class D>
     inline void xtransport<D>::open()
     {
-        xjson metadata;
+        xeus::xjson metadata;
         metadata["version"] = get_widget_protocol_version();
         xeus::xjson data;
         data["state"] = derived_cast().get_state();
@@ -284,14 +284,14 @@ namespace xeus
     template <class D>
     inline void xtransport<D>::close()
     {
-        m_comm.close(xjson::object(), xjson::object());
+        m_comm.close(xeus::xjson::object(), xeus::xjson::object());
     }
 
     template <class D>
-    inline void xtransport<D>::handle_message(const xmessage& message)
+    inline void xtransport<D>::handle_message(const xeus::xmessage& message)
     {
-        const xjson& content = message.content();
-        const xjson& data = content["data"];
+        const xeus::xjson& content = message.content();
+        const xeus::xjson& data = content["data"];
         std::string method = data["method"];
         if (method == "update")
         {
@@ -316,7 +316,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xtransport<D>::handle_custom_message(const xjson& content)
+    inline void xtransport<D>::handle_custom_message(const xeus::xjson& content)
     {
     }
 
@@ -325,18 +325,18 @@ namespace xeus
      ****************************************/
 
     template <class D>
-    inline void to_json(xjson& j, const xtransport<D>& o)
+    inline void to_json(xeus::xjson& j, const xtransport<D>& o)
     {
         j = "IPY_MODEL_" + guid_to_hex(o.id());
     }
 
     template <class D>
-    inline void from_json(const xjson& j, xtransport<D>& o)
+    inline void from_json(const xeus::xjson& j, xtransport<D>& o)
     {
         /*
         std::string prefixed_guid = j;
-        xguid guid = hex_to_guid(prefixed_guid.substr(10).c_str());
-        auto& holder = ::xeus::get_transport_registry().find(guid);
+        xeus::xguid guid = hex_to_guid(prefixed_guid.substr(10).c_str());
+        auto& holder = get_transport_registry().find(guid);
         o = holder.template get<D>();  // TODO: move?
         */
     }

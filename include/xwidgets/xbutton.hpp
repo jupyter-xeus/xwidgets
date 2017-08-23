@@ -13,7 +13,7 @@
 #include "xstyle.hpp"
 #include "xwidget.hpp"
 
-namespace xeus
+namespace xw
 {
     /****************************
      * button_style declaration *
@@ -28,8 +28,8 @@ namespace xeus
         using derived_type = D;
 
         xbutton_style();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(XOPTIONAL(std::string), derived_type, button_color);
         XPROPERTY(std::string, derived_type, font_weight);
@@ -56,8 +56,8 @@ namespace xeus
         using derived_type = D;
 
         xbutton();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         void on_click(click_callback_type);
 
@@ -67,9 +67,9 @@ namespace xeus
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(std::string, derived_type, icon);
         XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger, ), derived_type, button_style);
-        XPROPERTY(::xeus::button_style, derived_type, style);
+        XPROPERTY(::xw::button_style, derived_type, style);
 
-        void handle_custom_message(const xjson&);
+        void handle_custom_message(const xeus::xjson&);
 
     private:
 
@@ -92,9 +92,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xbutton_style<D>::get_state() const
+    inline xeus::xjson xbutton_style<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(button_color, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(font_weight, state);
@@ -103,7 +103,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xbutton_style<D>::apply_patch(const xjson& patch)
+    inline void xbutton_style<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 
@@ -130,9 +130,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xbutton<D>::get_state() const
+    inline xeus::xjson xbutton<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(description, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(tooltip, state);
@@ -145,7 +145,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xbutton<D>::apply_patch(const xjson& patch)
+    inline void xbutton<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 
@@ -173,7 +173,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xbutton<D>::handle_custom_message(const xjson& content)
+    inline void xbutton<D>::handle_custom_message(const xeus::xjson& content)
     {
         auto it = content.find("event");
         if (it != content.end() && it.value() == "click")

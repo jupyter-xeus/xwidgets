@@ -6,7 +6,7 @@
 #include "xholder.hpp"
 #include "xregistry.hpp"  
 
-namespace xeus
+namespace xw
 {
     template <class D>
     xholder make_id_holder(const xtransport<D>& value);
@@ -39,7 +39,7 @@ namespace xeus
                 holder.display();
             }
         
-            virtual xguid id() const override
+            virtual xeus::xguid id() const override
             {
                 return m_id;
             }
@@ -65,7 +65,7 @@ namespace xeus
         private:
 
             xholder_id(const xholder_id&) = default;
-            xguid m_id;
+            xeus::xguid m_id;
         };
     }
 

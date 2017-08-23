@@ -13,7 +13,7 @@
 
 #include "xwidget.hpp"
 
-namespace xeus
+namespace xw
 {
     /****************************
      * base xstring declaration *
@@ -28,8 +28,8 @@ namespace xeus
         using derived_type = D;
 
         xstring();
-        xjson get_state() const;
-        void apply_patch(const xjson& patch);
+        xeus::xjson get_state() const;
+        void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(std::string, derived_type, description);
         XPROPERTY(std::string, derived_type, value);
@@ -52,9 +52,9 @@ namespace xeus
     }
 
     template <class D>
-    inline xjson xstring<D>::get_state() const
+    inline xeus::xjson xstring<D>::get_state() const
     {
-        xjson state = base_type::get_state();
+        xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(placeholder, state);
@@ -63,7 +63,7 @@ namespace xeus
     }
 
     template <class D>
-    inline void xstring<D>::apply_patch(const xjson& patch)
+    inline void xstring<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 
