@@ -12,6 +12,7 @@
 #include <string>
 
 #include "xboolean.hpp"
+#include "xmaterialize.hpp"
 
 namespace xeus
 {
@@ -38,42 +39,7 @@ namespace xeus
         void set_defaults();
     };
 
-    class valid final : public xvalid<valid>
-    {
-    public:
-
-        using base_type = xvalid<valid>;
-
-        valid()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~valid()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        valid(const valid& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        valid& operator=(const valid& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        valid(valid&&) = default;
-        valid& operator=(valid&&) = default;
-    };
+    using valid = xmaterialize<xvalid>;
 
     /*************************
      * xvalid implementation *

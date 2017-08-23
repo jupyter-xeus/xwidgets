@@ -12,6 +12,7 @@
 #include <string>
 
 #include "xboolean.hpp"
+#include "xmaterialize.hpp"
 
 namespace xeus
 {
@@ -38,42 +39,7 @@ namespace xeus
         void set_defaults();
     };
 
-    class checkbox final : public xcheckbox<checkbox>
-    {
-    public:
-
-        using base_type = xcheckbox<checkbox>;
-
-        checkbox()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~checkbox()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        checkbox(const checkbox& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        checkbox& operator=(const checkbox& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        checkbox(checkbox&&) = default;
-        checkbox& operator=(checkbox&&) = default;
-    };
+    using checkbox = xmaterialize<xcheckbox>;
 
     /****************************
      * xcheckbox implementation *

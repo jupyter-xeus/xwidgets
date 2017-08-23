@@ -93,7 +93,7 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 set(XWIDGETS_TESTS
     main.cpp
-    test_xslider.cpp
+    test_xwidgets.cpp
 )
 
 # Output

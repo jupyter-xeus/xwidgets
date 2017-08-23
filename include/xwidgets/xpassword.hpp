@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_PASSWORD_HPP
 #define XWIDGETS_PASSWORD_HPP
 
+#include "xpassword.hpp"
 #include "xstring.hpp"
 
 namespace xeus
@@ -36,42 +37,7 @@ namespace xeus
         void set_defaults();
     };
 
-    class password final : public xpassword<password>
-    {
-    public:
-
-        using base_type = xpassword<password>;
-
-        password()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~password()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        password(const password& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        password& operator=(const password& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        password(password&&) = default;
-        password& operator=(password&&) = default;
-    };
+    using password = xmaterialize<xpassword>;
 
     /****************************
      * xpassword implementation *

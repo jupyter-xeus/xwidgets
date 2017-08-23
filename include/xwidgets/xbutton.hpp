@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_BUTTON_HPP
 #define XWIDGETS_BUTTON_HPP
 
+#include "xmaterialize.hpp"
 #include "xstyle.hpp"
 #include "xwidget.hpp"
 
@@ -38,42 +39,7 @@ namespace xeus
         void set_defaults();
     };
 
-    class button_style final : public xbutton_style<button_style>
-    {
-    public:
-
-        using base_type = xbutton_style<button_style>;
-
-        button_style()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~button_style()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        button_style(const button_style& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        button_style& operator=(const button_style& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        button_style(button_style&&) = default;
-        button_style& operator=(button_style&&) = default;
-    };
+    using button_style = xmaterialize<xbutton_style>;
 
     /**********************
      * button declaration *
@@ -111,43 +77,8 @@ namespace xeus
 
         std::list<click_callback_type> m_click_callbacks;
     };
-
-    class button final : public xbutton<button>
-    {
-    public:
-
-        using base_type = xbutton<button>;
-
-        button()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~button()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        button(const button& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        button& operator=(const button& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        button(button&&) = default;
-        button& operator=(button&&) = default;
-    };
+    
+    using button = xmaterialize<xbutton>;
 
     /********************************
      * xbutton_style implementation *

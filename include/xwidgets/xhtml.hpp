@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_HTML_HPP
 #define XWIDGETS_HTML_HPP
 
+#include "xmaterialize.hpp"
 #include "xstring.hpp"
 
 namespace xeus
@@ -34,42 +35,7 @@ namespace xeus
         void set_defaults();
     };
 
-    class html final : public xhtml<html>
-    {
-    public:
-
-        using base_type = xhtml<html>;
-
-        html()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~html()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        html(const html& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        html& operator=(const html& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        html(html&&) = default;
-        html& operator=(html&&) = default;
-    };
+    using html = xmaterialize<xhtml>;
 
     /************************
      * xhtml implementation *

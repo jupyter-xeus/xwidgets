@@ -11,6 +11,7 @@
 
 #include <string>
 
+#include "xmaterialize.hpp"
 #include "xobject.hpp"
 
 namespace xeus
@@ -62,42 +63,7 @@ namespace xeus
         void set_defaults();
     };
 
-    class layout final : public xlayout<layout>
-    {
-    public:
-
-        using base_type = xlayout<layout>;
-
-        layout()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~layout()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        layout(const layout& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        layout& operator=(const layout& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        layout(layout&&) = default;
-        layout& operator=(layout&&) = default;
-    };
+    using layout = xmaterialize<xlayout>;
 
     /*************************
      * layout implementation *
