@@ -8,6 +8,7 @@
 
 #include "gtest/gtest.h"
 
+#include "xwidgets/xbox.hpp"
 #include "xwidgets/xbutton.hpp"
 #include "xwidgets/xcheckbox.hpp"
 #include "xwidgets/xhtml.hpp"
@@ -25,6 +26,22 @@
 
 namespace xeus
 {
+    TEST(xwidgets, hbox)
+    {
+        hbox hb;
+        slider<double> s1, s2;
+        hb.add(s1);
+        hb.add(s2);
+    }
+
+    TEST(xwidgets, vbox)
+    {
+        vbox vb;
+        slider<double> s1, s2;
+        vb.add(s1);
+        vb.add(s2);
+    }
+
     TEST(xwidgets, button_style)
     {
         button_style bs;
