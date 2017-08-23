@@ -13,6 +13,7 @@ namespace xw
 
     namespace detail
     {
+        template <template <class> class CRTP>
         class xholder_impl;
     }
 
@@ -20,6 +21,7 @@ namespace xw
      * xholder declaration *
      ***********************/
 
+    template <template <class> class CRTP = xtransport>
     class xholder
     {
     public:
@@ -28,16 +30,16 @@ namespace xw
         ~xholder();
         xholder(const xholder& rhs);
         xholder(xholder&& rhs);
-        xholder(detail::xholder_impl* holder);
+        xholder(detail::xholder_impl<CRTP>* holder);
 
         xholder& operator=(const xholder& rhs);
         xholder& operator=(xholder&& rhs);
 
         template <class D>
-        xholder& operator=(const xtransport<D>& rhs);
+        xholder& operator=(const CRTP<D>& rhs);
 
         template <class D>
-        xholder& operator=(xtransport<D>&& rhs);
+        xholder& operator=(CRTP<D>&& rhs);
 
         void swap(xholder& rhs);
 
@@ -58,10 +60,11 @@ namespace xw
 
     private:
 
-        detail::xholder_impl* p_holder;
+        detail::xholder_impl<CRTP>* p_holder;
     };
 
-    inline void swap(xholder& lhs, xholder& rhs)
+    template <template <class> class CRTP>
+    inline void swap(xholder<CRTP>& lhs, xholder<CRTP>& rhs)
     {
         lhs.swap(rhs);
     }
@@ -70,11 +73,14 @@ namespace xw
      * to_json and from_json declaration *
      *************************************/
 
-    void to_json(xeus::xjson& j, const xholder& o);
-    void from_json(const xeus::xjson& j, xholder& o);
+    template <template <class> class CRTP>
+    void to_json(xeus::xjson& j, const xholder<CRTP>& o);
+    template <template <class> class CRTP>
+    void from_json(const xeus::xjson& j, xholder<CRTP>& o);
 
     namespace detail
     {
+        template <template <class> class CRTP>
         class xholder_impl
         {
         public:
@@ -94,20 +100,20 @@ namespace xw
             xholder_impl(const xholder_impl&) = default;
         };
      
-        template <class D>
-        class xholder_owning : public xholder_impl
+        template <template <class> class CRTP, class D>
+        class xholder_owning : public xholder_impl<CRTP>
         {
         public:
         
-            using base_type = xholder_impl;
+            using base_type = xholder_impl<CRTP>;
         
-            xholder_owning(const xtransport<D>& value)
+            xholder_owning(const CRTP<D>& value)
                 : base_type(),
                   m_value(value.derived_cast())
             {
             }
         
-            xholder_owning(xtransport<D>&& value)
+            xholder_owning(CRTP<D>&& value)
                 : base_type(),
                   m_value(std::move(value).derived_cast())
             {
@@ -117,7 +123,7 @@ namespace xw
             {
             }
         
-            virtual xholder_impl* clone() const override
+            virtual base_type* clone() const override
             {
                 return new xholder_owning(*this);
             }
@@ -142,14 +148,14 @@ namespace xw
             D m_value;
         };
 
-        template <class D>
-        class xholder_weak : public xholder_impl
+        template <template <class> class CRTP, class D>
+        class xholder_weak : public xholder_impl<CRTP>
         {
         public:
 
-            using base_type = xholder_impl;
+            using base_type = xholder_impl<CRTP>;
 
-            xholder_weak(xtransport<D>* ptr)
+            xholder_weak(CRTP<D>* ptr)
                 : base_type(),
                   p_value(&(ptr->derived_cast()))
             {
@@ -160,7 +166,7 @@ namespace xw
                 p_value = nullptr;
             }
 
-            virtual xholder_impl* clone() const override
+            virtual base_type* clone() const override
             {
                 return new xholder_weak(*this);
             }
@@ -186,51 +192,57 @@ namespace xw
         };
     }
 
-    template <class D>
-    xholder make_weak_holder(xtransport<D>* ptr)
+    template <template <class> class CRTP, class D>
+    xholder<CRTP> make_weak_holder(CRTP<D>* ptr)
     {
-        return xholder(new detail::xholder_weak<D>(ptr));
+        return xholder<CRTP>(new detail::xholder_weak<CRTP, D>(ptr));
     }
 
-    template <class D>
-    xholder make_owning_holder(const xtransport<D>& value)
+    template <template <class> class CRTP, class D>
+    xholder<CRTP> make_owning_holder(const CRTP<D>& value)
     {
-        return xholder(new detail::xholder_owning<D>(value));
+        return xholder<CRTP>(new detail::xholder_owning<CRTP, D>(value));
     }
 
-    template <class D>
-    xholder make_owning_holder(xtransport<D>&& value)
+    template <template <class> class CRTP, class D>
+    xholder<CRTP> make_owning_holder(CRTP<D>&& value)
     {
-        return xholder(new detail::xholder_owning<D>(std::move(value)));
+        return xholder<CRTP>(new detail::xholder_owning<CRTP, D>(std::move(value)));
     }
 
     /**************************
      * xholder implementation *
      **************************/
 
-    xholder::xholder() : p_holder(nullptr)
+    template <template <class> class CRTP>
+    xholder<CRTP>::xholder() : p_holder(nullptr)
     {
     }
 
-    xholder::xholder(detail::xholder_impl* holder) : p_holder(holder)
+    template <template <class> class CRTP>
+    xholder<CRTP>::xholder(detail::xholder_impl<CRTP>* holder) : p_holder(holder)
     {
     }
 
-    xholder::~xholder()
+    template <template <class> class CRTP>
+    xholder<CRTP>::~xholder()
     {
         delete p_holder;
     }
 
-    xholder::xholder(const xholder& rhs) : p_holder(rhs.p_holder->clone())
+    template <template <class> class CRTP>
+    xholder<CRTP>::xholder(const xholder& rhs) : p_holder(rhs.p_holder->clone())
     {
     }
 
-    xholder::xholder(xholder&& rhs) : p_holder(rhs.p_holder)
+    template <template <class> class CRTP>
+    xholder<CRTP>::xholder(xholder&& rhs) : p_holder(rhs.p_holder)
     {
        rhs.p_holder = nullptr;
     }
 
-    xholder& xholder::operator=(const xholder& rhs)
+    template <template <class> class CRTP>
+    xholder<CRTP>& xholder<CRTP>::operator=(const xholder& rhs)
     {
        using std::swap;
        xholder tmp(rhs);
@@ -238,7 +250,8 @@ namespace xw
        return *this;
     }
 
-    xholder& xholder::operator=(xholder&& rhs)
+    template <template <class> class CRTP>
+    xholder<CRTP>& xholder<CRTP>::operator=(xholder&& rhs)
     {
        using std::swap;
        xholder tmp(std::move(rhs));
@@ -246,21 +259,24 @@ namespace xw
        return *this;
     }
 
+    template <template <class> class CRTP>
     template <class D>
-    xholder& xholder::operator=(xtransport<D>&& rhs)
+    xholder<CRTP>& xholder<CRTP>::operator=(CRTP<D>&& rhs)
     {
         using std::swap;
-        xholder tmp(make_owning_holder(std::move(rhs)));
+        xholder<CRTP> tmp(make_owning_holder(std::move(rhs)));
         swap(tmp, *this);
         return *this;
     }
 
-    void xholder::swap(xholder& rhs)
+    template <template <class> class CRTP>
+    void xholder<CRTP>::swap(xholder& rhs)
     {
         std::swap(p_holder, rhs.p_holder);
     }
 
-    void xholder::display() const
+    template <template <class> class CRTP>
+    void xholder<CRTP>::display() const
     {
         if (p_holder != nullptr)
         {
@@ -268,7 +284,8 @@ namespace xw
         }
     }
 
-    xeus::xguid xholder::id() const
+    template <template <class> class CRTP>
+    xeus::xguid xholder<CRTP>::id() const
     {
         if (p_holder != nullptr)
         {
@@ -281,43 +298,47 @@ namespace xw
         }
     }
 
+    template <template <class> class CRTP>
     template <class D, bool owning>
-    D& xholder::get() &
+    D& xholder<CRTP>::get() &
     {
         if (owning)
         {
-            return dynamic_cast<detail::xholder_owning<D>*>(p_holder)->value();
+            return dynamic_cast<detail::xholder_owning<CRTP, D>*>(p_holder)->value();
         }
         else
         {
-            return dynamic_cast<detail::xholder_weak<D>*>(p_holder)->value();
+            return dynamic_cast<detail::xholder_weak<CRTP, D>*>(p_holder)->value();
         }
     }
 
+    template <template <class> class CRTP>
     template <class D, bool owning>
-    const D& xholder::get() const &
+    const D& xholder<CRTP>::get() const &
     {
         if (owning)
         {
-            return dynamic_cast<detail::xholder_owning<D>*>(p_holder)->value();
+            return dynamic_cast<detail::xholder_owning<CRTP, D>*>(p_holder)->value();
         }
         else
         {
-            return dynamic_cast<detail::xholder_weak<D>*>(p_holder)->value();
+            return dynamic_cast<detail::xholder_weak<CRTP, D>*>(p_holder)->value();
         }
     }
 
     /*
+    template <template <class> class CRTP>
     template <class D, bool owning, typename T = std::enable_if_t<owning>>
-    D xholder::get() &&
+    D xholder<CRTP>::get() &&
     {
-         return dynamic_cast<detail::xholder_owning<D>*>(p_holder)->value();
+         return dynamic_cast<detail::xholder_owning<CRTP, D>*>(p_holder)->value();
     }
 
+    template <template <class> class CRTP>
     template <class D, bool owning, typename T = std::enable_if_t<!owning>>
-    D& xholder::get() &&
+    D& xholder<CRT>::get() &&
     {
-         return dynamic_cast<detail::xholder_weak<D>*>(p_holder)->value();
+         return dynamic_cast<detail::xholder_weak<CRTP, D>*>(p_holder)->value();
     }
     */
 
@@ -325,12 +346,14 @@ namespace xw
      * to_json and from_json implementation *
      ****************************************/
 
-    inline void to_json(xeus::xjson& j, const xholder& o)
+    template <template <class> class CRTP>
+    inline void to_json(xeus::xjson& j, const xholder<CRTP>& o)
     {
         j = "IPY_MODEL_" + guid_to_hex(o.id());
     }
 
-    inline void from_json(const xeus::xjson& j, xholder& o)
+    template <template <class> class CRTP>
+    inline void from_json(const xeus::xjson& j, xholder<CRTP>& o)
     {
         /*
         std::string prefixed_guid = j;

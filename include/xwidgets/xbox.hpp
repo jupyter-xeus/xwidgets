@@ -19,6 +19,8 @@ namespace xw
      * xbox declaration *
      ********************/
 
+    using xbox_children_list_type = std::vector<xholder<xtransport>>;
+
     template <class D>
     class xbox : public xwidget<D>
     {
@@ -26,14 +28,14 @@ namespace xw
 
         using base_type = xwidget<D>;
         using derived_type = D;
-        using children_list = std::vector<xholder>;
+        using children_list_type = xbox_children_list_type;
 
         xbox();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(X_CASELESS_STR_ENUM(success, info, warning, danger,), derived_type, box_style);
-        XPROPERTY(children_list, derived_type, children);
+        XPROPERTY(children_list_type, derived_type, children);
 
         template <class T>
         void add(const xtransport<T>& w);
