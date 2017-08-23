@@ -3,6 +3,9 @@
 
 #include <utility>
 
+#include "xeus/xguid.hpp"
+#include "xeus/xjson.hpp"
+
 namespace xeus
 {
     template <class D>
@@ -67,9 +70,8 @@ namespace xeus
      * to_json and from_json declaration *
      *************************************/
 
-    inline void to_json(xjson& j, const xholder& o);
-
-    inline void from_json(const xjson& j, xholder& o);
+    void to_json(xjson& j, const xholder& o);
+    void from_json(const xjson& j, xholder& o);
 
     namespace detail
     {

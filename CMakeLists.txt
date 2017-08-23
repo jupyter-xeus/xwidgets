@@ -101,6 +101,7 @@ set(XWIDGETS_DEPENDENCIES ${xeus_LIBRARY})
 include_directories(${XWIDGETS_INCLUDE_DIR}/xwidgets)
 
 set(XWIDGETS_HEADERS
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbox.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xboolean.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbutton.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcheckbox.hpp
