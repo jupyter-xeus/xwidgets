@@ -124,7 +124,9 @@ namespace xw
     inline void xbox<D>::add(const xtransport<T>& w)
     {
         this->children().emplace_back(make_id_holder(w));
-        this->send_patch(this->get_state());
+        xeus::xjson state;
+        XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
+        this->send_patch(std::move(state));
     }
 
     template <class D>
@@ -132,7 +134,9 @@ namespace xw
     inline void xbox<D>::add(xtransport<T>&& w)
     {
         this->children().emplace_back(make_owning_holder(std::move(w)));
-        this->send_patch(this->get_state());
+        xeus::xjson state;
+        XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
+        this->send_patch(std::move(state));
     }
 
     template <class D>
