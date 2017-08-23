@@ -67,7 +67,7 @@ namespace xeus
     inline xmaterialize<B, P...>& xmaterialize<B, P...>::operator=(const xmaterialize& rhs)
     {
         this->close();
-        base_type::operator=(other);
+        base_type::operator=(rhs);
         this->open();
         return *this;
     }
