@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_TEXT_HPP
 #define XWIDGETS_TEXT_HPP
 
+#include "xmaterialize.hpp"
 #include "xstring.hpp"
 
 namespace xeus
@@ -45,42 +46,7 @@ namespace xeus
         std::list<submit_callback_type> m_submit_callbacks;
     };
 
-    class text final : public xtext<text>
-    {
-    public:
-
-        using base_type = xtext<text>;
-
-        text()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~text()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        text(const text& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        text& operator=(const text& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        text(text&&) = default;
-        text& operator=(text&&) = default;
-    };
+    using text = xmaterialize<xtext>;
 
     /************************
      * xtext implementation *

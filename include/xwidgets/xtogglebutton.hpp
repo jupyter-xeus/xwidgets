@@ -12,6 +12,7 @@
 #include <string>
 
 #include "xboolean.hpp"
+#include "xmaterialize.hpp"
 
 namespace xeus
 {
@@ -40,42 +41,7 @@ namespace xeus
         void set_defaults();
     };
 
-    class togglebutton final : public xtogglebutton<togglebutton>
-    {
-    public:
-
-        using base_type = xtogglebutton<togglebutton>;
-
-        togglebutton()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~togglebutton()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        togglebutton(const togglebutton& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        togglebutton& operator=(const togglebutton& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        togglebutton(togglebutton&&) = default;
-        togglebutton& operator=(togglebutton&&) = default;
-    };
+    using togglebutton = xmaterialize<xtogglebutton>;
 
     /********************************
      * xtogglebutton implementation *

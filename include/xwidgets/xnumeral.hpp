@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_NUMERAL_HPP
 #define XWIDGETS_NUMERAL_HPP
 
+#include "xmaterialize.hpp"
 #include "xnumber.hpp"
 
 namespace xeus
@@ -40,43 +41,7 @@ namespace xeus
     };
 
     template <class T>
-    class numeral final : public xnumeral<numeral<T>>
-    {
-    public:
-
-        using base_type = xnumeral<numeral<T>>;
-
-        numeral()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~numeral()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        numeral(const numeral& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        numeral& operator=(const numeral& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        numeral(numeral&&) = default;
-        numeral& operator=(numeral&&) = default;
-    };
-
+    using numeral = xmaterialize<xnumeral, T>;
 
     template <class T>
     struct xnumber_traits<numeral<T>>

@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_LABEL_HPP
 #define XWIDGETS_LABEL_HPP
 
+#include "xmaterialize.hpp"
 #include "xstring.hpp"
 
 namespace xeus
@@ -34,42 +35,7 @@ namespace xeus
         void set_defaults();
     };
 
-    class label final : public xlabel<label>
-    {
-    public:
-
-        using base_type = xlabel<label>;
-
-        label()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~label()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        label(const label& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        label& operator=(const label& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        label(label&&) = default;
-        label& operator=(label&&) = default;
-    };
+    using label = xmaterialize<xlabel>;
 
     /*************************
      * xlabel implementation *

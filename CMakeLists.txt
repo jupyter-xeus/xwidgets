@@ -107,6 +107,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xhtml.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlabel.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlayout.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmaterialize.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumeral.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xobject.hpp

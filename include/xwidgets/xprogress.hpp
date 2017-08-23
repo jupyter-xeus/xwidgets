@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_PROGRESS_HPP
 #define XWIDGETS_PROGRESS_HPP
 
+#include "xmaterialize.hpp"
 #include "xnumber.hpp"
 #include "xstyle.hpp"
 
@@ -38,42 +39,7 @@ namespace xeus
         void set_defaults();
     };
 
-    class progress_style final : public xprogress_style<progress_style>
-    {
-    public:
-
-        using base_type = xprogress_style<progress_style>;
-
-        progress_style()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~progress_style()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        progress_style(const progress_style& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        progress_style& operator=(const progress_style& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        progress_style(progress_style&&) = default;
-        progress_style& operator=(progress_style&&) = default;
-    };
+    using progress_style = xmaterialize<xprogress_style>;
 
     /***********************
      * progress declaration *
@@ -102,42 +68,7 @@ namespace xeus
     };
 
     template <class T>
-    class progress final : public xprogress<progress<T>>
-    {
-    public:
-
-        using base_type = xprogress<progress<T>>;
-
-        progress()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~progress()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        progress(const progress& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        progress& operator=(const progress& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        progress(progress&&) = default;
-        progress& operator=(progress&&) = default;
-    };
+    using progress = xmaterialize<xprogress, T>;
 
     template <class T>
     struct xnumber_traits<progress<T>>

@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_PLAY_HPP
 #define XWIDGETS_PLAY_HPP
 
+#include "xmaterialize.hpp"
 #include "xnumber.hpp"
 
 namespace xeus
@@ -42,49 +43,12 @@ namespace xeus
         void set_defaults();
     };
 
-    class play;
+    using play = xmaterialize<xplay>;
 
     template <>
     struct xnumber_traits<play>
     {
         using value_type = int;
-    };
-
-    class play final : public xplay<play>
-    {
-    public:
-
-        using base_type = xplay<play>;
-
-        play()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~play()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        play(const play& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        play& operator=(const play& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        play(play&&) = default;
-        play& operator=(play&&) = default;
     };
 
     /************************

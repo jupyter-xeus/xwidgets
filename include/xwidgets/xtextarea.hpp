@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_TEXTAREA_HPP
 #define XWIDGETS_TEXTAREA_HPP
 
+#include "xmaterialize.hpp"
 #include "xstring.hpp"
 
 namespace xeus
@@ -38,42 +39,7 @@ namespace xeus
         void set_defaults();
     };
 
-    class textarea final : public xtextarea<textarea>
-    {
-    public:
-
-        using base_type = xtextarea<textarea>;
-
-        textarea()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~textarea()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        textarea(const textarea& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        textarea& operator=(const textarea& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        textarea(textarea&&) = default;
-        textarea& operator=(textarea&&) = default;
-    };
+    using textarea = xmaterialize<xtextarea>;
 
     /****************************
      * xtextarea implementation *

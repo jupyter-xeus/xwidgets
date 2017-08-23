@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_SLIDER_HPP
 #define XWIDGETS_SLIDER_HPP
 
+#include "xmaterialize.hpp"
 #include "xnumber.hpp"
 #include "xstyle.hpp"
 
@@ -38,42 +39,7 @@ namespace xeus
         void set_defaults();
     };
 
-    class slider_style final : public xslider_style<slider_style>
-    {
-    public:
-
-        using base_type = xslider_style<slider_style>;
-
-        slider_style()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~slider_style()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        slider_style(const slider_style& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        slider_style& operator=(const slider_style& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        slider_style(slider_style&&) = default;
-        slider_style& operator=(slider_style&&) = default;
-    };
+    using slider_style = xmaterialize<xslider_style>;
 
     /**********************
      * slider declaration *
@@ -106,42 +72,7 @@ namespace xeus
     };
 
     template <class T>
-    class slider final : public xslider<slider<T>>
-    {
-    public:
-
-        using base_type = xslider<slider<T>>;
-
-        slider()
-            : base_type()
-        {
-            this->open();
-        }
-
-        ~slider()
-        {
-            if (!this->moved_from())
-            {
-                this->close();
-            }
-        }
-
-        slider(const slider& other)
-            : base_type(other)
-        {
-            this->open();
-        }
-
-        slider& operator=(const slider& other)
-        {
-            base_type::operator=(other);
-            this->open();
-            return *this;
-        }
-
-        slider(slider&&) = default;
-        slider& operator=(slider&&) = default;
-    };
+    using slider = xmaterialize<xslider, T>;
 
     template <class T>
     struct xnumber_traits<slider<T>>
