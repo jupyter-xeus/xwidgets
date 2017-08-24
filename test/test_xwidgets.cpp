@@ -85,7 +85,7 @@ namespace xw
 
     TEST(xwidgets, layout)
     {
-        wlayout l;
+        layout l;
         l.bottom = "bottom";
         ASSERT_EQ("bottom", l.bottom());
     }

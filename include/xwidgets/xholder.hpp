@@ -231,7 +231,8 @@ namespace xw
     }
 
     template <template <class> class CRTP>
-    xholder<CRTP>::xholder(const xholder& rhs) : p_holder(rhs.p_holder->clone())
+    xholder<CRTP>::xholder(const xholder& rhs)
+        : p_holder(rhs.p_holder ? rhs.p_holder->clone() : nullptr)
     {
     }
 
