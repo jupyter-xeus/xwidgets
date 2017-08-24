@@ -5,13 +5,15 @@
 #include <utility>
 
 #include "xholder.hpp" 
-#include "xtransport.hpp"
 
 namespace xw
 {
     /*************************
      * xregistry declaration *
      *************************/
+
+    template <class D>
+    class xtransport;
 
     class xregistry
     {
