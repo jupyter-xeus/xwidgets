@@ -119,8 +119,6 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xplay.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprogress.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xregistry.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtogglebutton.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtransport.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xslider.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstring.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstyle.hpp

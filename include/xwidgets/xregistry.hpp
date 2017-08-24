@@ -49,12 +49,12 @@ namespace xw
         m_storage[xeus::guid_to_hex(ptr->id())] = make_weak_holder(ptr);
     }
 
-    void xregistry::unregister(xeus::xguid id)
+    inline void xregistry::unregister(xeus::xguid id)
     {
         m_storage.erase(xeus::guid_to_hex(id));
     }
 
-    auto xregistry::find(xeus::xguid id) -> typename storage_type::mapped_type&
+    inline auto xregistry::find(xeus::xguid id) -> typename storage_type::mapped_type&
     {
         auto it = m_storage.find(xeus::guid_to_hex(id));
         if (it == m_storage.end())
