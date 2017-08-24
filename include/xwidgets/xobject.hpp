@@ -37,6 +37,7 @@ namespace xw
 
         using base_type = xtransport<D>;
         using derived_type = D;
+        using base_type::derived_cast;
 
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
