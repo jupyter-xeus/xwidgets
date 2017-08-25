@@ -8,8 +8,15 @@
 
 namespace xw
 {
+    /************************
+     * forward declarations *
+     ************************/
+
     template <class D>
     class xtransport;
+
+    template <template <class> class CRTP>
+    class xholder_reference;
 
     namespace detail
     {
@@ -28,16 +35,25 @@ namespace xw
 
         xholder();
         ~xholder();
+        
         xholder(const xholder& rhs);
-        xholder(xholder&& rhs);
-        xholder(detail::xholder_impl<CRTP>* holder);
-
         xholder& operator=(const xholder& rhs);
+
+        xholder(xholder&& rhs);
         xholder& operator=(xholder&& rhs);
 
+        xholder(detail::xholder_impl<CRTP>* holder);
+
+        xholder(const xholder_reference<CRTP>& holder_ref);
+        xholder& operator=(const xholder_reference<CRTP>& rhs);
+
+        /*template <class D>
+        xholder(const CRTP<D>& rhs);*/
         template <class D>
         xholder& operator=(const CRTP<D>& rhs);
 
+        /*template <class D>
+        xholder(CRTP<D>&& rhs);*/
         template <class D>
         xholder& operator=(CRTP<D>&& rhs);
 
@@ -60,6 +76,8 @@ namespace xw
 
     private:
 
+        detail::xholder_impl<CRTP>* make_implementation_reference() const;
+
         detail::xholder_impl<CRTP>* p_holder;
     };
 
@@ -78,6 +96,36 @@ namespace xw
     template <template <class> class CRTP>
     void from_json(const xeus::xjson& j, xholder<CRTP>& o);
 
+    /***************************
+     * xholder_ref declaration *
+     ***************************/
+
+    template <template <class> class CRTP = xtransport>
+    class xholder_reference
+    {
+    public:
+
+        using value_type = xholder<CRTP>;
+        using reference = const value_type&;
+        using pointer = const value_type*;
+
+        explicit xholder_reference(reference holder);
+
+        operator reference() const noexcept;
+        reference get() const noexcept;
+
+    private:
+
+        pointer p_holder;
+    };
+
+    template<template <class> class CRTP>
+    xholder_reference<CRTP> ref(const xholder<CRTP>& holder);
+
+    /*******************************
+     * xholder_impl implementation *
+     *******************************/
+
     namespace detail
     {
         template <template <class> class CRTP>
@@ -94,6 +142,8 @@ namespace xw
 
             virtual void display() const = 0;
             virtual xeus::xguid id() const = 0;
+
+            virtual xholder_impl* make_reference() const = 0;
 
         protected:
 
@@ -138,6 +188,8 @@ namespace xw
                 return m_value.id();
             }
         
+            virtual base_type* make_reference() const override;
+
             inline D& value() & noexcept { return m_value; }
             inline const D& value() const & noexcept { return m_value; }
             inline D value() && noexcept { return m_value; } 
@@ -181,6 +233,8 @@ namespace xw
                 return p_value->id();
             }
         
+            virtual base_type* make_reference() const override;
+
             inline D& value() & noexcept { return *p_value; }
             inline const D& value() const & noexcept { return *p_value; }
             inline D value() && noexcept { return *p_value; } 
@@ -237,18 +291,18 @@ namespace xw
     }
 
     template <template <class> class CRTP>
-    xholder<CRTP>::xholder(xholder&& rhs) : p_holder(rhs.p_holder)
+    xholder<CRTP>& xholder<CRTP>::operator=(const xholder& rhs)
     {
-       rhs.p_holder = nullptr;
+        using std::swap;
+        xholder tmp(rhs);
+        swap(*this, tmp);
+        return *this;
     }
 
     template <template <class> class CRTP>
-    xholder<CRTP>& xholder<CRTP>::operator=(const xholder& rhs)
+    xholder<CRTP>::xholder(xholder&& rhs) : p_holder(rhs.p_holder)
     {
-       using std::swap;
-       xholder tmp(rhs);
-       swap(*this, tmp);
-       return *this;
+       rhs.p_holder = nullptr;
     }
 
     template <template <class> class CRTP>
@@ -260,12 +314,19 @@ namespace xw
        return *this;
     }
 
+    /*template <template <class> class CRTP>
+    template <class D>
+    inline xholder<CRTP>::xholder(CRTP<D>&& rhs)
+        : p_holder(make_owning_holder<CRTP>(std::move(rhs)))
+    {
+    }*/
+
     template <template <class> class CRTP>
     template <class D>
     xholder<CRTP>& xholder<CRTP>::operator=(CRTP<D>&& rhs)
     {
         using std::swap;
-        xholder<CRTP> tmp(make_owning_holder(std::move(rhs)));
+        xholder<CRTP> tmp(make_owning_holder<CRTP>(std::move(rhs)));
         swap(tmp, *this);
         return *this;
     }
@@ -343,6 +404,12 @@ namespace xw
     }
     */
 
+    template <template <class > class CRTP>
+    inline detail::xholder_impl<CRTP>* xholder<CRTP>::make_implementation_reference() const
+    {
+        return p_holder ? p_holder->make_reference() : nullptr;
+    }
+
     /****************************************
      * to_json and from_json implementation *
      ****************************************/
@@ -363,6 +430,34 @@ namespace xw
         o;  // TODO: move?
         */
     }
-}
-#endif
 
+    /************************************
+     * xholder_reference implementation *
+     ************************************/
+
+    template <template <class> class CRTP>
+    xholder_reference<CRTP>::xholder_reference(reference holder)
+        : p_holder(&holder)
+    {
+    }
+
+    template <template <class> class CRTP>
+    xholder_reference<CRTP>::operator reference() const noexcept
+    {
+        return *p_holder;
+    }
+
+    template <template <class> class CRTP>
+    auto xholder_reference<CRTP>::get() const noexcept -> reference
+    {
+        return *p_holder;
+    }
+
+    template<template <class> class CRTP>
+    xholder_reference<CRTP> ref(const xholder<CRTP>& holder)
+    {
+        return xholder_reference<CRTP>(holder);
+    }
+}
+
+#endif
