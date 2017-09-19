@@ -32,7 +32,7 @@ namespace xw
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(std::string, derived_type, description_width);
-        XPROPERTY(XOPTIONAL(std::string), derived_type, bar_color);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, bar_color);
 
     private:
 

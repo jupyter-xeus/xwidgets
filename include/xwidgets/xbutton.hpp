@@ -31,7 +31,7 @@ namespace xw
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
-        XPROPERTY(XOPTIONAL(std::string), derived_type, button_color);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, button_color);
         XPROPERTY(std::string, derived_type, font_weight);
 
     private:
@@ -77,7 +77,7 @@ namespace xw
 
         std::list<click_callback_type> m_click_callbacks;
     };
-    
+
     using button = xmaterialize<xbutton>;
 
     /********************************
