@@ -11,6 +11,7 @@
 #include <map>
 #include <string>
 
+#include "xwidgets/xholder_id.hpp"
 #include "xwidgets/xbutton.hpp"
 
 namespace xw
@@ -23,5 +24,15 @@ namespace xw
         hm["x"] = std::move(b);
         std::string res = hm["x"].template get<button, true>().description();
         ASSERT_EQ(b.description(), res);
+    }
+
+    TEST(xholder, reference)
+    {
+        button b;
+        xholder<xwidget> hb;
+        hb = std::move(b);
+        xholder<xwidget> hb2 = xw::ref(hb);
+
+        ASSERT_EQ(xeus::guid_to_hex(hb.id()), xeus::guid_to_hex(hb2.id()));
     }
 }
