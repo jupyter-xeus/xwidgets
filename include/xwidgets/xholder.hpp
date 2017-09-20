@@ -30,6 +30,10 @@ namespace xw
         ~xholder();
         xholder(const xholder& rhs);
         xholder(xholder&& rhs);
+        template <class D>
+        xholder(const CRTP<D>& rhs);
+        template <class D>
+        xholder(CRTP<D>&& rhs);
         xholder(detail::xholder_impl<CRTP>* holder);
 
         xholder& operator=(const xholder& rhs);
@@ -37,7 +41,6 @@ namespace xw
 
         template <class D>
         xholder& operator=(const CRTP<D>& rhs);
-
         template <class D>
         xholder& operator=(CRTP<D>&& rhs);
 
@@ -239,6 +242,13 @@ namespace xw
     template <template <class> class CRTP>
     xholder<CRTP>::xholder(const xholder& rhs)
         : p_holder(rhs.p_holder ? rhs.p_holder->clone() : nullptr)
+    {
+    }
+
+    template <template <class> class CRTP>
+    template <class D>
+    xholder<CRTP>::xholder(CRTP<D>&& rhs)
+        : xholder(make_owning_holder(std::move(rhs)))
     {
     }
 
