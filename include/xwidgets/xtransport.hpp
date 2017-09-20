@@ -333,12 +333,10 @@ namespace xw
     template <class D>
     inline void from_json(const xeus::xjson& j, xtransport<D>& o)
     {
-        /*
         std::string prefixed_guid = j;
-        xeus::xguid guid = hex_to_guid(prefixed_guid.substr(10).c_str());
+        xeus::xguid guid = xeus::hex_to_guid(prefixed_guid.substr(10).c_str());
         auto& holder = get_transport_registry().find(guid);
         o = holder.template get<D>();  // TODO: move?
-        */
     }
 }
 

@@ -46,17 +46,10 @@ namespace xw
         void display() const;
         xeus::xguid id() const;
 
-        template <class D, bool owning>
+        template <class D>
         D& get() &;
-        template <class D, bool owning>
+        template <class D>
         const D& get() const &;
-
-        /*
-        template <class D, bool owning, typename T = std::enable_if_t<owning>>
-        D get() &&;
-        template <class D, bool owning, typename T = std::enable_if_t<!owning>>
-        D& get() &&;
-        */
 
     private:
 
@@ -94,6 +87,7 @@ namespace xw
 
             virtual void display() const = 0;
             virtual xeus::xguid id() const = 0;
+            virtual bool owning() const = 0;
 
         protected:
 
@@ -142,6 +136,11 @@ namespace xw
             inline const D& value() const & noexcept { return m_value; }
             inline D value() && noexcept { return m_value; }
 
+            virtual bool owning() const override
+            {
+                return true;
+            }
+
         private:
 
             xholder_owning(const xholder_owning&) = default;
@@ -184,6 +183,11 @@ namespace xw
             inline D& value() & noexcept { return *p_value; }
             inline const D& value() const & noexcept { return *p_value; }
             inline D value() && noexcept { return *p_value; }
+
+            virtual bool owning() const override
+            {
+                return false;
+            }
 
         private:
 
@@ -303,10 +307,10 @@ namespace xw
     }
 
     template <template <class> class CRTP>
-    template <class D, bool owning>
+    template <class D>
     D& xholder<CRTP>::get() &
     {
-        if (owning)
+        if (p_holder->owning())
         {
             return dynamic_cast<detail::xholder_owning<CRTP, D>*>(p_holder)->value();
         }
@@ -317,10 +321,10 @@ namespace xw
     }
 
     template <template <class> class CRTP>
-    template <class D, bool owning>
+    template <class D>
     const D& xholder<CRTP>::get() const &
     {
-        if (owning)
+        if (p_holder->owning())
         {
             return dynamic_cast<detail::xholder_owning<CRTP, D>*>(p_holder)->value();
         }
@@ -329,22 +333,6 @@ namespace xw
             return dynamic_cast<detail::xholder_weak<CRTP, D>*>(p_holder)->value();
         }
     }
-
-    /*
-    template <template <class> class CRTP>
-    template <class D, bool owning, typename T = std::enable_if_t<owning>>
-    D xholder<CRTP>::get() &&
-    {
-         return dynamic_cast<detail::xholder_owning<CRTP, D>*>(p_holder)->value();
-    }
-
-    template <template <class> class CRTP>
-    template <class D, bool owning, typename T = std::enable_if_t<!owning>>
-    D& xholder<CRT>::get() &&
-    {
-         return dynamic_cast<detail::xholder_weak<CRTP, D>*>(p_holder)->value();
-    }
-    */
 
     /****************************************
      * to_json and from_json implementation *
