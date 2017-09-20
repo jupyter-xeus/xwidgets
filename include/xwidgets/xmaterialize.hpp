@@ -26,7 +26,8 @@ namespace xw
         using self_type = xmaterialize<B, P...>;
         using base_type = B<self_type>;
 
-        xmaterialize();
+        template <class... A>
+        xmaterialize(A&&...);
         ~xmaterialize();
 
         xmaterialize(const xmaterialize&);
@@ -41,8 +42,9 @@ namespace xw
      *******************************/
 
     template <template <class> class B, class... P>
-    inline xmaterialize<B, P...>::xmaterialize()
-        : base_type()
+    template <class... A>
+    inline xmaterialize<B, P...>::xmaterialize(A&&... args)
+        : base_type(std::forward<A>(args)...)
     {
         this->open();
     }
