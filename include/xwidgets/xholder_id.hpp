@@ -4,7 +4,7 @@
 #include <utility>
 
 #include "xholder.hpp"
-#include "xregistry.hpp"  
+#include "xregistry.hpp"
 
 namespace xw
 {
@@ -25,7 +25,7 @@ namespace xw
                   m_id(value.id())
             {
             }
-        
+
             virtual ~xholder_id() = default;
 
             virtual base_type* clone() const override
@@ -38,12 +38,12 @@ namespace xw
                 auto holder = get_transport_registry().find(m_id);
                 holder.display();
             }
-        
+
             virtual xeus::xguid id() const override
             {
                 return m_id;
             }
-        
+
             inline D& value() & noexcept
             {
                 auto holder = get_transport_registry().find(m_id);
@@ -60,7 +60,7 @@ namespace xw
             {
                 auto holder = get_transport_registry().find(m_id);
                 return holder.template get<D>();
-            } 
+            }
 
         private:
 
@@ -86,4 +86,3 @@ namespace xw
     }
 }
 #endif
-

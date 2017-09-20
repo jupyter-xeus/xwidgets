@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <utility>
 
-#include "xholder.hpp" 
+#include "xholder.hpp"
 
 namespace xw
 {
@@ -65,4 +65,3 @@ namespace xw
     }
 }
 #endif
-

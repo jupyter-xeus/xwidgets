@@ -30,7 +30,7 @@ namespace xw
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
-        XPROPERTY(XOPTIONAL(int), derived_type, rows);
+        XPROPERTY(xtl::xoptional<int>, derived_type, rows);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(bool, derived_type, continuous_update, true);
 

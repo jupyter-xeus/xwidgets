@@ -93,6 +93,9 @@ include_directories(${xeus_INCLUDE_DIRS})
 find_package(xproperty REQUIRED)
 include_directories(${xproperty_INCLUDE_DIRS})
 
+find_package(xtl REQUIRED)
+include_directories(${xtl_INCLUDE_DIRS})
+
 set(XWIDGETS_DEPENDENCIES ${xeus_LIBRARY})
 
 # Source files

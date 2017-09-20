@@ -85,7 +85,7 @@ namespace xw
         {
         public:
       
-            xholder_impl() = default; 
+            xholder_impl() = default;
             xholder_impl(xholder_impl&&) = delete;
             xholder_impl& operator=(const xholder_impl&) = delete;
             xholder_impl& operator=(xholder_impl&&) = delete;
@@ -99,30 +99,30 @@ namespace xw
 
             xholder_impl(const xholder_impl&) = default;
         };
-     
+
         template <template <class> class CRTP, class D>
         class xholder_owning : public xholder_impl<CRTP>
         {
         public:
         
             using base_type = xholder_impl<CRTP>;
-        
+
             xholder_owning(const CRTP<D>& value)
                 : base_type(),
                   m_value(value.derived_cast())
             {
             }
-        
+
             xholder_owning(CRTP<D>&& value)
                 : base_type(),
                   m_value(std::move(value).derived_cast())
             {
             }
-        
+
             virtual ~xholder_owning()
             {
             }
-        
+
             virtual base_type* clone() const override
             {
                 return new xholder_owning(*this);
@@ -132,15 +132,15 @@ namespace xw
             {
                 m_value.display();
             }
-        
+
             virtual xeus::xguid id() const override
             {
                 return m_value.id();
             }
-        
+
             inline D& value() & noexcept { return m_value; }
             inline const D& value() const & noexcept { return m_value; }
-            inline D value() && noexcept { return m_value; } 
+            inline D value() && noexcept { return m_value; }
 
         private:
 
@@ -160,7 +160,7 @@ namespace xw
                   p_value(&(ptr->derived_cast()))
             {
             }
-        
+
             virtual ~xholder_weak()
             {
                 p_value = nullptr;
@@ -175,15 +175,15 @@ namespace xw
             {
                 p_value->display();
             }
-        
+
             virtual xeus::xguid id() const override
             {
                 return p_value->id();
             }
-        
+
             inline D& value() & noexcept { return *p_value; }
             inline const D& value() const & noexcept { return *p_value; }
-            inline D value() && noexcept { return *p_value; } 
+            inline D value() && noexcept { return *p_value; }
 
         private:
 
@@ -215,12 +215,14 @@ namespace xw
      **************************/
 
     template <template <class> class CRTP>
-    xholder<CRTP>::xholder() : p_holder(nullptr)
+    xholder<CRTP>::xholder()
+        : p_holder(nullptr)
     {
     }
 
     template <template <class> class CRTP>
-    xholder<CRTP>::xholder(detail::xholder_impl<CRTP>* holder) : p_holder(holder)
+    xholder<CRTP>::xholder(detail::xholder_impl<CRTP>* holder)
+        : p_holder(holder)
     {
     }
 
@@ -237,27 +239,28 @@ namespace xw
     }
 
     template <template <class> class CRTP>
-    xholder<CRTP>::xholder(xholder&& rhs) : p_holder(rhs.p_holder)
+    xholder<CRTP>::xholder(xholder&& rhs)
+        : p_holder(rhs.p_holder)
     {
-       rhs.p_holder = nullptr;
+        rhs.p_holder = nullptr;
     }
 
     template <template <class> class CRTP>
     xholder<CRTP>& xholder<CRTP>::operator=(const xholder& rhs)
     {
-       using std::swap;
-       xholder tmp(rhs);
-       swap(*this, tmp);
-       return *this;
+        using std::swap;
+        xholder tmp(rhs);
+        swap(*this, tmp);
+        return *this;
     }
 
     template <template <class> class CRTP>
     xholder<CRTP>& xholder<CRTP>::operator=(xholder&& rhs)
     {
-       using std::swap;
-       xholder tmp(std::move(rhs));
-       swap(*this, tmp);
-       return *this;
+        using std::swap;
+        xholder tmp(std::move(rhs));
+        swap(*this, tmp);
+        return *this;
     }
 
     template <template <class> class CRTP>
@@ -365,4 +368,3 @@ namespace xw
     }
 }
 #endif
-

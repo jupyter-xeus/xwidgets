@@ -107,9 +107,9 @@ namespace xw
         xeus::xcomm m_comm;
     };
 
-    /*************************************
-     * to_json and from_json declaration *
-     *************************************/
+    /****************************************
+     * to_json and from_json specialization *
+     ****************************************/
 
     template <class D>
     void to_json(xeus::xjson& j, const xtransport<D>& o);

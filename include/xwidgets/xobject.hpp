@@ -12,8 +12,44 @@
 #include <string>
 #include <unordered_map>
 
+#include "xtl/xoptional.hpp"
+
 #include "xproperty/xobserved.hpp"
+
 #include "xtransport.hpp"
+
+namespace xtl
+{
+    /***********************************************************
+     * to_json and from_json specialization for xtl::xoptional *
+     ***********************************************************/
+
+    template <class D>
+    void to_json(xeus::xjson& j, const xoptional<D>& o)
+    {
+        if (!o.has_value())
+        {
+            j = nullptr;
+        }
+        else
+        {
+            j = o.value();
+        }
+    }
+
+    template <class D>
+    void from_json(const xeus::xjson& j, xoptional<D>& o)
+    {
+        if (j.is_null())
+        {
+            o = missing<D>();
+        }
+        else
+        {
+            o.value() = j.get<D>();
+        }
+    }
+}
 
 namespace xw
 {
@@ -27,9 +63,6 @@ namespace xw
     //  - to_json and from_json overload converting from and to the corresponding strings.
     #define X_CASELESS_STR_ENUM(...) std::string
 
-    // TODO: Use an optional type such as xtensor optionals
-    #define XOPTIONAL(x) x
-
     template <class D>
     class xobject : public xp::xobserved<D>, public xtransport<D>
     {
@@ -42,12 +75,12 @@ namespace xw
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_module, "jupyter-js-widgets");
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_module_version, "~2.1.4");
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _model_name, "WidgetModel");
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_module, "jupyter-js-widgets");
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_module_version, "~2.1.4");
-        XPROPERTY(XOPTIONAL(std::string), derived_type, _view_name, "WidgetView");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module, "jupyter-js-widgets");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module_version, "~2.1.4");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_name, "WidgetModel");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module, "jupyter-js-widgets");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module_version, "~2.1.4");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_name, "WidgetView");
 
         using base_type::notify;
     };

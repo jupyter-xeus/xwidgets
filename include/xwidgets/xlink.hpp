@@ -12,8 +12,8 @@
 #include <utility>
 
 #include "xholder.hpp"
-#include "xholder_id.hpp" 
-#include "xmaterialize.hpp" 
+#include "xholder_id.hpp"
+#include "xmaterialize.hpp"
 #include "xobject.hpp"
 
 namespace std
@@ -28,9 +28,8 @@ namespace std
     template <class A, class B>
     inline void from_json(const xeus::xjson& j, std::pair<A, B>& o)
     {
-        //using xeus::from_json;
-        //from_json(j[0], o.first);
-        //from_json(j[1], o.second);
+        o.first = j[0].get<A>();
+        o.second = j[1].get<B>();
     }
 }
 
@@ -89,7 +88,7 @@ namespace xw
         this->source().second = sn;
         this->target().first = t;
         this->target().second = tn;
-    }    
+    }
 
     template <class D>
     inline xeus::xjson xlink<D>::get_state() const
@@ -127,7 +126,7 @@ namespace xw
         l.target().first = t;
         l.target().second = tn;
         l.send_patch(l.get_state());
-        return l; 
+        return l;
     }
 }
 
