@@ -17,7 +17,8 @@ conda install widgetsnbextension -c QuantStack
 ## Requirements
 
  - widgetsnbextension ~3.0.0
- - xeus ~0.5.3
+ - xeus ~0.5.4
+ - xtl 0.2.0
  - xproperty 0.3.0
 
 ## License
