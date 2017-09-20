@@ -44,6 +44,11 @@ namespace xw
                 return m_id;
             }
 
+            virtual bool owning() const override
+            {
+                return false;
+            }
+
             inline D& value() & noexcept
             {
                 auto holder = get_transport_registry().find(m_id);

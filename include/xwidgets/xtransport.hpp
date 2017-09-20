@@ -84,8 +84,8 @@ namespace xw
         xeus::xguid id() const noexcept;
         void display() const;
 
-        void send_patch(xeus::xjson&& state) const;
-        void send(xeus::xjson&& content) const;
+        void send_patch(xeus::xjson&&) const;
+        void send(xeus::xjson&&) const;
 
     protected:
         
@@ -98,8 +98,8 @@ namespace xw
 
     private:
     
-        void handle_message(const xeus::xmessage& message);
-        void handle_custom_message(const xeus::xjson& content);
+        void handle_message(const xeus::xmessage&);
+        void handle_custom_message(const xeus::xjson&);
 
         bool m_moved_from;
         std::list<message_callback_type> m_message_callbacks;
@@ -316,7 +316,7 @@ namespace xw
     }
 
     template <class D>
-    inline void xtransport<D>::handle_custom_message(const xeus::xjson& content)
+    inline void xtransport<D>::handle_custom_message(const xeus::xjson& /*content*/)
     {
     }
 

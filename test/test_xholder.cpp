@@ -21,7 +21,7 @@ namespace xw
         button b;
         b.description = "coincoin";
         hm["x"] = std::move(b);
-        std::string res = hm["x"].template get<button, true>().description();
+        std::string res = hm["x"].template get<button>().description();
         ASSERT_EQ(b.description(), res);
     }
 }
