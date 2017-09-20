@@ -82,6 +82,13 @@ namespace xw
 
     template <template <class> class CRTP>
     template <class D>
+    xholder<CRTP>::xholder(const CRTP<D>& rhs)
+        : xholder(make_id_holder<CRTP>(rhs))
+    {
+    }
+
+    template <template <class> class CRTP>
+    template <class D>
     xholder<CRTP>& xholder<CRTP>::operator=(const CRTP<D>& rhs)
     {
         using std::swap;
