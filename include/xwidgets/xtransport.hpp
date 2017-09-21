@@ -53,11 +53,6 @@ namespace xw
             .target(get_widget_target_name());
     }
 
-    inline const char* get_widget_protocol_version()
-    {
-        return "2.0.0";
-    }
-
     /*******************************
      * base xtransport declaration *
      *******************************/
@@ -212,8 +207,8 @@ namespace xw
 
         // application/vnd.jupyter.widget-view+json
         xeus::xjson widgets_json;
-        widgets_json["version_major"] = "2";
-        widgets_json["version_minor"] = "0";
+        widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
+        widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
         widgets_json["model_id"] = xeus::guid_to_hex(this->derived_cast().id());
         mime_bundle["application/vnd.jupyter.widget-view+json"] = std::move(widgets_json);
 
@@ -247,7 +242,7 @@ namespace xw
     inline void xtransport<D>::send_patch(xeus::xjson&& patch) const
     {
         xeus::xjson metadata;
-        metadata["version"] = get_widget_protocol_version();
+        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
         xeus::xjson data;
         data["method"] = "update";
         data["state"] = std::move(patch);
@@ -258,7 +253,7 @@ namespace xw
     inline void xtransport<D>::send(xeus::xjson&& content) const
     {
         xeus::xjson metadata;
-        metadata["version"] = get_widget_protocol_version();
+        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
         xeus::xjson data;
         data["method"] = "custom";
         data["content"] = std::move(content);
@@ -275,7 +270,7 @@ namespace xw
     inline void xtransport<D>::open()
     {
         xeus::xjson metadata;
-        metadata["version"] = get_widget_protocol_version();
+        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
         xeus::xjson data;
         data["state"] = derived_cast().get_state();
         m_comm.open(std::move(metadata), std::move(data));
