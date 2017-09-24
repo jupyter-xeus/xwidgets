@@ -1,6 +1,7 @@
 #ifndef XWIDGETS_HOLDER_HPP
 #define XWIDGETS_HOLDER_HPP
 
+#include <stdexcept>
 #include <utility>
 
 #include "xeus/xguid.hpp"
@@ -351,7 +352,7 @@ namespace xw
     template <template <class> class CRTP>
     inline void to_json(xeus::xjson& j, const xholder<CRTP>& o)
     {
-        j = "IPY_MODEL_" + guid_to_hex(o.id());
+        j = "IPY_MODEL_" + std::string(o.id());
     }
 
     template <template <class> class CRTP>
@@ -359,7 +360,7 @@ namespace xw
     {
         /*
         std::string prefixed_guid = j;
-        xguid guid = hex_to_guid(prefixed_guid.substr(10).c_str());
+        xeus::xguid guid guid = prefixed_guid.substr(10).c_str();
         auto& holder = get_transport_registry().find(guid);
         o;  // TODO: move?
         */

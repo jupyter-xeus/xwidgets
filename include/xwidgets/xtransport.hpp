@@ -120,7 +120,7 @@ namespace xw
     inline xtransport<D>::xtransport()
         : m_moved_from(false),
           m_hold(nullptr),
-          m_comm(get_widget_target(), xeus::xguid())
+          m_comm(get_widget_target(), xeus::new_xguid())
     {
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         get_transport_registry().register_weak(this);
@@ -209,7 +209,7 @@ namespace xw
         xeus::xjson widgets_json;
         widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
         widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
-        widgets_json["model_id"] = xeus::guid_to_hex(this->derived_cast().id());
+        widgets_json["model_id"] = this->derived_cast().id();
         mime_bundle["application/vnd.jupyter.widget-view+json"] = std::move(widgets_json);
 
         // text/plain
@@ -322,14 +322,15 @@ namespace xw
     template <class D>
     inline void to_json(xeus::xjson& j, const xtransport<D>& o)
     {
-        j = "IPY_MODEL_" + guid_to_hex(o.id());
+        j = "IPY_MODEL_" + std::string(o.id());
     }
 
     template <class D>
     inline void from_json(const xeus::xjson& j, xtransport<D>& o)
     {
+        // TODO: directly convert from xjson
         std::string prefixed_guid = j;
-        xeus::xguid guid = xeus::hex_to_guid(prefixed_guid.substr(10).c_str());
+        auto guid = prefixed_guid.substr(10).c_str();
         auto& holder = get_transport_registry().find(guid);
         o = holder.template get<D>();  // TODO: move?
     }
