@@ -9,6 +9,7 @@ First, install xeus-cling and notebook from conda
 ```bash
 conda install cling              -c QuantStack
 conda install xeus-cling         -c QuantStack
+conda install xtl                -c QuantStack
 conda install xproperty          -c QuantStack
 conda install notebook           -c QuantStack
 conda install widgetsnbextension -c QuantStack
@@ -17,9 +18,9 @@ conda install widgetsnbextension -c QuantStack
 ## Requirements
 
  - widgetsnbextension ~3.0.0
- - xeus ~0.5.4
- - xtl 0.2.0
- - xproperty 0.3.0
+ - xeus >=0.6.0,0.7
+ - xtl >=0.2.2,<0.3
+ - xproperty >=0.3.0,<0.4
 
 ## License
 

@@ -46,17 +46,17 @@ namespace xw
     template <class D>
     void xregistry::register_weak(xtransport<D>* ptr)
     {
-        m_storage[xeus::guid_to_hex(ptr->id())] = make_weak_holder(ptr);
+        m_storage[ptr->id()] = make_weak_holder(ptr);
     }
 
     inline void xregistry::unregister(xeus::xguid id)
     {
-        m_storage.erase(xeus::guid_to_hex(id));
+        m_storage.erase(id);
     }
 
     inline auto xregistry::find(xeus::xguid id) -> typename storage_type::mapped_type&
     {
-        auto it = m_storage.find(xeus::guid_to_hex(id));
+        auto it = m_storage.find(id);
         if (it == m_storage.end())
         {
             throw std::runtime_error("Could not find specified id in widgets registry");
