@@ -4,6 +4,7 @@
 #include <utility>
 
 #include "xtl/xany.hpp"
+#include "xtl/xclosure.hpp"
 
 #include "xholder.hpp"
 #include "xregistry.hpp"
@@ -44,11 +45,6 @@ namespace xw
             virtual xeus::xguid id() const override
             {
                 return m_id;
-            }
-
-            virtual bool owning() const override
-            {
-                return false;
             }
 
             virtual xtl::any value() & override
