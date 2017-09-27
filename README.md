@@ -40,7 +40,7 @@ All the dependencies of xeus-cling are available for the conda package manager.
 
  - widgetsnbextension ~3.0.0
  - xeus >=0.6.0,0.7
- - xtl >=0.2.2,<0.3
+ - xtl >=0.2.5,<0.3
  - xproperty >=0.3.0,<0.4
 
 ## License

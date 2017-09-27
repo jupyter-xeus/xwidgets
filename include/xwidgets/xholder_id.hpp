@@ -3,6 +3,8 @@
 
 #include <utility>
 
+#include "xtl/xany.hpp"
+
 #include "xholder.hpp"
 #include "xregistry.hpp"
 
@@ -49,22 +51,22 @@ namespace xw
                 return false;
             }
 
-            inline D& value() & noexcept
+            virtual xtl::any value() & override
             {
                 auto holder = get_transport_registry().find(m_id);
-                return holder.template get<D>();
+                return xtl::closure(holder.template get<D>());
             }
 
-            inline const D& value() const & noexcept
+            virtual xtl::any value() const & override
             {
                 auto holder = get_transport_registry().find(m_id);
-                return holder.template get<D>();
+                return xtl::closure(holder.template get<D>());
             }
 
-            inline D value() && noexcept
+            virtual xtl::any value() && override
             {
                 auto holder = get_transport_registry().find(m_id);
-                return holder.template get<D>();
+                return xtl::closure(std::move(holder.template get<D>()));
             }
 
         private:

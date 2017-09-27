@@ -4,14 +4,13 @@
 #include <stdexcept>
 #include <utility>
 
+#include "xtl/xany.hpp"
+
 #include "xeus/xguid.hpp"
 #include "xeus/xjson.hpp"
 
 namespace xw
 {
-    template <class D>
-    class xtransport;
-
     namespace detail
     {
         template <template <class> class CRTP>
@@ -22,10 +21,12 @@ namespace xw
      * xholder declaration *
      ***********************/
 
-    template <template <class> class CRTP = xtransport>
+    template <template <class> class CRTP>
     class xholder
     {
     public:
+
+        using implementation_type = detail::xholder_impl<CRTP>;
 
         xholder();
         ~xholder();
@@ -35,7 +36,7 @@ namespace xw
         xholder(const CRTP<D>& rhs);
         template <class D>
         xholder(CRTP<D>&& rhs);
-        xholder(detail::xholder_impl<CRTP>* holder);
+        xholder(implementation_type* holder);
 
         xholder& operator=(const xholder& rhs);
         xholder& operator=(xholder&& rhs);
@@ -57,7 +58,7 @@ namespace xw
 
     private:
 
-        detail::xholder_impl<CRTP>* p_holder;
+        implementation_type* p_holder;
     };
 
     template <template <class> class CRTP>
@@ -91,7 +92,10 @@ namespace xw
 
             virtual void display() const = 0;
             virtual xeus::xguid id() const = 0;
-            virtual bool owning() const = 0;
+
+            virtual xtl::any value() & = 0;
+            virtual xtl::any value() const & = 0;
+            virtual xtl::any value() && = 0;
 
         protected:
 
@@ -136,13 +140,19 @@ namespace xw
                 return m_value.id();
             }
 
-            inline D& value() & noexcept { return m_value; }
-            inline const D& value() const & noexcept { return m_value; }
-            inline D value() && noexcept { return m_value; }
-
-            virtual bool owning() const override
+            virtual xtl::any value() & override
             {
-                return true;
+                return xtl::closure(m_value);
+            }
+
+            virtual xtl::any value() const & override
+            {
+                return xtl::closure(m_value);
+            }
+
+            virtual xtl::any value() && override
+            {
+                return xtl::closure(std::move(m_value));
             }
 
         private:
@@ -184,13 +194,19 @@ namespace xw
                 return p_value->id();
             }
 
-            inline D& value() & noexcept { return *p_value; }
-            inline const D& value() const & noexcept { return *p_value; }
-            inline D value() && noexcept { return *p_value; }
-
-            virtual bool owning() const override
+            virtual xtl::any value() & override
             {
-                return false;
+                return xtl::closure(*p_value);
+            }
+
+            virtual xtl::any value() const & override
+            {
+                return xtl::closure(*p_value);
+            }
+
+            virtual xtl::any value() && override
+            {
+                return xtl::closure(std::move(*p_value));
             }
 
         private:
@@ -321,28 +337,14 @@ namespace xw
     template <class D>
     D& xholder<CRTP>::get() &
     {
-        if (p_holder->owning())
-        {
-            return dynamic_cast<detail::xholder_owning<CRTP, D>*>(p_holder)->value();
-        }
-        else
-        {
-            return dynamic_cast<detail::xholder_weak<CRTP, D>*>(p_holder)->value();
-        }
+        return xtl::any_cast<xtl::closure_wrapper<D&>>(p_holder->value()).get();
     }
 
     template <template <class> class CRTP>
     template <class D>
     const D& xholder<CRTP>::get() const &
     {
-        if (p_holder->owning())
-        {
-            return dynamic_cast<detail::xholder_owning<CRTP, D>*>(p_holder)->value();
-        }
-        else
-        {
-            return dynamic_cast<detail::xholder_weak<CRTP, D>*>(p_holder)->value();
-        }
+        return xtl::any_cast<xtl::closure_wrapper<const D&>>(p_holder->value()).get();
     }
 
     /****************************************
