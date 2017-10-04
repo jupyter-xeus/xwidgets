@@ -12,6 +12,13 @@
 namespace xw
 {
 
+    template <class T, class... Args>
+    T make_widget(Args&&... args)
+    {
+        typename T::base_type tmp(std::forward<Args>(args)...);
+        return std::move(tmp.derived_cast());
+    }
+
     /****************************
      * xmaterialize declaration *
      ****************************/
@@ -35,6 +42,8 @@ namespace xw
 
         xmaterialize(xmaterialize&&) = default;
         xmaterialize& operator=(xmaterialize&&) = default;
+
+        const xmaterialize& finalize() const;
     };
 
     /*******************************
@@ -71,6 +80,12 @@ namespace xw
         this->close();
         base_type::operator=(rhs);
         this->open();
+        return *this;
+    }
+
+    template <template <class> class B, class... P>
+    inline const xmaterialize<B, P...>& xmaterialize<B, P...>::finalize() const
+    {
         return *this;
     }
 }
