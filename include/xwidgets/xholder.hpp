@@ -322,15 +322,11 @@ namespace xw
     template <template <class> class CRTP>
     xeus::xguid xholder<CRTP>::id() const
     {
-        if (p_holder != nullptr)
+        if (p_holder == nullptr)
         {
-            return p_holder->id();
+            throw std::runtime_error("The holder does not contain a widget");
         }
-        else
-        {
-            // TODO: throw?
-            return xeus::xguid();
-        }
+        return p_holder->id();
     }
 
     template <template <class> class CRTP>

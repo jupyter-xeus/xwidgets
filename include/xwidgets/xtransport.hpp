@@ -246,6 +246,7 @@ namespace xw
         xeus::xjson data;
         data["method"] = "update";
         data["state"] = std::move(patch);
+        data["buffer_paths"] = xeus::xjson::array();
         m_comm.send(std::move(metadata), std::move(data));
     }
 
