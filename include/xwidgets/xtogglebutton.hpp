@@ -28,7 +28,6 @@ namespace xw
         using base_type = xboolean<D>;
         using derived_type = D;
 
-        xtogglebutton();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
@@ -36,12 +35,18 @@ namespace xw
         XPROPERTY(std::string, derived_type, icon);
         XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger, ), derived_type, button_style);
 
+    protected:
+
+        xtogglebutton();
+
     private:
 
         void set_defaults();
     };
 
     using togglebutton = xmaterialize<xtogglebutton>;
+
+    using togglebutton_generator = xgenerator<xtogglebutton>;
 
     /********************************
      * xtogglebutton implementation *

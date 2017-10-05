@@ -28,7 +28,6 @@ namespace xw
         using base_type = xobject<D>;
         using derived_type = D;
 
-        xlayout();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
@@ -58,6 +57,10 @@ namespace xw
         XPROPERTY(xtl::xoptional<std::string>, derived_type, visibility);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, width);
 
+    protected:
+
+        xlayout();
+
     private:
 
         void set_defaults();
@@ -65,16 +68,11 @@ namespace xw
 
     using layout = xmaterialize<xlayout>;
 
+    using layout_generator = xgenerator<xlayout>;
+
     /*************************
      * layout implementation *
      *************************/
-
-    template <class D>
-    inline xlayout<D>::xlayout()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline void xlayout<D>::apply_patch(const xeus::xjson& patch)
@@ -136,6 +134,13 @@ namespace xw
         XOBJECT_SET_PATCH_FROM_PROPERTY(width, state);
 
         return state;
+    }
+
+    template <class D>
+    inline xlayout<D>::xlayout()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

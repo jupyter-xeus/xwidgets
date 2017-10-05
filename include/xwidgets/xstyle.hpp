@@ -27,9 +27,12 @@ namespace xw
         using base_type = xobject<D>;
         using derived_type = D;
 
-        xstyle();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
+
+    protected:
+
+        xstyle();
 
     private:
 
@@ -39,13 +42,6 @@ namespace xw
     /******************************
      * base xstyle implementation *
      ******************************/
-
-    template <class D>
-    inline xstyle<D>::xstyle()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline void xstyle<D>::apply_patch(const xeus::xjson& patch)
@@ -58,6 +54,13 @@ namespace xw
     {
         xeus::xjson state = base_type::get_state();
         return state;
+    }
+
+    template <class D>
+    inline xstyle<D>::xstyle()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

@@ -28,11 +28,14 @@ namespace xw
         using base_type = xboolean<D>;
         using derived_type = D;
 
-        xcheckbox();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(bool, derived_type, indent, true);
+
+    protected:
+
+        xcheckbox();
 
     private:
 
@@ -41,16 +44,11 @@ namespace xw
 
     using checkbox = xmaterialize<xcheckbox>;
 
+    using checkbox_generator = xgenerator<xcheckbox>;
+
     /****************************
      * xcheckbox implementation *
      ****************************/
-
-    template <class D>
-    inline xcheckbox<D>::xcheckbox()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xcheckbox<D>::get_state() const
@@ -68,6 +66,13 @@ namespace xw
         base_type::apply_patch(patch);
 
         XOBJECT_SET_PROPERTY_FROM_PATCH(indent, patch)
+    }
+
+    template <class D>
+    inline xcheckbox<D>::xcheckbox()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

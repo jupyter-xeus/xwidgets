@@ -27,13 +27,16 @@ namespace xw
         using derived_type = D;
         using value_type = typename base_type::value_type;
 
-        xnumeral();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(value_type, derived_type, step);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(bool, derived_type, continuous_update);
+
+    protected:
+
+        xnumeral();
 
     private:
 
@@ -44,6 +47,9 @@ namespace xw
     using numeral = xmaterialize<xnumeral, T>;
 
     template <class T>
+    using numeral_generator = xgenerator<xnumeral, T>;
+
+    template <class T>
     struct xnumber_traits<numeral<T>>
     {
         using value_type = T;
@@ -52,13 +58,6 @@ namespace xw
     /***************************
      * xnumeral implementation *
      ***************************/
-
-    template <class D>
-    inline xnumeral<D>::xnumeral()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xnumeral<D>::get_state() const
@@ -80,6 +79,13 @@ namespace xw
         XOBJECT_SET_PROPERTY_FROM_PATCH(step, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch)
+    }
+
+    template <class D>
+    inline xnumeral<D>::xnumeral()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

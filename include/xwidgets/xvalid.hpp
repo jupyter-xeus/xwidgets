@@ -28,11 +28,14 @@ namespace xw
         using base_type = xboolean<D>;
         using derived_type = D;
 
-        xvalid();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(std::string, derived_type, readout, "Invalid");
+
+    protected:
+
+        xvalid();
 
     private:
 
@@ -41,16 +44,11 @@ namespace xw
 
     using valid = xmaterialize<xvalid>;
 
+    using valid_generator = xgenerator<xvalid>;
+
     /*************************
      * xvalid implementation *
      *************************/
-
-    template <class D>
-    inline xvalid<D>::xvalid()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xvalid<D>::get_state() const
@@ -68,6 +66,13 @@ namespace xw
         base_type::apply_patch(patch);
 
         XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch)
+    }
+
+    template <class D>
+    inline xvalid<D>::xvalid()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

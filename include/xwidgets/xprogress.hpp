@@ -27,12 +27,15 @@ namespace xw
         using base_type = xstyle<D>;
         using derived_type = D;
 
-        xprogress_style();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(std::string, derived_type, description_width);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, bar_color);
+
+    protected:
+
+        xprogress_style();
 
     private:
 
@@ -40,6 +43,8 @@ namespace xw
     };
 
     using progress_style = xmaterialize<xprogress_style>;
+
+    using progress_style_generator = xgenerator<xprogress_style>;
 
     /***********************
      * progress declaration *
@@ -54,13 +59,16 @@ namespace xw
         using derived_type = D;
         using value_type = typename base_type::value_type;
 
-        xprogress();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(X_CASELESS_STR_ENUM(horizontal, vertical), derived_type, orientation, "horizontal");
         XPROPERTY(X_CASELESS_STR_ENUM(success, info, warning, danger, ), derived_type, bar_style);
         XPROPERTY(::xw::progress_style, derived_type, style);
+
+    protected:
+
+        xprogress();
 
     private:
 
@@ -71,6 +79,9 @@ namespace xw
     using progress = xmaterialize<xprogress, T>;
 
     template <class T>
+    using progress_generator = xgenerator<xprogress, T>;
+
+    template <class T>
     struct xnumber_traits<progress<T>>
     {
         using value_type = T;
@@ -79,13 +90,6 @@ namespace xw
     /**********************************
      * xprogress_style implementation *
      **********************************/
-
-    template <class D>
-    inline xprogress_style<D>::xprogress_style()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xprogress_style<D>::get_state() const
@@ -105,6 +109,13 @@ namespace xw
     }
 
     template <class D>
+    inline xprogress_style<D>::xprogress_style()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
     inline void xprogress_style<D>::set_defaults()
     {
         this->_model_module() = "@jupyter-widgets/controls";
@@ -114,13 +125,6 @@ namespace xw
     /****************************
      * xprogress implementation *
      ****************************/
-
-    template <class D>
-    inline xprogress<D>::xprogress()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xprogress<D>::get_state() const
@@ -142,6 +146,13 @@ namespace xw
         XOBJECT_SET_PROPERTY_FROM_PATCH(orientation, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(bar_style, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch)
+    }
+
+    template <class D>
+    inline xprogress<D>::xprogress()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

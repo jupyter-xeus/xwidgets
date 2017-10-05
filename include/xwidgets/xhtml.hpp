@@ -26,9 +26,12 @@ namespace xw
         using base_type = xstring<D>;
         using derived_type = D;
 
-        xhtml();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
+
+    protected:
+
+        xhtml();
 
     private:
 
@@ -37,16 +40,11 @@ namespace xw
 
     using html = xmaterialize<xhtml>;
 
+    using html_generator = xgenerator<xhtml>;
+
     /************************
      * xhtml implementation *
      ************************/
-
-    template <class D>
-    inline xhtml<D>::xhtml()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xhtml<D>::get_state() const
@@ -59,6 +57,13 @@ namespace xw
     inline void xhtml<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
+    }
+
+    template <class D>
+    inline xhtml<D>::xhtml()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

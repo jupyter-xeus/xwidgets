@@ -26,7 +26,6 @@ namespace xw
         using base_type = xstring<D>;
         using derived_type = D;
 
-        xtextarea();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
@@ -34,23 +33,21 @@ namespace xw
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(bool, derived_type, continuous_update, true);
 
+    protected:
+
+        xtextarea();
+
     private:
 
         void set_defaults();
     };
 
     using textarea = xmaterialize<xtextarea>;
+    using textarea_generator = xgenerator<xtextarea>;
 
     /****************************
      * xtextarea implementation *
      ****************************/
-
-    template <class D>
-    inline xtextarea<D>::xtextarea()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xtextarea<D>::get_state() const
@@ -72,6 +69,13 @@ namespace xw
         XOBJECT_SET_PROPERTY_FROM_PATCH(rows, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch)
+    }
+
+    template <class D>
+    inline xtextarea<D>::xtextarea()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

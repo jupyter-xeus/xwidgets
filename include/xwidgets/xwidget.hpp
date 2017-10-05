@@ -28,11 +28,14 @@ namespace xw
         using base_type = xobject<D>;
         using derived_type = D;
 
-        xwidget();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(::xw::layout, derived_type, layout);
+
+    protected:
+
+        xwidget();
 
     private:
 

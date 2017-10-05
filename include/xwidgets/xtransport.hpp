@@ -66,12 +66,6 @@ namespace xw
 
         using derived_type = D;
 
-        xtransport();
-        xtransport(const xtransport&);
-        xtransport(xtransport&&);
-        xtransport& operator=(const xtransport&);
-        xtransport& operator=(xtransport&&);
-
         derived_type& derived_cast() & noexcept;
         const derived_type& derived_cast() const & noexcept;
         derived_type derived_cast() && noexcept;
@@ -83,7 +77,13 @@ namespace xw
         void send(xeus::xjson&&) const;
 
     protected:
-        
+ 
+        xtransport();
+        xtransport(const xtransport&);
+        xtransport(xtransport&&);
+        xtransport& operator=(const xtransport&);
+        xtransport& operator=(xtransport&&);
+
         bool moved_from() const noexcept;
         void open();
         void close();
@@ -329,10 +329,10 @@ namespace xw
     inline void from_json(const xeus::xjson& j, xtransport<D>& o)
     {
         // TODO: directly convert from xjson
-        std::string prefixed_guid = j;
-        auto guid = prefixed_guid.substr(10).c_str();
-        auto& holder = get_transport_registry().find(guid);
-        o = holder.template get<D>();  // TODO: move?
+        //std::string prefixed_guid = j;
+        //auto guid = prefixed_guid.substr(10).c_str();
+        //auto& holder = get_transport_registry().find(guid);
+        //o = holder.template get<D>();  // TODO: move?
     }
 }
 

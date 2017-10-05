@@ -28,7 +28,6 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        xnumber();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
@@ -40,6 +39,10 @@ namespace xw
         XPROPERTY(value_type, derived_type, min);
         XPROPERTY(value_type, derived_type, max, value_type(100));
 
+    protected:
+
+        xnumber();
+
     private:
 
         void set_defaults();
@@ -48,13 +51,6 @@ namespace xw
     /**************************
      * xnumber implementation *
      **************************/
-
-    template <class D>
-    inline xnumber<D>::xnumber()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xnumber<D>::get_state() const
@@ -76,6 +72,13 @@ namespace xw
         XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(min, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(max, patch)
+    }
+
+    template <class D>
+    inline xnumber<D>::xnumber()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>
