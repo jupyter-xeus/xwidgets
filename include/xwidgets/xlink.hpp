@@ -58,8 +58,6 @@ namespace xw
 
     protected:
 
-        xlink();
-
         template <class S, class T>
         xlink(xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn);
 
@@ -97,13 +95,6 @@ namespace xw
     }
 
     template <class D>
-    inline xlink<D>::xlink()
-        : base_type()
-    {
-        set_defaults();
-    }
-
-    template <class D>
     template <class S, class T>
     inline xlink<D>::xlink(xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn)
         : base_type()
@@ -120,18 +111,6 @@ namespace xw
     {
         this->_model_name() = "LinkModel";
         this->_model_module() = "@jupyter-widgets/controls";
-    }
-
-    template <class S, class T>
-    inline link make_link(xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn)
-    {
-        link l;
-        l.source().first = s;
-        l.source().second = sn;
-        l.target().first = t;
-        l.target().second = tn;
-        l.send_patch(l.get_state());
-        return l;
     }
 }
 
