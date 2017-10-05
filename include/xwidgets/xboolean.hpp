@@ -26,7 +26,6 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        xboolean();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
@@ -34,6 +33,10 @@ namespace xw
 
         XPROPERTY(bool, derived_type, value);
         XPROPERTY(bool, derived_type, disabled);
+
+    protected:
+
+        xboolean();
 
     private:
 
@@ -43,13 +46,6 @@ namespace xw
     /***************************
      * xboolean implementation *
      ***************************/
-
-    template <class D>
-    inline xboolean<D>::xboolean()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xboolean<D>::get_state() const
@@ -69,6 +65,13 @@ namespace xw
 
         XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
+    }
+
+    template <class D>
+    inline xboolean<D>::xboolean()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

@@ -26,11 +26,14 @@ namespace xw
         using base_type = xstring<D>;
         using derived_type = D;
 
-        xpassword();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(bool, derived_type, disabled);
+
+    protected:
+
+        xpassword();
 
     private:
 
@@ -39,16 +42,11 @@ namespace xw
 
     using password = xmaterialize<xpassword>;
 
+    using password_generator = xgenerator<xpassword>;
+
     /****************************
      * xpassword implementation *
      ****************************/
-
-    template <class D>
-    inline xpassword<D>::xpassword()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xpassword<D>::get_state() const
@@ -66,6 +64,13 @@ namespace xw
         base_type::apply_patch(patch);
 
         XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
+    }
+
+    template <class D>
+    inline xpassword<D>::xpassword()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

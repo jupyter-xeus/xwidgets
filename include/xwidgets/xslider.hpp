@@ -27,12 +27,15 @@ namespace xw
         using base_type = xstyle<D>;
         using derived_type = D;
 
-        xslider_style();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(std::string, derived_type, description_width);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, handle_color);
+
+    protected:
+
+        xslider_style();
 
     private:
 
@@ -40,6 +43,8 @@ namespace xw
     };
 
     using slider_style = xmaterialize<xslider_style>;
+
+    using slider_style_generator = xgenerator<xslider_style>;
 
     /**********************
      * slider declaration *
@@ -54,7 +59,6 @@ namespace xw
         using derived_type = D;
         using value_type = typename base_type::value_type;
 
-        xslider();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
@@ -66,6 +70,10 @@ namespace xw
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(::xw::slider_style, derived_type, style);
 
+    protected:
+
+        xslider();
+
     private:
 
         void set_defaults();
@@ -75,7 +83,16 @@ namespace xw
     using slider = xmaterialize<xslider, T>;
 
     template <class T>
+    using slider_generator = xgenerator<xslider, T>;
+
+    template <class T>
     struct xnumber_traits<slider<T>>
+    {
+        using value_type = T;
+    };
+
+    template <class T>
+    struct xnumber_traits<slider_generator<T>>
     {
         using value_type = T;
     };
@@ -83,13 +100,6 @@ namespace xw
     /********************************
      * xslider_style implementation *
      ********************************/
-
-    template <class D>
-    inline xslider_style<D>::xslider_style()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xslider_style<D>::get_state() const
@@ -109,6 +119,13 @@ namespace xw
     }
 
     template <class D>
+    inline xslider_style<D>::xslider_style()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
     inline void xslider_style<D>::set_defaults()
     {
         this->_model_module() = "@jupyter-widgets/controls";
@@ -118,13 +135,6 @@ namespace xw
     /**************************
      * xslider implementation *
      **************************/
-
-    template <class D>
-    inline xslider<D>::xslider()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xslider<D>::get_state() const
@@ -154,6 +164,13 @@ namespace xw
         XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch)
+    }
+
+    template <class D>
+    inline xslider<D>::xslider()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

@@ -27,13 +27,16 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        xstring();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(std::string, derived_type, description);
         XPROPERTY(std::string, derived_type, value);
         XPROPERTY(std::string, derived_type, placeholder, "\u00A0");
+
+    protected:
+
+        xstring();
 
     private:
 
@@ -43,13 +46,6 @@ namespace xw
     /**************************
      * xstring implementation *
      **************************/
-
-    template <class D>
-    inline xstring<D>::xstring()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xstring<D>::get_state() const
@@ -69,6 +65,13 @@ namespace xw
 
         XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(placeholder, patch)
+    }
+
+    template <class D>
+    inline xstring<D>::xstring()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

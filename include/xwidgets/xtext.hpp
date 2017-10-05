@@ -28,7 +28,6 @@ namespace xw
         using base_type = xstring<D>;
         using derived_type = D;
 
-        xtext();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
@@ -39,6 +38,10 @@ namespace xw
 
         void handle_custom_message(const xeus::xjson&);
 
+    protected:
+
+        xtext();
+
     private:
 
         void set_defaults();
@@ -48,16 +51,11 @@ namespace xw
 
     using text = xmaterialize<xtext>;
 
+    using text_generator = xgenerator<xtext>;
+
     /************************
      * xtext implementation *
      ************************/
-
-    template <class D>
-    inline xtext<D>::xtext()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xtext<D>::get_state() const
@@ -83,6 +81,13 @@ namespace xw
     inline void xtext<D>::on_submit(submit_callback_type cb)
     {
         m_submit_callbacks.emplace_back(std::move(cb));
+    }
+
+    template <class D>
+    inline xtext<D>::xtext()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

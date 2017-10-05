@@ -26,9 +26,12 @@ namespace xw
         using base_type = xstring<D>;
         using derived_type = D;
 
-        xlabel();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
+
+    protected:
+
+        xlabel();
 
     private:
 
@@ -37,16 +40,11 @@ namespace xw
 
     using label = xmaterialize<xlabel>;
 
+    using label_generator = xgenerator<xlabel>;
+
     /*************************
      * xlabel implementation *
      ************************/
-
-    template <class D>
-    inline xlabel<D>::xlabel()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xlabel<D>::get_state() const
@@ -59,6 +57,13 @@ namespace xw
     inline void xlabel<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
+    }
+
+    template <class D>
+    inline xlabel<D>::xlabel()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

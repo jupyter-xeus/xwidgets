@@ -30,7 +30,6 @@ namespace xw
         using derived_type = D;
         using children_list_type = xbox_children_list_type;
 
-        xbox();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
@@ -42,6 +41,10 @@ namespace xw
 
         template <class T>
         void add(xtransport<T>&& w);
+
+    protected:
+
+        xbox();
 
     private:
 
@@ -60,6 +63,8 @@ namespace xw
         using base_type = xbox<D>;
         using derived_type = D;
 
+    protected:
+
         xhbox();
 
     private:
@@ -68,6 +73,8 @@ namespace xw
     };
 
     using hbox = xmaterialize<xhbox>;
+
+    using hbox_generator = xgenerator<xhbox>;
 
     /********************
      * vbox declaration *
@@ -81,6 +88,8 @@ namespace xw
         using base_type = xbox<D>;
         using derived_type = D;
 
+    protected:
+
         xvbox();
 
     private:
@@ -90,16 +99,11 @@ namespace xw
 
     using vbox = xmaterialize<xvbox>;
 
+    using vbox_generator = xgenerator<xvbox>;
+
     /***********************
      * xbox implementation *
      ***********************/
-
-    template <class D>
-    inline xbox<D>::xbox()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xbox<D>::get_state() const
@@ -139,6 +143,13 @@ namespace xw
         xeus::xjson state;
         XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
         this->send_patch(std::move(state));
+    }
+
+    template <class D>
+    inline xbox<D>::xbox()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

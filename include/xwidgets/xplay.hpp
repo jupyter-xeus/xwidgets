@@ -27,7 +27,6 @@ namespace xw
         using derived_type = D;
         using value_type = typename base_type::value_type;
 
-        xplay();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
@@ -38,12 +37,18 @@ namespace xw
         XPROPERTY(bool, derived_type, _repeat);
         XPROPERTY(bool, derived_type, show_repeat, true);
 
+    protected:
+
+        xplay();
+
     private:
 
         void set_defaults();
     };
 
     using play = xmaterialize<xplay>;
+
+    using play_generator = xgenerator<xplay>;
 
     template <>
     struct xnumber_traits<play>
@@ -54,13 +59,6 @@ namespace xw
     /************************
      * xplay implementation *
      ************************/
-
-    template <class D>
-    inline xplay<D>::xplay()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xplay<D>::get_state() const
@@ -88,6 +86,13 @@ namespace xw
         XOBJECT_SET_PROPERTY_FROM_PATCH(_playing, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(_repeat, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(show_repeat, patch)
+    }
+
+    template <class D>
+    inline xplay<D>::xplay()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

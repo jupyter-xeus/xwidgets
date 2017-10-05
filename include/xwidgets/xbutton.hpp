@@ -27,12 +27,15 @@ namespace xw
         using base_type = xstyle<D>;
         using derived_type = D;
 
-        xbutton_style();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(xtl::xoptional<std::string>, derived_type, button_color);
         XPROPERTY(std::string, derived_type, font_weight);
+
+    protected:
+
+        xbutton_style();
 
     private:
 
@@ -40,6 +43,8 @@ namespace xw
     };
 
     using button_style = xmaterialize<xbutton_style>;
+
+    using button_style_generator = xgenerator<xbutton_style>;
 
     /**********************
      * button declaration *
@@ -55,7 +60,6 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        xbutton();
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
@@ -71,6 +75,10 @@ namespace xw
 
         void handle_custom_message(const xeus::xjson&);
 
+    protected:
+
+        xbutton();
+
     private:
 
         void set_defaults();
@@ -80,16 +88,11 @@ namespace xw
 
     using button = xmaterialize<xbutton>;
 
+    using button_generator = xgenerator<xbutton>;
+
     /********************************
      * xbutton_style implementation *
      ********************************/
-
-    template <class D>
-    inline xbutton_style<D>::xbutton_style()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xbutton_style<D>::get_state() const
@@ -112,6 +115,13 @@ namespace xw
     }
 
     template <class D>
+    inline xbutton_style<D>::xbutton_style()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
     inline void xbutton_style<D>::set_defaults()
     {
         this->_model_module() = "@jupyter-widgets/controls";
@@ -121,13 +131,6 @@ namespace xw
     /**************************
      * xbutton implementation *
      **************************/
-
-    template <class D>
-    inline xbutton<D>::xbutton()
-        : base_type()
-    {
-        set_defaults();
-    }
 
     template <class D>
     inline xeus::xjson xbutton<D>::get_state() const
@@ -161,6 +164,13 @@ namespace xw
     inline void xbutton<D>::on_click(click_callback_type cb)
     {
         m_click_callbacks.emplace_back(std::move(cb));
+    }
+
+    template <class D>
+    inline xbutton<D>::xbutton()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>

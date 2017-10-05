@@ -48,17 +48,20 @@ namespace xw
 
         using base_type = xobject<D>;
         using derived_type = D;
-
         using pair_type = xlink_pair_type;
 
-        xlink();
-        template <class S, class T>
-        xlink(xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn);
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(pair_type, derived_type, source);
         XPROPERTY(pair_type, derived_type, target);
+
+    protected:
+
+        xlink();
+
+        template <class S, class T>
+        xlink(xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn);
 
     private:
 
@@ -67,28 +70,11 @@ namespace xw
 
     using link = xmaterialize<xlink>;
 
+    using link_generator = xgenerator<xlink>;
+
     /************************
      * xlink implementation *
      ************************/
-
-    template <class D>
-    inline xlink<D>::xlink()
-        : base_type()
-    {
-        set_defaults();
-    }
-
-    template <class D>
-    template <class S, class T>
-    inline xlink<D>::xlink(xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn)
-        : base_type()
-    {
-        set_defaults();
-        this->source().first = s;
-        this->source().second = sn;
-        this->target().first = t;
-        this->target().second = tn;
-    }
 
     template <class D>
     inline xeus::xjson xlink<D>::get_state() const
@@ -108,6 +94,25 @@ namespace xw
 
         XOBJECT_SET_PROPERTY_FROM_PATCH(source, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(target, patch)
+    }
+
+    template <class D>
+    inline xlink<D>::xlink()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
+    template <class S, class T>
+    inline xlink<D>::xlink(xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn)
+        : base_type()
+    {
+        set_defaults();
+        this->source().first = s;
+        this->source().second = sn;
+        this->target().first = t;
+        this->target().second = tn;
     }
 
     template <class D>

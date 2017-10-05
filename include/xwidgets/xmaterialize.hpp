@@ -11,14 +11,6 @@
 
 namespace xw
 {
-
-    template <class T, class... Args>
-    T make_widget(Args&&... args)
-    {
-        typename T::base_type tmp(std::forward<Args>(args)...);
-        return std::move(tmp.derived_cast());
-    }
-
     /****************************
      * xmaterialize declaration *
      ****************************/
@@ -42,8 +34,23 @@ namespace xw
 
         xmaterialize(xmaterialize&&) = default;
         xmaterialize& operator=(xmaterialize&&) = default;
+    };
 
-        const xmaterialize& finalize() const;
+    /**************************
+     * xgenerator declaration *
+     **************************/
+
+    // CRTP and mixin
+
+    template <template <class> class B, class... P>
+    class xgenerator final : public B<xgenerator<B, P...>>
+    {
+    public:
+
+        using self_type = xgenerator<B, P...>;
+        using base_type = B<self_type>;
+
+        xmaterialize<B, P...> finalize() &&;
     };
 
     /*******************************
@@ -83,10 +90,14 @@ namespace xw
         return *this;
     }
 
+    /*****************************
+     * xgenerator implementation *
+     *****************************/
+
     template <template <class> class B, class... P>
-    inline const xmaterialize<B, P...>& xmaterialize<B, P...>::finalize() const
+    inline xmaterialize<B, P...> xgenerator<B, P...>::finalize() &&
     {
-        return *this;
+        return reinterpret_cast<typename xmaterialize<B, P...>::base_type&&>(*this);
     }
 }
 
