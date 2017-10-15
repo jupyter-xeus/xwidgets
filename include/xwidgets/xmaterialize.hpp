@@ -9,6 +9,8 @@
 #ifndef XWIDGETS_MATERIALIZE_HPP
 #define XWIDGETS_MATERIALIZE_HPP
 
+#include <utility>
+
 namespace xw
 {
     /****************************
