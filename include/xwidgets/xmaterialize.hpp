@@ -17,8 +17,6 @@ namespace xw
      * xmaterialize declaration *
      ****************************/
 
-    // CRTP and mixin
-
     template <template <class> class B, class... P>
     class xmaterialize final : public B<xmaterialize<B, P...>>
     {
@@ -41,8 +39,6 @@ namespace xw
     /**************************
      * xgenerator declaration *
      **************************/
-
-    // CRTP and mixin
 
     template <template <class> class B, class... P>
     class xgenerator final : public B<xgenerator<B, P...>>

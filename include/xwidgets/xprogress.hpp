@@ -57,6 +57,7 @@ namespace xw
 
         using base_type = xnumber<D>;
         using derived_type = D;
+
         using value_type = typename base_type::value_type;
 
         xeus::xjson get_state() const;
