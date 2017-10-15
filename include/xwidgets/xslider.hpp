@@ -36,6 +36,7 @@ namespace xw
     protected:
 
         xslider_style();
+        using base_type::base_type;
 
     private:
 
@@ -57,6 +58,7 @@ namespace xw
 
         using base_type = xnumber<D>;
         using derived_type = D;
+
         using value_type = typename base_type::value_type;
 
         xeus::xjson get_state() const;
@@ -73,6 +75,7 @@ namespace xw
     protected:
 
         xslider();
+        using base_type::base_type;
 
     private:
 

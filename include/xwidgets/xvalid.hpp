@@ -36,6 +36,7 @@ namespace xw
     protected:
 
         xvalid();
+        using base_type::base_type;
 
     private:
 

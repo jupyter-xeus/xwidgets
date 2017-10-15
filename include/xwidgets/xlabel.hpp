@@ -32,6 +32,7 @@ namespace xw
     protected:
 
         xlabel();
+        using base_type::base_type;
 
     private:
 

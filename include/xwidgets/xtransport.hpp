@@ -19,6 +19,7 @@
 #include "xeus/xcomm.hpp"
 #include "xeus/xinterpreter.hpp"
 
+#include "xfactory.hpp"
 #include "xregistry.hpp"
 #include "xwidgets_config.hpp"
 
@@ -33,8 +34,31 @@ namespace xw
         return "jupyter.widget";
     }
 
-    inline void xobject_comm_opened(xeus::xcomm&&, const xeus::xmessage&)
+    inline void xobject_comm_opened(xeus::xcomm&& comm, const xeus::xmessage& msg)
     {
+        const xeus::xjson& content = msg.content();
+        const xeus::xjson& metadata = msg.metadata();
+
+        std::string version;
+        try
+        {
+            version = metadata.at("version").get<std::string>();
+        }
+        catch (std::out_of_range)
+        {
+            version = "";
+        }
+
+        if (version.substr(0, version.find(".")) != XWIDGETS_STRINGIFY(XWIDGETS_PROTOCOL_VERSION_MAJOR))
+        {
+            throw std::runtime_error("Incompatible widget protocol versions");
+        }
+
+        const xeus::xjson& data = content["data"];
+        const xeus::xjson& state = data["state"];
+
+        xfactory& factory = get_xfactory();
+        factory.make(std::move(comm), state);
     }
 
     inline int register_widget_target()
@@ -79,6 +103,7 @@ namespace xw
     protected:
 
         xtransport();
+        xtransport(xeus::xcomm&&, bool owning = false);
         ~xtransport();
         xtransport(const xtransport&);
         xtransport(xtransport&&);
@@ -133,6 +158,19 @@ namespace xw
         if (!m_moved_from)
         {
             get_transport_registry().unregister(this->id());
+        }
+    }
+
+    template <class D>
+    inline xtransport<D>::xtransport(xeus::xcomm&& comm, bool owning)
+        : m_moved_from(false),
+          m_hold(nullptr),
+          m_comm(std::move(comm))
+    {
+        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        if (!owning)
+        {
+            get_transport_registry().register_weak(this);
         }
     }
 
@@ -341,11 +379,10 @@ namespace xw
     template <class D>
     inline void from_json(const xeus::xjson& j, xtransport<D>& o)
     {
-        // TODO: directly convert from xjson
-        //std::string prefixed_guid = j;
-        //auto guid = prefixed_guid.substr(10).c_str();
-        //auto& holder = get_transport_registry().find(guid);
-        //o = holder.template get<D>();  // TODO: move?
+        std::string prefixed_guid = j;
+        xeus::xguid guid = prefixed_guid.substr(10).c_str();
+        auto& holder = get_transport_registry().find(guid);
+        o.derived_cast() = std::move(holder.template get<D>());
     }
 }
 

@@ -108,6 +108,8 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xboolean.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbutton.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcheckbox.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcontroller.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xfactory.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xholder.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xholder_id.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xhtml.hpp

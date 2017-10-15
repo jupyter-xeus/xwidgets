@@ -48,6 +48,7 @@ namespace xw
 
         using base_type = xobject<D>;
         using derived_type = D;
+
         using pair_type = xlink_pair_type;
 
         xeus::xjson get_state() const;
@@ -60,6 +61,8 @@ namespace xw
 
         template <class S, class T>
         xlink(xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn);
+
+        using base_type::base_type;
 
     private:
 
