@@ -23,10 +23,10 @@ namespace xw
     {
     public:
 
-        using submit_callback_type = std::function<void()>;
-
         using base_type = xstring<D>;
         using derived_type = D;
+
+        using submit_callback_type = std::function<void()>;
 
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);

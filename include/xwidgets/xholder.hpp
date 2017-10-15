@@ -57,9 +57,9 @@ namespace xw
         template <class D>
         const D& get() const &;
 
-        void check_holder() const;
-
     private:
+
+        void check_holder() const;
 
         implementation_type* p_holder;
     };

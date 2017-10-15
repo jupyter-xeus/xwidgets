@@ -19,6 +19,7 @@ namespace xw
      * xbox declaration *
      ********************/
 
+    // TODO: use xholder<xwidget> instead of xholder<xtransport>
     using xbox_children_list_type = std::vector<xholder<xtransport>>;
 
     template <class D>

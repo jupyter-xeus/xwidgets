@@ -24,7 +24,6 @@
 
 namespace xw
 {
-
     /**********************************
      * Comm target handling functions *
      **********************************/
@@ -152,7 +151,7 @@ namespace xw
     inline xtransport<D>::xtransport(xtransport&& other)
         : m_moved_from(false),
           m_message_callbacks(std::move(other.m_message_callbacks)),
-          m_hold(std::move(other.m_hold)),
+          m_hold(nullptr),
           m_comm(std::move(other.m_comm))
     {
         other.m_moved_from = true;
@@ -180,7 +179,7 @@ namespace xw
         m_moved_from = false;
         m_message_callbacks = std::move(other.m_message_callbacks);
         get_transport_registry().unregister(this->id());
-        m_hold = std::move(other.m_hold);
+        m_hold = nullptr;
         m_comm = std::move(other.m_comm);
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
