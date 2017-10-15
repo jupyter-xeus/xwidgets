@@ -11,6 +11,7 @@
 
 #include <functional>
 #include <list>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
 #include <utility>
@@ -33,7 +34,7 @@ namespace xw
         return "jupyter.widget";
     }
 
-    inline void xobject_comm_opened(const xeus::xcomm&, const xeus::xmessage&)
+    inline void xobject_comm_opened(xeus::xcomm&&, const xeus::xmessage&)
     {
     }
 
@@ -77,8 +78,9 @@ namespace xw
         void send(xeus::xjson&&) const;
 
     protected:
- 
+
         xtransport();
+        ~xtransport();
         xtransport(const xtransport&);
         xtransport(xtransport&&);
         xtransport& operator=(const xtransport&);
@@ -127,10 +129,19 @@ namespace xw
     }
 
     template <class D>
+    inline xtransport<D>::~xtransport()
+    {
+        if (!m_moved_from)
+        {
+            get_transport_registry().unregister(this->id());
+        }
+    }
+
+    template <class D>
     inline xtransport<D>::xtransport(const xtransport& other)
         : m_moved_from(false),
           m_message_callbacks(other.m_message_callbacks),
-          m_hold(other.m_hold),
+          m_hold(nullptr),
           m_comm(other.m_comm)
     {
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
@@ -155,7 +166,7 @@ namespace xw
         m_moved_from = false;
         m_message_callbacks = other.m_message_callbacks;
         get_transport_registry().unregister(this->id());
-        m_hold = other.m_hold;
+        m_hold = nullptr;
         m_comm = other.m_comm;
         m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         get_transport_registry().register_weak(this);
@@ -209,7 +220,7 @@ namespace xw
         xeus::xjson widgets_json;
         widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
         widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
-        widgets_json["model_id"] = this->derived_cast().id();
+        widgets_json["model_id"] = this->id();
         mime_bundle["application/vnd.jupyter.widget-view+json"] = std::move(widgets_json);
 
         // text/plain
@@ -294,7 +305,9 @@ namespace xw
             auto it = data.find("state");
             if (it != data.end())
             {
+                m_hold = &(it.value());
                 derived_cast().apply_patch(it.value());
+                m_hold = nullptr;
             }
         }
         else if (method == "request_state")

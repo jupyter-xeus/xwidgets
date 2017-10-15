@@ -5,6 +5,7 @@
 #include <utility>
 
 #include "xtl/xany.hpp"
+#include "xtl/xclosure.hpp"
 
 #include "xeus/xguid.hpp"
 #include "xeus/xjson.hpp"
@@ -56,6 +57,8 @@ namespace xw
         template <class D>
         const D& get() const &;
 
+        void check_holder() const;
+
     private:
 
         implementation_type* p_holder;
@@ -73,6 +76,7 @@ namespace xw
 
     template <template <class> class CRTP>
     void to_json(xeus::xjson& j, const xholder<CRTP>& o);
+
     template <template <class> class CRTP>
     void from_json(const xeus::xjson& j, xholder<CRTP>& o);
 
@@ -223,12 +227,6 @@ namespace xw
     }
 
     template <template <class> class CRTP, class D>
-    xholder<CRTP> make_owning_holder(const CRTP<D>& value)
-    {
-        return xholder<CRTP>(new detail::xholder_owning<CRTP, D>(value));
-    }
-
-    template <template <class> class CRTP, class D>
     xholder<CRTP> make_owning_holder(CRTP<D>&& value)
     {
         return xholder<CRTP>(new detail::xholder_owning<CRTP, D>(std::move(value)));
@@ -313,19 +311,14 @@ namespace xw
     template <template <class> class CRTP>
     void xholder<CRTP>::display() const
     {
-        if (p_holder != nullptr)
-        {
-            p_holder->display();
-        }
+        check_holder();
+        p_holder->display();
     }
 
     template <template <class> class CRTP>
     xeus::xguid xholder<CRTP>::id() const
     {
-        if (p_holder == nullptr)
-        {
-            throw std::runtime_error("The holder does not contain a widget");
-        }
+        check_holder();
         return p_holder->id();
     }
 
@@ -341,6 +334,15 @@ namespace xw
     const D& xholder<CRTP>::get() const &
     {
         return xtl::any_cast<xtl::closure_wrapper<const D&>>(p_holder->value()).get();
+    }
+
+    template <template <class> class CRTP>
+    void xholder<CRTP>::check_holder() const
+    {
+        if (p_holder == nullptr)
+        {
+            throw std::runtime_error("The holder does not contain a widget");
+        }
     }
 
     /****************************************
