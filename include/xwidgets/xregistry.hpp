@@ -1,6 +1,7 @@
 #ifndef XWIDGETS_REGISTRY_HPP
 #define XWIDGETS_REGISTRY_HPP
 
+#include <stdexcept>
 #include <unordered_map>
 #include <utility>
 
@@ -19,10 +20,14 @@ namespace xw
     {
     public:
 
-        using storage_type = std::unordered_map<std::string, xholder<xtransport>>;
+        using holder_type = xholder<xtransport>;
+        using storage_type = std::unordered_map<xeus::xguid, holder_type>;
 
         template <class D>
         void register_weak(xtransport<D>* ptr);
+
+        template <class D>
+        void register_owning(xtransport<D>&& model);
 
         void unregister(xeus::xguid id);
 
@@ -49,6 +54,12 @@ namespace xw
         m_storage[ptr->id()] = make_weak_holder(ptr);
     }
 
+    template <class D>
+    void xregistry::register_owning(xtransport<D>&& model)
+    {
+        return m_storage[model.id()] = make_owning_holder(std::move(model));
+    }
+
     inline void xregistry::unregister(xeus::xguid id)
     {
         m_storage.erase(id);
@@ -59,7 +70,7 @@ namespace xw
         auto it = m_storage.find(id);
         if (it == m_storage.end())
         {
-            throw std::runtime_error("Could not find specified id in widgets registry");
+            throw std::runtime_error("Could not find specified id in transport registry");
         }
         return it->second;
     }

@@ -36,6 +36,7 @@ namespace xw
     protected:
 
         xbutton_style();
+        using base_type::base_type;
 
     private:
 
@@ -78,6 +79,7 @@ namespace xw
     protected:
 
         xbutton();
+        using base_type::base_type;
 
     private:
 

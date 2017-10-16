@@ -37,6 +37,7 @@ namespace xw
     protected:
 
         xboolean();
+        using base_type::base_type;
 
     private:
 

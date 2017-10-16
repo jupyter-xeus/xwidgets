@@ -36,6 +36,7 @@ namespace xw
     protected:
 
         xcheckbox();
+        using base_type::base_type;
 
     private:
 

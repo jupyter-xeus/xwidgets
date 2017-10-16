@@ -52,6 +52,9 @@ namespace xw
         void display() const;
         xeus::xguid id() const;
 
+        xtl::any value() &;
+        const xtl::any value() const &;
+
         template <class D>
         D& get() &;
         template <class D>
@@ -98,9 +101,8 @@ namespace xw
             virtual xeus::xguid id() const = 0;
 
             virtual xtl::any value() & = 0;
-            virtual xtl::any value() const & = 0;
-            virtual xtl::any value() && = 0;
-
+            virtual const xtl::any value() const & = 0;
+        
         protected:
 
             xholder_impl(const xholder_impl&) = default;
@@ -121,7 +123,7 @@ namespace xw
 
             xholder_owning(CRTP<D>&& value)
                 : base_type(),
-                  m_value(std::move(value).derived_cast())
+                  m_value(std::move(value.derived_cast()))
             {
             }
 
@@ -149,19 +151,18 @@ namespace xw
                 return xtl::closure(m_value);
             }
 
-            virtual xtl::any value() const & override
+            virtual const xtl::any value() const & override
             {
                 return xtl::closure(m_value);
-            }
-
-            virtual xtl::any value() && override
-            {
-                return xtl::closure(std::move(m_value));
             }
 
         private:
 
             xholder_owning(const xholder_owning&) = default;
+            xholder_owning(xholder_owning&&) = default;
+            xholder_owning& operator=(const xholder_owning&) = default;
+            xholder_owning& operator=(xholder_owning&&) = default;
+
             D m_value;
         };
 
@@ -203,19 +204,18 @@ namespace xw
                 return xtl::closure(*p_value);
             }
 
-            virtual xtl::any value() const & override
+            virtual const xtl::any value() const & override
             {
                 return xtl::closure(*p_value);
-            }
-
-            virtual xtl::any value() && override
-            {
-                return xtl::closure(std::move(*p_value));
             }
 
         private:
 
             xholder_weak(const xholder_weak&) = default;
+            xholder_weak(xholder_weak&&) = default;
+            xholder_weak& operator=(const xholder_weak&) = default;
+            xholder_weak& operator=(xholder_weak&&) = default;
+
             D* p_value;
         };
     }
@@ -323,17 +323,31 @@ namespace xw
     }
 
     template <template <class> class CRTP>
+    xtl::any xholder<CRTP>::value() &
+    {
+        check_holder();
+        return p_holder->value();
+    }
+
+    template <template <class> class CRTP>
+    const xtl::any xholder<CRTP>::value() const &
+    {
+        check_holder();
+        return p_holder->value();
+    }
+
+    template <template <class> class CRTP>
     template <class D>
     D& xholder<CRTP>::get() &
     {
-        return xtl::any_cast<xtl::closure_wrapper<D&>>(p_holder->value()).get();
+        return xtl::any_cast<xtl::closure_wrapper<D&>>(this->value()).get();
     }
 
     template <template <class> class CRTP>
     template <class D>
     const D& xholder<CRTP>::get() const &
     {
-        return xtl::any_cast<xtl::closure_wrapper<const D&>>(p_holder->value()).get();
+        return xtl::any_cast<xtl::closure_wrapper<const D&>>(this->value()).get();
     }
 
     template <template <class> class CRTP>
@@ -353,17 +367,6 @@ namespace xw
     inline void to_json(xeus::xjson& j, const xholder<CRTP>& o)
     {
         j = "IPY_MODEL_" + std::string(o.id());
-    }
-
-    template <template <class> class CRTP>
-    inline void from_json(const xeus::xjson& j, xholder<CRTP>& o)
-    {
-        /*
-        std::string prefixed_guid = j;
-        xeus::xguid guid guid = prefixed_guid.substr(10).c_str();
-        auto& holder = get_transport_registry().find(guid);
-        o;  // TODO: move?
-        */
     }
 }
 #endif

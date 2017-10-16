@@ -38,6 +38,7 @@ namespace xw
     protected:
 
         xtogglebutton();
+        using base_type::base_type;
 
     private:
 

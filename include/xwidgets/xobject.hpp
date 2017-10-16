@@ -46,7 +46,7 @@ namespace xtl
         }
         else
         {
-            o.value() = j.get<D>();
+            o = j.get<D>();
         }
     }
 }
@@ -70,6 +70,8 @@ namespace xw
 
         using base_type = xtransport<D>;
         using derived_type = D;
+        using base_type::base_type;
+
         using base_type::derived_cast;
 
         xeus::xjson get_state() const;

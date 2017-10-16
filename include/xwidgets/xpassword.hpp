@@ -34,6 +34,7 @@ namespace xw
     protected:
 
         xpassword();
+        using base_type::base_type;
 
     private:
 

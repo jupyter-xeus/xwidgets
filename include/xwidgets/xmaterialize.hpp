@@ -48,6 +48,9 @@ namespace xw
         using self_type = xgenerator<B, P...>;
         using base_type = B<self_type>;
 
+        template <class... A>
+        xgenerator(A&&...);
+
         xmaterialize<B, P...> finalize() &&;
     };
 
@@ -91,6 +94,13 @@ namespace xw
     /*****************************
      * xgenerator implementation *
      *****************************/
+
+    template <template <class> class B, class... P>
+    template <class... A>
+    inline xgenerator<B, P...>::xgenerator(A&&... args)
+        : base_type(std::forward<A>(args)...)
+    {
+    }
 
     template <template <class> class B, class... P>
     inline xmaterialize<B, P...> xgenerator<B, P...>::finalize() &&

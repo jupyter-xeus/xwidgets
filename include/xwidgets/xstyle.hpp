@@ -33,6 +33,7 @@ namespace xw
     protected:
 
         xstyle();
+        using base_type::base_type;
 
     private:
 

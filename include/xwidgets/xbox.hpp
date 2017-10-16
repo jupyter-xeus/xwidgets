@@ -29,6 +29,7 @@ namespace xw
 
         using base_type = xwidget<D>;
         using derived_type = D;
+
         using children_list_type = xbox_children_list_type;
 
         xeus::xjson get_state() const;
@@ -46,6 +47,7 @@ namespace xw
     protected:
 
         xbox();
+        using base_type::base_type;
 
     private:
 
@@ -130,7 +132,7 @@ namespace xw
     template <class T>
     inline void xbox<D>::add(const xtransport<T>& w)
     {
-        this->children().emplace_back(make_id_holder(w));
+        this->children().emplace_back(make_id_holder<xtransport>(w.id()));
         xeus::xjson state;
         XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
         this->send_patch(std::move(state));
