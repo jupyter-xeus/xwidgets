@@ -12,24 +12,14 @@
 #include <functional>
 #include <string>
 #include <unordered_map>
+#include <utility>
 
-#include "xmaterialize.hpp"
-#include "xregistry.hpp"
+#include "xeus/xcomm.hpp"
+#include "xeus/xguid.hpp"
+#include "xeus/xjson.hpp"
 
 namespace xw
 {
-    /*******************
-     * xmaker template *
-     *******************/
-
-    template <template <class> class CRTP, class... P>
-    void xmaker(xeus::xcomm&& comm, const xeus::xjson& state)
-    {
-        auto model = xgenerator<CRTP, P...>(std::move(comm), true);
-        model.apply_patch(state);
-        get_transport_registry().register_owning(reinterpret_cast<xmaterialize<CRTP, P...>&&>(model));
-    }
-
     /************************
      * xfactory declaration *
      ************************/

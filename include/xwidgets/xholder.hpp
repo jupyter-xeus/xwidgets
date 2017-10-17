@@ -68,10 +68,7 @@ namespace xw
     };
 
     template <template <class> class CRTP>
-    inline void swap(xholder<CRTP>& lhs, xholder<CRTP>& rhs)
-    {
-        lhs.swap(rhs);
-    }
+    inline void swap(xholder<CRTP>& lhs, xholder<CRTP>& rhs);
 
     /*************************************
      * to_json and from_json declaration *
@@ -357,6 +354,12 @@ namespace xw
         {
             throw std::runtime_error("The holder does not contain a widget");
         }
+    }
+
+    template <template <class> class CRTP>
+    inline void swap(xholder<CRTP>& lhs, xholder<CRTP>& rhs)
+    {
+        lhs.swap(rhs);
     }
 
     /****************************************

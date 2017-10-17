@@ -6,6 +6,7 @@
 #include <utility>
 
 #include "xholder.hpp"
+#include "xmaterialize.hpp"
 
 namespace xw
 {
@@ -73,6 +74,18 @@ namespace xw
             throw std::runtime_error("Could not find specified id in transport registry");
         }
         return it->second;
+    }
+
+    /*******************
+     * xmaker template *
+     *******************/
+
+    template <template <class> class CRTP, class... P>
+    void xmaker(xeus::xcomm&& comm, const xeus::xjson& state)
+    {
+        auto model = xgenerator<CRTP, P...>(std::move(comm), true);
+        model.apply_patch(state);
+        get_transport_registry().register_owning(reinterpret_cast<xmaterialize<CRTP, P...>&&>(model));
     }
 }
 #endif
