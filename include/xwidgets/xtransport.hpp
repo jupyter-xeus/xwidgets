@@ -20,7 +20,7 @@
 #include "xeus/xinterpreter.hpp"
 
 #include "xfactory.hpp"
-#include "xregistry.hpp"
+#include "xholder.hpp"
 #include "xwidgets_config.hpp"
 
 namespace xw

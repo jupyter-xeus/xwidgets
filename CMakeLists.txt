@@ -111,7 +111,6 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcontroller.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xfactory.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xholder.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xholder_id.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xhtml.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlabel.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlayout.hpp
@@ -123,7 +122,6 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xpassword.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xplay.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprogress.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xregistry.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xslider.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstring.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstyle.hpp

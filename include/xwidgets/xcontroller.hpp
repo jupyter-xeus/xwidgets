@@ -9,7 +9,11 @@
 #ifndef XWIDGETS_CONTROLLER_HPP
 #define XWIDGETS_CONTROLLER_HPP
 
-#include "xholder_id.hpp"
+#include <vector>
+#include <string>
+
+#include "xeus/xjson.hpp"
+
 #include "xmaterialize.hpp"
 #include "xwidget.hpp"
 

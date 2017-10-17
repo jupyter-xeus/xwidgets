@@ -9,7 +9,9 @@
 #ifndef XWIDGETS_BOX_HPP
 #define XWIDGETS_BOX_HPP
 
-#include "xholder_id.hpp"
+#include <vector>
+#include <utility>
+
 #include "xmaterialize.hpp"
 #include "xwidget.hpp"
 
