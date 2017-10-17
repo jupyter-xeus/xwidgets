@@ -11,6 +11,8 @@
 #include "xeus/xguid.hpp"
 #include "xeus/xjson.hpp"
 
+#include "xmaterialize.hpp"
+
 namespace xw
 {
     namespace detail

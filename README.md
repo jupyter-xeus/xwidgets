@@ -36,7 +36,7 @@ make install
 
 ## Dependencies
 
-All the dependencies of xeus-cling are available for the conda package manager. 
+All the dependencies of xwidgets are available for the conda package manager. 
 
 | `xwidgets` | `widgetsnbextension`  |     `xtl`      | `xproperty`   | `xeus`       |
 |------------|-----------------------|----------------|---------------|--------------|
