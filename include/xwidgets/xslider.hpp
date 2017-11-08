@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_SLIDER_HPP
 #define XWIDGETS_SLIDER_HPP
 
+#include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
 #include "xstyle.hpp"
@@ -65,7 +66,7 @@ namespace xw
         void apply_patch(const xeus::xjson& patch);
 
         XPROPERTY(value_type, derived_type, step, value_type(1));
-        XPROPERTY(X_CASELESS_STR_ENUM(horizontal, vertical), derived_type, orientation, "horizontal");
+        XPROPERTY(xeither<std::string>, derived_type, orientation, xeither<std::string>({"horizontal", "vertical"}, "horizontal"));
         XPROPERTY(bool, derived_type, readout, true);
         XPROPERTY(std::string, derived_type, readout_format, ".2f");
         XPROPERTY(bool, derived_type, continuous_update, true);
