@@ -1,6 +1,6 @@
 # ![xwidgets](http://quantstack.net/assets/images/xwidgets.svg)
 
-[![Binder](https://img.shields.io/badge/launch-binder-brightgreen.svg)](https://beta.mybinder.org/v2/gh/QuantStack/xwidgets/0.4.0?filepath=notebooks/xwidgets.ipynb)
+[![Binder](https://img.shields.io/badge/launch-binder-brightgreen.svg)](https://beta.mybinder.org/v2/gh/QuantStack/xwidgets/0.5.0?filepath=notebooks/xwidgets.ipynb)
 [![Join the Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/QuantStack/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The C++ backend for Jupyter interactive widgets.
@@ -40,10 +40,10 @@ All the dependencies of xwidgets are available for the conda package manager.
 
 | `xwidgets` | `widgetsnbextension`  |     `xtl`      | `xproperty`   | `xeus`       |
 |------------|-----------------------|----------------|---------------|--------------|
-|  master    |      ~3.0.0           |  >=0.3.4,<0.4  | >=0.4.1,<0.5  | >=0.7.0,<0.8 |
+|  master    |      ~3.0.0           |  >=0.3.4,<0.4  | >=0.4.1,<0.5  | >=0.8.0,<0.9 |
+|  0.5.0     |      ~3.0.0           |  >=0.3.4,<0.4  | >=0.4.1,<0.5  | >=0.8.0,<0.9 |
 |  0.4.0     |      ~3.0.0           |  >=0.2.5,<0.3  | >=0.4.0,<0.5  | >=0.7.0,<0.8 |
 |  0.3.0     |      ~3.0.0           |  >=0.2.5,<0.3  | >=0.4.0,<0.5  | >=0.6.0,<0.7 |
-|  0.2.0     |      ~3.0.0           |  >=0.2.5,<0.3  | >=0.3.0,<0.4  | >=0.6.0,<0.7 |
 
 ## License
 

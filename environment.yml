@@ -4,7 +4,7 @@ channels:
   - QuantStack
 dependencies:
   - xwidgets
-  - xeus-cling >=0.0.5
+  - xeus-cling
   - notebook
   - widgetsnbextension >=3.0.0
   - ipywidgets >=7.0  # Fixing conda conflict
