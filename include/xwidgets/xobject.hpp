@@ -58,11 +58,6 @@ namespace xw
      * base xobject declaration *
      ****************************/
 
-    // TODO: Generate an enum type with
-    //  - operator=() allowing string assignment
-    //  - to_json and from_json overload converting from and to the corresponding strings.
-    #define X_CASELESS_STR_ENUM(...) std::string
-
     template <class D>
     class xobject : public xp::xobserved<D>, public xtransport<D>
     {

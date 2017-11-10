@@ -12,6 +12,7 @@
 #include <vector>
 #include <utility>
 
+#include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xwidget.hpp"
 
@@ -34,7 +35,8 @@ namespace xw
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
-        XPROPERTY(X_CASELESS_STR_ENUM(success, info, warning, danger,), derived_type, box_style);
+        XPROPERTY(std::string, derived_type, box_style, "", XEITHER("success", "info", "warning", "danger", ""));
+
         XPROPERTY(children_list_type, derived_type, children);
 
         template <class T>

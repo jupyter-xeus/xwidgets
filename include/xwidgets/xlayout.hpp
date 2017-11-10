@@ -31,25 +31,26 @@ namespace xw
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
-        XPROPERTY(xtl::xoptional<X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, space-evenly, stretch, inherit, inital, unset)>, derived_type, align_content);
-        XPROPERTY(xtl::xoptional<X_CASELESS_STR_ENUM(flex-start, flex-end, center, baseline, stretch, inherit, inital, unset)>, derived_type, align_items);
-        XPROPERTY(xtl::xoptional<X_CASELESS_STR_ENUM(auto, flex-start, flex-end, center, baseline, stretch, inherit, inital, unset)>, derived_type, align_self);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, align_content, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly", "stretch", "inherit", "inital", "unset"));
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, align_items, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset"));
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, align_self, {}, XEITHER_OPTIONAL("auto", "flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset"));
+
         XPROPERTY(xtl::xoptional<std::string>, derived_type, bottom);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, border);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, display);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, flex);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, flex_flow);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, height);
-        XPROPERTY(xtl::xoptional<X_CASELESS_STR_ENUM(flex-start, flex-end, center, space-between, space-around, inherit, inital, unset)>, derived_type, justify_content);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, justify_content, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "space-between", "space-around", "inherit", "inital", "unset"));
         XPROPERTY(xtl::xoptional<std::string>, derived_type, left);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, margin);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, max_height);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, max_width);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, min_height);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, min_width);
-        XPROPERTY(xtl::xoptional<X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)>, derived_type, overflow);
-        XPROPERTY(xtl::xoptional<X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)>, derived_type, overflow_x);
-        XPROPERTY(xtl::xoptional<X_CASELESS_STR_ENUM(visible, hidden, scroll, auto, inherit, inital, unset)>, derived_type, overflow_y);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, overflow, {}, XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset"));
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, overflow_x, {}, XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset"));
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, overflow_y, {}, XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset"));
         XPROPERTY(xtl::xoptional<std::string>, derived_type, order);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, padding);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, right);

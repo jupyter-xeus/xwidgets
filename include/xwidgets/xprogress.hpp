@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_PROGRESS_HPP
 #define XWIDGETS_PROGRESS_HPP
 
+#include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
 #include "xstyle.hpp"
@@ -65,8 +66,8 @@ namespace xw
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson& patch);
 
-        XPROPERTY(X_CASELESS_STR_ENUM(horizontal, vertical), derived_type, orientation, "horizontal");
-        XPROPERTY(X_CASELESS_STR_ENUM(success, info, warning, danger, ), derived_type, bar_style);
+        XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
+        XPROPERTY(std::string, derived_type, bar_style, "", XEITHER("success", "info", "warning", "danger", ""));
         XPROPERTY(::xw::progress_style, derived_type, style);
 
     protected:

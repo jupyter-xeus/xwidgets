@@ -9,6 +9,10 @@
 #ifndef XWIDGETS_BUTTON_HPP
 #define XWIDGETS_BUTTON_HPP
 
+#include <stdexcept>
+#include <unordered_set>
+
+#include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xstyle.hpp"
 #include "xwidget.hpp"
@@ -71,7 +75,7 @@ namespace xw
         XPROPERTY(std::string, derived_type, tooltip);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(std::string, derived_type, icon);
-        XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger, ), derived_type, button_style);
+        XPROPERTY(std::string, derived_type, button_style, "", XEITHER("primary", "success", "info", "warning", "danger", ""));
         XPROPERTY(::xw::button_style, derived_type, style);
 
         void handle_custom_message(const xeus::xjson&);
