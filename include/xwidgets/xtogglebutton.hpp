@@ -12,6 +12,7 @@
 #include <string>
 
 #include "xboolean.hpp"
+#include "xeither.hpp"
 #include "xmaterialize.hpp"
 
 namespace xw
@@ -33,7 +34,7 @@ namespace xw
 
         XPROPERTY(std::string, derived_type, tooltip);
         XPROPERTY(std::string, derived_type, icon);
-        XPROPERTY(X_CASELESS_STR_ENUM(primary, success, info, warning, danger, ), derived_type, button_style);
+        XPROPERTY(std::string, derived_type, button_style, "", XEITHER("primary", "success", "info", "warning", "danger", ""));
 
     protected:
 
