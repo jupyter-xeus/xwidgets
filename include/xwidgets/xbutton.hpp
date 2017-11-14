@@ -32,7 +32,7 @@ namespace xw
         using derived_type = D;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(xtl::xoptional<std::string>, derived_type, button_color);
         XPROPERTY(std::string, derived_type, font_weight);
@@ -66,7 +66,7 @@ namespace xw
         using derived_type = D;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         void on_click(click_callback_type);
 

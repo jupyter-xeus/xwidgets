@@ -32,39 +32,39 @@ namespace xw
         {
             return std::move(v).value();
         }
- 
+
         template <class CT, class CB>
         decltype(auto) value(xtl::xoptional<CT, CB>& v)
         {
             return v.value();
         }
- 
+
         template <class CT, class CB>
         decltype(auto) value(const xtl::xoptional<CT, CB>& v)
         {
             return v.value();
         }
- 
+
         // has_value
- 
+
         template <class T, class U = xtl::disable_xoptional<std::decay_t<T>>>
         bool has_value(T&&)
         {
             return true;
         }
- 
+
         template <class CT, class CB>
         decltype(auto) has_value(xtl::xoptional<CT, CB>&& v)
         {
             return std::move(v).has_value();
         }
- 
+
         template <class CT, class CB>
         decltype(auto) has_value(xtl::xoptional<CT, CB>& v)
         {
             return std::move(v).has_value();
         }
- 
+
         template <class CT, class CB>
         decltype(auto) has_value(const xtl::xoptional<CT, CB>& v)
         {
@@ -73,28 +73,28 @@ namespace xw
     }
 }
 
-#define XEITHER(...)                                                       \
- [](const auto& proposal) {                                                \
-     static const std::unordered_set<std::string> options({__VA_ARGS__});  \
-     auto position = options.find(proposal);                               \
-     if (position == options.end())                                        \
-     {                                                                     \
-         throw std::runtime_error("Invalid proposal for string enum");     \
-     }                                                                     \
- }
+#define XEITHER(...)                                                         \
+    [](const auto& proposal) {                                               \
+        static const std::unordered_set<std::string> options({__VA_ARGS__}); \
+        auto position = options.find(proposal);                              \
+        if (position == options.end())                                       \
+        {                                                                    \
+            throw std::runtime_error("Invalid proposal for string enum");    \
+        }                                                                    \
+    }
 
-#define XEITHER_OPTIONAL(...)                                                       \
- [](const auto& proposal) {                                                         \
-     if (xw::detail::has_value(proposal))                                           \
-     {                                                                              \
-         static const std::unordered_set<std::string> options({__VA_ARGS__});       \
-         auto position = options.find(xw::detail::value(proposal));                 \
-         if (position == options.end())                                             \
-         {                                                                          \
-             throw std::runtime_error("Invalid proposal for optional string enum"); \
-         }                                                                          \
-     }                                                                              \
- }
+#define XEITHER_OPTIONAL(...)                                                          \
+    [](const auto& proposal) {                                                         \
+        if (xw::detail::has_value(proposal))                                           \
+        {                                                                              \
+            static const std::unordered_set<std::string> options({__VA_ARGS__});       \
+            auto position = options.find(xw::detail::value(proposal));                 \
+            if (position == options.end())                                             \
+            {                                                                          \
+                throw std::runtime_error("Invalid proposal for optional string enum"); \
+            }                                                                          \
+        }                                                                              \
+    }
 
 
 #endif

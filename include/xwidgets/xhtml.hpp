@@ -27,7 +27,7 @@ namespace xw
         using derived_type = D;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
     protected:
 
@@ -51,6 +51,7 @@ namespace xw
     inline xeus::xjson xhtml<D>::get_state() const
     {
         xeus::xjson state = base_type::get_state();
+
         return state;
     }
 

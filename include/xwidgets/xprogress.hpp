@@ -9,6 +9,10 @@
 #ifndef XWIDGETS_PROGRESS_HPP
 #define XWIDGETS_PROGRESS_HPP
 
+#include <string>
+
+#include "xtl/xoptional.hpp"
+
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
@@ -29,7 +33,7 @@ namespace xw
         using derived_type = D;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(std::string, derived_type, description_width);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, bar_color);
@@ -64,7 +68,7 @@ namespace xw
         using value_type = typename base_type::value_type;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
         XPROPERTY(std::string, derived_type, bar_style, "", XEITHER("success", "info", "warning", "danger", ""));
@@ -109,6 +113,7 @@ namespace xw
     inline void xprogress_style<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
+
         XOBJECT_SET_PROPERTY_FROM_PATCH(bar_color, patch);
     }
 

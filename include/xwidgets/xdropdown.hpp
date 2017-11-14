@@ -6,36 +6,36 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_TEXTAREA_HPP
-#define XWIDGETS_TEXTAREA_HPP
+#ifndef XWIDGETS_DROPDOWN_HPP
+#define XWIDGETS_DROPDOWN_HPP
+
+#include <utility>
 
 #include "xmaterialize.hpp"
-#include "xstring.hpp"
+#include "xselection.hpp"
 
 namespace xw
 {
     /************************
-     * textarea declaration *
+     * dropdown declaration *
      ************************/
 
     template <class D>
-    class xtextarea : public xstring<D>
+    class xdropdown : public xselection<D>
     {
     public:
 
-        using base_type = xstring<D>;
+        using base_type = xselection<D>;
         using derived_type = D;
 
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
 
-        XPROPERTY(xtl::xoptional<int>, derived_type, rows);
-        XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(bool, derived_type, continuous_update, true);
-
     protected:
 
-        xtextarea();
+        template <class O, class T>
+        xdropdown(O&& options, T&& value);
+
         using base_type::base_type;
 
     private:
@@ -43,48 +43,43 @@ namespace xw
         void set_defaults();
     };
 
-    using textarea = xmaterialize<xtextarea>;
-    using textarea_generator = xgenerator<xtextarea>;
+    using dropdown = xmaterialize<xdropdown>;
+
+    using dropdown_generator = xgenerator<xdropdown>;
 
     /****************************
-     * xtextarea implementation *
+     * xdropdown implementation *
      ****************************/
 
     template <class D>
-    inline xeus::xjson xtextarea<D>::get_state() const
+    inline xeus::xjson xdropdown<D>::get_state() const
     {
         xeus::xjson state = base_type::get_state();
-
-        XOBJECT_SET_PATCH_FROM_PROPERTY(rows, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(continuous_update, state);
 
         return state;
     }
 
     template <class D>
-    inline void xtextarea<D>::apply_patch(const xeus::xjson& patch)
+    inline void xdropdown<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
-
-        XOBJECT_SET_PROPERTY_FROM_PATCH(rows, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch)
     }
 
     template <class D>
-    inline xtextarea<D>::xtextarea()
-        : base_type()
+    template <class O, class T>
+    inline xdropdown<D>::xdropdown(O&& options, T&& value)
+        : base_type(std::forward<O>(options), std::forward<T>(value))
     {
         set_defaults();
     }
 
     template <class D>
-    inline void xtextarea<D>::set_defaults()
+    inline void xdropdown<D>::set_defaults()
     {
-        this->_model_name() = "TextareaModel";
-        this->_view_name() = "TextareaView";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_name() = "DropdownModel";
+        this->_view_name() = "DropdownView";
     }
 }
-
 #endif

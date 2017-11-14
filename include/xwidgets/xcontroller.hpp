@@ -9,8 +9,8 @@
 #ifndef XWIDGETS_CONTROLLER_HPP
 #define XWIDGETS_CONTROLLER_HPP
 
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "xeus/xjson.hpp"
 
@@ -32,7 +32,7 @@ namespace xw
         using derived_type = D;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(double, derived_type, value);
         XPROPERTY(bool, derived_type, pressed);
@@ -65,7 +65,7 @@ namespace xw
         using base_type::base_type;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(double, derived_type, value);
 
@@ -99,7 +99,7 @@ namespace xw
         using xcontroller_button_list_type = std::vector<xholder<xtransport>>;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(int, derived_type, index);
         XPROPERTY(std::string, derived_type, name);

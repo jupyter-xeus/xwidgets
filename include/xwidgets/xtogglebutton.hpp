@@ -30,7 +30,7 @@ namespace xw
         using derived_type = D;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(std::string, derived_type, tooltip);
         XPROPERTY(std::string, derived_type, icon);

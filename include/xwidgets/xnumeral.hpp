@@ -30,7 +30,7 @@ namespace xw
         using value_type = typename base_type::value_type;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(value_type, derived_type, step);
         XPROPERTY(bool, derived_type, disabled);

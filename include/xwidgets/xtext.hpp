@@ -29,7 +29,7 @@ namespace xw
         using submit_callback_type = std::function<void()>;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         void on_submit(submit_callback_type);
 
