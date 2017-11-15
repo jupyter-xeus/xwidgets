@@ -182,6 +182,39 @@ namespace xw
         : base_type()
     {
         set_defaults();
+
+        this->template validate<decltype(this->value)>([&, this](const auto&, auto& proposal) {
+            if (proposal > this->max())
+            {
+                proposal = this->max();
+            }
+            if (proposal < this->min())
+            {
+                proposal = this->min();
+            }
+        });
+
+        this->template validate<decltype(this->min)>([&, this](const auto&, auto& proposal) {
+            if (proposal > this->max())
+            {
+                throw std::runtime_error("setting min > max");
+            }
+            if (proposal > this->value())
+            {
+                this->value = proposal;
+            }
+        });
+
+        this->template validate<decltype(this->max)>([&, this](const auto&, auto& proposal) {
+            if (proposal < this->min())
+            {
+                throw std::runtime_error("setting max < min");
+            }
+            if (proposal < this->value())
+            {
+                this->value = proposal;
+            }
+        });
     }
 
     template <class D>
