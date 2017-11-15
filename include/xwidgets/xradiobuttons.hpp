@@ -6,42 +6,36 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_NUMBER_HPP
-#define XWIDGETS_NUMBER_HPP
+#ifndef XWIDGETS_RADIOBUTTONS_HPP
+#define XWIDGETS_RADIOBUTTONS_HPP
 
-#include "xwidget.hpp"
+#include <utility>
+
+#include "xmaterialize.hpp"
+#include "xselection.hpp"
 
 namespace xw
 {
     /****************************
-     * base xnumber declaration *
+     * radiobuttons declaration *
      ****************************/
 
     template <class D>
-    struct xnumber_traits;
-
-    template <class D>
-    class xnumber : public xwidget<D>
+    class xradiobuttons : public xselection<D>
     {
     public:
 
-        using base_type = xwidget<D>;
+        using base_type = xselection<D>;
         using derived_type = D;
 
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
 
-        using value_type = typename xnumber_traits<derived_type>::value_type;
-
-        XPROPERTY(std::string, derived_type, description);
-
-        XPROPERTY(value_type, derived_type, value);
-        XPROPERTY(value_type, derived_type, min);
-        XPROPERTY(value_type, derived_type, max, value_type(100));
-
     protected:
 
-        xnumber();
+        template <class O, class T>
+        xradiobuttons(O&& options, T&& value);
+
         using base_type::base_type;
 
     private:
@@ -49,47 +43,43 @@ namespace xw
         void set_defaults();
     };
 
-    /**************************
-     * xnumber implementation *
-     **************************/
+    using radiobuttons = xmaterialize<xradiobuttons>;
+
+    using radiobuttons_generator = xgenerator<xradiobuttons>;
+
+    /********************************
+     * xradiobuttons implementation *
+     ********************************/
 
     template <class D>
-    inline xeus::xjson xnumber<D>::get_state() const
+    inline xeus::xjson xradiobuttons<D>::get_state() const
     {
         xeus::xjson state = base_type::get_state();
-
-        XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(min, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(max, state);
 
         return state;
     }
 
     template <class D>
-    inline void xnumber<D>::apply_patch(const xeus::xjson& patch)
+    inline void xradiobuttons<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
-
-        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(min, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(max, patch)
     }
 
     template <class D>
-    inline xnumber<D>::xnumber()
-        : base_type()
+    template <class O, class T>
+    inline xradiobuttons<D>::xradiobuttons(O&& options, T&& value)
+        : base_type(std::forward<O>(options), std::forward<T>(value))
     {
         set_defaults();
     }
 
     template <class D>
-    inline void xnumber<D>::set_defaults()
+    inline void xradiobuttons<D>::set_defaults()
     {
         this->_model_module() = "@jupyter-widgets/controls";
         this->_view_module() = "@jupyter-widgets/controls";
-        this->_model_name() = "BoundedFloatModel";
-        this->_view_name() = "BoundedFloatView";
+        this->_model_name() = "RadioButtonsModel";
+        this->_view_name() = "RadioButtonsView";
     }
 }
-
 #endif

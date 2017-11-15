@@ -9,6 +9,10 @@
 #ifndef XWIDGETS_SLIDER_HPP
 #define XWIDGETS_SLIDER_HPP
 
+#include <string>
+
+#include "xtl/xoptional.hpp"
+
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
@@ -29,7 +33,7 @@ namespace xw
         using derived_type = D;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(std::string, derived_type, description_width);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, handle_color);
@@ -63,7 +67,7 @@ namespace xw
         using value_type = typename base_type::value_type;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(value_type, derived_type, step, value_type(1));
         XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
@@ -110,6 +114,7 @@ namespace xw
     {
         xeus::xjson state = base_type::get_state();
 
+        XOBJECT_SET_PATCH_FROM_PROPERTY(description_width, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(handle_color, state);
 
         return state;
@@ -119,6 +124,8 @@ namespace xw
     inline void xslider_style<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
+
+        XOBJECT_SET_PROPERTY_FROM_PATCH(description_width, patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(handle_color, patch);
     }
 

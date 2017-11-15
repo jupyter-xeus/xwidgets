@@ -9,8 +9,8 @@
 #ifndef XWIDGETS_BOX_HPP
 #define XWIDGETS_BOX_HPP
 
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
@@ -33,7 +33,7 @@ namespace xw
         using children_list_type = std::vector<xholder<xtransport>>;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(std::string, derived_type, box_style, "", XEITHER("success", "info", "warning", "danger", ""));
 
@@ -201,5 +201,4 @@ namespace xw
         this->_view_name() = "VBoxView";
     }
 }
-
 #endif

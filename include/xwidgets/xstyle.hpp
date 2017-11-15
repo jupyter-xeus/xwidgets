@@ -9,8 +9,6 @@
 #ifndef XWIDGETS_STYLE_HPP
 #define XWIDGETS_STYLE_HPP
 
-#include <string>
-
 #include "xobject.hpp"
 
 namespace xw
@@ -28,7 +26,7 @@ namespace xw
         using derived_type = D;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
     protected:
 
@@ -54,6 +52,7 @@ namespace xw
     inline xeus::xjson xstyle<D>::get_state() const
     {
         xeus::xjson state = base_type::get_state();
+
         return state;
     }
 
@@ -73,5 +72,4 @@ namespace xw
         this->_view_name() = "StyleView";
     }
 }
-
 #endif

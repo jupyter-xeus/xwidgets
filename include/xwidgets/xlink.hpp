@@ -51,7 +51,7 @@ namespace xw
         using pair_type = xlink_pair_type;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(pair_type, derived_type, source);
         XPROPERTY(pair_type, derived_type, target);
@@ -89,7 +89,7 @@ namespace xw
         using pair_type = xdirectional_link_pair_type;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(pair_type, derived_type, source);
         XPROPERTY(pair_type, derived_type, target);

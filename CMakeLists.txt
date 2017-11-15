@@ -109,6 +109,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbutton.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcheckbox.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcontroller.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xdropdown.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xeither.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xfactory.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xholder.hpp
@@ -123,12 +124,17 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xpassword.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xplay.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprogress.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselect.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselection.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselectionslider.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xslider.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstring.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstyle.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xradiobuttons.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtext.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtextarea.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtogglebutton.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtogglebuttons.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtransport.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvalid.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp

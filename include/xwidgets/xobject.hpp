@@ -70,7 +70,7 @@ namespace xw
         using base_type::derived_cast;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module, "jupyter-js-widgets");
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module_version, "~2.1.4");
@@ -110,12 +110,14 @@ namespace xw
     inline xeus::xjson xobject<D>::get_state() const
     {
         xeus::xjson state;
+
         XOBJECT_SET_PATCH_FROM_PROPERTY(_model_module, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(_model_module_version, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(_model_name, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(_view_module, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(_view_module_version, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(_view_name, state);
+
         return state;
     }
 }

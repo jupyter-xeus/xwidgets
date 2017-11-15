@@ -11,6 +11,7 @@
 
 #include <string>
 
+#include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xobject.hpp"
 
@@ -29,7 +30,7 @@ namespace xw
         using derived_type = D;
 
         xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson& patch);
+        void apply_patch(const xeus::xjson&);
 
         XPROPERTY(xtl::xoptional<std::string>, derived_type, align_content, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly", "stretch", "inherit", "inital", "unset"));
         XPROPERTY(xtl::xoptional<std::string>, derived_type, align_items, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset"));
