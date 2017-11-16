@@ -15,64 +15,6 @@
 
 #include "xtl/xoptional.hpp"
 
-namespace xw
-{
-    namespace detail
-    {
-        // TODO: use xtl::has_value in xtl >= 0.3.5
-
-        template <class T, class U = xtl::disable_xoptional<std::decay_t<T>>>
-        T&& value(T&& v)
-        {
-            return std::forward<T>(v);
-        }
-
-        template <class CT, class CB>
-        decltype(auto) value(xtl::xoptional<CT, CB>&& v)
-        {
-            return std::move(v).value();
-        }
-
-        template <class CT, class CB>
-        decltype(auto) value(xtl::xoptional<CT, CB>& v)
-        {
-            return v.value();
-        }
-
-        template <class CT, class CB>
-        decltype(auto) value(const xtl::xoptional<CT, CB>& v)
-        {
-            return v.value();
-        }
-
-        // has_value
-
-        template <class T, class U = xtl::disable_xoptional<std::decay_t<T>>>
-        bool has_value(T&&)
-        {
-            return true;
-        }
-
-        template <class CT, class CB>
-        decltype(auto) has_value(xtl::xoptional<CT, CB>&& v)
-        {
-            return std::move(v).has_value();
-        }
-
-        template <class CT, class CB>
-        decltype(auto) has_value(xtl::xoptional<CT, CB>& v)
-        {
-            return std::move(v).has_value();
-        }
-
-        template <class CT, class CB>
-        decltype(auto) has_value(const xtl::xoptional<CT, CB>& v)
-        {
-            return std::move(v).has_value();
-        }
-    }
-}
-
 #define XEITHER(...)                                                         \
     [](const auto& proposal) {                                               \
         static const std::unordered_set<std::string> options({__VA_ARGS__}); \
@@ -85,10 +27,10 @@ namespace xw
 
 #define XEITHER_OPTIONAL(...)                                                          \
     [](const auto& proposal) {                                                         \
-        if (xw::detail::has_value(proposal))                                           \
+        if (xtl::has_value(proposal))                                                  \
         {                                                                              \
             static const std::unordered_set<std::string> options({__VA_ARGS__});       \
-            auto position = options.find(xw::detail::value(proposal));                 \
+            auto position = options.find(xtl::value(proposal));                        \
             if (position == options.end())                                             \
             {                                                                          \
                 throw std::runtime_error("Invalid proposal for optional string enum"); \
