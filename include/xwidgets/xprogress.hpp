@@ -104,6 +104,7 @@ namespace xw
     {
         xeus::xjson state = base_type::get_state();
 
+        XOBJECT_SET_PATCH_FROM_PROPERTY(description_width, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(bar_color, state);
 
         return state;
@@ -114,6 +115,7 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
+        XOBJECT_SET_PROPERTY_FROM_PATCH(description_width, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(bar_color, patch);
     }
 
