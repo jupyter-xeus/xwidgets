@@ -13,9 +13,9 @@
 
 namespace xw
 {
-    /****************************
-     * base xnumber declaration *
-     ****************************/
+    /***********************
+     * xnumber declaration *
+     ***********************/
 
     template <class D>
     struct xnumber_traits;

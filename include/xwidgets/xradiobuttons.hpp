@@ -27,6 +27,7 @@ namespace xw
 
         using base_type = xselection<D>;
         using derived_type = D;
+        using options_type = typename base_type::options_type;
 
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
