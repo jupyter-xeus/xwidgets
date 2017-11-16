@@ -37,6 +37,8 @@ namespace xw
         XPROPERTY(titles_type, derived_type, _titles);
         XPROPERTY(int, derived_type, selected_index);
 
+        void set_title(typename titles_type::size_type i, std::string title);
+
     protected:
 
         xselection_container();
@@ -81,6 +83,19 @@ namespace xw
     template <class D>
     inline void xselection_container<D>::set_defaults()
     {
+    }
+
+    template <class D>
+    inline void xselection_container<D>::set_title(typename titles_type::size_type i, std::string title)
+    {
+        if (_titles().size() != this->children().size())
+        {
+            _titles() = titles_type(this->children().size());
+        }
+        _titles()[i] = title;
+        xeus::xjson state;
+        XOBJECT_SET_PATCH_FROM_PROPERTY(_titles, state);
+        this->send_patch(std::move(state));
     }
 }
 
