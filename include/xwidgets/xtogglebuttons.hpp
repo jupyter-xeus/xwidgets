@@ -144,10 +144,10 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(tooltips, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(icons, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(button_style, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(tooltips, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(icons, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(button_style, patch);
     }
 
     template <class D>

@@ -101,7 +101,7 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(rows, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(rows, patch);
     }
 
     template <class D>
@@ -140,7 +140,7 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(rows, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(rows, patch);
     }
 
     template <class D>

@@ -78,9 +78,9 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(step, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(step, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch);
     }
 
     template <class D>

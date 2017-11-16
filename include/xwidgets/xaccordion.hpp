@@ -6,36 +6,32 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_VALID_HPP
-#define XWIDGETS_VALID_HPP
+#ifndef XWIDGETS_ACCORDION_HPP
+#define XWIDGETS_ACCORDION_HPP
 
-#include <string>
-
-#include "xboolean.hpp"
 #include "xmaterialize.hpp"
+#include "xselection_container.hpp"
 
 namespace xw
 {
-    /*********************
-     * valid declaration *
-     *********************/
+    /*************************
+     * accordion declaration *
+     *************************/
 
     template <class D>
-    class xvalid : public xboolean<D>
+    class xaccordion : public xselection_container<D>
     {
     public:
 
-        using base_type = xboolean<D>;
+        using base_type = xselection_container<D>;
         using derived_type = D;
 
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
 
-        XPROPERTY(std::string, derived_type, readout, "Invalid");
-
     protected:
 
-        xvalid();
+        xaccordion();
         using base_type::base_type;
 
     private:
@@ -43,44 +39,41 @@ namespace xw
         void set_defaults();
     };
 
-    using valid = xmaterialize<xvalid>;
+    using accordion = xmaterialize<xaccordion>;
 
-    using valid_generator = xgenerator<xvalid>;
+    using accordion_generator = xgenerator<xaccordion>;
 
-    /*************************
-     * xvalid implementation *
-     *************************/
+    /*****************************
+     * xaccordion implementation *
+     *****************************/
 
     template <class D>
-    inline xeus::xjson xvalid<D>::get_state() const
+    inline xeus::xjson xaccordion<D>::get_state() const
     {
         xeus::xjson state = base_type::get_state();
-
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout, state);
 
         return state;
     }
 
     template <class D>
-    inline void xvalid<D>::apply_patch(const xeus::xjson& patch)
+    inline void xaccordion<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
-
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch);
     }
 
     template <class D>
-    inline xvalid<D>::xvalid()
+    inline xaccordion<D>::xaccordion()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline void xvalid<D>::set_defaults()
+    inline void xaccordion<D>::set_defaults()
     {
-        this->_model_name() = "ValidModel";
-        this->_view_name() = "ValidView";
+        this->_model_name() = "AccordionModel";
+        this->_view_name() = "AccordionView";
     }
 }
+
 #endif

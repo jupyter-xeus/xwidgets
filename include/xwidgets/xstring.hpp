@@ -64,8 +64,8 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(placeholder, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(placeholder, patch);
     }
 
     template <class D>

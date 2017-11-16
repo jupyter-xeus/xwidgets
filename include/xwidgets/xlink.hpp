@@ -130,8 +130,8 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(source, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(target, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(source, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(target, patch);
     }
 
     template <class D>
@@ -173,8 +173,8 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(source, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(target, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(source, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(target, patch);
     }
 
     template <class D>

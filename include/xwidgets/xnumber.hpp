@@ -70,9 +70,9 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(min, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(max, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(min, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(max, patch);
     }
 
     template <class D>

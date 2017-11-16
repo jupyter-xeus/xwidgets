@@ -124,10 +124,10 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(index, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_options_labels, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(description, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(index, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(_options_labels, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(description, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
     }
 
     template <class D>
