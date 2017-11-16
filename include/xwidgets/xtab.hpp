@@ -6,36 +6,32 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_VALID_HPP
-#define XWIDGETS_VALID_HPP
+#ifndef XWIDGETS_TAB_HPP
+#define XWIDGETS_TAB_HPP
 
-#include <string>
-
-#include "xboolean.hpp"
 #include "xmaterialize.hpp"
+#include "xselection_container.hpp"
 
 namespace xw
 {
-    /*********************
-     * valid declaration *
-     *********************/
+    /*************************
+     * accordion declaration *
+     *************************/
 
     template <class D>
-    class xvalid : public xboolean<D>
+    class xtab : public xselection_container<D>
     {
     public:
 
-        using base_type = xboolean<D>;
+        using base_type = xselection_container<D>;
         using derived_type = D;
 
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
 
-        XPROPERTY(std::string, derived_type, readout, "Invalid");
-
     protected:
 
-        xvalid();
+        xtab();
         using base_type::base_type;
 
     private:
@@ -43,44 +39,41 @@ namespace xw
         void set_defaults();
     };
 
-    using valid = xmaterialize<xvalid>;
+    using tab = xmaterialize<xtab>;
 
-    using valid_generator = xgenerator<xvalid>;
+    using tab_generator = xgenerator<xtab>;
 
-    /*************************
-     * xvalid implementation *
-     *************************/
+    /*****************************
+     * xtab implementation *
+     *****************************/
 
     template <class D>
-    inline xeus::xjson xvalid<D>::get_state() const
+    inline xeus::xjson xtab<D>::get_state() const
     {
         xeus::xjson state = base_type::get_state();
-
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout, state);
 
         return state;
     }
 
     template <class D>
-    inline void xvalid<D>::apply_patch(const xeus::xjson& patch)
+    inline void xtab<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
-
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch);
     }
 
     template <class D>
-    inline xvalid<D>::xvalid()
+    inline xtab<D>::xtab()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline void xvalid<D>::set_defaults()
+    inline void xtab<D>::set_defaults()
     {
-        this->_model_name() = "ValidModel";
-        this->_view_name() = "ValidView";
+        this->_model_name() = "TabModel";
+        this->_view_name() = "TabView";
     }
 }
+
 #endif

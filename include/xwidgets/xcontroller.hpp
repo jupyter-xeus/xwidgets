@@ -144,8 +144,8 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(pressed, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(pressed, patch);
     }
 
     template <class D>
@@ -183,7 +183,7 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch);
     }
 
     template <class D>
@@ -227,13 +227,13 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(index, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(name, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(mapping, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(connected, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(timestamp, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(buttons, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(axes, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(index, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(name, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(mapping, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(connected, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(timestamp, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(buttons, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(axes, patch);
     }
 
     template <class D>

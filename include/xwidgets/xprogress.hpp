@@ -115,7 +115,7 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(description_width, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(description_width, patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(bar_color, patch);
     }
 
@@ -154,9 +154,9 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(orientation, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(bar_style, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(orientation, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(bar_style, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch);
     }
 
     template <class D>

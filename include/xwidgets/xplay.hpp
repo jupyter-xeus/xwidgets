@@ -82,12 +82,12 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(interval, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(step, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_playing, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_repeat, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(show_repeat, patch)
+        XOBJECT_SET_PROPERTY_FROM_PATCH(interval, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(step, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(_playing, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(_repeat, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(show_repeat, patch);
     }
 
     template <class D>

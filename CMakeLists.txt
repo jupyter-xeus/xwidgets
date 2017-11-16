@@ -104,6 +104,7 @@ set(XWIDGETS_DEPENDENCIES ${xeus_LIBRARY})
 include_directories(${XWIDGETS_INCLUDE_DIR}/xwidgets)
 
 set(XWIDGETS_HEADERS
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaccordion.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbox.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xboolean.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbutton.hpp
@@ -126,11 +127,13 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprogress.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselect.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselection.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselection_container.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselectionslider.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xslider.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstring.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstyle.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xradiobuttons.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtab.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtext.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtextarea.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtogglebutton.hpp
