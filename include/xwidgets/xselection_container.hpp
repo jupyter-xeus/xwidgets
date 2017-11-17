@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include "xtl/xoptional.hpp"
+
 #include "xbox.hpp"
 #include "xmaterialize.hpp"
 
@@ -35,7 +37,7 @@ namespace xw
         void apply_patch(const xeus::xjson&);
 
         XPROPERTY(titles_type, derived_type, _titles);
-        XPROPERTY(int, derived_type, selected_index);
+        XPROPERTY(xtl::xoptional<int>, derived_type, selected_index, 0);
 
         void set_title(typename titles_type::size_type i, std::string title);
 
