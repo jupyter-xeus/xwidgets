@@ -9,8 +9,6 @@
 #ifndef XWIDGETS_CHECKBOX_HPP
 #define XWIDGETS_CHECKBOX_HPP
 
-#include <string>
-
 #include "xboolean.hpp"
 #include "xmaterialize.hpp"
 

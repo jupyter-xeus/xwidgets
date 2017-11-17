@@ -109,6 +109,8 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xboolean.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbutton.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcheckbox.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcolor.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcolor_picker.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcontroller.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xdropdown.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xeither.hpp

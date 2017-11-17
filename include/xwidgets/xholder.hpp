@@ -150,7 +150,7 @@ namespace xw
 
             virtual xtl::any value() & = 0;
             virtual const xtl::any value() const & = 0;
-        
+
         protected:
 
             xholder_impl(const xholder_impl&) = default;

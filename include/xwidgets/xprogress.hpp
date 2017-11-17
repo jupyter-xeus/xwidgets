@@ -13,6 +13,7 @@
 
 #include "xtl/xoptional.hpp"
 
+#include "xcolor.hpp"
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
@@ -36,7 +37,7 @@ namespace xw
         void apply_patch(const xeus::xjson&);
 
         XPROPERTY(std::string, derived_type, description_width);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, bar_color);
+        XPROPERTY(xtl::xoptional<html_color>, derived_type, bar_color);
 
     protected:
 
