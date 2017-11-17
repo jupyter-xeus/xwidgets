@@ -37,7 +37,7 @@ namespace xw
         void apply_patch(const xeus::xjson&);
 
         XPROPERTY(titles_type, derived_type, _titles);
-        XPROPERTY(xtl::xoptional<int>, derived_type, selected_index, 0);
+        XPROPERTY(xtl::xoptional<int>, derived_type, selected_index);
 
         void set_title(typename titles_type::size_type i, std::string title);
 
