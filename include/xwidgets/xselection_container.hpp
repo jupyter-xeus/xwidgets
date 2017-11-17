@@ -12,8 +12,8 @@
 #include <string>
 #include <vector>
 
-#include "xmaterialize.hpp"
 #include "xbox.hpp"
+#include "xmaterialize.hpp"
 
 namespace xw
 {

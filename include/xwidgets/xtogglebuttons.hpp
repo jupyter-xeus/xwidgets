@@ -13,8 +13,8 @@
 #include <utility>
 #include <vector>
 
-#include "xmaterialize.hpp"
 #include "xeither.hpp"
+#include "xmaterialize.hpp"
 #include "xselection.hpp"
 #include "xstyle.hpp"
 
@@ -39,7 +39,7 @@ namespace xw
 
     protected:
 
-        xtogglebuttons_style(); 
+        xtogglebuttons_style();
         using base_type::base_type;
 
     private:

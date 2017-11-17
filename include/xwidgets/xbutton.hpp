@@ -9,9 +9,15 @@
 #ifndef XWIDGETS_BUTTON_HPP
 #define XWIDGETS_BUTTON_HPP
 
+#include <functional>
+#include <list>
 #include <stdexcept>
-#include <unordered_set>
+#include <string>
+#include <utility>
 
+#include "xtl/xoptional.hpp"
+
+#include "xcolor.hpp"
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xstyle.hpp"
@@ -34,7 +40,7 @@ namespace xw
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
 
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, button_color);
+        XPROPERTY(xtl::xoptional<html_color>, derived_type, button_color);
         XPROPERTY(std::string, derived_type, font_weight);
 
     protected:

@@ -6,39 +6,39 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#ifndef XWIDGETS_BOOLEAN_HPP
-#define XWIDGETS_BOOLEAN_HPP
+#ifndef XWIDGETS_COLOR_PICKER_HPP
+#define XWIDGETS_COLOR_PICKER_HPP
 
-#include <string>
-
+#include "xcolor.hpp"
+#include "xmaterialize.hpp"
 #include "xwidget.hpp"
 
 namespace xw
 {
-
-    /*****************************
-     * base xboolean declaration *
-     *****************************/
+    /****************************
+     * color_picker declaration *
+     ****************************/
 
     template <class D>
-    class xboolean : public xwidget<D>
+    class xcolor_picker : public xwidget<D>
     {
     public:
 
         using base_type = xwidget<D>;
         using derived_type = D;
 
+        using value_type = html_color;
+
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
 
-        XPROPERTY(std::string, derived_type, description);
-
-        XPROPERTY(bool, derived_type, value);
+        XPROPERTY(value_type, derived_type, value, "black");
         XPROPERTY(bool, derived_type, disabled);
+        XPROPERTY(bool, derived_type, concise);
 
     protected:
 
-        xboolean();
+        xcolor_picker();
         using base_type::base_type;
 
     private:
@@ -46,43 +46,48 @@ namespace xw
         void set_defaults();
     };
 
-    /***************************
-     * xboolean implementation *
-     ***************************/
+    using color_picker = xmaterialize<xcolor_picker>;
+
+    using color_picker_generator = xgenerator<xcolor_picker>;
+
+    /********************************
+     * xcolor_picker implementation *
+     ********************************/
 
     template <class D>
-    inline xeus::xjson xboolean<D>::get_state() const
+    inline xeus::xjson xcolor_picker<D>::get_state() const
     {
         xeus::xjson state = base_type::get_state();
 
         XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
 
         return state;
     }
 
     template <class D>
-    inline void xboolean<D>::apply_patch(const xeus::xjson& patch)
+    inline void xcolor_picker<D>::apply_patch(const xeus::xjson& patch)
     {
         base_type::apply_patch(patch);
 
         XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(concise, patch);
     }
 
     template <class D>
-    inline xboolean<D>::xboolean()
+    inline xcolor_picker<D>::xcolor_picker()
         : base_type()
     {
         set_defaults();
     }
 
     template <class D>
-    inline void xboolean<D>::set_defaults()
+    inline void xcolor_picker<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
-        this->_model_name() = "BoolModel";
+        this->_model_name() = "ColorPickerModel";
+        this->_view_name() = "ColorPickerView";
     }
 }
 
