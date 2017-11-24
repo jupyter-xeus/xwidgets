@@ -146,7 +146,7 @@ namespace xw
     template <class D>
     inline void xselection<D>::setup_properties()
     {
-        this->template observe<decltype(value)>([&, this](const auto&) {
+        this->template observe<decltype(value)>([this]() {
             const options_type& opt = this->_options_labels();
             auto new_index = std::find(opt.cbegin(), opt.cend(), this->value()) - opt.cbegin();
             if (new_index != this->index())
@@ -155,7 +155,7 @@ namespace xw
             }
         });
 
-        this->template observe<decltype(index)>([&, this](const auto&) {
+        this->template observe<decltype(index)>([this]() {
             auto new_value = this->_options_labels()[this->index()];
             if (new_value != this->value())
             {
@@ -163,7 +163,7 @@ namespace xw
             }
         });
 
-        this->template observe<decltype(_options_labels)>([&, this](const auto&) {
+        this->template observe<decltype(_options_labels)>([this]() {
             const options_type& opt = this->_options_labels();
             auto position = std::find(opt.cbegin(), opt.cend(), this->value());
             if (position == opt.cend())
@@ -173,7 +173,7 @@ namespace xw
             this->index = position - opt.cbegin();
         });
 
-        this->template validate<decltype(value)>([&](const auto&, auto& proposal) {
+        this->template validate<decltype(value)>([](auto& proposal) {
             const options_type& opt = this->_options_labels();
             if (std::find(opt.cbegin(), opt.cend(), proposal) == opt.cend())
             {
@@ -237,7 +237,7 @@ namespace xw
     template <class D>
     inline void xmultiple_selection<D>::setup_properties()
     {
-        this->template observe<decltype(value)>([&, this](const auto&) {
+        this->template observe<decltype(value)>([this]() {
             const options_type& opt = this->_options_labels();
             index_type new_index;
             for (const auto& val : this->value())
@@ -250,7 +250,7 @@ namespace xw
             }
         });
 
-        this->template observe<decltype(index)>([&, this](const auto&) {
+        this->template observe<decltype(index)>([this]() {
             value_type new_value;
             for (const auto& i : this->index())
             {
@@ -262,11 +262,11 @@ namespace xw
             }
         });
 
-        this->template observe<decltype(_options_labels)>([&, this](const auto&) {
+        this->template observe<decltype(_options_labels)>([this]() {
             this->index = index_type();
         });
 
-        this->template validate<decltype(value)>([&](const auto&, auto& proposal) {
+        this->template validate<decltype(value)>([](auto& proposal) {
             const options_type& opt = this->_options_labels();
             for (const auto& val : proposal)
             {
