@@ -54,6 +54,25 @@ namespace xw
         xmaterialize<B, P...> finalize() &&;
     };
 
+    /******************
+     * xconcrete_type *
+     ******************/
+
+    template <class D>
+    struct xconcrete_type
+    {
+        using type = D;
+    };
+
+    template <template <class> class B, class... P>
+    struct xconcrete_type<xgenerator<B, P...>>
+    {
+        using type = xmaterialize<B, P...>;
+    };
+
+    template <class D>
+    using xconcrete_type_t = typename xconcrete_type<D>::type;
+
     /*******************************
      * xmaterialize implementation *
      *******************************/

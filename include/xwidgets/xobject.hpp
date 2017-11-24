@@ -16,6 +16,7 @@
 
 #include "xproperty/xobserved.hpp"
 
+#include "xmaterialize.hpp"
 #include "xtransport.hpp"
 
 namespace xtl
@@ -65,7 +66,6 @@ namespace xw
 
         using base_type = xtransport<D>;
         using derived_type = D;
-        using base_type::base_type;
 
         using base_type::derived_cast;
 
@@ -80,6 +80,14 @@ namespace xw
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_name, "WidgetView");
 
         using base_type::notify;
+
+    protected:
+
+        using base_type::base_type;
+        using concrete_type = xconcrete_type_t<D>; 
+
+        concrete_type* self();
+        const concrete_type* self() const;
     };
 
     /*******************************
@@ -96,17 +104,6 @@ namespace xw
     patch[#name] = this->name();
 
     template <class D>
-    inline void xobject<D>::apply_patch(const xeus::xjson& patch)
-    {
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_model_module, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_model_module_version, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_model_name, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_view_module, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_view_module_version, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_view_name, patch);
-    }
-
-    template <class D>
     inline xeus::xjson xobject<D>::get_state() const
     {
         xeus::xjson state;
@@ -119,6 +116,29 @@ namespace xw
         XOBJECT_SET_PATCH_FROM_PROPERTY(_view_name, state);
 
         return state;
+    }
+
+    template <class D>
+    inline void xobject<D>::apply_patch(const xeus::xjson& patch)
+    {
+        XOBJECT_SET_PROPERTY_FROM_PATCH(_model_module, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(_model_module_version, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(_model_name, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(_view_module, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(_view_module_version, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(_view_name, patch);
+    }
+
+    template <class D> 
+    inline auto xobject<D>::self() -> concrete_type*
+    {
+        return reinterpret_cast<concrete_type*>(this);
+    }
+
+    template <class D> 
+    inline auto xobject<D>::self() const -> const concrete_type*
+    {
+        return reinterpret_cast<const concrete_type*>(this);
     }
 }
 
