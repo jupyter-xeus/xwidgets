@@ -86,6 +86,8 @@ namespace xw
     private:
 
         void set_defaults();
+
+        void setup_properties();
     };
 
     template <class T>
@@ -184,6 +186,12 @@ namespace xw
     {
         set_defaults();
 
+        this->setup_properties();
+    }
+
+    template <class D>
+    inline void xslider<D>::setup_properties()
+    {
         this->template validate<decltype(this->value)>([this](auto& proposal) {
             if (proposal > this->max())
             {
