@@ -192,7 +192,8 @@ namespace xw
     template <class D>
     inline void xslider<D>::setup_properties()
     {
-        this->template validate<decltype(this->value)>([](auto& owner, auto& proposal) {
+        auto self = this->self();
+        self->template validate<decltype(self->value)>([](auto& owner, auto& proposal) {
             if (proposal > owner.max())
             {
                 proposal = owner.max();
@@ -203,7 +204,7 @@ namespace xw
             }
         });
 
-        this->template validate<decltype(this->min)>([](auto& owner, auto& proposal) {
+        self->template validate<decltype(self->min)>([](auto& owner, auto& proposal) {
             if (proposal > owner.max())
             {
                 throw std::runtime_error("setting min > max");
@@ -214,7 +215,7 @@ namespace xw
             }
         });
 
-        this->template validate<decltype(this->max)>([](auto& owner, auto& proposal) {
+        self->template validate<decltype(self->max)>([](auto& owner, auto& proposal) {
             if (proposal < owner.min())
             {
                 throw std::runtime_error("setting max < min");

@@ -64,7 +64,6 @@ namespace xw
 
         using base_type = xnumber<D>;
         using derived_type = D;
-        using base_type::base_type;
 
         using value_type = typename base_type::value_type;
 
@@ -78,6 +77,7 @@ namespace xw
     protected:
 
         xprogress();
+        using base_type::base_type;
 
     private:
 

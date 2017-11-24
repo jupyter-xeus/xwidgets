@@ -62,7 +62,6 @@ namespace xw
 
         using base_type = xwidget<D>;
         using derived_type = D;
-        using base_type::base_type;
 
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
@@ -72,6 +71,7 @@ namespace xw
     protected:
 
         xcontroller_axis();
+        using base_type::base_type;
 
     private:
 
@@ -93,7 +93,6 @@ namespace xw
 
         using base_type = xwidget<D>;
         using derived_type = D;
-        using base_type::base_type;
 
         using xcontroller_axis_list_type = std::vector<xholder<xtransport>>;
         using xcontroller_button_list_type = std::vector<xholder<xtransport>>;
@@ -112,6 +111,7 @@ namespace xw
     protected:
 
         xcontroller();
+        using base_type::base_type;
 
     private:
 
