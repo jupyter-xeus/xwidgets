@@ -184,7 +184,7 @@ namespace xw
     {
         set_defaults();
 
-        this->template validate<decltype(this->value)>([&, this](const auto&, auto& proposal) {
+        this->template validate<decltype(this->value)>([this](auto& proposal) {
             if (proposal > this->max())
             {
                 proposal = this->max();
@@ -195,7 +195,7 @@ namespace xw
             }
         });
 
-        this->template validate<decltype(this->min)>([&, this](const auto&, auto& proposal) {
+        this->template validate<decltype(this->min)>([this](auto& proposal) {
             if (proposal > this->max())
             {
                 throw std::runtime_error("setting min > max");
@@ -206,7 +206,7 @@ namespace xw
             }
         });
 
-        this->template validate<decltype(this->max)>([&, this](const auto&, auto& proposal) {
+        this->template validate<decltype(this->max)>([this](auto& proposal) {
             if (proposal < this->min())
             {
                 throw std::runtime_error("setting max < min");
