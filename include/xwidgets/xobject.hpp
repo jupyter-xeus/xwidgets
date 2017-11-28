@@ -72,11 +72,11 @@ namespace xw
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
 
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module, "jupyter-js-widgets");
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module_version, "~2.1.4");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module, "@jupyter-widgets/base");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module_version, "^1.0.0");
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_name, "WidgetModel");
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module, "jupyter-js-widgets");
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module_version, "~2.1.4");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module, "@jupyter-widgets/base");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module_version, "^1.0.0");
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_name, "WidgetView");
 
         using base_type::notify;
