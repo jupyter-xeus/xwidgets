@@ -107,7 +107,7 @@ install:
     # Testing
     - mkdir build
     - cd build
-    - cmake -DBUILD_TESTS=ON .
+    - cmake -DBUILD_TESTS=ON ..
     - make -j2 test_xwidgets
     - cd test
 script:

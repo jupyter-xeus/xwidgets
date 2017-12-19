@@ -4,7 +4,7 @@
 
    The full license is in the file LICENSE, distributed with this software.
 
-Releasing xwidgets 
+Releasing xwidgets
 ==================
 
 Releasing a new version
