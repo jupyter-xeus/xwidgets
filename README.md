@@ -1,5 +1,7 @@
 # ![xwidgets](http://quantstack.net/assets/images/xwidgets.svg)
 
+[![Travis](https://travis-ci.org/QuantStack/xwidgets.svg?branch=master)](https://travis-ci.org/QuantStack/xwidgets)
+[![Documentation](http://readthedocs.org/projects/xwidgets/badge/?version=latest)](https://xwidgets.readthedocs.io/en/latest/?badge=latest)
 [![Binder](https://img.shields.io/badge/launch-binder-brightgreen.svg)](https://beta.mybinder.org/v2/gh/QuantStack/xwidgets/0.6.0-binder?filepath=notebooks/xwidgets.ipynb)
 [![Join the Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/QuantStack/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -45,8 +47,6 @@ All the dependencies of xwidgets are available for the conda package manager.
 |  0.5.2     |      ~3.0.0           |  >=0.3.5,<0.4  | >=0.4.2,<0.5  | >=0.8.0,<0.9 |
 |  0.5.1     |      ~3.0.0           |  >=0.3.4,<0.4  | >=0.4.2,<0.5  | >=0.8.0,<0.9 |
 |  0.5.0     |      ~3.0.0           |  >=0.3.4,<0.4  | >=0.4.1,<0.5  | >=0.8.0,<0.9 |
-|  0.4.0     |      ~3.0.0           |  >=0.2.5,<0.3  | >=0.4.0,<0.5  | >=0.7.0,<0.8 |
-|  0.3.0     |      ~3.0.0           |  >=0.2.5,<0.3  | >=0.4.0,<0.5  | >=0.6.0,<0.7 |
 
 ## License
 

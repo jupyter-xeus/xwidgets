@@ -114,22 +114,22 @@ namespace xw
     TEST(xwidgets, progress_style)
     {
         progress_style p;
-        p.description_width = "description_width";
-        ASSERT_EQ("description_width", p.description_width());
+        p.description_width = "40px";
+        ASSERT_EQ("40px", p.description_width());
     }
 
     TEST(xwidgets, progress)
     {
         progress<double> p;
-        p.orientation = "orientation";
-        ASSERT_EQ("orientation", p.orientation());
+        p.orientation = "vertical";
+        ASSERT_EQ("vertical", p.orientation());
     }
 
     TEST(xwidgets, slider_style)
     {
         slider_style s;
-        s.description_width = "description_width";
-        ASSERT_EQ("description_width", s.description_width());
+        s.description_width = "40px";
+        ASSERT_EQ("40px", s.description_width());
     }
 
     TEST(xwidgets, slider)

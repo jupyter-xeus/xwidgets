@@ -43,9 +43,9 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
     endif()
 
-    CHECK_CXX_COMPILER_FLAG("-std=c++11" HAS_CPP11_FLAG)
+    CHECK_CXX_COMPILER_FLAG("-std=c++14" HAS_CPP14_FLAG)
 
-    if (HAS_CPP11_FLAG)
+    if (HAS_CPP14_FLAG)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
     else()
         message(FATAL_ERROR "Unsupported compiler -- xeux requires c++14 support!")
@@ -88,6 +88,7 @@ endif()
 # ============
 
 find_package(xeus REQUIRED)
+
 include_directories(${xeus_INCLUDE_DIRS})
 
 find_package(xproperty REQUIRED)
