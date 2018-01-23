@@ -19,9 +19,10 @@ namespace xw
     {
         std::map<std::string, xholder<xwidget>> hm;
         button b;
-        b.description = "coincoin";
+        std::string desc = "coincoin";
+        b.description = desc;
         hm["x"] = std::move(b);
         std::string res = hm["x"].template get<button>().description();
-        ASSERT_EQ(b.description(), res);
+        ASSERT_EQ(desc, res);
     }
 }

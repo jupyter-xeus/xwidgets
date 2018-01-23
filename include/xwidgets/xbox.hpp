@@ -30,7 +30,10 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        using children_list_type = std::vector<xholder<xtransport>>;
+        template <class T>
+        using transport_type = xtransport<T>;
+
+        using children_list_type = std::vector<xholder<transport_type>>;
 
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
@@ -133,7 +136,7 @@ namespace xw
     template <class T>
     inline void xbox<D>::add(const xtransport<T>& w)
     {
-        this->children().emplace_back(make_id_holder<xtransport>(w.id()));
+        this->children().emplace_back(make_id_holder<transport_type>(w.id()));
         xeus::xjson state;
         XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
         this->send_patch(std::move(state));
