@@ -83,7 +83,8 @@ namespace xw
 
     protected:
 
-        using base_type::base_type;
+        xobject();
+        xobject(xeus::xcomm&&, bool owning = false);
         using concrete_type = xconcrete_type_t<D>; 
 
         concrete_type* self();
@@ -129,13 +130,25 @@ namespace xw
         XOBJECT_SET_PROPERTY_FROM_PATCH(_view_name, patch);
     }
 
-    template <class D> 
+    template <class D>
+    inline xobject<D>::xobject()
+        : base_type()
+    {
+    }
+
+    template <class D>
+    inline xobject<D>::xobject(xeus::xcomm&& com, bool owning)
+        : base_type(std::move(com), owning)
+    {
+    }
+
+    template <class D>
     inline auto xobject<D>::self() -> concrete_type*
     {
         return reinterpret_cast<concrete_type*>(this);
     }
 
-    template <class D> 
+    template <class D>
     inline auto xobject<D>::self() const -> const concrete_type*
     {
         return reinterpret_cast<const concrete_type*>(this);
