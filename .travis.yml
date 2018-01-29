@@ -17,7 +17,7 @@ install:
     - hash -r
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
-    - conda install gtest cmake xeus cppzmq xproperty xtl gcc-6 -c QuantStack
+    - conda install gtest cmake xeus cppzmq xproperty xtl gcc-7 -c QuantStack -c conda-forge
     # Testing
     - mkdir build
     - cd build
