@@ -15,23 +15,6 @@
 #include "xmaterialize.hpp"
 #include "xobject.hpp"
 
-namespace std
-{
-    template <class A, class B>
-    inline void to_json(xeus::xjson& j, const std::pair<A, B>& o)
-    {
-        j[0] = o.first;
-        j[1] = o.second;
-    }
-
-    template <class A, class B>
-    inline void from_json(const xeus::xjson& j, std::pair<A, B>& o)
-    {
-        o.first = j[0].get<A>();
-        o.second = j[1].get<B>();
-    }
-}
-
 namespace xw
 {
     /********************
