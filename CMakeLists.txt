@@ -22,87 +22,34 @@ foreach(ver ${xwidgets_version_defines})
         set(XWIDGETS_VERSION_${CMAKE_MATCH_1} "${CMAKE_MATCH_2}" CACHE INTERNAL "")
     endif()
 endforeach()
-set(${PROJECT_NAME}_VERSION 
+set(XWIDGETS_VERSION
     ${XWIDGETS_VERSION_MAJOR}.${XWIDGETS_VERSION_MINOR}.${XWIDGETS_VERSION_PATCH})
-message(STATUS "xwidgets v${${PROJECT_NAME}_VERSION}")
+message(STATUS "xwidgets version: v${XWIDGETS_VERSION}")
 
-# Compilation flags
-# =================
-
-include(CheckCXXCompilerFlag)
-
-string(TOUPPER "${CMAKE_BUILD_TYPE}" U_CMAKE_BUILD_TYPE)
-
-OPTION(DISABLE_ARCH_NATIVE "disable -march=native flag" OFF)
-
-if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wunused-parameter -Wextra -Wreorder")
-    if (DISABLE_ARCH_NATIVE)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=generic")
-    else()
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+# Binary version
+# See the following URL for explanations about the binary versionning
+# https://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html#Updating-version-info
+file(STRINGS "${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp" xwidgets_version_defines
+    REGEX "#define XWIDGETS_BINARY_(CURRENT|REVISION|AGE)")
+foreach(ver ${xwidgets_version_defines})
+    if(ver MATCHES "#define XWIDGETS_BINARY_(CURRENT|REVISION|AGE) +([^ ]+)$")
+        set(XWIDGETS_BINARY_${CMAKE_MATCH_1} "${CMAKE_MATCH_2}" CACHE INTERNAL "")
     endif()
-
-    CHECK_CXX_COMPILER_FLAG("-std=c++14" HAS_CPP14_FLAG)
-
-    if (HAS_CPP14_FLAG)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
-    else()
-        message(FATAL_ERROR "Unsupported compiler -- xeux requires c++14 support!")
-    endif()
-
-    # Enable link time optimization and set the default symbol
-    # visibility to hidden (very important to obtain small binaries)
-    if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
-        # Check for Link Time Optimization support
-        # (GCC/Clang)
-        CHECK_CXX_COMPILER_FLAG("-flto" HAS_LTO_FLAG)
-        if (HAS_LTO_FLAG)
-            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto")
-        endif()
-
-        # Intel equivalent to LTO is called IPO
-        if (CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-            CHECK_CXX_COMPILER_FLAG("-ipo" HAS_IPO_FLAG)
-            if (HAS_IPO_FLAG)
-                set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ipo")
-            endif()
-        endif()
-    endif()
-    message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
-endif()
-
-if(MSVC)
-    add_definitions(-DNOMINMAX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /bigobj")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251 /wd4996")
-    # Allows to compile in debug without requiring each dependencies to
-    # be compiled in debug
-    if(${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
-        set(CMAKE_CXX_FLAGS_DEBUG "/DNDEBUG /MD /Zi /Ob0 /Od /RTC1")
-        message(STATUS "Overriding CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
-    endif()
-endif()
+endforeach()
+set(XWIDGETS_BINARY_VERSION
+    ${XWIDGETS_BINARY_CURRENT}.${XWIDGETS_BINARY_REVISION}.${XWIDGETS_BINARY_AGE})
+message(STATUS "xwidgets binary version: v${XWIDGETS_BINARY_VERSION}")
 
 # Dependencies
 # ============
 
-find_package(xeus REQUIRED)
-
-include_directories(${xeus_INCLUDE_DIRS})
-
-find_package(xproperty REQUIRED)
-include_directories(${xproperty_INCLUDE_DIRS})
-
-find_package(xtl REQUIRED)
-include_directories(${xtl_INCLUDE_DIRS})
-
-set(XWIDGETS_DEPENDENCIES ${xeus_LIBRARY})
+find_package(cppzmq 4.2.3 REQUIRED)
+find_package(xtl 0.4 REQUIRED)
+find_package(xeus 0.10 REQUIRED)
+find_package(xproperty 0.6 REQUIRED)
 
 # Source files
 # ============
-
-include_directories(${XWIDGETS_INCLUDE_DIR}/xwidgets)
 
 set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaccordion.hpp
@@ -145,27 +92,102 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvalid.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprecompiled.hpp    
 )
 
-# # Output
-# # ======
-# 
-# set(XWIDGETS_TARGET xwidgets)
-# add_library(${XWIDGETS_TARGET} SHARED ${XWIDGETS_SOURCES} ${XWIDGETS_HEADERS})
-# target_link_libraries(${XWIDGETS_TARGET} ${XWIDGETS_DEPENDENCIES})
-# set_target_properties(${XWIDGETS_TARGET} PROPERTIES
-#                       PUBLIC_HEADER "${XWIDGETS_HEADERS}"
-#                       COMPILE_DEFINITIONS "XWIDGETS_EXPORTS"
-#                       PREFIX ""
-#                       OUTPUT_NAME "libxwidgets")
-# 
-# get_property(XWIDGETS_NAME TARGET ${XWIDGETS_TARGET} PROPERTY OUTPUT_NAME)
+set(XWIDGETS_SOURCES
+    ${XWIDGETS_SOURCE_DIR}/xwidgets.cpp
+)
+
+# Output
+# ======
+
+set(CMAKE_SKIP_BUILD_RPATH FALSE)
+set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
+if("${isSystemDir}" STREQUAL "-1")
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+endif("${isSystemDir}" STREQUAL "-1")
+
+add_library(xwidgets SHARED ${XWIDGETS_SOURCES} ${XWIDGETS_HEADERS})
+target_include_directories(xwidgets PUBLIC $<BUILD_INTERFACE:${XWIDGETS_INCLUDE_DIR}>
+                                           $<INSTALL_INTERFACE:include>)
+
+target_link_libraries(xwidgets
+                      PUBLIC xtl
+                      PRIVATE xeus)
+
+set_target_properties(xwidgets PROPERTIES
+                      PUBLIC_HEADER "${XWIDGETS_HEADERS}"
+                      COMPILE_DEFINITIONS "XWIDGETS_EXPORTS"
+                      PREFIX ""
+                      VERSION ${XWIDGETS_BINARY_VERSION}
+                      SOVERSION ${XWIDGETS_BINARY_CURRENT}
+                      OUTPUT_NAME "libxwidgets")
+
+# Compilation flags
+# =================
+
+include(CheckCXXCompilerFlag)
+string(TOUPPER "${CMAKE_BUILD_TYPE}" U_CMAKE_BUILD_TYPE)
+OPTION(DISABLE_ARCH_NATIVE "disable -march=native flag" OFF)
+
+set_target_properties(xwidgets PROPERTIES
+                      CXX_STANDARD 14
+                      CXX_STANDARD_REQUIRED ON)
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
+    target_compile_options(xwidgets PUBLIC -Wunused-parameter -Wextra -Wreorder)
+    if (DISABLE_ARCH_NATIVE)
+        target_compile_options(xwidgets PUBLIC -mtune=generic)
+    else()
+        target_compile_options(xwidgets PUBLIC -march=native)
+    endif()
+
+    CHECK_CXX_COMPILER_FLAG("-std=c++14" HAS_CPP14_FLAG)
+    if(HAS_CPP14_FLAG)
+        target_compile_options(xwidgets PUBLIC -std=c++14)
+    else()
+        message(FATAL_ERROR "Unsupported compiler -- xwidgets requires C++14 support!")
+    endif()
+
+    # Enable link time optimization and set the default symbol
+    # visibility to hidden (very important to obtain small binaries)
+    if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
+        # Check for Link Time Optimization support
+        # (GCC/Clang)
+        CHECK_CXX_COMPILER_FLAG("-flto" HAS_LTO_FLAG)
+        if (HAS_LTO_FLAG)
+            target_compile_options(xwidgets PUBLIC -flto)
+        endif()
+
+        # Intel equivalent to LTO is called IPO
+        if (CMAKE_CXX_COMPILER_ID MATCHES "Intel")
+            CHECK_CXX_COMPILER_FLAG("-ipo" HAS_IPO_FLAG)
+            if (HAS_IPO_FLAG)
+                target_compile_options(xwidgets PUBLIC -ipo)
+            endif()
+        endif()
+    endif()
+    message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
+endif()
+
 # if(MSVC)
-#     set(XWIDGETS_LINK_FILE ${XWIDGETS_NAME}${CMAKE_LINK_LIBRARY_SUFFIX})
-#     set(XWIDGETS_RUNTIME_FILE ${XWIDGETS_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
+#     target_compile_definitions(xwidgets PUBLIC -DNOMINMAX)
+#     target_compile_options(xwidgets PUBLIC /DGUID_WINDOWS /MP /bigobj)
+#     target_compile_options(xwidgets PUBLIC /wd4251 /wd 4996)
+#     # Allows to compile in debug without requiring each dependencies to
+#     # be compiled in debug
+#     if(${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
+#         set(CMAKE_CXX_FLAGS_DEBUG "/DNDEBUG /MD /Zi /Ob0 /Od /RTC1")
+#         message(STATUS "Overriding CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
+#     endif()
+# elseif(APPLE)
+#     target_compile_definitions(xwidgets PUBLIC -DGUID_CFUUID)
 # else()
-#     set(XWIDGETS_LINK_FILE ${XWIDGETS_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
-#     set(XWIDGETS_RUNTIME_FILE ${XWIDGETS_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
+#     target_compile_definitions(xwidgets PUBLIC -DGUID_LIBUUID)
 # endif()
 
 # Tests
@@ -188,25 +210,28 @@ endif()
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-install(FILES ${XWIDGETS_HEADERS}
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/xwidgets)
+set(XWIDGETS_CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}" CACHE STRING "install path for xwidgetsConfig.cmake")
 
-install(TARGETS ${XWIDGETS_TARGET}
+install(TARGETS xwidgets
+        EXPORT ${PROJECT_NAME}-targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/xwidgets)
 
-set(XWIDGETS_CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}" CACHE
-    STRING "install path for xwidgetsConfig.cmake")
+# Makes the project importable from the build directory
+export(EXPORT ${PROJECT_NAME}-targets
+       FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake")
 
 configure_package_config_file(${PROJECT_NAME}Config.cmake.in
                               "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
                               INSTALL_DESTINATION ${XWIDGETS_CMAKECONFIG_INSTALL_DIR})
 write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-                                 VERSION ${${PROJECT_NAME}_VERSION}
+                                 VERSION ${XWIDGETS_VERSION}
                                  COMPATIBILITY AnyNewerVersion)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-        DESTINATION ${XWIDGETS_CMAKECONFIG_INSTALL_DIR})
-
+              DESTINATION ${XWIDGETS_CMAKECONFIG_INSTALL_DIR})
+install(EXPORT ${PROJECT_NAME}-targets
+        FILE ${PROJECT_NAME}Targets.cmake
+DESTINATION ${XWIDGETS_CMAKECONFIG_INSTALL_DIR})
