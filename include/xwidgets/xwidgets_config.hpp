@@ -9,9 +9,25 @@
 #ifndef XWIDGETS_CONFIG_HPP
 #define XWIDGETS_CONFIG_HPP
 
+#ifdef _WIN32
+    #ifdef XWIDGETS_EXPORTS
+        #define XWIDGETS_API __declspec(dllexport)
+    #else
+        #define XWIDGETS_API __declspec(dllimport)
+    #endif
+#else
+    #define XWIDGETS_API
+#endif
+
+// Project version
 #define XWIDGETS_VERSION_MAJOR 0
 #define XWIDGETS_VERSION_MINOR 6
 #define XWIDGETS_VERSION_PATCH 1
+
+// Binary version
+#define XWIDGETS_BINARY_CURRENT 1
+#define XWIDGETS_BINARY_REVISION 0
+#define XWIDGETS_BINARY_AGE 1
 
 #define XWIDGETS_PROTOCOL_VERSION_MAJOR 2
 #define XWIDGETS_PROTOCOL_VERSION_MINOR 0
@@ -28,14 +44,5 @@
                               XWIDGETS_CONCATENATE(.,XWIDGETS_CONCATENATE(XWIDGETS_PROTOCOL_VERSION_MINOR,   \
                                                    XWIDGETS_CONCATENATE(.,XWIDGETS_PROTOCOL_VERSION_PATCH)))))
 
-#ifdef _WIN32
-    #ifdef XWIDGETS_EXPORTS
-        #define XWIDGETS_API __declspec(dllexport)
-    #else
-        #define XWIDGETS_API __declspec(dllimport)
-    #endif
-#else
-    #define XWIDGETS_API
-#endif
 
 #endif

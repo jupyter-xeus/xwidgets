@@ -58,6 +58,12 @@ namespace xw
         using value_type = int;
     };
 
+    template <>
+    struct xnumber_traits<play_generator>
+    {
+        using value_type = int;
+    };
+
     /************************
      * xplay implementation *
      ************************/

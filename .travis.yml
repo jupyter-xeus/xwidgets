@@ -22,7 +22,7 @@ install:
     - mkdir build
     - cd build
     - cmake -D CMAKE_INSTALL_PREFIX=$HOME/miniconda/ -D DOWNLOAD_GTEST=ON ..
-    - make -j2 test_xwidgets
+    - make -j2 install
     - cd test
 script:
     - ./test_xwidgets

@@ -32,8 +32,8 @@ namespace xw
         xmaterialize(const xmaterialize&);
         xmaterialize& operator=(const xmaterialize&);
 
-        xmaterialize(xmaterialize&&) = default;
-        xmaterialize& operator=(xmaterialize&&) = default;
+        xmaterialize(xmaterialize&&);
+        xmaterialize& operator=(xmaterialize&&);
     };
 
     /**************************
@@ -109,6 +109,12 @@ namespace xw
         this->open();
         return *this;
     }
+
+    template <template <class> class B, class... P>
+    inline xmaterialize<B, P...>::xmaterialize(xmaterialize&&) = default;
+
+    template <template <class> class B, class... P>
+    inline xmaterialize<B, P...>& xmaterialize<B, P...>::operator=(xmaterialize&& rhs) = default;
 
     /*****************************
      * xgenerator implementation *
