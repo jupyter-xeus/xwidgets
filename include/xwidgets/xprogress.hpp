@@ -96,6 +96,12 @@ namespace xw
         using value_type = T;
     };
 
+    template <class T>
+    struct xnumber_traits<progress_generator<T>>
+    {
+        using value_type = T;
+    };
+
     /**********************************
      * xprogress_style implementation *
      **********************************/
