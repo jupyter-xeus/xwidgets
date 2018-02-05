@@ -89,6 +89,17 @@ namespace xw
         this->_model_name() = "ColorPickerModel";
         this->_view_name() = "ColorPickerView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xcolor_picker>;
+    extern template xmaterialize<xcolor_picker>::xmaterialize();
+    extern template class xtransport<xmaterialize<xcolor_picker>>;
+    extern template class xgenerator<xcolor_picker>;
+    extern template xgenerator<xcolor_picker>::xgenerator();
+    extern template class xtransport<xgenerator<xcolor_picker>>;
 }
 
 #endif

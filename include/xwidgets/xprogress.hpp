@@ -179,6 +179,38 @@ namespace xw
         this->_model_name() = "FloatProgressModel";
         this->_view_name() = "ProgressView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xprogress_style>;
+    extern template xmaterialize<xprogress_style>::xmaterialize();
+    extern template class xtransport<xmaterialize<xprogress_style>>;
+    extern template class xgenerator<xprogress_style>;
+    extern template xgenerator<xprogress_style>::xgenerator();
+    extern template class xtransport<xgenerator<xprogress_style>>;
+
+    extern template class xmaterialize<xprogress, int>;
+    extern template xmaterialize<xprogress, int>::xmaterialize();
+    extern template class xtransport<xmaterialize<xprogress, int>>;
+    extern template class xgenerator<xprogress, int>;
+    extern template xgenerator<xprogress, int>::xgenerator();
+    extern template class xtransport<xgenerator<xprogress, int>>;
+
+    extern template class xmaterialize<xprogress, float>;
+    extern template xmaterialize<xprogress, float>::xmaterialize();
+    extern template class xtransport<xmaterialize<xprogress, float>>;
+    extern template class xgenerator<xprogress, float>;
+    extern template xgenerator<xprogress, float>::xgenerator();
+    extern template class xtransport<xgenerator<xprogress, float>>;
+
+    extern template class xmaterialize<xprogress, double>;
+    extern template xmaterialize<xprogress, double>::xmaterialize();
+    extern template class xtransport<xmaterialize<xprogress, double>>;
+    extern template class xgenerator<xprogress, double>;
+    extern template xgenerator<xprogress, double>::xgenerator();
+    extern template class xtransport<xgenerator<xprogress, double>>;
 }
 
 #endif
