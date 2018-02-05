@@ -58,8 +58,8 @@ message(STATUS "xwidgets binary version: v${XWIDGETS_BINARY_VERSION}")
 
 find_package(cppzmq 4.2.3 REQUIRED)
 find_package(xtl 0.4 REQUIRED)
-find_package(xeus 0.10 REQUIRED)
-find_package(xproperty 0.6 REQUIRED)
+find_package(xeus 0.10.1 REQUIRED)
+find_package(xproperty 0.7 REQUIRED)
 
 # Source files
 # ============
@@ -146,9 +146,7 @@ include(CheckCXXCompilerFlag)
 string(TOUPPER "${CMAKE_BUILD_TYPE}" U_CMAKE_BUILD_TYPE)
 OPTION(DISABLE_ARCH_NATIVE "disable -march=native flag" OFF)
 
-set_target_properties(xwidgets PROPERTIES
-                      CXX_STANDARD 14
-                      CXX_STANDARD_REQUIRED ON)
+target_compile_features(xwidgets PRIVATE cxx_std_14)
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
     target_compile_options(xwidgets PUBLIC -Wunused-parameter -Wextra -Wreorder)
@@ -156,13 +154,6 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
         target_compile_options(xwidgets PUBLIC -mtune=generic)
     else()
         target_compile_options(xwidgets PUBLIC -march=native)
-    endif()
-
-    CHECK_CXX_COMPILER_FLAG("-std=c++14" HAS_CPP14_FLAG)
-    if(HAS_CPP14_FLAG)
-        target_compile_options(xwidgets PUBLIC -std=c++14)
-    else()
-        message(FATAL_ERROR "Unsupported compiler -- xwidgets requires C++14 support!")
     endif()
 
     # Enable link time optimization and set the default symbol
