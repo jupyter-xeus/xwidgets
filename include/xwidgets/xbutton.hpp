@@ -206,5 +206,23 @@ namespace xw
             }
         }
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xbutton_style>;
+    extern template xmaterialize<xbutton_style>::xmaterialize();
+    extern template class xtransport<xmaterialize<xbutton_style>>;
+    extern template class xgenerator<xbutton_style>;
+    extern template xgenerator<xbutton_style>::xgenerator();
+    extern template class xtransport<xgenerator<xbutton_style>>;
+
+    extern template class xmaterialize<xbutton>;
+    extern template xmaterialize<xbutton>::xmaterialize();
+    extern template class xtransport<xmaterialize<xbutton>>;
+    extern template class xgenerator<xbutton>;
+    extern template xgenerator<xbutton>::xgenerator();
+    extern template class xtransport<xgenerator<xbutton>>;
 }
 #endif

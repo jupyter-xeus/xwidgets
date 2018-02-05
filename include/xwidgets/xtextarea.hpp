@@ -85,6 +85,17 @@ namespace xw
         this->_model_name() = "TextareaModel";
         this->_view_name() = "TextareaView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xtextarea>;
+    extern template xmaterialize<xtextarea>::xmaterialize();
+    extern template class xtransport<xmaterialize<xtextarea>>;
+    extern template class xgenerator<xtextarea>;
+    extern template xgenerator<xtextarea>::xgenerator();
+    extern template class xtransport<xgenerator<xtextarea>>;
 }
 
 #endif

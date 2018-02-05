@@ -80,6 +80,17 @@ namespace xw
         this->_model_name() = "PasswordModel";
         this->_view_name() = "PasswordView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xpassword>;
+    extern template xmaterialize<xpassword>::xmaterialize();
+    extern template class xtransport<xmaterialize<xpassword>>;
+    extern template class xgenerator<xpassword>;
+    extern template xgenerator<xpassword>::xgenerator();
+    extern template class xtransport<xgenerator<xpassword>>;
 }
 
 #endif

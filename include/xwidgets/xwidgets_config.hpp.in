@@ -43,4 +43,9 @@
                               XWIDGETS_CONCATENATE(.,XWIDGETS_CONCATENATE(XWIDGETS_PROTOCOL_VERSION_MINOR,   \
                                                    XWIDGETS_CONCATENATE(.,XWIDGETS_PROTOCOL_VERSION_PATCH)))))
 
+#ifdef __CLING__
+#pragma cling add_library_path(@XWIDGETS_INSTALL_LIBRARY_DIR@)
+#pragma cling load("libxwidgets")
+#endif
+
 #endif

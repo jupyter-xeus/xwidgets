@@ -80,6 +80,17 @@ namespace xw
         this->_model_name() = "CheckboxModel";
         this->_view_name() = "CheckboxView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xcheckbox>;
+    extern template xmaterialize<xcheckbox>::xmaterialize();
+    extern template class xtransport<xmaterialize<xcheckbox>>;
+    extern template class xgenerator<xcheckbox>;
+    extern template xgenerator<xcheckbox>::xgenerator();
+    extern template class xtransport<xgenerator<xcheckbox>>;
 }
 
 #endif

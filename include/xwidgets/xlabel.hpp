@@ -45,7 +45,7 @@ namespace xw
 
     /*************************
      * xlabel implementation *
-     ************************/
+     *************************/
 
     template <class D>
     inline xeus::xjson xlabel<D>::get_state() const
@@ -73,6 +73,17 @@ namespace xw
         this->_model_name() = "HTMLModel";
         this->_view_name() = "HTMLView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xlabel>;
+    extern template xmaterialize<xlabel>::xmaterialize();
+    extern template class xtransport<xmaterialize<xlabel>>;
+    extern template class xgenerator<xlabel>;
+    extern template xgenerator<xlabel>::xgenerator();
+    extern template class xtransport<xgenerator<xlabel>>;
 }
 
 #endif

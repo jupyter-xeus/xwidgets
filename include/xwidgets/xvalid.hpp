@@ -82,5 +82,16 @@ namespace xw
         this->_model_name() = "ValidModel";
         this->_view_name() = "ValidView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xvalid>;
+    extern template xmaterialize<xvalid>::xmaterialize();
+    extern template class xtransport<xmaterialize<xvalid>>;
+    extern template class xgenerator<xvalid>;
+    extern template xgenerator<xvalid>::xgenerator();
+    extern template class xtransport<xgenerator<xvalid>>;
 }
 #endif

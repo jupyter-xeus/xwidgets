@@ -109,6 +109,17 @@ namespace xw
         this->_model_name() = "PlayModel";
         this->_view_name() = "PlayView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xplay>;
+    extern template xmaterialize<xplay>::xmaterialize();
+    extern template class xtransport<xmaterialize<xplay>>;
+    extern template class xgenerator<xplay>;
+    extern template xgenerator<xplay>::xgenerator();
+    extern template class xtransport<xgenerator<xplay>>;
 }
 
 #endif

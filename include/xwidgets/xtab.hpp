@@ -43,9 +43,9 @@ namespace xw
 
     using tab_generator = xgenerator<xtab>;
 
-    /*****************************
+    /***********************
      * xtab implementation *
-     *****************************/
+     ***********************/
 
     template <class D>
     inline xeus::xjson xtab<D>::get_state() const
@@ -74,6 +74,17 @@ namespace xw
         this->_model_name() = "TabModel";
         this->_view_name() = "TabView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xtab>;
+    extern template xmaterialize<xtab>::xmaterialize();
+    extern template class xtransport<xmaterialize<xtab>>;
+    extern template class xgenerator<xtab>;
+    extern template xgenerator<xtab>::xgenerator();
+    extern template class xtransport<xgenerator<xtab>>;
 }
 
 #endif

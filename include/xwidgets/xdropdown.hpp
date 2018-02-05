@@ -82,5 +82,16 @@ namespace xw
         this->_model_name() = "DropdownModel";
         this->_view_name() = "DropdownView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xdropdown>;
+    extern template xmaterialize<xdropdown>::xmaterialize();
+    extern template class xtransport<xmaterialize<xdropdown>>;
+    extern template class xgenerator<xdropdown>;
+    extern template xgenerator<xdropdown>::xgenerator();
+    extern template class xtransport<xgenerator<xdropdown>>;
 }
 #endif

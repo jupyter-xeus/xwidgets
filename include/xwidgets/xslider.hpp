@@ -233,6 +233,38 @@ namespace xw
         this->_model_name() = "FloatSliderModel";
         this->_view_name() = "FloatSliderView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xslider_style>;
+    extern template xmaterialize<xslider_style>::xmaterialize();
+    extern template class xtransport<xmaterialize<xslider_style>>;
+    extern template class xgenerator<xslider_style>;
+    extern template xgenerator<xslider_style>::xgenerator();
+    extern template class xtransport<xgenerator<xslider_style>>;
+
+    extern template class xmaterialize<xslider, int>;
+    extern template xmaterialize<xslider, int>::xmaterialize();
+    extern template class xtransport<xmaterialize<xslider, int>>;
+    extern template class xgenerator<xslider, int>;
+    extern template xgenerator<xslider, int>::xgenerator();
+    extern template class xtransport<xgenerator<xslider, int>>;
+
+    extern template class xmaterialize<xslider, float>;
+    extern template xmaterialize<xslider, float>::xmaterialize();
+    extern template class xtransport<xmaterialize<xslider, float>>;
+    extern template class xgenerator<xslider, float>;
+    extern template xgenerator<xslider, float>::xgenerator();
+    extern template class xtransport<xgenerator<xslider, float>>;
+
+    extern template class xmaterialize<xslider, double>;
+    extern template xmaterialize<xslider, double>::xmaterialize();
+    extern template class xtransport<xmaterialize<xslider, double>>;
+    extern template class xgenerator<xslider, double>;
+    extern template xgenerator<xslider, double>::xgenerator();
+    extern template class xtransport<xgenerator<xslider, double>>;
 }
 
 #endif

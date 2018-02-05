@@ -82,5 +82,16 @@ namespace xw
         this->_model_name() = "RadioButtonsModel";
         this->_view_name() = "RadioButtonsView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xradiobuttons>;
+    extern template xmaterialize<xradiobuttons>::xmaterialize();
+    extern template class xtransport<xmaterialize<xradiobuttons>>;
+    extern template class xgenerator<xradiobuttons>;
+    extern template xgenerator<xradiobuttons>::xgenerator();
+    extern template class xtransport<xgenerator<xradiobuttons>>;
 }
 #endif

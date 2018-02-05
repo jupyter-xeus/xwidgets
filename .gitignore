@@ -52,4 +52,4 @@ docs/build/
 *.pc
 
 # Generated header
-include/xwidgets/xprecompiled.hpp
+include/xwidgets/xwidgets_config.hpp

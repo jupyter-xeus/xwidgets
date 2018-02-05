@@ -74,6 +74,17 @@ namespace xw
         this->_model_name() = "AccordionModel";
         this->_view_name() = "AccordionView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xaccordion>;
+    extern template xmaterialize<xaccordion>::xmaterialize();
+    extern template class xtransport<xmaterialize<xaccordion>>;
+    extern template class xgenerator<xaccordion>;
+    extern template xgenerator<xaccordion>::xgenerator();
+    extern template class xtransport<xgenerator<xaccordion>>;
 }
 
 #endif

@@ -154,5 +154,16 @@ namespace xw
         this->_model_name() = "LayoutModel";
         this->_view_name() = "LayoutView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xlayout>;
+    extern template xmaterialize<xlayout>::xmaterialize();
+    extern template class xtransport<xmaterialize<xlayout>>;
+    extern template class xgenerator<xlayout>;
+    extern template xgenerator<xlayout>::xgenerator();
+    extern template class xtransport<xgenerator<xlayout>>;
 }
 #endif
