@@ -10,7 +10,7 @@
 #define XWIDGETS_XPRECOMPILED_HPP
 
 #ifdef __CLING__
-#pragma cling add_library_path("/Users/scorlay/miniconda3/lib")
+#pragma cling add_library_path(@XWIDGETS_INSTALL_LIBRARY_DIR@)
 #pragma cling load("libxwidgets")
 #endif
 

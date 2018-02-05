@@ -50,3 +50,6 @@ docs/build/
 
 # Generated files
 *.pc
+
+# Generated header
+include/xwidgets/xprecompiled.hpp

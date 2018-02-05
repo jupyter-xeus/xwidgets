@@ -12,6 +12,19 @@ project(xwidgets)
 set(XWIDGETS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(XWIDGETS_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
+# Configuration
+# =============
+
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+set(XWIDGETS_INSTALL_LIBRARY_DIR "\"${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}\"")
+
+configure_file (
+    "${XWIDGETS_INCLUDE_DIR}/xwidgets/xprecompiled.hpp.in"
+    "${XWIDGETS_INCLUDE_DIR}/xwidgets/xprecompiled.hpp"
+)
+
 # Versionning
 # ===========
 
@@ -92,7 +105,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvalid.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprecompiled.hpp    
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprecompiled.hpp
 )
 
 set(XWIDGETS_SOURCES
@@ -206,9 +219,6 @@ endif()
 
 # Installation
 # ============
-
-include(GNUInstallDirs)
-include(CMakePackageConfigHelpers)
 
 set(XWIDGETS_CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}" CACHE STRING "install path for xwidgetsConfig.cmake")
 
