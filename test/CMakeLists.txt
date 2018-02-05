@@ -81,9 +81,7 @@ if(DOWNLOAD_GTEST OR GTEST_SRC_DIR)
     add_dependencies(${XWIDGETS_TEST_TARGET} gtest_main)
 endif()
 
-set_target_properties(${XWIDGETS_TEST_TARGET} PROPERTIES
-                      CXX_STANDARD 14
-                      CXX_STANDARD_REQUIRED ON)
+target_compile_features(${XWIDGETS_TEST_TARGET} PRIVATE cxx_std_14)
 
 target_link_libraries(${XWIDGETS_TEST_TARGET} 
                         PRIVATE xwidgets 
