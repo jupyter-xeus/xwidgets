@@ -1,10 +1,9 @@
 name: xwidgets
 channels:
-  - nodefaults
   - QuantStack
+  - conda-forge
 dependencies:
-  - xwidgets
-  - xeus-cling
+  - xeus-cling=0.1.0
+  - xwidgets=0.7.1
   - notebook
   - widgetsnbextension >=3.0.0
-  - ipywidgets >=7.0  # Fixing conda conflict
