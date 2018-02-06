@@ -140,6 +140,10 @@ include(CheckCXXCompilerFlag)
 string(TOUPPER "${CMAKE_BUILD_TYPE}" U_CMAKE_BUILD_TYPE)
 OPTION(DISABLE_ARCH_NATIVE "disable -march=native flag" OFF)
 
+set_target_properties(xwidgets PROPERTIES
+    CXX_EXTENSIONS OFF
+    CXX_STANDARD_REQUIRED 14)
+
 target_compile_features(xwidgets PRIVATE cxx_std_14)
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
