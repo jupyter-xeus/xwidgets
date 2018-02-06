@@ -51,6 +51,12 @@ namespace xw
         template <class... A>
         xgenerator(A&&...);
 
+        xgenerator(const xgenerator&);
+        xgenerator& operator=(const xgenerator&);
+
+        xgenerator(xgenerator&&);
+        xgenerator& operator=(xgenerator&&);
+
         xmaterialize<B, P...> finalize() &&;
     };
 
@@ -132,6 +138,18 @@ namespace xw
     {
         return reinterpret_cast<typename xmaterialize<B, P...>::base_type&&>(*this);
     }
+
+    template <template <class> class B, class... P>
+    inline xgenerator<B, P...>::xgenerator(const xgenerator&) = default;
+
+    template <template <class> class B, class... P>
+    inline xgenerator<B, P...>& xgenerator<B, P...>::operator=(const xgenerator&) = default;
+
+    template <template <class> class B, class... P>
+    inline xgenerator<B, P...>::xgenerator(xgenerator&&) = default;
+
+    template <template <class> class B, class... P>
+    inline xgenerator<B, P...>& xgenerator<B, P...>::operator=(xgenerator&&) = default;
 }
 
 #endif
