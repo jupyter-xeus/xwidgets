@@ -43,6 +43,8 @@ namespace xw
 
     protected:
 
+        xselectionslider();
+
         template <class O, class T>
         xselectionslider(O&& options, T&& value);
 
@@ -81,6 +83,7 @@ namespace xw
 
     protected:
 
+        xselection_rangeslider();
         xselection_rangeslider(options_type&& options);
         xselection_rangeslider(const options_type& options);
 
@@ -119,6 +122,13 @@ namespace xw
         XOBJECT_SET_PROPERTY_FROM_PATCH(orientation, patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch);
+    }
+
+    template <class D>
+    inline xselectionslider<D>::xselectionslider()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>
@@ -178,6 +188,14 @@ namespace xw
     }
 
     template <class D>
+    inline xselection_rangeslider<D>::xselection_rangeslider()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+
+    template <class D>
     inline xselection_rangeslider<D>::xselection_rangeslider(options_type&& options)
         : base_type(std::move(options))
     {
@@ -231,6 +249,7 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xselectionslider>;
     extern template xmaterialize<xselectionslider>::xmaterialize();
     extern template class xtransport<xmaterialize<xselectionslider>>;
@@ -244,5 +263,6 @@ namespace xw
     extern template class xgenerator<xselection_rangeslider>;
     extern template xgenerator<xselection_rangeslider>::xgenerator();
     extern template class xtransport<xgenerator<xselection_rangeslider>>;
+#endif
 }
 #endif

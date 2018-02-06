@@ -9,6 +9,9 @@
 cmake_minimum_required(VERSION 3.1)
 project(xwidgets)
 
+message(STATUS "Forcing tests build type to Release")
+set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+
 set(XWIDGETS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(XWIDGETS_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
@@ -196,10 +199,6 @@ endif()
 #         set(CMAKE_CXX_FLAGS_DEBUG "/DNDEBUG /MD /Zi /Ob0 /Od /RTC1")
 #         message(STATUS "Overriding CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
 #     endif()
-# elseif(APPLE)
-#     target_compile_definitions(xwidgets PUBLIC -DGUID_CFUUID)
-# else()
-#     target_compile_definitions(xwidgets PUBLIC -DGUID_LIBUUID)
 # endif()
 
 # Tests

@@ -90,12 +90,14 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xtextarea>;
     extern template xmaterialize<xtextarea>::xmaterialize();
     extern template class xtransport<xmaterialize<xtextarea>>;
     extern template class xgenerator<xtextarea>;
     extern template xgenerator<xtextarea>::xgenerator();
     extern template class xtransport<xgenerator<xtextarea>>;
+#endif
 }
 
 #endif

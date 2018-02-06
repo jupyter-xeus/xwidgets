@@ -34,6 +34,8 @@ namespace xw
 
     protected:
 
+        xdropdown();
+
         template <class O, class T>
         xdropdown(O&& options, T&& value);
 
@@ -67,6 +69,13 @@ namespace xw
     }
 
     template <class D>
+    inline xdropdown<D>::xdropdown()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
     template <class O, class T>
     inline xdropdown<D>::xdropdown(O&& options, T&& value)
         : base_type(std::forward<O>(options), std::forward<T>(value))
@@ -87,11 +96,13 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xdropdown>;
     extern template xmaterialize<xdropdown>::xmaterialize();
     extern template class xtransport<xmaterialize<xdropdown>>;
     extern template class xgenerator<xdropdown>;
     extern template xgenerator<xdropdown>::xgenerator();
     extern template class xtransport<xgenerator<xdropdown>>;
+#endif
 }
 #endif

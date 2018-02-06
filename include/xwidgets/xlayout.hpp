@@ -159,11 +159,13 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xlayout>;
     extern template xmaterialize<xlayout>::xmaterialize();
     extern template class xtransport<xmaterialize<xlayout>>;
     extern template class xgenerator<xlayout>;
     extern template xgenerator<xlayout>::xgenerator();
     extern template class xtransport<xgenerator<xlayout>>;
+#endif
 }
 #endif

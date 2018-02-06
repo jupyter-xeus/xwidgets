@@ -78,12 +78,14 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xlabel>;
     extern template xmaterialize<xlabel>::xmaterialize();
     extern template class xtransport<xmaterialize<xlabel>>;
     extern template class xgenerator<xlabel>;
     extern template xgenerator<xlabel>::xgenerator();
     extern template class xtransport<xgenerator<xlabel>>;
+#endif
 }
 
 #endif

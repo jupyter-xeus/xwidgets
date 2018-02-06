@@ -211,6 +211,7 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xbutton_style>;
     extern template xmaterialize<xbutton_style>::xmaterialize();
     extern template class xtransport<xmaterialize<xbutton_style>>;
@@ -224,5 +225,6 @@ namespace xw
     extern template class xgenerator<xbutton>;
     extern template xgenerator<xbutton>::xgenerator();
     extern template class xtransport<xgenerator<xbutton>>;
+#endif
 }
 #endif

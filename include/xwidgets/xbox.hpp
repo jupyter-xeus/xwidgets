@@ -216,6 +216,7 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xhbox>;
     extern template xmaterialize<xhbox>::xmaterialize();
     extern template class xtransport<xmaterialize<xhbox>>;
@@ -229,5 +230,6 @@ namespace xw
     extern template class xgenerator<xvbox>;
     extern template xgenerator<xvbox>::xgenerator();
     extern template class xtransport<xgenerator<xvbox>>;
+#endif
 }
 #endif

@@ -1,4 +1,4 @@
-#include "xwidgets/xaccordion.hpp" 
+#include "xwidgets/xaccordion.hpp"
 #include "xwidgets/xcheckbox.hpp"
 #include "xwidgets/xselect.hpp"
 #include "xwidgets/xslider.hpp"
@@ -23,6 +23,12 @@
 
 namespace xw
 {
+    // Define dummy symbol on windows to prevent empty import library
+    #ifdef _WIN32
+        void XWIDGETS_API dummy_symbol()
+        {
+        }
+    #endif
 
     template class xmaterialize<xlabel>;
     template xmaterialize<xlabel>::xmaterialize();
@@ -101,28 +107,26 @@ namespace xw
     template xgenerator<xprogress_style>::xgenerator();
     template class xtransport<xgenerator<xprogress_style>>;
 
-        
     template class xmaterialize<xprogress, int>;
     template xmaterialize<xprogress, int>::xmaterialize();
     template class xtransport<xmaterialize<xprogress, int>>;
     template class xgenerator<xprogress, int>;
     template xgenerator<xprogress, int>::xgenerator();
     template class xtransport<xgenerator<xprogress, int>>;
-        
+
     template class xmaterialize<xprogress, float>;
     template xmaterialize<xprogress, float>::xmaterialize();
     template class xtransport<xmaterialize<xprogress, float>>;
     template class xgenerator<xprogress, float>;
     template xgenerator<xprogress, float>::xgenerator();
     template class xtransport<xgenerator<xprogress, float>>;
-        
+
     template class xmaterialize<xprogress, double>;
     template xmaterialize<xprogress, double>::xmaterialize();
     template class xtransport<xmaterialize<xprogress, double>>;
     template class xgenerator<xprogress, double>;
     template xgenerator<xprogress, double>::xgenerator();
     template class xtransport<xgenerator<xprogress, double>>;
-        
 
     template class xmaterialize<xcolor_picker>;
     template xmaterialize<xcolor_picker>::xmaterialize();
@@ -187,28 +191,26 @@ namespace xw
     template xgenerator<xslider_style>::xgenerator();
     template class xtransport<xgenerator<xslider_style>>;
 
-        
     template class xmaterialize<xslider, int>;
     template xmaterialize<xslider, int>::xmaterialize();
     template class xtransport<xmaterialize<xslider, int>>;
     template class xgenerator<xslider, int>;
     template xgenerator<xslider, int>::xgenerator();
     template class xtransport<xgenerator<xslider, int>>;
-        
+
     template class xmaterialize<xslider, float>;
     template xmaterialize<xslider, float>::xmaterialize();
     template class xtransport<xmaterialize<xslider, float>>;
     template class xgenerator<xslider, float>;
     template xgenerator<xslider, float>::xgenerator();
     template class xtransport<xgenerator<xslider, float>>;
-        
+
     template class xmaterialize<xslider, double>;
     template xmaterialize<xslider, double>::xmaterialize();
     template class xtransport<xmaterialize<xslider, double>>;
     template class xgenerator<xslider, double>;
     template xgenerator<xslider, double>::xgenerator();
     template class xtransport<xgenerator<xslider, double>>;
-        
 
     template class xmaterialize<xselect>;
     template xmaterialize<xselect>::xmaterialize();
@@ -258,6 +260,5 @@ namespace xw
     template class xgenerator<xtogglebutton>;
     template xgenerator<xtogglebutton>::xgenerator();
     template class xtransport<xgenerator<xtogglebutton>>;
-
 
 }
