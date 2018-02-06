@@ -34,6 +34,8 @@ namespace xw
 
     protected:
 
+        xradiobuttons();
+
         template <class O, class T>
         xradiobuttons(O&& options, T&& value);
 
@@ -67,6 +69,13 @@ namespace xw
     }
 
     template <class D>
+    inline xradiobuttons<D>::xradiobuttons()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
     template <class O, class T>
     inline xradiobuttons<D>::xradiobuttons(O&& options, T&& value)
         : base_type(std::forward<O>(options), std::forward<T>(value))
@@ -87,11 +96,13 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xradiobuttons>;
     extern template xmaterialize<xradiobuttons>::xmaterialize();
     extern template class xtransport<xmaterialize<xradiobuttons>>;
     extern template class xgenerator<xradiobuttons>;
     extern template xgenerator<xradiobuttons>::xgenerator();
     extern template class xtransport<xgenerator<xradiobuttons>>;
+#endif
 }
 #endif

@@ -34,6 +34,7 @@ namespace xw
     protected:
 
         xcheckbox();
+
         using base_type::base_type;
 
     private:
@@ -85,12 +86,13 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xcheckbox>;
     extern template xmaterialize<xcheckbox>::xmaterialize();
     extern template class xtransport<xmaterialize<xcheckbox>>;
     extern template class xgenerator<xcheckbox>;
     extern template xgenerator<xcheckbox>::xgenerator();
-    extern template class xtransport<xgenerator<xcheckbox>>;
+#endif
 }
 
 #endif

@@ -40,6 +40,7 @@ namespace xw
     protected:
 
         xtogglebuttons_style();
+
         using base_type::base_type;
 
     private:
@@ -67,6 +68,8 @@ namespace xw
         void apply_patch(const xeus::xjson&);
 
     protected:
+
+        xtogglebuttons();
 
         template <class O, class T>
         xtogglebuttons(O&& options, T&& value);
@@ -151,6 +154,13 @@ namespace xw
     }
 
     template <class D>
+    inline xtogglebuttons<D>::xtogglebuttons()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
     template <class O, class T>
     inline xtogglebuttons<D>::xtogglebuttons(O&& options, T&& value)
         : base_type(std::forward<O>(options), std::forward<T>(value))
@@ -171,6 +181,7 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xtogglebuttons_style>;
     extern template xmaterialize<xtogglebuttons_style>::xmaterialize();
     extern template class xtransport<xmaterialize<xtogglebuttons_style>>;
@@ -184,5 +195,6 @@ namespace xw
     extern template class xgenerator<xtogglebuttons>;
     extern template xgenerator<xtogglebuttons>::xgenerator();
     extern template class xtransport<xgenerator<xtogglebuttons>>;
+#endif
 }
 #endif

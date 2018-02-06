@@ -49,8 +49,11 @@ namespace xw
 
     protected:
 
+        xselection();
+
         template <class O, class T>
         xselection(O&& options, T&& value);
+
         using base_type::base_type;
 
     private:
@@ -90,6 +93,7 @@ namespace xw
 
     protected:
 
+        explicit xmultiple_selection();
         explicit xmultiple_selection(options_type&& options);
         explicit xmultiple_selection(const options_type& options);
 
@@ -131,6 +135,15 @@ namespace xw
     }
 
     template <class D>
+    inline xselection<D>::xselection()
+        : base_type()
+    {
+        set_defaults();
+
+        this->setup_properties();
+    }
+
+    template <class D>
     template <class O, class T>
     inline xselection<D>::xselection(O&& options, T&& v)
         : base_type()
@@ -149,7 +162,7 @@ namespace xw
         auto self = this->self();
         self->template observe<decltype(self->value)>([](auto& owner) {
             const options_type& opt = owner._options_labels();
-            auto new_index = std::find(opt.cbegin(), opt.cend(), owner.value()) - opt.cbegin();
+            auto new_index = index_type(std::find(opt.cbegin(), opt.cend(), owner.value()) - opt.cbegin());
             if (new_index != owner.index())
             {
                 owner.index = new_index;
@@ -214,6 +227,14 @@ namespace xw
         XOBJECT_SET_PROPERTY_FROM_PATCH(_options_labels, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(description, patch)
         XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
+    }
+
+    template <class D>
+    inline xmultiple_selection<D>::xmultiple_selection()
+        : base_type()
+    {
+        set_defaults();
+        this->setup_properties();
     }
 
     template <class D>

@@ -34,6 +34,8 @@ namespace xw
 
     protected:
 
+        xselect();
+
         template <class O, class T>
         xselect(O&& options, T&& value);
 
@@ -68,6 +70,7 @@ namespace xw
 
     protected:
 
+        xselect_multiple();
         xselect_multiple(options_type&& options);
         xselect_multiple(const options_type& options);
 
@@ -102,6 +105,13 @@ namespace xw
         base_type::apply_patch(patch);
 
         XOBJECT_SET_PROPERTY_FROM_PATCH(rows, patch);
+    }
+
+    template <class D>
+    inline xselect<D>::xselect()
+        : base_type()
+    {
+        set_defaults();
     }
 
     template <class D>
@@ -144,6 +154,13 @@ namespace xw
     }
 
     template <class D>
+    inline xselect_multiple<D>::xselect_multiple()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
     inline xselect_multiple<D>::xselect_multiple(options_type&& options)
         : base_type(std::move(options))
     {
@@ -170,6 +187,7 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xselect>;
     extern template xmaterialize<xselect>::xmaterialize();
     extern template class xtransport<xmaterialize<xselect>>;
@@ -183,5 +201,6 @@ namespace xw
     extern template class xgenerator<xselect_multiple>;
     extern template xgenerator<xselect_multiple>::xgenerator();
     extern template class xtransport<xgenerator<xselect_multiple>>;
+#endif
 }
 #endif

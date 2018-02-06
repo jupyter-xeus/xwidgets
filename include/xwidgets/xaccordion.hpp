@@ -79,12 +79,14 @@ namespace xw
      * precompiled types *
      *********************/
 
+#ifndef _WIN32
     extern template class xmaterialize<xaccordion>;
     extern template xmaterialize<xaccordion>::xmaterialize();
     extern template class xtransport<xmaterialize<xaccordion>>;
     extern template class xgenerator<xaccordion>;
     extern template xgenerator<xaccordion>::xgenerator();
     extern template class xtransport<xgenerator<xaccordion>>;
+#endif
 }
 
 #endif
