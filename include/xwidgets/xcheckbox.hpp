@@ -11,6 +11,7 @@
 
 #include "xboolean.hpp"
 #include "xmaterialize.hpp"
+#include "xprecompiled_macros.hpp"
 
 namespace xw
 {
@@ -87,11 +88,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xcheckbox>;
-    extern template xmaterialize<xcheckbox>::xmaterialize();
-    extern template class xtransport<xmaterialize<xcheckbox>>;
-    extern template class xgenerator<xcheckbox>;
-    extern template xgenerator<xcheckbox>::xgenerator();
+    XPRECOMPILE(EXTERN, (xcheckbox));
 #endif
 }
 

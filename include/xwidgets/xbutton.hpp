@@ -20,6 +20,7 @@
 #include "xcolor.hpp"
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
+#include "xprecompiled_macros.hpp"
 #include "xstyle.hpp"
 #include "xwidget.hpp"
 
@@ -212,19 +213,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xbutton_style>;
-    extern template xmaterialize<xbutton_style>::xmaterialize();
-    extern template class xtransport<xmaterialize<xbutton_style>>;
-    extern template class xgenerator<xbutton_style>;
-    extern template xgenerator<xbutton_style>::xgenerator();
-    extern template class xtransport<xgenerator<xbutton_style>>;
-
-    extern template class xmaterialize<xbutton>;
-    extern template xmaterialize<xbutton>::xmaterialize();
-    extern template class xtransport<xmaterialize<xbutton>>;
-    extern template class xgenerator<xbutton>;
-    extern template xgenerator<xbutton>::xgenerator();
-    extern template class xtransport<xgenerator<xbutton>>;
+    XPRECOMPILE(EXTERN, (xbutton_style, xbutton));
 #endif
 }
 #endif

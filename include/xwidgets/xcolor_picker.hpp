@@ -11,6 +11,7 @@
 
 #include "xcolor.hpp"
 #include "xmaterialize.hpp"
+#include "xprecompiled_macros.hpp"
 #include "xwidget.hpp"
 
 namespace xw
@@ -95,12 +96,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xcolor_picker>;
-    extern template xmaterialize<xcolor_picker>::xmaterialize();
-    extern template class xtransport<xmaterialize<xcolor_picker>>;
-    extern template class xgenerator<xcolor_picker>;
-    extern template xgenerator<xcolor_picker>::xgenerator();
-    extern template class xtransport<xgenerator<xcolor_picker>>;
+    XPRECOMPILE(EXTERN, (xcolor_picker));
 #endif 
 }
 

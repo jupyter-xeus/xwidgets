@@ -15,8 +15,10 @@
 
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
+#include "xprecompiled_macros.hpp"
 #include "xselection.hpp"
 #include "xstyle.hpp"
+
 
 namespace xw
 {
@@ -182,19 +184,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xtogglebuttons_style>;
-    extern template xmaterialize<xtogglebuttons_style>::xmaterialize();
-    extern template class xtransport<xmaterialize<xtogglebuttons_style>>;
-    extern template class xgenerator<xtogglebuttons_style>;
-    extern template xgenerator<xtogglebuttons_style>::xgenerator();
-    extern template class xtransport<xgenerator<xtogglebuttons_style>>;
-
-    extern template class xmaterialize<xtogglebuttons>;
-    extern template xmaterialize<xtogglebuttons>::xmaterialize();
-    extern template class xtransport<xmaterialize<xtogglebuttons>>;
-    extern template class xgenerator<xtogglebuttons>;
-    extern template xgenerator<xtogglebuttons>::xgenerator();
-    extern template class xtransport<xgenerator<xtogglebuttons>>;
+    XPRECOMPILE(EXTERN, (xtogglebuttons_style, xtogglebuttons));
 #endif
 }
 #endif

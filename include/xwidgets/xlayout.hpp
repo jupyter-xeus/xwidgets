@@ -14,6 +14,7 @@
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xobject.hpp"
+#include "xprecompiled_macros.hpp"
 
 namespace xw
 {
@@ -160,12 +161,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xlayout>;
-    extern template xmaterialize<xlayout>::xmaterialize();
-    extern template class xtransport<xmaterialize<xlayout>>;
-    extern template class xgenerator<xlayout>;
-    extern template xgenerator<xlayout>::xgenerator();
-    extern template class xtransport<xgenerator<xlayout>>;
+    XPRECOMPILE(EXTERN, (xlayout));
 #endif
 }
 #endif

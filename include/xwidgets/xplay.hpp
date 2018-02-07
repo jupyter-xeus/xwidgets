@@ -11,6 +11,7 @@
 
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
+#include "xprecompiled_macros.hpp"
 
 namespace xw
 {
@@ -115,12 +116,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xplay>;
-    extern template xmaterialize<xplay>::xmaterialize();
-    extern template class xtransport<xmaterialize<xplay>>;
-    extern template class xgenerator<xplay>;
-    extern template xgenerator<xplay>::xgenerator();
-    extern template class xtransport<xgenerator<xplay>>;
+    XPRECOMPILE(EXTERN, (xplay));
 #endif
 }
 

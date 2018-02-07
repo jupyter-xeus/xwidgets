@@ -10,6 +10,7 @@
 #define XWIDGETS_HTML_HPP
 
 #include "xmaterialize.hpp"
+#include "xprecompiled_macros.hpp"
 #include "xstring.hpp"
 
 namespace xw
@@ -80,12 +81,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xhtml>;
-    extern template xmaterialize<xhtml>::xmaterialize();
-    extern template class xtransport<xmaterialize<xhtml>>;
-    extern template class xgenerator<xhtml>;
-    extern template xgenerator<xhtml>::xgenerator();
-    extern template class xtransport<xgenerator<xhtml>>;
+    XPRECOMPILE(EXTERN, (xhtml));
 #endif
 }
 

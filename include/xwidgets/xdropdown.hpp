@@ -12,6 +12,7 @@
 #include <utility>
 
 #include "xmaterialize.hpp"
+#include "xprecompiled_macros.hpp"
 #include "xselection.hpp"
 
 namespace xw
@@ -97,12 +98,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xdropdown>;
-    extern template xmaterialize<xdropdown>::xmaterialize();
-    extern template class xtransport<xmaterialize<xdropdown>>;
-    extern template class xgenerator<xdropdown>;
-    extern template xgenerator<xdropdown>::xgenerator();
-    extern template class xtransport<xgenerator<xdropdown>>;
+    XPRECOMPILE(EXTERN, (xdropdown));
 #endif
 }
 #endif

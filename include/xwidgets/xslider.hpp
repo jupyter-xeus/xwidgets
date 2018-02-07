@@ -17,6 +17,7 @@
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
+#include "xprecompiled_macros.hpp"
 #include "xstyle.hpp"
 
 namespace xw
@@ -239,33 +240,8 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xslider_style>;
-    extern template xmaterialize<xslider_style>::xmaterialize();
-    extern template class xtransport<xmaterialize<xslider_style>>;
-    extern template class xgenerator<xslider_style>;
-    extern template xgenerator<xslider_style>::xgenerator();
-    extern template class xtransport<xgenerator<xslider_style>>;
-
-    extern template class xmaterialize<xslider, int>;
-    extern template xmaterialize<xslider, int>::xmaterialize();
-    extern template class xtransport<xmaterialize<xslider, int>>;
-    extern template class xgenerator<xslider, int>;
-    extern template xgenerator<xslider, int>::xgenerator();
-    extern template class xtransport<xgenerator<xslider, int>>;
-
-    extern template class xmaterialize<xslider, float>;
-    extern template xmaterialize<xslider, float>::xmaterialize();
-    extern template class xtransport<xmaterialize<xslider, float>>;
-    extern template class xgenerator<xslider, float>;
-    extern template xgenerator<xslider, float>::xgenerator();
-    extern template class xtransport<xgenerator<xslider, float>>;
-
-    extern template class xmaterialize<xslider, double>;
-    extern template xmaterialize<xslider, double>::xmaterialize();
-    extern template class xtransport<xmaterialize<xslider, double>>;
-    extern template class xgenerator<xslider, double>;
-    extern template xgenerator<xslider, double>::xgenerator();
-    extern template class xtransport<xgenerator<xslider, double>>;
+    XPRECOMPILE(EXTERN, (xslider_style));
+    XPRECOMPILE_WITH_TYPES(EXTERN, (xslider), (int, float, double));
 #endif
 }
 
