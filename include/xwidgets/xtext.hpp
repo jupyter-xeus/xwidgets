@@ -115,14 +115,12 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
-    extern template class xmaterialize<xtext>;
-    extern template xmaterialize<xtext>::xmaterialize();
-    extern template class xtransport<xmaterialize<xtext>>;
-    extern template class xgenerator<xtext>;
-    extern template xgenerator<xtext>::xgenerator();
-    extern template class xtransport<xgenerator<xtext>>;
-#endif
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xtext>;
+    XWIDGETS_EXTERN template xmaterialize<xtext>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xtext>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xtext>;
+    XWIDGETS_EXTERN template xgenerator<xtext>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xtext>>;
 }
 
 #endif

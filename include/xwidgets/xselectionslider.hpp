@@ -249,20 +249,18 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
-    extern template class xmaterialize<xselectionslider>;
-    extern template xmaterialize<xselectionslider>::xmaterialize();
-    extern template class xtransport<xmaterialize<xselectionslider>>;
-    extern template class xgenerator<xselectionslider>;
-    extern template xgenerator<xselectionslider>::xgenerator();
-    extern template class xtransport<xgenerator<xselectionslider>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xselectionslider>;
+    XWIDGETS_EXTERN template xmaterialize<xselectionslider>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xselectionslider>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xselectionslider>;
+    XWIDGETS_EXTERN template xgenerator<xselectionslider>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xselectionslider>>;
 
-    extern template class xmaterialize<xselection_rangeslider>;
-    extern template xmaterialize<xselection_rangeslider>::xmaterialize();
-    extern template class xtransport<xmaterialize<xselection_rangeslider>>;
-    extern template class xgenerator<xselection_rangeslider>;
-    extern template xgenerator<xselection_rangeslider>::xgenerator();
-    extern template class xtransport<xgenerator<xselection_rangeslider>>;
-#endif
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xselection_rangeslider>;
+    XWIDGETS_EXTERN template xmaterialize<xselection_rangeslider>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xselection_rangeslider>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xselection_rangeslider>;
+    XWIDGETS_EXTERN template xgenerator<xselection_rangeslider>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xselection_rangeslider>>;
 }
 #endif

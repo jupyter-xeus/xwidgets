@@ -187,20 +187,18 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
-    extern template class xmaterialize<xselect>;
-    extern template xmaterialize<xselect>::xmaterialize();
-    extern template class xtransport<xmaterialize<xselect>>;
-    extern template class xgenerator<xselect>;
-    extern template xgenerator<xselect>::xgenerator();
-    extern template class xtransport<xgenerator<xselect>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xselect>;
+    XWIDGETS_EXTERN template xmaterialize<xselect>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xselect>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xselect>;
+    XWIDGETS_EXTERN template xgenerator<xselect>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xselect>>;
 
-    extern template class xmaterialize<xselect_multiple>;
-    extern template xmaterialize<xselect_multiple>::xmaterialize();
-    extern template class xtransport<xmaterialize<xselect_multiple>>;
-    extern template class xgenerator<xselect_multiple>;
-    extern template xgenerator<xselect_multiple>::xgenerator();
-    extern template class xtransport<xgenerator<xselect_multiple>>;
-#endif
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xselect_multiple>;
+    XWIDGETS_EXTERN template xmaterialize<xselect_multiple>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xselect_multiple>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xselect_multiple>;
+    XWIDGETS_EXTERN template xgenerator<xselect_multiple>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xselect_multiple>>;
 }
 #endif
