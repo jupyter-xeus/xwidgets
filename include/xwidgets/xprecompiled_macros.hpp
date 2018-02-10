@@ -1,11 +1,13 @@
 #ifndef XWIDGETS_PRECOMPILED_MACROS_HPP
 #define XWIDGETS_PRECOMPILED_MACROS_HPP
 
-namespace xw{
-    // CONSTANTS
+namespace xw
+{
+    // CONSTANT DEFINITIONS
 
     #define EXTERN 1
     #define NO_EXTERN 0
+
 
     #define CTR_TYPE &, const &, &&
 
@@ -257,48 +259,51 @@ namespace xw{
     #define INC(x) PRIMITIVE_CAT(INC_, x)
     #define DEC(x) PRIMITIVE_CAT(DEC_, x)
 
-    #define REPEAT(count, macro, ...) \
-        WHEN(count) \
-        ( \
-            OBSTRUCT(REPEAT_INDIRECT) () \
-            ( \
+    #define REPEAT(count, macro, ...)          \
+        WHEN(count)                            \
+        (                                      \
+            OBSTRUCT(REPEAT_INDIRECT) ()       \
+            (                                  \
                 DEC(count), macro, __VA_ARGS__ \
-            ) \
-            OBSTRUCT(macro) \
-            ( \
-                DEC(count), __VA_ARGS__ \
-            ) \
-        )
+            )                                  \
+            OBSTRUCT(macro)                    \
+            (                                  \
+                DEC(count), __VA_ARGS__        \
+            )                                  \
+        )                                      \
+
     #define REPEAT_INDIRECT() REPEAT
 
-    #define COUNT_IMPL(n, ...) \
-        IF(CHECK(__VA_ARGS__)) \
-        ( \
-            OBSTRUCT(COUNT_INDIRECT) () \
-            ( \
-                INC(n), REMOVE(__VA_ARGS__) \
-            ), \
-            INC(n) \
-        )
+    #define COUNT_IMPL(n, ...)                 \
+        IF(CHECK(__VA_ARGS__))                 \
+        (                                      \
+            OBSTRUCT(COUNT_INDIRECT) ()        \
+            (                                  \
+                INC(n), REMOVE(__VA_ARGS__)    \
+            ),                                 \
+            INC(n)                             \
+        )                                      \
+
     #define COUNT_INDIRECT() COUNT_IMPL
     #define COUNT(...) COUNT_IMPL(0, __VA_ARGS__)
 
     #define GET_N(x, ...) x
-    #define GET_IMPL(n, ...) \
-        IF(n) \
-        ( \
-            OBSTRUCT(GET_INDIRECT) () \
-            ( \
-                DEC(n), REMOVE(__VA_ARGS__) \
-            ), \
-            GET_N(__VA_ARGS__) \
-        )
+    #define GET_IMPL(n, ...)                   \
+        IF(n)                                  \
+        (                                      \
+            OBSTRUCT(GET_INDIRECT) ()          \
+            (                                  \
+                DEC(n), REMOVE(__VA_ARGS__)    \
+            ),                                 \
+            GET_N(__VA_ARGS__)                 \
+        )                                      \
+
     #define GET_INDIRECT() GET_IMPL
     #define GET(i, ...) GET_IMPL(i, __VA_ARGS__)
 
     // Precompile functions with no constructor parameter
     //
-    // XPRECOMPILE(EXTERN, xlabel) returns
+    // XPRECOMPILE(EXTERN, (xlabel)) returns
     //
     // extern template class xmaterialize<xlabel>; 
     // extern template xmaterialize<xlabel>::xmaterialize(); 
@@ -307,16 +312,46 @@ namespace xw{
     // extern template xgenerator<xlabel>::xgenerator(); 
     // extern template class xtransport<xgenerator<xlabel>>;
 
-    #define XPRECOMPILE_I(i, is_ext, ...) \
-        IF(is_ext)(extern )template class xmaterialize<GET(i, __VA_ARGS__)>;                  \
-        IF(is_ext)(extern )template xmaterialize<GET(i, __VA_ARGS__)>::xmaterialize();        \
-        IF(is_ext)(extern )template class xtransport<xmaterialize<GET(i, __VA_ARGS__)>>;      \
-        IF(is_ext)(extern )template class xgenerator<GET(i, __VA_ARGS__)>;                    \
-        IF(is_ext)(extern )template xgenerator<GET(i, __VA_ARGS__)>::xgenerator();            \
-        IF(is_ext)(extern )template class xtransport<xgenerator<GET(i, __VA_ARGS__)>>;        \
+    #define XPRECOMPILE_I(i, params, ...)                                                                      \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
+            template class GET(1, PASS_PARAMETERS(params)) xmaterialize<GET(i, __VA_ARGS__)>;                  \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
+            template xmaterialize<GET(i, __VA_ARGS__)>::xmaterialize();                                        \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xmaterialize<GET(i, __VA_ARGS__)>>;      \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
+            template class GET(1, PASS_PARAMETERS(params)) xgenerator<GET(i, __VA_ARGS__)>;                    \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
+            template xgenerator<GET(i, __VA_ARGS__)>::xgenerator();                                            \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xgenerator<GET(i, __VA_ARGS__)>>;        \
 
-    #define XPRECOMPILE_IMPL(n, is_ext, names) EVAL(REPEAT(n, XPRECOMPILE_I, is_ext, PASS_PARAMETERS(names)))
-    #define XPRECOMPILE(is_ext, names) XPRECOMPILE_IMPL(EVAL(COUNT(PASS_PARAMETERS(names))), is_ext, names)
+    #define XPRECOMPILE_IMPL(n, params, names) EVAL(REPEAT(n, XPRECOMPILE_I, params, PASS_PARAMETERS(names)))
+    #define XPRECOMPILE(params, names) XPRECOMPILE_IMPL(EVAL(COUNT(PASS_PARAMETERS(names))), params, names)
+
+    // Precompile functions with no constructor parameter
+    // and doesn't instantiate the default constructors
+    // of xmaterialize and xgenerator
+    //
+    // XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT(EXTERN, (xlabel)) returns
+    //
+    // extern template class xmaterialize<xlabel>; 
+    // extern template class xtransport<xmaterialize<xlabel>>; 
+    // extern template class xgenerator<xlabel>; 
+    // extern template class xtransport<xgenerator<xlabel>>;
+
+    #define XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT_I(i, is_ext, ...)                                            \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
+            template class GET(1, PASS_PARAMETERS(params)) xmaterialize<GET(i, __VA_ARGS__)>;                  \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xmaterialize<GET(i, __VA_ARGS__)>>;      \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
+            template class GET(1, PASS_PARAMETERS(params)) xgenerator<GET(i, __VA_ARGS__)>;                    \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xgenerator<GET(i, __VA_ARGS__)>>;        \
+
+    #define XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT_IMPL(n, params, names) EVAL(REPEAT(n, XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT_I, params, PASS_PARAMETERS(names)))
+    #define XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT(params, names) XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT_IMPL(EVAL(COUNT(PASS_PARAMETERS(names))), params, names)
 
     // Precompile functions with type
     //
@@ -335,68 +370,73 @@ namespace xw{
     // extern template xgenerator<xslider, double>::xgenerator();
     // extern template class xtransport<xgenerator<xslider, double>>;
 
-    #define XPRECOMPILE_TYPES_I(i, is_ext, name, ...) \
-        IF(is_ext)(extern )template class xmaterialize<name, GET(i, __VA_ARGS__)>;                  \
-        IF(is_ext)(extern )template xmaterialize<name, GET(i, __VA_ARGS__)>::xmaterialize();        \
-        IF(is_ext)(extern )template class xtransport<xmaterialize<name, GET(i, __VA_ARGS__)>>;      \
-        IF(is_ext)(extern )template class xgenerator<name, GET(i, __VA_ARGS__)>;                    \
-        IF(is_ext)(extern )template xgenerator<name, GET(i, __VA_ARGS__)>::xgenerator();            \
-        IF(is_ext)(extern )template class xtransport<xgenerator<name, GET(i, __VA_ARGS__)>>;        \
+    #define XPRECOMPILE_TYPES_I(i, params, name, ...)                                                                \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
+            template class GET(1, PASS_PARAMETERS(params)) xmaterialize<name, GET(i, __VA_ARGS__)>;                  \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
+            template xmaterialize<name, GET(i, __VA_ARGS__)>::xmaterialize();                                        \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xmaterialize<name, GET(i, __VA_ARGS__)>>;      \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
+            template class GET(1, PASS_PARAMETERS(params)) xgenerator<name, GET(i, __VA_ARGS__)>;                    \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
+            template xgenerator<name, GET(i, __VA_ARGS__)>::xgenerator();                                            \
+        IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xgenerator<name, GET(i, __VA_ARGS__)>>;        \
 
-    #define XPRECOMPILE_TYPES_IMPL_0(i, is_ext, names, nt, types) \
-            REPEAT(nt, XPRECOMPILE_TYPES_I, is_ext, GET(i, PASS_PARAMETERS(names)), PASS_PARAMETERS(types))
+    #define XPRECOMPILE_TYPES_IMPL_0(i, params, names, nt, types)                                                    \
+            REPEAT(nt, XPRECOMPILE_TYPES_I, params, GET(i, PASS_PARAMETERS(names)), PASS_PARAMETERS(types))          \
 
-    #define XPRECOMPILE_TYPES_IMPL(is_ext, n, names, nt, types) \
-            EVAL(REPEAT(n, XPRECOMPILE_TYPES_IMPL_0, is_ext, names, nt, types))
+    #define XPRECOMPILE_TYPES_IMPL(params, n, names, nt, types)                 \
+            EVAL(REPEAT(n, XPRECOMPILE_TYPES_IMPL_0, params, names, nt, types)) \
 
-    #define XPRECOMPILE_WITH_TYPES(is_ext, names, types) \
-            XPRECOMPILE_TYPES_IMPL(is_ext, EVAL(COUNT(PASS_PARAMETERS(names))), names, EVAL(COUNT(PASS_PARAMETERS(types))), types)
+    #define XPRECOMPILE_WITH_TYPES(params, names, types)                                                                           \
+            XPRECOMPILE_TYPES_IMPL(params, EVAL(COUNT(PASS_PARAMETERS(names))), names, EVAL(COUNT(PASS_PARAMETERS(types))), types) \
 
     // Precompile functions with one universal reference as constructor parameter
-    #define XCONSTRUCTOR_ARG1_I(i, is_ext, name, arg) \
+    #define XCONSTRUCTOR_ARG1_I(i, is_ext, name, arg)                                       \
         IF(is_ext)(extern )template xmaterialize<name>::xmaterialize(arg GET(i, CTR_TYPE)); \
-        IF(is_ext)(extern )template xgenerator<name>::xgenerator(arg GET(i, CTR_TYPE)); \
+        IF(is_ext)(extern )template xgenerator<name>::xgenerator(arg GET(i, CTR_TYPE));     \
 
-    #define XCONSTRUCTOR_ARG1_0(i, is_ext, name, na, args) \
-        REPEAT(3, XCONSTRUCTOR_ARG1_I, is_ext, name, GET(i, PASS_PARAMETERS(args)))
+    #define XCONSTRUCTOR_ARG1_0(i, is_ext, name, na, args)                          \
+        REPEAT(3, XCONSTRUCTOR_ARG1_I, is_ext, name, GET(i, PASS_PARAMETERS(args))) \
 
-    #define XCONSTRUCTOR_ARG1_1(i, is_ext, names, na, args) \
-        REPEAT(na, XCONSTRUCTOR_ARG1_0, is_ext, GET(i, PASS_PARAMETERS(names)), na, args)
+    #define XCONSTRUCTOR_ARG1_1(i, is_ext, names, na, args)                               \
+        REPEAT(na, XCONSTRUCTOR_ARG1_0, is_ext, GET(i, PASS_PARAMETERS(names)), na, args) \
 
-    #define XCONSTRUCTOR_ARG1(is_ext, n, names, na, args) \
-        XPRECOMPILE(is_ext, PASS_PARAMETERS(names))   \
-        EVAL(REPEAT(n, XCONSTRUCTOR_ARG1_1, is_ext, names, na, args))
+    #define XCONSTRUCTOR_ARG1(params, n, names, na, args)             \
+        XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT(params, names)          \
+        EVAL(REPEAT(n, XCONSTRUCTOR_ARG1_1, GET(0, PASS_PARAMETERS(params)), names, na, args)) \
 
-    #define XPRECOMPILE_WITH_ARG1(is_ext, NAMES, args) \
-        XCONSTRUCTOR_ARG1(is_ext, EVAL(COUNT(PASS_PARAMETERS(NAMES))), NAMES, EVAL(COUNT(PASS_PARAMETERS(args))), args)
+    #define XPRECOMPILE_WITH_ARG1(params, NAMES, args)                                                                  \
+        XCONSTRUCTOR_ARG1(params, EVAL(COUNT(PASS_PARAMETERS(NAMES))), NAMES, EVAL(COUNT(PASS_PARAMETERS(args))), args) \
 
     // Precompile functions with two universal references as constructor parameters
-    #define XCONSTRUCTOR_ARG2_I_0(i, is_ext, name, arg1, arg2, type1) \
+    #define XCONSTRUCTOR_ARG2_I_0(i, is_ext, name, arg1, arg2, type1)                                    \
         IF(is_ext)(extern )template xmaterialize<name>::xmaterialize(arg1 type1, arg2 GET(i, CTR_TYPE)); \
-        IF(is_ext)(extern )template xgenerator<name>::xgenerator(arg1 type1, arg2 GET(i, CTR_TYPE)); \
+        IF(is_ext)(extern )template xgenerator<name>::xgenerator(arg1 type1, arg2 GET(i, CTR_TYPE));     \
 
-    #define XCONSTRUCTOR_ARG2_I_1(i, is_ext, name, arg1, arg2) \
-        REPEAT(3, XCONSTRUCTOR_ARG2_I_0, is_ext, name, arg1, arg2, GET(i, CTR_TYPE))
+    #define XCONSTRUCTOR_ARG2_I_1(i, is_ext, name, arg1, arg2)                       \
+        REPEAT(3, XCONSTRUCTOR_ARG2_I_0, is_ext, name, arg1, arg2, GET(i, CTR_TYPE)) \
 
-    #define XCONSTRUCTOR_ARG2_0(i, is_ext, name, arg1, args2) \
-        REPEAT(3, XCONSTRUCTOR_ARG2_I_1, is_ext, name, arg1, GET(i, PASS_PARAMETERS(args2)))
+    #define XCONSTRUCTOR_ARG2_0(i, is_ext, name, arg1, args2)                                \
+        REPEAT(3, XCONSTRUCTOR_ARG2_I_1, is_ext, name, arg1, GET(i, PASS_PARAMETERS(args2))) \
 
-    #define XCONSTRUCTOR_ARG2_1(i, is_ext, name, args1, na2, args2) \
-        REPEAT(na2, XCONSTRUCTOR_ARG2_0, is_ext, name, GET(i, PASS_PARAMETERS(args1)), args2)
+    #define XCONSTRUCTOR_ARG2_1(i, is_ext, name, args1, na2, args2)                           \
+        REPEAT(na2, XCONSTRUCTOR_ARG2_0, is_ext, name, GET(i, PASS_PARAMETERS(args1)), args2) \
 
-    #define XCONSTRUCTOR_ARG2_2(i, is_ext, names, na1, args1, na2, args2) \
-        REPEAT(na1, XCONSTRUCTOR_ARG2_1, is_ext, GET(i, PASS_PARAMETERS(names)), args1, na2, args2)
+    #define XCONSTRUCTOR_ARG2_2(i, is_ext, names, na1, args1, na2, args2)                           \
+        REPEAT(na1, XCONSTRUCTOR_ARG2_1, is_ext, GET(i, PASS_PARAMETERS(names)), args1, na2, args2) \
 
-    #define XCONSTRUCTOR_ARG2(is_ext, n, names, na1, args1, na2, args2) \
-        XPRECOMPILE(is_ext, PASS_PARAMETERS(names))   \
-        EVAL(REPEAT(n, XCONSTRUCTOR_ARG2_2, is_ext, names, na1, args1, na2, args2))
+    #define XCONSTRUCTOR_ARG2(params, n, names, na1, args1, na2, args2)             \
+        XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT(params, names)                        \
+        EVAL(REPEAT(n, XCONSTRUCTOR_ARG2_2, GET(0, PASS_PARAMETERS(params)), names, na1, args1, na2, args2)) \
 
-    #define XPRECOMPILE_WITH_ARG2(is_ext, NAMES, args1, args2) \
-        XCONSTRUCTOR_ARG2(is_ext,                         \
+    #define XPRECOMPILE_WITH_ARG2(params, NAMES, args1, args2)          \
+        XCONSTRUCTOR_ARG2(params,                                       \
                             EVAL(COUNT(PASS_PARAMETERS(NAMES))), NAMES, \
                             EVAL(COUNT(PASS_PARAMETERS(args1))), args1, \
-                            EVAL(COUNT(PASS_PARAMETERS(args2))), args2)\
+                            EVAL(COUNT(PASS_PARAMETERS(args2))), args2) \
 
 }
-
 #endif

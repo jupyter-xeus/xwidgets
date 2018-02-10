@@ -24,14 +24,7 @@
 
 namespace xw
 {
-    // Define dummy symbol on windows to prevent empty import library
-    #ifdef _WIN32
-        void XWIDGETS_API dummy_symbol()
-        {
-        }
-    #endif
-
-    XPRECOMPILE(NO_EXTERN, 
+    XPRECOMPILE((NO_EXTERN, XWIDGETS_API),
                (xlabel,
                 xhtml,
                 xcheckbox,
@@ -61,5 +54,5 @@ namespace xw
                 xtab
                 ));
 
-   XPRECOMPILE_WITH_TYPES(NO_EXTERN, (xprogress, xslider), (int, float, double));
+   XPRECOMPILE_WITH_TYPES((NO_EXTERN, XWIDGETS_API), (xprogress, xslider), (int, float, double));
 }
