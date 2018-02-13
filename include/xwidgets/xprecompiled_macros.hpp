@@ -226,24 +226,26 @@ namespace xw
     #define COMPL_0 1
     #define COMPL_1 0
 
+#define EXPAND(...) __VA_ARGS__
+
     #define CHECK_N(x, n, ...) n
-    #define CHECK(...) CHECK_N(__VA_ARGS__, 0,)
+    #define CHECK(...) EXPAND(CHECK_N(__VA_ARGS__, 0,))
     #define PROBE(x) x, 1,
 
     #define IS_PAREN(x) CHECK(IS_PAREN_PROBE x)
     #define IS_PAREN_PROBE(...) PROBE(~)
 
-    #define NOT(x) CHECK(PRIMITIVE_CAT(NOT_, x))
+    #define NOT(x) CHECK(EXPAND(PRIMITIVE_CAT(NOT_, x)))
     #define NOT_0 PROBE(~)
 
-    #define BOOL(x) COMPL(NOT(x))
-    #define IF(c) IIF(BOOL(c))
+    #define BOOL_CAST(x) COMPL(NOT(x))
+    #define IF(c) IIF(BOOL_CAST(c))
 
     #define EAT(...)
     #define EMPTY()
     #define DEFER(id) id EMPTY()
     #define OBSTRUCT(...) __VA_ARGS__ DEFER(EMPTY)()
-    #define EXPAND(...) __VA_ARGS__
+    
     #define REMOVE(x, ...) __VA_ARGS__
     #define WHEN(c) IF(c)(EXPAND, EAT)
     #define STRIP_PARENS(X) X
@@ -275,17 +277,17 @@ namespace xw
     #define REPEAT_INDIRECT() REPEAT
 
     #define COUNT_IMPL(n, ...)                 \
-        IF(CHECK(__VA_ARGS__))                 \
+        IF(EXPAND(CHECK(__VA_ARGS__)))                 \
         (                                      \
             OBSTRUCT(COUNT_INDIRECT) ()        \
             (                                  \
-                INC(n), REMOVE(__VA_ARGS__)    \
+                INC(n), EXPAND(REMOVE(__VA_ARGS__))    \
             ),                                 \
             INC(n)                             \
         )                                      \
 
     #define COUNT_INDIRECT() COUNT_IMPL
-    #define COUNT(...) COUNT_IMPL(0, __VA_ARGS__)
+    #define COUNT(...) EXPAND(COUNT_IMPL(0, __VA_ARGS__))
 
     #define GET_N(x, ...) x
     #define GET_IMPL(n, ...)                   \
@@ -293,13 +295,13 @@ namespace xw
         (                                      \
             OBSTRUCT(GET_INDIRECT) ()          \
             (                                  \
-                DEC(n), REMOVE(__VA_ARGS__)    \
+                DEC(n), EXPAND(REMOVE(__VA_ARGS__))    \
             ),                                 \
-            GET_N(__VA_ARGS__)                 \
+            EXPAND(GET_N(__VA_ARGS__))                 \
         )                                      \
 
     #define GET_INDIRECT() GET_IMPL
-    #define GET(i, ...) GET_IMPL(i, __VA_ARGS__)
+    #define GET(i, ...) EXPAND(GET_IMPL(i, __VA_ARGS__))
 
     // Precompile functions with no constructor parameter
     //
@@ -314,17 +316,17 @@ namespace xw
 
     #define XPRECOMPILE_I(i, params, ...)                                                                      \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
-            template class GET(1, PASS_PARAMETERS(params)) xmaterialize<GET(i, __VA_ARGS__)>;                  \
+            template class GET(1, PASS_PARAMETERS(params)) xmaterialize<EXPAND(GET(i, __VA_ARGS__))>;                  \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
             template xmaterialize<GET(i, __VA_ARGS__)>::xmaterialize();                                        \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
-            template class GET(1, PASS_PARAMETERS(params)) xtransport<xmaterialize<GET(i, __VA_ARGS__)>>;      \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xmaterialize<EXPAND(GET(i, __VA_ARGS__))>>;      \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
-            template class GET(1, PASS_PARAMETERS(params)) xgenerator<GET(i, __VA_ARGS__)>;                    \
+            template class GET(1, PASS_PARAMETERS(params)) xgenerator<EXPAND(GET(i, __VA_ARGS__))>;                    \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
-            template xgenerator<GET(i, __VA_ARGS__)>::xgenerator();                                            \
+            template xgenerator<EXPAND(GET(i, __VA_ARGS__))>::xgenerator();                                            \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
-            template class GET(1, PASS_PARAMETERS(params)) xtransport<xgenerator<GET(i, __VA_ARGS__)>>;        \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xgenerator<EXPAND(GET(i, __VA_ARGS__))>>;        \
 
     #define XPRECOMPILE_IMPL(n, params, names) EVAL(REPEAT(n, XPRECOMPILE_I, params, PASS_PARAMETERS(names)))
     #define XPRECOMPILE(params, names) XPRECOMPILE_IMPL(EVAL(COUNT(PASS_PARAMETERS(names))), params, names)
@@ -342,13 +344,13 @@ namespace xw
 
     #define XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT_I(i, is_ext, ...)                                            \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
-            template class GET(1, PASS_PARAMETERS(params)) xmaterialize<GET(i, __VA_ARGS__)>;                  \
+            template class GET(1, PASS_PARAMETERS(params)) xmaterialize<EXPAND(GET(i, __VA_ARGS__))>;                  \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
-            template class GET(1, PASS_PARAMETERS(params)) xtransport<xmaterialize<GET(i, __VA_ARGS__)>>;      \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xmaterialize<EXPAND(GET(i, __VA_ARGS__))>>;      \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
-            template class GET(1, PASS_PARAMETERS(params)) xgenerator<GET(i, __VA_ARGS__)>;                    \
+            template class GET(1, PASS_PARAMETERS(params)) xgenerator<EXPAND(GET(i, __VA_ARGS__))>;                    \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                           \
-            template class GET(1, PASS_PARAMETERS(params)) xtransport<xgenerator<GET(i, __VA_ARGS__)>>;        \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xgenerator<EXPAND(GET(i, __VA_ARGS__))>>;        \
 
     #define XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT_IMPL(n, params, names) EVAL(REPEAT(n, XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT_I, params, PASS_PARAMETERS(names)))
     #define XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT(params, names) XPRECOMPILE_WITHOUT_DEFAULT_CONSTRUCT_IMPL(EVAL(COUNT(PASS_PARAMETERS(names))), params, names)
@@ -372,17 +374,17 @@ namespace xw
 
     #define XPRECOMPILE_TYPES_I(i, params, name, ...)                                                                \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
-            template class GET(1, PASS_PARAMETERS(params)) xmaterialize<name, GET(i, __VA_ARGS__)>;                  \
+            template class GET(1, PASS_PARAMETERS(params)) xmaterialize<name, EXPAND(GET(i, __VA_ARGS__))>;                  \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
-            template xmaterialize<name, GET(i, __VA_ARGS__)>::xmaterialize();                                        \
+            template xmaterialize<name, EXPAND(GET(i, __VA_ARGS__))>::xmaterialize();                                        \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
-            template class GET(1, PASS_PARAMETERS(params)) xtransport<xmaterialize<name, GET(i, __VA_ARGS__)>>;      \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xmaterialize<name, EXPAND(GET(i, __VA_ARGS__))>>;      \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
-            template class GET(1, PASS_PARAMETERS(params)) xgenerator<name, GET(i, __VA_ARGS__)>;                    \
+            template class GET(1, PASS_PARAMETERS(params)) xgenerator<name, EXPAND(GET(i, __VA_ARGS__))>;                    \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
-            template xgenerator<name, GET(i, __VA_ARGS__)>::xgenerator();                                            \
+            template xgenerator<name, EXPAND(GET(i, __VA_ARGS__))>::xgenerator();                                            \
         IF(GET(0, PASS_PARAMETERS(params)))(extern )                                                                 \
-            template class GET(1, PASS_PARAMETERS(params)) xtransport<xgenerator<name, GET(i, __VA_ARGS__)>>;        \
+            template class GET(1, PASS_PARAMETERS(params)) xtransport<xgenerator<name, EXPAND(GET(i, __VA_ARGS__))>>;        \
 
     #define XPRECOMPILE_TYPES_IMPL_0(i, params, names, nt, types)                                                    \
             REPEAT(nt, XPRECOMPILE_TYPES_I, params, GET(i, PASS_PARAMETERS(names)), PASS_PARAMETERS(types))          \
