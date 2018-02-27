@@ -152,4 +152,31 @@ namespace xw
     inline xgenerator<B, P...>& xgenerator<B, P...>::operator=(xgenerator&&) = default;
 }
 
+#include "xeus/xjson.hpp"
+#include "xwidgets_config.hpp"
+
+namespace xw
+{
+    /***********************************************************
+     * Specialization of cling::printValue for Jupyter Widgets *
+     ***********************************************************/
+
+    template <template <class> class B, class... P>
+    xeus::xjson mime_bundle_repr(const xmaterialize<B, P...>* val)
+    {
+        xeus::xjson mime_bundle;
+
+        // application/vnd.jupyter.widget-view+json
+        xeus::xjson widgets_json;
+        widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
+        widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
+        widgets_json["model_id"] = val->id();
+        mime_bundle["application/vnd.jupyter.widget-view+json"] = std::move(widgets_json);
+
+        // text/plain
+        mime_bundle["text/plain"] = "A Jupyter widget";
+        return mime_bundle;
+    }
+}
+
 #endif
