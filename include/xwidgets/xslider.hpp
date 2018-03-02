@@ -238,35 +238,33 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
-    extern template class xmaterialize<xslider_style>;
-    extern template xmaterialize<xslider_style>::xmaterialize();
-    extern template class xtransport<xmaterialize<xslider_style>>;
-    extern template class xgenerator<xslider_style>;
-    extern template xgenerator<xslider_style>::xgenerator();
-    extern template class xtransport<xgenerator<xslider_style>>;
+    XWIDGETS_EXTERN template class xmaterialize<xslider_style>;
+    XWIDGETS_EXTERN template xmaterialize<xslider_style>::xmaterialize();
+    XWIDGETS_EXTERN template class xtransport<xmaterialize<xslider_style>>;
+    XWIDGETS_EXTERN template class xgenerator<xslider_style>;
+    XWIDGETS_EXTERN template xgenerator<xslider_style>::xgenerator();
+    XWIDGETS_EXTERN template class xtransport<xgenerator<xslider_style>>;
 
-    extern template class xmaterialize<xslider, int>;
-    extern template xmaterialize<xslider, int>::xmaterialize();
-    extern template class xtransport<xmaterialize<xslider, int>>;
-    extern template class xgenerator<xslider, int>;
-    extern template xgenerator<xslider, int>::xgenerator();
-    extern template class xtransport<xgenerator<xslider, int>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xslider, int>;
+    XWIDGETS_EXTERN template xmaterialize<xslider, int>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xslider, int>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xslider, int>;
+    XWIDGETS_EXTERN template xgenerator<xslider, int>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xslider, int>>;
 
-    extern template class xmaterialize<xslider, float>;
-    extern template xmaterialize<xslider, float>::xmaterialize();
-    extern template class xtransport<xmaterialize<xslider, float>>;
-    extern template class xgenerator<xslider, float>;
-    extern template xgenerator<xslider, float>::xgenerator();
-    extern template class xtransport<xgenerator<xslider, float>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xslider, float>;
+    XWIDGETS_EXTERN template xmaterialize<xslider, float>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xslider, float>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xslider, float>;
+    XWIDGETS_EXTERN template xgenerator<xslider, float>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xslider, float>>;
 
-    extern template class xmaterialize<xslider, double>;
-    extern template xmaterialize<xslider, double>::xmaterialize();
-    extern template class xtransport<xmaterialize<xslider, double>>;
-    extern template class xgenerator<xslider, double>;
-    extern template xgenerator<xslider, double>::xgenerator();
-    extern template class xtransport<xgenerator<xslider, double>>;
-#endif
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xslider, double>;
+    XWIDGETS_EXTERN template xmaterialize<xslider, double>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xslider, double>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xslider, double>;
+    XWIDGETS_EXTERN template xgenerator<xslider, double>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xslider, double>>;
 }
 
 #endif

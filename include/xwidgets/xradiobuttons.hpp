@@ -96,13 +96,11 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
-    extern template class xmaterialize<xradiobuttons>;
-    extern template xmaterialize<xradiobuttons>::xmaterialize();
-    extern template class xtransport<xmaterialize<xradiobuttons>>;
-    extern template class xgenerator<xradiobuttons>;
-    extern template xgenerator<xradiobuttons>::xgenerator();
-    extern template class xtransport<xgenerator<xradiobuttons>>;
-#endif
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xradiobuttons>;
+    XWIDGETS_EXTERN template xmaterialize<xradiobuttons>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xradiobuttons>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xradiobuttons>;
+    XWIDGETS_EXTERN template xgenerator<xradiobuttons>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xradiobuttons>>;
 }
 #endif

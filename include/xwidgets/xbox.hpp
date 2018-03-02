@@ -216,20 +216,18 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
-    extern template class xmaterialize<xhbox>;
-    extern template xmaterialize<xhbox>::xmaterialize();
-    extern template class xtransport<xmaterialize<xhbox>>;
-    extern template class xgenerator<xhbox>;
-    extern template xgenerator<xhbox>::xgenerator();
-    extern template class xtransport<xgenerator<xhbox>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xhbox>;
+    XWIDGETS_EXTERN template xmaterialize<xhbox>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xhbox>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xhbox>;
+    XWIDGETS_EXTERN template xgenerator<xhbox>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xhbox>>;
 
-    extern template class xmaterialize<xvbox>;
-    extern template xmaterialize<xvbox>::xmaterialize();
-    extern template class xtransport<xmaterialize<xvbox>>;
-    extern template class xgenerator<xvbox>;
-    extern template xgenerator<xvbox>::xgenerator();
-    extern template class xtransport<xgenerator<xvbox>>;
-#endif
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xvbox>;
+    XWIDGETS_EXTERN template xmaterialize<xvbox>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xvbox>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xvbox>;
+    XWIDGETS_EXTERN template xgenerator<xvbox>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xvbox>>;
 }
 #endif

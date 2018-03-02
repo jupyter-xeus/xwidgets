@@ -184,35 +184,33 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
-    extern template class xmaterialize<xprogress_style>;
-    extern template xmaterialize<xprogress_style>::xmaterialize();
-    extern template class xtransport<xmaterialize<xprogress_style>>;
-    extern template class xgenerator<xprogress_style>;
-    extern template xgenerator<xprogress_style>::xgenerator();
-    extern template class xtransport<xgenerator<xprogress_style>>;
+    XWIDGETS_EXTERN template class xmaterialize<xprogress_style>;
+    XWIDGETS_EXTERN template xmaterialize<xprogress_style>::xmaterialize();
+    XWIDGETS_EXTERN template class xtransport<xmaterialize<xprogress_style>>;
+    XWIDGETS_EXTERN template class xgenerator<xprogress_style>;
+    XWIDGETS_EXTERN template xgenerator<xprogress_style>::xgenerator();
+    XWIDGETS_EXTERN template class xtransport<xgenerator<xprogress_style>>;
 
-    extern template class xmaterialize<xprogress, int>;
-    extern template xmaterialize<xprogress, int>::xmaterialize();
-    extern template class xtransport<xmaterialize<xprogress, int>>;
-    extern template class xgenerator<xprogress, int>;
-    extern template xgenerator<xprogress, int>::xgenerator();
-    extern template class xtransport<xgenerator<xprogress, int>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xprogress, int>;
+    XWIDGETS_EXTERN template xmaterialize<xprogress, int>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xprogress, int>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xprogress, int>;
+    XWIDGETS_EXTERN template xgenerator<xprogress, int>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xprogress, int>>;
 
-    extern template class xmaterialize<xprogress, float>;
-    extern template xmaterialize<xprogress, float>::xmaterialize();
-    extern template class xtransport<xmaterialize<xprogress, float>>;
-    extern template class xgenerator<xprogress, float>;
-    extern template xgenerator<xprogress, float>::xgenerator();
-    extern template class xtransport<xgenerator<xprogress, float>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xprogress, float>;
+    XWIDGETS_EXTERN template xmaterialize<xprogress, float>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xprogress, float>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xprogress, float>;
+    XWIDGETS_EXTERN template xgenerator<xprogress, float>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xprogress, float>>;
 
-    extern template class xmaterialize<xprogress, double>;
-    extern template xmaterialize<xprogress, double>::xmaterialize();
-    extern template class xtransport<xmaterialize<xprogress, double>>;
-    extern template class xgenerator<xprogress, double>;
-    extern template xgenerator<xprogress, double>::xgenerator();
-    extern template class xtransport<xgenerator<xprogress, double>>;
-#endif
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xprogress, double>;
+    XWIDGETS_EXTERN template xmaterialize<xprogress, double>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xprogress, double>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xprogress, double>;
+    XWIDGETS_EXTERN template xgenerator<xprogress, double>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xprogress, double>>;
 }
 
 #endif

@@ -211,20 +211,18 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
-    extern template class xmaterialize<xbutton_style>;
-    extern template xmaterialize<xbutton_style>::xmaterialize();
-    extern template class xtransport<xmaterialize<xbutton_style>>;
-    extern template class xgenerator<xbutton_style>;
-    extern template xgenerator<xbutton_style>::xgenerator();
-    extern template class xtransport<xgenerator<xbutton_style>>;
+    XWIDGETS_EXTERN template class xmaterialize<xbutton_style>;
+    XWIDGETS_EXTERN template xmaterialize<xbutton_style>::xmaterialize();
+    XWIDGETS_EXTERN template class xtransport<xmaterialize<xbutton_style>>;
+    XWIDGETS_EXTERN template class xgenerator<xbutton_style>;
+    XWIDGETS_EXTERN template xgenerator<xbutton_style>::xgenerator();
+    XWIDGETS_EXTERN template class xtransport<xgenerator<xbutton_style>>;
 
-    extern template class xmaterialize<xbutton>;
-    extern template xmaterialize<xbutton>::xmaterialize();
-    extern template class xtransport<xmaterialize<xbutton>>;
-    extern template class xgenerator<xbutton>;
-    extern template xgenerator<xbutton>::xgenerator();
-    extern template class xtransport<xgenerator<xbutton>>;
-#endif
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xbutton>;
+    XWIDGETS_EXTERN template xmaterialize<xbutton>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xbutton>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xbutton>;
+    XWIDGETS_EXTERN template xgenerator<xbutton>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xbutton>>;
 }
 #endif

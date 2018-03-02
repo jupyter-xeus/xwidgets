@@ -10,12 +10,14 @@
 #define XWIDGETS_CONFIG_HPP
 
 #ifdef _WIN32
+    #define XWIDGETS_EXTERN
     #ifdef XWIDGETS_EXPORTS
         #define XWIDGETS_API __declspec(dllexport)
     #else
         #define XWIDGETS_API __declspec(dllimport)
     #endif
 #else
+    #define XWIDGETS_EXTERN extern
     #define XWIDGETS_API
 #endif
 

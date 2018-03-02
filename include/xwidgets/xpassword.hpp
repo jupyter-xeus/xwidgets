@@ -85,14 +85,12 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
-    extern template class xmaterialize<xpassword>;
-    extern template xmaterialize<xpassword>::xmaterialize();
-    extern template class xtransport<xmaterialize<xpassword>>;
-    extern template class xgenerator<xpassword>;
-    extern template xgenerator<xpassword>::xgenerator();
-    extern template class xtransport<xgenerator<xpassword>>;
-#endif
+    XWIDGETS_EXTERN template class XWIDGETS_API xmaterialize<xpassword>;
+    XWIDGETS_EXTERN template xmaterialize<xpassword>::xmaterialize();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xmaterialize<xpassword>>;
+    XWIDGETS_EXTERN template class XWIDGETS_API xgenerator<xpassword>;
+    XWIDGETS_EXTERN template xgenerator<xpassword>::xgenerator();
+    XWIDGETS_EXTERN template class XWIDGETS_API xtransport<xgenerator<xpassword>>;
 }
 
 #endif
