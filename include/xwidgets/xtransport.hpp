@@ -118,7 +118,7 @@ namespace xw
         void notify(const P& property) const;
 
     private:
-    
+
         void handle_message(const xeus::xmessage&);
         void handle_custom_message(const xeus::xjson&);
 
