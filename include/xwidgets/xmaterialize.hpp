@@ -162,7 +162,7 @@ namespace xw
      ***********************************************************/
 
     template <template <class> class B, class... P>
-    xeus::xjson mime_bundle_repr(const xmaterialize<B, P...>* val)
+    xeus::xjson mime_bundle_repr(const xmaterialize<B, P...>& val)
     {
         xeus::xjson mime_bundle;
 
@@ -170,7 +170,7 @@ namespace xw
         xeus::xjson widgets_json;
         widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
         widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
-        widgets_json["model_id"] = val->id();
+        widgets_json["model_id"] = val.id();
         mime_bundle["application/vnd.jupyter.widget-view+json"] = std::move(widgets_json);
 
         // text/plain
