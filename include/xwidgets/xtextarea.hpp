@@ -10,6 +10,7 @@
 #define XWIDGETS_TEXTAREA_HPP
 
 #include "xmaterialize.hpp"
+#include "xprecompiled_macros.hpp"
 #include "xstring.hpp"
 
 namespace xw
@@ -91,12 +92,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xtextarea>;
-    extern template xmaterialize<xtextarea>::xmaterialize();
-    extern template class xtransport<xmaterialize<xtextarea>>;
-    extern template class xgenerator<xtextarea>;
-    extern template xgenerator<xtextarea>::xgenerator();
-    extern template class xtransport<xgenerator<xtextarea>>;
+    XPRECOMPILE(EXTERN, (xtextarea));
 #endif
 }
 

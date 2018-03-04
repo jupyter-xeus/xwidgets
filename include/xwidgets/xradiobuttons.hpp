@@ -12,6 +12,7 @@
 #include <utility>
 
 #include "xmaterialize.hpp"
+#include "xprecompiled_macros.hpp"
 #include "xselection.hpp"
 
 namespace xw
@@ -97,12 +98,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xradiobuttons>;
-    extern template xmaterialize<xradiobuttons>::xmaterialize();
-    extern template class xtransport<xmaterialize<xradiobuttons>>;
-    extern template class xgenerator<xradiobuttons>;
-    extern template xgenerator<xradiobuttons>::xgenerator();
-    extern template class xtransport<xgenerator<xradiobuttons>>;
+    XPRECOMPILE(EXTERN, (xradiobuttons));
 #endif
 }
 #endif

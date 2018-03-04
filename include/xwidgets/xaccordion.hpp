@@ -10,6 +10,7 @@
 #define XWIDGETS_ACCORDION_HPP
 
 #include "xmaterialize.hpp"
+#include "xprecompiled_macros.hpp"
 #include "xselection_container.hpp"
 
 namespace xw
@@ -80,12 +81,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xaccordion>;
-    extern template xmaterialize<xaccordion>::xmaterialize();
-    extern template class xtransport<xmaterialize<xaccordion>>;
-    extern template class xgenerator<xaccordion>;
-    extern template xgenerator<xaccordion>::xgenerator();
-    extern template class xtransport<xgenerator<xaccordion>>;
+    XPRECOMPILE(EXTERN, (xaccordion));
 #endif
 }
 

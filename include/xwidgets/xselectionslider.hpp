@@ -15,6 +15,7 @@
 
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
+#include "xprecompiled_macros.hpp"
 #include "xselection.hpp"
 
 namespace xw
@@ -250,19 +251,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xselectionslider>;
-    extern template xmaterialize<xselectionslider>::xmaterialize();
-    extern template class xtransport<xmaterialize<xselectionslider>>;
-    extern template class xgenerator<xselectionslider>;
-    extern template xgenerator<xselectionslider>::xgenerator();
-    extern template class xtransport<xgenerator<xselectionslider>>;
-
-    extern template class xmaterialize<xselection_rangeslider>;
-    extern template xmaterialize<xselection_rangeslider>::xmaterialize();
-    extern template class xtransport<xmaterialize<xselection_rangeslider>>;
-    extern template class xgenerator<xselection_rangeslider>;
-    extern template xgenerator<xselection_rangeslider>::xgenerator();
-    extern template class xtransport<xgenerator<xselection_rangeslider>>;
+    XPRECOMPILE(EXTERN, (xselectionslider, xselection_rangeslider));
 #endif
 }
 #endif

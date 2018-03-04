@@ -13,6 +13,7 @@
 
 #include "xboolean.hpp"
 #include "xmaterialize.hpp"
+#include "xprecompiled_macros.hpp"
 
 namespace xw
 {
@@ -88,12 +89,7 @@ namespace xw
      *********************/
 
 #ifndef _WIN32
-    extern template class xmaterialize<xvalid>;
-    extern template xmaterialize<xvalid>::xmaterialize();
-    extern template class xtransport<xmaterialize<xvalid>>;
-    extern template class xgenerator<xvalid>;
-    extern template xgenerator<xvalid>::xgenerator();
-    extern template class xtransport<xgenerator<xvalid>>;
+    XPRECOMPILE(EXTERN, (xvalid));
 #endif
 }
 #endif

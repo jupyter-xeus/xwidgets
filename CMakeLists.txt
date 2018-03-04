@@ -108,6 +108,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvalid.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprecompiled_macros.hpp
 )
 
 set(XWIDGETS_SOURCES
