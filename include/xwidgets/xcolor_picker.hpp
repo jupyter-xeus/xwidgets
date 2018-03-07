@@ -105,7 +105,7 @@ namespace xw
     extern template class xgenerator<xcolor_picker>;
     extern template xgenerator<xcolor_picker>::xgenerator();
     extern template class xtransport<xgenerator<xcolor_picker>>;
-#endif 
+#endif
 }
 
 #endif
