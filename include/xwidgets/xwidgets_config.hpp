@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_CONFIG_HPP
 #define XWIDGETS_CONFIG_HPP
 
+// Visual C++ declspec macors
 #ifdef _WIN32
     #ifdef XWIDGETS_EXPORTS
         #define XWIDGETS_API __declspec(dllexport)
@@ -29,9 +30,25 @@
 #define XWIDGETS_BINARY_REVISION 0
 #define XWIDGETS_BINARY_AGE 1
 
+// Protocol version
 #define XWIDGETS_PROTOCOL_VERSION_MAJOR 2
 #define XWIDGETS_PROTOCOL_VERSION_MINOR 0
 #define XWIDGETS_PROTOCOL_VERSION_PATCH 0
+
+// Semver requirement for @jupyter-widgets/base
+#define XWIDGETS_BASE_VERSION_MAJOR 1
+#define XWIDGETS_BASE_VERSION_MINOR 0
+#define XWIDGETS_BASE_VERSION_PATCH 0
+
+// Semver requirement for @jupyter-widgets/output
+#define XWIDGETS_OUTPUT_VERSION_MAJOR 1
+#define XWIDGETS_OUTPUT_VERSION_MINOR 0
+#define XWIDGETS_OUTPUT_VERSION_PATCH 0
+
+// Semver requirement for @jupyter-widgets/controls
+#define XWIDGETS_CONTROLS_VERSION_MAJOR 1
+#define XWIDGETS_CONTROLS_VERSION_MINOR 1
+#define XWIDGETS_CONTROLS_VERSION_PATCH 0
 
 // Composing the protocol version string from major, minor and patch
 #define XWIDGETS_CONCATENATE(A, B) XWIDGETS_CONCATENATE_IMPL(A, B)
@@ -43,9 +60,20 @@
                               XWIDGETS_CONCATENATE(.,XWIDGETS_CONCATENATE(XWIDGETS_PROTOCOL_VERSION_MINOR,   \
                                                    XWIDGETS_CONCATENATE(.,XWIDGETS_PROTOCOL_VERSION_PATCH)))))
 
+#define XWIDGETS_BASE_VERSION XWIDGETS_STRINGIFY(XWIDGETS_CONCATENATE(XWIDGETS_BASE_VERSION_MAJOR,   \
+                          XWIDGETS_CONCATENATE(.,XWIDGETS_CONCATENATE(XWIDGETS_BASE_VERSION_MINOR,   \
+                                               XWIDGETS_CONCATENATE(.,XWIDGETS_BASE_VERSION_PATCH)))))
+
+#define XWIDGETS_OUTPUT_VERSION XWIDGETS_STRINGIFY(XWIDGETS_CONCATENATE(XWIDGETS_OUTPUT_VERSION_MAJOR,   \
+                            XWIDGETS_CONCATENATE(.,XWIDGETS_CONCATENATE(XWIDGETS_OUTPUT_VERSION_MINOR,   \
+                                                 XWIDGETS_CONCATENATE(.,XWIDGETS_OUTPUT_VERSION_PATCH)))))
+
+#define XWIDGETS_CONTROLS_VERSION XWIDGETS_STRINGIFY(XWIDGETS_CONCATENATE(XWIDGETS_CONTROLS_VERSION_MAJOR,   \
+                              XWIDGETS_CONCATENATE(.,XWIDGETS_CONCATENATE(XWIDGETS_CONTROLS_VERSION_MINOR,   \
+                                                   XWIDGETS_CONCATENATE(.,XWIDGETS_CONTROLS_VERSION_PATCH)))))
+
 #ifdef __CLING__
-#pragma cling add_library_path(@XWIDGETS_INSTALL_LIBRARY_DIR@)
-#pragma cling load("libxwidgets")
+#include "xwidgets_config_cling.hpp"
 #endif
 
 #endif

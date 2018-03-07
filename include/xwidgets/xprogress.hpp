@@ -136,8 +136,9 @@ namespace xw
     template <class D>
     inline void xprogress_style<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
         this->_model_name() = "ProgressStyleModel";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     /****************************

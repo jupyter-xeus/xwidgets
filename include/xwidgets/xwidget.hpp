@@ -79,8 +79,6 @@ namespace xw
     template <class D>
     inline void xwidget<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_name() = "DOMWidgetModel";
         this->_view_name() = "DOMWidgetView";
     }

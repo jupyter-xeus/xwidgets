@@ -142,8 +142,9 @@ namespace xw
     template <class D>
     inline void xslider_style<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
         this->_model_name() = "SliderStyleModel";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     /**************************

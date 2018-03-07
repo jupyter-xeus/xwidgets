@@ -121,8 +121,9 @@ namespace xw
     template <class D>
     inline void xtogglebuttons_style<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
         this->_model_name() = "ToggleButtonsStyleModel";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     /*********************************
@@ -171,10 +172,12 @@ namespace xw
     template <class D>
     inline void xtogglebuttons<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_name() = "ToggleButtonsModel";
         this->_view_name() = "ToggleButtonsView";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     /*********************
