@@ -178,7 +178,23 @@ namespace xw
     {
         this->_model_name() = "DirectionalLinkModel";
         this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
-}
 
+    /*********************
+     * precompiled types *
+     *********************/
+
+#ifndef _WIN32
+    extern template class xmaterialize<xlink>;
+    extern template class xtransport<xmaterialize<xlink>>;
+    extern template class xgenerator<xlink>;
+    extern template class xtransport<xgenerator<xlink>>;
+
+    extern template class xmaterialize<xdirectional_link>;
+    extern template class xtransport<xmaterialize<xdirectional_link>>;
+    extern template class xgenerator<xdirectional_link>;
+    extern template class xtransport<xgenerator<xdirectional_link>>;
+#endif
+}
 #endif

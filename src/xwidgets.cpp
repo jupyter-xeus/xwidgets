@@ -1,25 +1,26 @@
 #include "xwidgets/xaccordion.hpp"
-#include "xwidgets/xcheckbox.hpp"
-#include "xwidgets/xselect.hpp"
-#include "xwidgets/xslider.hpp"
-#include "xwidgets/xcontroller.hpp"
 #include "xwidgets/xbox.hpp"
-#include "xwidgets/xselectionslider.hpp"
-#include "xwidgets/xtogglebuttons.hpp"
-#include "xwidgets/xhtml.hpp"
 #include "xwidgets/xbutton.hpp"
-#include "xwidgets/xpassword.hpp"
+#include "xwidgets/xcheckbox.hpp"
+#include "xwidgets/xcolor_picker.hpp"
+#include "xwidgets/xcontroller.hpp"
+#include "xwidgets/xdropdown.hpp"
+#include "xwidgets/xhtml.hpp"
 #include "xwidgets/xlabel.hpp"
 #include "xwidgets/xlayout.hpp"
-#include "xwidgets/xprogress.hpp"
+#include "xwidgets/xlink.hpp"
+#include "xwidgets/xpassword.hpp"
 #include "xwidgets/xplay.hpp"
-#include "xwidgets/xdropdown.hpp"
-#include "xwidgets/xcolor_picker.hpp"
-#include "xwidgets/xtogglebutton.hpp"
-#include "xwidgets/xtext.hpp"
+#include "xwidgets/xprogress.hpp"
 #include "xwidgets/xradiobuttons.hpp"
+#include "xwidgets/xselect.hpp"
+#include "xwidgets/xselectionslider.hpp"
+#include "xwidgets/xslider.hpp"
 #include "xwidgets/xtab.hpp"
+#include "xwidgets/xtext.hpp"
 #include "xwidgets/xtextarea.hpp"
+#include "xwidgets/xtogglebutton.hpp"
+#include "xwidgets/xtogglebuttons.hpp"
 #include "xwidgets/xvalid.hpp"
 
 namespace xw
@@ -275,4 +276,14 @@ namespace xw
     template class XWIDGETS_API xgenerator<xcontroller>;
     template xgenerator<xcontroller>::xgenerator();
     template class XWIDGETS_API xtransport<xgenerator<xcontroller>>;
+
+    template class XWIDGETS_API xmaterialize<xlink>;
+    template class XWIDGETS_API xtransport<xmaterialize<xlink>>;
+    template class XWIDGETS_API xgenerator<xlink>;
+    template class XWIDGETS_API xtransport<xgenerator<xlink>>;
+
+    template class XWIDGETS_API xmaterialize<xdirectional_link>;
+    template class XWIDGETS_API xtransport<xmaterialize<xdirectional_link>>;
+    template class XWIDGETS_API xgenerator<xdirectional_link>;
+    template class XWIDGETS_API xtransport<xgenerator<xdirectional_link>>;
 }
