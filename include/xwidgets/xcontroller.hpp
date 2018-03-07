@@ -94,8 +94,16 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
+#ifdef _MSC_VER
+        template <class T>
+        using transport_type = xtransport<T>;
+
+        using xcontroller_axis_list_type = std::vector<xholder<transport_type>>;
+        using xcontroller_button_list_type = std::vector<xholder<transport_type>>;
+#else
         using xcontroller_axis_list_type = std::vector<xholder<xtransport>>;
         using xcontroller_button_list_type = std::vector<xholder<xtransport>>;
+#endif
 
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
@@ -275,5 +283,33 @@ namespace xw
                                       xmaker<xcontroller_button>);
         return 0;
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+#ifndef _WIN32
+    extern template class xmaterialize<xcontroller_button>;
+    extern template xmaterialize<xcontroller_button>::xmaterialize();
+    extern template class xtransport<xmaterialize<xcontroller_button>>;
+    extern template class xgenerator<xcontroller_button>;
+    extern template xgenerator<xcontroller_button>::xgenerator();
+    extern template class xtransport<xgenerator<xcontroller_button>>;
+
+    extern template class xmaterialize<xcontroller_axis>;
+    extern template xmaterialize<xcontroller_axis>::xmaterialize();
+    extern template class xtransport<xmaterialize<xcontroller_axis>>;
+    extern template class xgenerator<xcontroller_axis>;
+    extern template xgenerator<xcontroller_axis>::xgenerator();
+    extern template class xtransport<xgenerator<xcontroller_axis>>;
+
+    extern template class xmaterialize<xcontroller>;
+    extern template xmaterialize<xcontroller>::xmaterialize();
+    extern template class xtransport<xmaterialize<xcontroller>>;
+    extern template class xgenerator<xcontroller>;
+    extern template xgenerator<xcontroller>::xgenerator();
+    extern template class xtransport<xgenerator<xcontroller>>;
+#endif
 }
+
 #endif

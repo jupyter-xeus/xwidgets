@@ -461,7 +461,7 @@ namespace xw
     template <class D>
     void xregistry::register_owning(xtransport<D>&& model)
     {
-        return m_storage[model.id()] = make_owning_holder(std::move(model));
+        m_storage[model.id()] = make_owning_holder(std::move(model));
     }
 
     inline void xregistry::unregister(xeus::xguid id)
