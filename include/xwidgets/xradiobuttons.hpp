@@ -86,10 +86,12 @@ namespace xw
     template <class D>
     inline void xradiobuttons<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_name() = "RadioButtonsModel";
         this->_view_name() = "RadioButtonsView";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     /*********************

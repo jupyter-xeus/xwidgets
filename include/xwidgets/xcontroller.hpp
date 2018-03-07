@@ -158,10 +158,12 @@ namespace xw
     template <class D>
     inline void xcontroller_button<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_name() = "ControllerButtonModel";
         this->_view_name() = "ControllerButtonView";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     /***********************************
@@ -196,10 +198,12 @@ namespace xw
     template <class D>
     inline void xcontroller_axis<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_name() = "ControllerAxisModel";
         this->_view_name() = "ControllerAxisView";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     /******************************
@@ -247,10 +251,12 @@ namespace xw
     template <class D>
     inline void xcontroller<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_name() = "ControllerModel";
         this->_view_name() = "ControllerView";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     template <class D>

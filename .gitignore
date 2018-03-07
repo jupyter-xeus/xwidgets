@@ -52,4 +52,4 @@ docs/build/
 *.pc
 
 # Generated header
-include/xwidgets/xwidgets_config.hpp
+include/xwidgets/xwidgets_config_cling.hpp

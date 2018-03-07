@@ -78,10 +78,12 @@ namespace xw
     template <class D>
     inline void xstring<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_name() = "StringModel";
         this->_view_name() = "";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 }
 

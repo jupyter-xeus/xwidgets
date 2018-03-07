@@ -134,6 +134,7 @@ namespace xw
     {
         this->_model_name() = "LinkModel";
         this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     /************************************

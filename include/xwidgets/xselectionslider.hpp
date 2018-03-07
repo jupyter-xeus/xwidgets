@@ -155,10 +155,12 @@ namespace xw
     template <class D>
     inline void xselectionslider<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_name() = "SelectionSliderModel";
         this->_view_name() = "SelectionSliderView";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     /*****************************************
@@ -238,11 +240,13 @@ namespace xw
     template <class D>
     inline void xselection_rangeslider<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
+        this->index() = {0, 0};
         this->_model_name() = "SelectionRangeSliderModel";
         this->_view_name() = "SelectionRangeSliderView";
-        this->index() = {0, 0};
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     /*********************

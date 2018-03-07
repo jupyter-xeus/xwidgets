@@ -188,10 +188,12 @@ namespace xw
     template <class D>
     inline void xbutton<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_name() = "ButtonModel";
         this->_view_name() = "ButtonView";
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
     template <class D>

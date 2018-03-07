@@ -24,8 +24,8 @@ include(CMakePackageConfigHelpers)
 set(XWIDGETS_INSTALL_LIBRARY_DIR "\"${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}\"")
 
 configure_file (
-    "${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp.in"
-    "${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp"
+    "${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config_cling.hpp.in"
+    "${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config_cling.hpp"
 )
 
 # Versionning
@@ -108,6 +108,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvalid.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config_cling.hpp
 )
 
 set(XWIDGETS_SOURCES

@@ -73,10 +73,10 @@ namespace xw
         void apply_patch(const xeus::xjson&);
 
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module, "@jupyter-widgets/base");
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module_version, "^1.0.0");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module_version, XWIDGETS_BASE_VERSION);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_name, "WidgetModel");
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module, "@jupyter-widgets/base");
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module_version, "^1.0.0");
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module_version, XWIDGETS_BASE_VERSION);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_name, "WidgetView");
 
         using base_type::notify;
@@ -85,7 +85,7 @@ namespace xw
 
         xobject();
         xobject(xeus::xcomm&&, bool owning = false);
-        using concrete_type = xconcrete_type_t<D>; 
+        using concrete_type = xconcrete_type_t<D>;
 
         concrete_type* self();
         const concrete_type* self() const;
