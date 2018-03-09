@@ -21,7 +21,7 @@ namespace xw
      * link declaration *
      ********************/
 
-    using xlink_pair_type = std::pair<xholder<xtransport>, std::string>;
+    using xlink_pair_type = std::tuple<xholder<xtransport>, std::string>;
 
     template <class D>
     class xlink : public xobject<D>
@@ -123,10 +123,10 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        this->source().first = s;
-        this->source().second = sn;
-        this->target().first = t;
-        this->target().second = tn;
+        std::get<0>(this->source()) = s;
+        std::get<1>(this->source()) = sn;
+        std::get<0>(this->target()) = t;
+        std::get<1>(this->target()) = tn;
     }
 
     template <class D>
@@ -167,10 +167,10 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        this->source().first = s;
-        this->source().second = sn;
-        this->target().first = t;
-        this->target().second = tn;
+        std::get<0>(this->source()) = s;
+        std::get<1>(this->source()) = sn;
+        std::get<0>(this->target()) = t;
+        std::get<1>(this->target()) = tn;
     }
 
     template <class D>
