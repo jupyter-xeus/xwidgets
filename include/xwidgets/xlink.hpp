@@ -9,6 +9,8 @@
 #ifndef XWIDGETS_LINK_HPP
 #define XWIDGETS_LINK_HPP
 
+#include <string>
+#include <tuple>
 #include <utility>
 
 #include "xholder.hpp"
@@ -59,7 +61,7 @@ namespace xw
      * directional_link declaration *
      ********************************/
 
-    using xdirectional_link_pair_type = std::pair<xholder<xtransport>, std::string>;
+    using xdirectional_link_pair_type = std::tuple<xholder<xtransport>, std::string>;
 
     template <class D>
     class xdirectional_link : public xobject<D>
