@@ -21,7 +21,7 @@ namespace xw
      * link declaration *
      ********************/
 
-    using xlink_pair_type = std::pair<xholder<xtransport>, std::string>;
+    using xlink_pair_type = std::tuple<xholder<xtransport>, std::string>;
 
     template <class D>
     class xlink : public xobject<D>
@@ -123,10 +123,10 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        this->source().first = s;
-        this->source().second = sn;
-        this->target().first = t;
-        this->target().second = tn;
+        std::get<0>(this->source()) = s;
+        std::get<1>(this->source()) = sn;
+        std::get<0>(this->target()) = t;
+        std::get<1>(this->target()) = tn;
     }
 
     template <class D>
@@ -167,10 +167,10 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        this->source().first = s;
-        this->source().second = sn;
-        this->target().first = t;
-        this->target().second = tn;
+        std::get<0>(this->source()) = s;
+        std::get<1>(this->source()) = sn;
+        std::get<0>(this->target()) = t;
+        std::get<1>(this->target()) = tn;
     }
 
     template <class D>
@@ -178,7 +178,23 @@ namespace xw
     {
         this->_model_name() = "DirectionalLinkModel";
         this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
-}
 
+    /*********************
+     * precompiled types *
+     *********************/
+
+#ifndef _WIN32
+    extern template class xmaterialize<xlink>;
+    extern template class xtransport<xmaterialize<xlink>>;
+    extern template class xgenerator<xlink>;
+    extern template class xtransport<xgenerator<xlink>>;
+
+    extern template class xmaterialize<xdirectional_link>;
+    extern template class xtransport<xmaterialize<xdirectional_link>>;
+    extern template class xgenerator<xdirectional_link>;
+    extern template class xtransport<xgenerator<xdirectional_link>>;
+#endif
+}
 #endif
