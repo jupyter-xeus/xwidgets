@@ -25,6 +25,7 @@
 
 namespace xw
 {
+    /*
     template class XWIDGETS_API xmaterialize<xlabel>;
     template xmaterialize<xlabel>::xmaterialize();
     template class XWIDGETS_API xtransport<xmaterialize<xlabel>>;
@@ -143,14 +144,14 @@ namespace xw
     template class XWIDGETS_API xgenerator<xtogglebuttons>;
     template xgenerator<xtogglebuttons>::xgenerator();
     template class XWIDGETS_API xtransport<xgenerator<xtogglebuttons>>;
-
-    template class xmaterialize<xlayout>;
+    */
+    template class XWIDGETS_API xmaterialize<xlayout>;
     template xmaterialize<xlayout>::xmaterialize();
-    template class xtransport<xmaterialize<xlayout>>;
-    template class xgenerator<xlayout>;
+    template class XWIDGETS_API xtransport<xmaterialize<xlayout>>;
+    template class XWIDGETS_API xgenerator<xlayout>;
     template xgenerator<xlayout>::xgenerator();
-    template class xtransport<xgenerator<xlayout>>;
-
+    template class XWIDGETS_API xtransport<xgenerator<xlayout>>;
+    /*
     template class XWIDGETS_API xmaterialize<xtextarea>;
     template xmaterialize<xtextarea>::xmaterialize();
     template class XWIDGETS_API xtransport<xmaterialize<xtextarea>>;
@@ -286,4 +287,5 @@ namespace xw
     template class XWIDGETS_API xtransport<xmaterialize<xdirectional_link>>;
     template class XWIDGETS_API xgenerator<xdirectional_link>;
     template class XWIDGETS_API xtransport<xgenerator<xdirectional_link>>;
+    */
 }
