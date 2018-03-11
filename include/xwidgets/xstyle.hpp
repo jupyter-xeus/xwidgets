@@ -71,5 +71,18 @@ namespace xw
         this->_model_name() = "StyleModel";
         this->_view_name() = "StyleView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+#ifndef _WIN32
+    extern template class xmaterialize<xstyle>;
+    extern template xmaterialize<xstyle>::xmaterialize();
+    extern template class xtransport<xmaterialize<xstyle>>;
+    extern template class xgenerator<xstyle>;
+    extern template xgenerator<xstyle>::xgenerator();
+    extern template class xtransport<xgenerator<xstyle>>;
+#endif
 }
 #endif

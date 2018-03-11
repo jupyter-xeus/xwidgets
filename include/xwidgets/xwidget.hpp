@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-#include "xlayout.hpp"
+//#include "xlayout.hpp"
 #include "xobject.hpp"
 
 namespace xw
@@ -32,7 +32,7 @@ namespace xw
         xeus::xjson get_state() const;
         void apply_patch(const xeus::xjson&);
 
-        XPROPERTY(::xw::layout, derived_type, layout);
+//        XPROPERTY(::xw::layout, derived_type, layout);
         XPROPERTY(std::vector<std::string>, derived_type, _dom_classes);
 
     protected:
@@ -61,7 +61,7 @@ namespace xw
     {
         base_type::apply_patch(patch);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(layout, patch);
+//        XOBJECT_SET_PROPERTY_FROM_PATCH(layout, patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(_dom_classes, patch);
     }
 
@@ -70,7 +70,7 @@ namespace xw
     {
         xeus::xjson state = base_type::get_state();
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(layout, state);
+//        XOBJECT_SET_PATCH_FROM_PROPERTY(layout, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(_dom_classes, state);
 
         return state;
