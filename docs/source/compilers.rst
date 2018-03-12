@@ -15,3 +15,8 @@ Visual Studio 2017 and ``__declspec(dllexport)``
 In ``xwidgets.cpp`` a number of widget types are precompiled, in order to improve the just-in-time compilation time in the context of the cling C++ interpreter.
 
 However, with Visual Studio 2017, the introduction of ``__declspec(dllexport)`` instructions for certain widget types causes compilation errors. This is the case for widget types that are used as properties for other widgets such as ``xlayout``` and style widgets.
+
+Visual Studio and CRTP bases
+----------------------------
+
+If we have ``template <class T> class Foo : public Bar<Foo<T>>``, then within the implementation of ``Foo ``, ``Bar`` should be a template, and not refer to ``Bar<Foo<T>>``. However, unlike GCC and Clang, Visual Studio incorrectly makes ``Bar`` refer to the fully specialized template type.
