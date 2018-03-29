@@ -60,7 +60,7 @@ namespace xw
     template xgenerator<xpassword>::xgenerator();
     template class XWIDGETS_API xtransport<xgenerator<xpassword>>;
 
-#if defined(_MSC_VER) && (_MSC_VER==1910 || _MSC_VER==1911 || _MSC_VER==1912)
+#if defined(_MSC_VER) && (_MSC_VER==1910 || _MSC_VER==1911 || _MSC_VER==1912 || _MSC_VER==1913)
     template class xmaterialize<xbutton_style>;
     template xmaterialize<xbutton_style>::xmaterialize();
     template class xtransport<xmaterialize<xbutton_style>>;
@@ -104,7 +104,7 @@ namespace xw
     template xgenerator<xselection_rangeslider>::xgenerator();
     template class XWIDGETS_API xtransport<xgenerator<xselection_rangeslider>>;
 
-#if defined(_MSC_VER) && (_MSC_VER==1910 || _MSC_VER==1911 || _MSC_VER==1912)
+#if defined(_MSC_VER) && (_MSC_VER==1910 || _MSC_VER==1911 || _MSC_VER==1912 || _MSC_VER==1913)
     template class xmaterialize<xprogress_style>;
     template xmaterialize<xprogress_style>::xmaterialize();
     template class xtransport<xmaterialize<xprogress_style>>;
@@ -148,7 +148,7 @@ namespace xw
     template xgenerator<xcolor_picker>::xgenerator();
     template class XWIDGETS_API xtransport<xgenerator<xcolor_picker>>;
 
-#if defined(_MSC_VER) && (_MSC_VER==1910 || _MSC_VER==1911 || _MSC_VER==1912)
+#if defined(_MSC_VER) && (_MSC_VER==1910 || _MSC_VER==1911 || _MSC_VER==1912 || _MSC_VER==1913)
     template class xmaterialize<xtogglebuttons_style>;
     template xmaterialize<xtogglebuttons_style>::xmaterialize();
     template class xtransport<xmaterialize<xtogglebuttons_style>>;
@@ -171,7 +171,7 @@ namespace xw
     template xgenerator<xtogglebuttons>::xgenerator();
     template class XWIDGETS_API xtransport<xgenerator<xtogglebuttons>>;
 
-#if defined(_MSC_VER) && (_MSC_VER==1910 || _MSC_VER==1911 || _MSC_VER==1912)
+#if defined(_MSC_VER) && (_MSC_VER==1910 || _MSC_VER==1911 || _MSC_VER==1912 || _MSC_VER==1913)
     template class xmaterialize<xlayout>;
     template xmaterialize<xlayout>::xmaterialize();
     template class xtransport<xmaterialize<xlayout>>;
@@ -215,7 +215,7 @@ namespace xw
     template xgenerator<xvbox>::xgenerator();
     template class XWIDGETS_API xtransport<xgenerator<xvbox>>;
 
-#if defined(_MSC_VER) && (_MSC_VER==1910 || _MSC_VER==1911 || _MSC_VER==1912)
+#if defined(_MSC_VER) && (_MSC_VER==1910 || _MSC_VER==1911 || _MSC_VER==1912 || _MSC_VER==1913)
     template class xmaterialize<xslider_style>;
     template xmaterialize<xslider_style>::xmaterialize();
     template class xtransport<xmaterialize<xslider_style>>;
