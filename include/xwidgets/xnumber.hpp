@@ -61,6 +61,7 @@ namespace xw
         XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(min, state);
         XOBJECT_SET_PATCH_FROM_PROPERTY(max, state);
+        XOBJECT_SET_PATCH_FROM_PROPERTY(description, state);
 
         return state;
     }
@@ -73,6 +74,7 @@ namespace xw
         XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(min, patch);
         XOBJECT_SET_PROPERTY_FROM_PATCH(max, patch);
+        XOBJECT_SET_PROPERTY_FROM_PATCH(description, patch);
     }
 
     template <class D>
