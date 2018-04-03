@@ -61,7 +61,7 @@ message(STATUS "xwidgets binary version: v${XWIDGETS_BINARY_VERSION}")
 
 find_package(cppzmq 4.2.3 REQUIRED)
 find_package(xtl 0.4 REQUIRED)
-find_package(xeus 0.10.1 REQUIRED)
+find_package(xeus 0.11.0 REQUIRED)
 find_package(xproperty 0.7 REQUIRED)
 
 # Source files
@@ -124,7 +124,7 @@ target_include_directories(xwidgets PUBLIC $<BUILD_INTERFACE:${XWIDGETS_INCLUDE_
 
 target_link_libraries(xwidgets
                       PUBLIC xtl
-                      PRIVATE xeus)
+                      PUBLIC xeus)
 
 set_target_properties(xwidgets PROPERTIES
                       PUBLIC_HEADER "${XWIDGETS_HEADERS}"
