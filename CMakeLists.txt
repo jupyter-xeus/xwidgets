@@ -6,7 +6,7 @@
 # The full license is in the file LICENSE, distributed with this software. #
 ############################################################################
 
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.8)
 project(xwidgets)
 
 message(STATUS "Forcing tests build type to Release")
