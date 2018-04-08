@@ -8,8 +8,6 @@
 
 The C++ backend for Jupyter interactive widgets.
 
-**xwidgets is an early developer preview, and is not suitable for general usage yet. Features and implementation are subject to change.**
-
 ## Introduction
 
 `xwidgets` is a C++ implementation of the Jupyter interactive widgets protocol. The Python reference implementation is available in the [ipywidgets](https://github.com/jupyter-widgets/ipywidgets) project.
@@ -24,11 +22,29 @@ Launch the jupyter notebook with `jupyter notebook` and launch a new C++ noteboo
 
 ## Installation
 
-We provide a `xeus-cling` package for the conda package manager.
+We provide a package for the conda package manager.
+
+- Installing `xwidgets` and the C++ kernel
 
 ```bash
-conda install xeus-cling notebook xwidgets widgetsnbextension -c QuantStack
+conda install xeus-cling xwidgets -c QuantStack -c conda-forge
 ```
+
+Then, the front-end extension must be installed for either the classic notebook or JupyterLab.
+
+- Installing the extension for the classic notebook
+
+```
+conda install widgetsnbextension -c conda-forge
+```
+
+- Installing the JupyterLab extension
+
+```
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
+```
+
+## Installation from sources
 
 Or you can directly install it from the sources if you have all the dependencies already installed:
 

@@ -50,7 +50,7 @@
 #define XWIDGETS_CONTROLS_VERSION_MINOR 1
 #define XWIDGETS_CONTROLS_VERSION_PATCH 0
 
-// Composing the protocol version string from major, minor and patch
+// Composing the version strings from major, minor and patch
 #define XWIDGETS_CONCATENATE(A, B) XWIDGETS_CONCATENATE_IMPL(A, B)
 #define XWIDGETS_CONCATENATE_IMPL(A, B) A##B
 #define XWIDGETS_STRINGIFY(a) XWIDGETS_STRINGIFY_IMPL(a)
