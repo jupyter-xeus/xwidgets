@@ -26,6 +26,20 @@
 
 namespace xw
 {
+    TEST(xwidgets, box)
+    {
+        hbox hb;
+        slider<double> s1, s2, s3;
+        hb.add(s1);
+        hb.add(s2);
+        hb.add(s3);
+        ASSERT_EQ(3, hb.children().size());
+        hb.remove(s1);
+        ASSERT_EQ(2, hb.children().size());
+        hb.clear();
+        ASSERT_EQ(0, hb.children().size());
+    }
+
     TEST(xwidgets, hbox)
     {
         hbox hb;
