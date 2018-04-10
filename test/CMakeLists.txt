@@ -15,7 +15,9 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     project(xwidgets-test)
 
     find_package(xwidgets REQUIRED CONFIG)
+    find_package(xtl REQUIRED CONFIG)
     set(XWIDGETS_INCLUDE_DIR ${xwidgets_INCLUDE_DIRS})
+    set(DOWNLOAD_GTEST true)
 endif ()
 
 # Dependencies
@@ -86,10 +88,9 @@ endif()
 
 target_compile_features(${XWIDGETS_TEST_TARGET} PRIVATE cxx_std_14)
 
-target_link_libraries(${XWIDGETS_TEST_TARGET} 
-                        PRIVATE xwidgets 
+target_link_libraries(${XWIDGETS_TEST_TARGET}
+                        PRIVATE xwidgets
                         PUBLIC  xtl
                         PRIVATE xeus
-                        PRIVATE ${GTEST_BOTH_LIBRARIES} 
+                        PRIVATE ${GTEST_BOTH_LIBRARIES}
                         PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-
