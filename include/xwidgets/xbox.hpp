@@ -52,6 +52,11 @@ namespace xw
         template <class T>
         void add(xtransport<T>&& w);
 
+        template <class T>
+        void remove(const xtransport<T>& w);
+
+        void clear();
+
     protected:
 
         xbox();
@@ -155,6 +160,41 @@ namespace xw
     inline void xbox<D>::add(xtransport<T>&& w)
     {
         this->children().emplace_back(make_owning_holder(std::move(w)));
+        xeus::xjson state;
+        XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
+        this->send_patch(std::move(state));
+    }
+
+    template <class D>
+    template <class T>
+    inline void xbox<D>::remove(const xtransport<T>& w)
+    {
+#ifdef _MSC_VER
+        this->children().erase(
+            std::remove_if(
+                this->children().begin(), this->children().end(),
+                [&w](xholder<transport_type> _w){return _w.id() == w.id();}
+            ),
+            this->children().end()
+        );
+#else
+        this->children().erase(
+            std::remove_if(
+                this->children().begin(), this->children().end(),
+                [&w](xholder<xtransport> _w){return _w.id() == w.id();}
+            ),
+            this->children().end()
+        );
+#endif
+        xeus::xjson state;
+        XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
+        this->send_patch(std::move(state));
+    }
+
+    template <class D>
+    inline void xbox<D>::clear()
+    {
+        this->children() = {};
         xeus::xjson state;
         XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
         this->send_patch(std::move(state));
