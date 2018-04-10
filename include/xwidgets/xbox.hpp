@@ -170,9 +170,6 @@ namespace xw
     inline void xbox<D>::remove(const xtransport<T>& w)
     {
 #ifdef _MSC_VER
-        template <class T>
-        using transport_type = xtransport<T>;
-
         this->children().erase(
             std::remove_if(
                 this->children().begin(), this->children().end(),
