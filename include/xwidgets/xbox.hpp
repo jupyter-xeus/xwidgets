@@ -173,7 +173,9 @@ namespace xw
         this->children().erase(
             std::remove_if(
                 this->children().begin(), this->children().end(),
-                [&w](xholder<transport_type> _w){return _w.id() == w.id();}
+                [&w](const xholder<transport_type>& element) {
+                    return element.id() == w.id();
+                }
             ),
             this->children().end()
         );
@@ -181,7 +183,9 @@ namespace xw
         this->children().erase(
             std::remove_if(
                 this->children().begin(), this->children().end(),
-                [&w](xholder<xtransport> _w){return _w.id() == w.id();}
+                [&w](const xholder<xtransport>& element) {
+                    return element.id() == w.id();
+                }
             ),
             this->children().end()
         );
