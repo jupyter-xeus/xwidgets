@@ -57,6 +57,12 @@ namespace xw
         using value_type = T;
     };
 
+    template <class T>
+    struct xnumber_traits<numeral_generator<T>>
+    {
+        using value_type = T;
+    };
+
     /***************************
      * xnumeral implementation *
      ***************************/
@@ -96,6 +102,33 @@ namespace xw
         this->_model_name() = "FloatTextModel";
         this->_view_name() = "FloatTextView";
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+#ifndef _WIN32
+    extern template class xmaterialize<xnumeral, int>;
+    extern template xmaterialize<xnumeral, int>::xmaterialize();
+    extern template class xtransport<xmaterialize<xnumeral, int>>;
+    extern template class xgenerator<xnumeral, int>;
+    extern template xgenerator<xnumeral, int>::xgenerator();
+    extern template class xtransport<xgenerator<xnumeral, int>>;
+
+    extern template class xmaterialize<xnumeral, float>;
+    extern template xmaterialize<xnumeral, float>::xmaterialize();
+    extern template class xtransport<xmaterialize<xnumeral, float>>;
+    extern template class xgenerator<xnumeral, float>;
+    extern template xgenerator<xnumeral, float>::xgenerator();
+    extern template class xtransport<xgenerator<xnumeral, float>>;
+
+    extern template class xmaterialize<xnumeral, double>;
+    extern template xmaterialize<xnumeral, double>::xmaterialize();
+    extern template class xtransport<xmaterialize<xnumeral, double>>;
+    extern template class xgenerator<xnumeral, double>;
+    extern template xgenerator<xnumeral, double>::xgenerator();
+    extern template class xtransport<xgenerator<xnumeral, double>>;
+#endif
 }
 
 #endif
