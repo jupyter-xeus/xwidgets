@@ -26,8 +26,8 @@ namespace xw
         using base_type = xselection_container<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
     protected:
 
@@ -48,17 +48,15 @@ namespace xw
      ***********************/
 
     template <class D>
-    inline xeus::xjson xtab<D>::get_state() const
+    inline void xtab<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
-
-        return state;
+        base_type::serialize_state(state, buffers);
     }
 
     template <class D>
-    inline void xtab<D>::apply_patch(const xeus::xjson& patch)
+    inline void xtab<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
     }
 
     template <class D>

@@ -28,8 +28,8 @@ namespace xw
 
         using submit_callback_type = std::function<void()>;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         void on_submit(submit_callback_type);
 
@@ -59,23 +59,21 @@ namespace xw
      ************************/
 
     template <class D>
-    inline xeus::xjson xtext<D>::get_state() const
+    inline void xtext<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(continuous_update, state);
-
-        return state;
+        set_patch_from_property(disabled, state, buffers);
+        set_patch_from_property(continuous_update, state, buffers);
     }
 
     template <class D>
-    inline void xtext<D>::apply_patch(const xeus::xjson& patch)
+    inline void xtext<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch);
+        set_property_from_patch(disabled, patch, buffers);
+        set_property_from_patch(continuous_update, patch, buffers);
     }
 
     template <class D>

@@ -28,8 +28,8 @@ namespace xw
 
         using value_type = typename base_type::value_type;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(value_type, derived_type, step);
         XPROPERTY(bool, derived_type, disabled);
@@ -68,25 +68,23 @@ namespace xw
      ***************************/
 
     template <class D>
-    inline xeus::xjson xnumeral<D>::get_state() const
+    inline void xnumeral<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(step, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(continuous_update, state);
-
-        return state;
+        set_patch_from_property(step, state, buffers);
+        set_patch_from_property(disabled, state, buffers);
+        set_patch_from_property(continuous_update, state, buffers);
     }
 
     template <class D>
-    inline void xnumeral<D>::apply_patch(const xeus::xjson& patch)
+    inline void xnumeral<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(step, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch);
+        set_property_from_patch(step, patch, buffers);
+        set_property_from_patch(disabled, patch, buffers);
+        set_property_from_patch(continuous_update, patch, buffers);
     }
 
     template <class D>

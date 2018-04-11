@@ -29,8 +29,8 @@ namespace xw
         using base_type = xobject<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(xtl::xoptional<std::string>, derived_type, align_content, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly", "stretch", "inherit", "inital", "unset"));
         XPROPERTY(xtl::xoptional<std::string>, derived_type, align_items, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset"));
@@ -78,65 +78,63 @@ namespace xw
      *************************/
 
     template <class D>
-    inline void xlayout<D>::apply_patch(const xeus::xjson& patch)
+    inline void xlayout<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(align_content, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(align_items, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(align_self, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(bottom, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(border, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(display, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(flex, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(flex_flow, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(height, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(justify_content, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(left, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(margin, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(max_height, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(max_width, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(overflow, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(overflow_x, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(overflow_y, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(order, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(padding, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(right, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(top, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(width, patch);
+        set_property_from_patch(align_content, patch, buffers);
+        set_property_from_patch(align_items, patch, buffers);
+        set_property_from_patch(align_self, patch, buffers);
+        set_property_from_patch(bottom, patch, buffers);
+        set_property_from_patch(border, patch, buffers);
+        set_property_from_patch(display, patch, buffers);
+        set_property_from_patch(flex, patch, buffers);
+        set_property_from_patch(flex_flow, patch, buffers);
+        set_property_from_patch(height, patch, buffers);
+        set_property_from_patch(justify_content, patch, buffers);
+        set_property_from_patch(left, patch, buffers);
+        set_property_from_patch(margin, patch, buffers);
+        set_property_from_patch(max_height, patch, buffers);
+        set_property_from_patch(max_width, patch, buffers);
+        set_property_from_patch(overflow, patch, buffers);
+        set_property_from_patch(overflow_x, patch, buffers);
+        set_property_from_patch(overflow_y, patch, buffers);
+        set_property_from_patch(order, patch, buffers);
+        set_property_from_patch(padding, patch, buffers);
+        set_property_from_patch(right, patch, buffers);
+        set_property_from_patch(top, patch, buffers);
+        set_property_from_patch(width, patch, buffers);
     }
 
     template <class D>
-    inline xeus::xjson xlayout<D>::get_state() const
+    inline void xlayout<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(align_content, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(align_items, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(align_self, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(bottom, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(border, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(display, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(flex, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(flex_flow, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(height, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(justify_content, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(left, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(margin, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(max_height, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(max_width, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(min_height, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(min_width, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(overflow, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(overflow_x, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(overflow_y, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(order, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(padding, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(right, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(top, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(width, state);
-
-        return state;
+        set_patch_from_property(align_content, state, buffers);
+        set_patch_from_property(align_items, state, buffers);
+        set_patch_from_property(align_self, state, buffers);
+        set_patch_from_property(bottom, state, buffers);
+        set_patch_from_property(border, state, buffers);
+        set_patch_from_property(display, state, buffers);
+        set_patch_from_property(flex, state, buffers);
+        set_patch_from_property(flex_flow, state, buffers);
+        set_patch_from_property(height, state, buffers);
+        set_patch_from_property(justify_content, state, buffers);
+        set_patch_from_property(left, state, buffers);
+        set_patch_from_property(margin, state, buffers);
+        set_patch_from_property(max_height, state, buffers);
+        set_patch_from_property(max_width, state, buffers);
+        set_patch_from_property(min_height, state, buffers);
+        set_patch_from_property(min_width, state, buffers);
+        set_patch_from_property(overflow, state, buffers);
+        set_patch_from_property(overflow_x, state, buffers);
+        set_patch_from_property(overflow_y, state, buffers);
+        set_patch_from_property(order, state, buffers);
+        set_patch_from_property(padding, state, buffers);
+        set_patch_from_property(right, state, buffers);
+        set_patch_from_property(top, state, buffers);
+        set_patch_from_property(width, state, buffers);
     }
 
     template <class D>

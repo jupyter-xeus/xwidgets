@@ -33,8 +33,8 @@ namespace xw
         using base_type = xstyle<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::string, derived_type, description_width);
         XPROPERTY(xtl::xoptional<html_color>, derived_type, handle_color);
@@ -67,8 +67,8 @@ namespace xw
 
         using value_type = typename base_type::value_type;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(value_type, derived_type, step, value_type(1));
         XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
@@ -113,23 +113,21 @@ namespace xw
      ********************************/
 
     template <class D>
-    inline xeus::xjson xslider_style<D>::get_state() const
+    inline void xslider_style<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(description_width, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(handle_color, state);
-
-        return state;
+        set_patch_from_property(description_width, state, buffers);
+        set_patch_from_property(handle_color, state, buffers);
     }
 
     template <class D>
-    inline void xslider_style<D>::apply_patch(const xeus::xjson& patch)
+    inline void xslider_style<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(description_width, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(handle_color, patch);
+        set_property_from_patch(description_width, patch, buffers);
+        set_property_from_patch(handle_color, patch, buffers);
     }
 
     template <class D>
@@ -152,33 +150,31 @@ namespace xw
      **************************/
 
     template <class D>
-    inline xeus::xjson xslider<D>::get_state() const
+    inline void xslider<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(step, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(orientation, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout_format, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(continuous_update, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(style, state);
-
-        return state;
+        set_patch_from_property(step, state, buffers);
+        set_patch_from_property(orientation, state, buffers);
+        set_patch_from_property(readout, state, buffers);
+        set_patch_from_property(readout_format, state, buffers);
+        set_patch_from_property(continuous_update, state, buffers);
+        set_patch_from_property(disabled, state, buffers);
+        set_patch_from_property(style, state, buffers);
     }
 
     template <class D>
-    inline void xslider<D>::apply_patch(const xeus::xjson& patch)
+    inline void xslider<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(step, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(orientation, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout_format, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch);
+        set_property_from_patch(step, patch, buffers);
+        set_property_from_patch(orientation, patch, buffers);
+        set_property_from_patch(readout, patch, buffers);
+        set_property_from_patch(readout_format, patch, buffers);
+        set_property_from_patch(continuous_update, patch, buffers);
+        set_property_from_patch(disabled, patch, buffers);
+        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>

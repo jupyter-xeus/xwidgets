@@ -29,8 +29,8 @@ namespace xw
         using base_type = xboolean<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::string, derived_type, tooltip);
         XPROPERTY(std::string, derived_type, icon);
@@ -62,25 +62,23 @@ namespace xw
     }
 
     template <class D>
-    inline xeus::xjson xtogglebutton<D>::get_state() const
+    inline void xtogglebutton<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(tooltip, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(icon, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(button_style, state);
-
-        return state;
+        set_patch_from_property(tooltip, state, buffers);
+        set_patch_from_property(icon, state, buffers);
+        set_patch_from_property(button_style, state, buffers);
     }
 
     template <class D>
-    inline void xtogglebutton<D>::apply_patch(const xeus::xjson& patch)
+    inline void xtogglebutton<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(tooltip, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(icon, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(button_style, patch);
+        set_property_from_patch(tooltip, patch, buffers);
+        set_property_from_patch(icon, patch, buffers);
+        set_property_from_patch(button_style, patch, buffers);
     }
 
     template <class D>

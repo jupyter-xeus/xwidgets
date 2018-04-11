@@ -35,8 +35,8 @@ namespace xw
 
         using pair_type = xlink_pair_type;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(pair_type, derived_type, source);
         XPROPERTY(pair_type, derived_type, target);
@@ -73,8 +73,8 @@ namespace xw
 
         using pair_type = xdirectional_link_pair_type;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(pair_type, derived_type, source);
         XPROPERTY(pair_type, derived_type, target);
@@ -100,23 +100,21 @@ namespace xw
      ************************/
 
     template <class D>
-    inline xeus::xjson xlink<D>::get_state() const
+    inline void xlink<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(source, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(target, state);
-
-        return state;
+        set_patch_from_property(source, state, buffers);
+        set_patch_from_property(target, state, buffers);
     }
 
     template <class D>
-    inline void xlink<D>::apply_patch(const xeus::xjson& patch)
+    inline void xlink<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(source, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(target, patch);
+        set_property_from_patch(source, patch, buffers);
+        set_property_from_patch(target, patch, buffers);
     }
 
     template <class D>
@@ -144,23 +142,21 @@ namespace xw
      ************************************/
 
     template <class D>
-    inline xeus::xjson xdirectional_link<D>::get_state() const
+    inline void xdirectional_link<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(source, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(target, state);
-
-        return state;
+        set_patch_from_property(source, state, buffers);
+        set_patch_from_property(target, state, buffers);
     }
 
     template <class D>
-    inline void xdirectional_link<D>::apply_patch(const xeus::xjson& patch)
+    inline void xdirectional_link<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(source, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(target, patch);
+        set_property_from_patch(source, patch, buffers);
+        set_property_from_patch(target, patch, buffers);
     }
 
     template <class D>

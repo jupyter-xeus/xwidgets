@@ -32,8 +32,8 @@ namespace xw
         using derived_type = D;
         using options_type = typename base_type::options_type;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::vector<std::string>, derived_type, tooltips);
 
@@ -72,8 +72,8 @@ namespace xw
         using derived_type = D;
         using options_type = typename base_type::options_type;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::vector<std::string>, derived_type, tooltips);
 
@@ -103,25 +103,23 @@ namespace xw
      ***********************************/
 
     template <class D>
-    inline xeus::xjson xselectionslider<D>::get_state() const
+    inline void xselectionslider<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(orientation, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(continuous_update, state);
-
-        return state;
+        set_patch_from_property(orientation, state, buffers);
+        set_patch_from_property(readout, state, buffers);
+        set_patch_from_property(continuous_update, state, buffers);
     }
 
     template <class D>
-    inline void xselectionslider<D>::apply_patch(const xeus::xjson& patch)
+    inline void xselectionslider<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(orientation, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch);
+        set_property_from_patch(orientation, patch, buffers);
+        set_property_from_patch(readout, patch, buffers);
+        set_property_from_patch(continuous_update, patch, buffers);
     }
 
     template <class D>
@@ -168,25 +166,23 @@ namespace xw
      *****************************************/
 
     template <class D>
-    inline xeus::xjson xselection_rangeslider<D>::get_state() const
+    inline void xselection_rangeslider<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(orientation, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(continuous_update, state);
-
-        return state;
+        set_patch_from_property(orientation, state, buffers);
+        set_patch_from_property(readout, state, buffers);
+        set_patch_from_property(continuous_update, state, buffers);
     }
 
     template <class D>
-    inline void xselection_rangeslider<D>::apply_patch(const xeus::xjson& patch)
+    inline void xselection_rangeslider<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(orientation, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(continuous_update, patch);
+        set_property_from_patch(orientation, patch, buffers);
+        set_property_from_patch(readout, patch, buffers);
+        set_property_from_patch(continuous_update, patch, buffers);
     }
 
     template <class D>

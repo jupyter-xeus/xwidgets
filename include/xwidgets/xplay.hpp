@@ -28,8 +28,8 @@ namespace xw
 
         using value_type = typename base_type::value_type;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson& state, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(value_type, derived_type, interval, value_type(100));
         XPROPERTY(value_type, derived_type, step, value_type(1));
@@ -69,31 +69,29 @@ namespace xw
      ************************/
 
     template <class D>
-    inline xeus::xjson xplay<D>::get_state() const
+    inline void xplay<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(interval, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(step, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_playing, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_repeat, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(show_repeat, state);
-
-        return state;
+        set_patch_from_property(interval, state, buffers);
+        set_patch_from_property(step, state, buffers);
+        set_patch_from_property(disabled, state, buffers);
+        set_patch_from_property(_playing, state, buffers);
+        set_patch_from_property(_repeat, state, buffers);
+        set_patch_from_property(show_repeat, state, buffers);
     }
 
     template <class D>
-    inline void xplay<D>::apply_patch(const xeus::xjson& patch)
+    inline void xplay<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(interval, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(step, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_playing, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_repeat, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(show_repeat, patch);
+        set_property_from_patch(interval, patch, buffers);
+        set_property_from_patch(step, patch, buffers);
+        set_property_from_patch(disabled, patch, buffers);
+        set_property_from_patch(_playing, patch, buffers);
+        set_property_from_patch(_repeat, patch, buffers);
+        set_property_from_patch(show_repeat, patch, buffers);
     }
 
     template <class D>

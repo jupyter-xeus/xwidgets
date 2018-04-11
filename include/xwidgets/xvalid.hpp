@@ -28,8 +28,8 @@ namespace xw
         using base_type = xboolean<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::string, derived_type, readout, "Invalid");
 
@@ -52,21 +52,19 @@ namespace xw
      *************************/
 
     template <class D>
-    inline xeus::xjson xvalid<D>::get_state() const
+    inline void xvalid<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(readout, state);
-
-        return state;
+        set_patch_from_property(readout, state, buffers);
     }
 
     template <class D>
-    inline void xvalid<D>::apply_patch(const xeus::xjson& patch)
+    inline void xvalid<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(readout, patch);
+        set_property_from_patch(readout, patch, buffers);
     }
 
     template <class D>
