@@ -12,6 +12,7 @@
 #include "xwidgets/xlabel.hpp"
 #include "xwidgets/xlayout.hpp"
 #include "xwidgets/xprogress.hpp"
+#include "xwidgets/xnumeral.hpp"
 #include "xwidgets/xplay.hpp"
 #include "xwidgets/xdropdown.hpp"
 #include "xwidgets/xcolor_picker.hpp"
@@ -140,6 +141,27 @@ namespace xw
     template class XWIDGETS_API xgenerator<xprogress, double>;
     template xgenerator<xprogress, double>::xgenerator();
     template class XWIDGETS_API xtransport<xgenerator<xprogress, double>>;
+
+    template class XWIDGETS_API xmaterialize<xnumeral, int>;
+    template xmaterialize<xnumeral, int>::xmaterialize();
+    template class XWIDGETS_API xtransport<xmaterialize<xnumeral, int>>;
+    template class XWIDGETS_API xgenerator<xnumeral, int>;
+    template xgenerator<xnumeral, int>::xgenerator();
+    template class XWIDGETS_API xtransport<xgenerator<xnumeral, int>>;
+
+    template class XWIDGETS_API xmaterialize<xnumeral, float>;
+    template xmaterialize<xnumeral, float>::xmaterialize();
+    template class XWIDGETS_API xtransport<xmaterialize<xnumeral, float>>;
+    template class XWIDGETS_API xgenerator<xnumeral, float>;
+    template xgenerator<xnumeral, float>::xgenerator();
+    template class XWIDGETS_API xtransport<xgenerator<xnumeral, float>>;
+
+    template class XWIDGETS_API xmaterialize<xnumeral, double>;
+    template xmaterialize<xnumeral, double>::xmaterialize();
+    template class XWIDGETS_API xtransport<xmaterialize<xnumeral, double>>;
+    template class XWIDGETS_API xgenerator<xnumeral, double>;
+    template xgenerator<xnumeral, double>::xgenerator();
+    template class XWIDGETS_API xtransport<xgenerator<xnumeral, double>>;
 
     template class XWIDGETS_API xmaterialize<xcolor_picker>;
     template xmaterialize<xcolor_picker>::xmaterialize();
