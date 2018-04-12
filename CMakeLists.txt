@@ -112,7 +112,31 @@ set(XWIDGETS_HEADERS
 )
 
 set(XWIDGETS_SOURCES
-    ${XWIDGETS_SOURCE_DIR}/xwidgets.cpp
+    ${XWIDGETS_SOURCE_DIR}/xaccordion.cpp
+    ${XWIDGETS_SOURCE_DIR}/xbox.cpp
+    ${XWIDGETS_SOURCE_DIR}/xbutton.cpp
+    ${XWIDGETS_SOURCE_DIR}/xcheckbox.cpp
+    ${XWIDGETS_SOURCE_DIR}/xcolor_picker.cpp
+    ${XWIDGETS_SOURCE_DIR}/xcontroller.cpp
+    ${XWIDGETS_SOURCE_DIR}/xdropdown.cpp
+    ${XWIDGETS_SOURCE_DIR}/xhtml.cpp
+    ${XWIDGETS_SOURCE_DIR}/xlabel.cpp
+    ${XWIDGETS_SOURCE_DIR}/xlayout.cpp
+    ${XWIDGETS_SOURCE_DIR}/xlink.cpp
+    ${XWIDGETS_SOURCE_DIR}/xnumeral.cpp
+    ${XWIDGETS_SOURCE_DIR}/xpassword.cpp
+    ${XWIDGETS_SOURCE_DIR}/xplay.cpp
+    ${XWIDGETS_SOURCE_DIR}/xprogress.cpp
+    ${XWIDGETS_SOURCE_DIR}/xselect.cpp
+    ${XWIDGETS_SOURCE_DIR}/xslider.cpp
+    ${XWIDGETS_SOURCE_DIR}/xselectionslider.cpp
+    ${XWIDGETS_SOURCE_DIR}/xtab.cpp
+    ${XWIDGETS_SOURCE_DIR}/xtext.cpp
+    ${XWIDGETS_SOURCE_DIR}/xtextarea.cpp
+    ${XWIDGETS_SOURCE_DIR}/xtogglebutton.cpp
+    ${XWIDGETS_SOURCE_DIR}/xtogglebuttons.cpp
+    ${XWIDGETS_SOURCE_DIR}/xradiobuttons.cpp
+    ${XWIDGETS_SOURCE_DIR}/xvalid.cpp
 )
 
 # Output

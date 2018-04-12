@@ -8,6 +8,7 @@
 #include "xtl/xany.hpp"
 #include "xtl/xclosure.hpp"
 
+#include "xeus/xcomm.hpp"
 #include "xeus/xguid.hpp"
 #include "xeus/xjson.hpp"
 
