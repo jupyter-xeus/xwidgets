@@ -61,7 +61,7 @@ message(STATUS "xwidgets binary version: v${XWIDGETS_BINARY_VERSION}")
 
 find_package(cppzmq 4.2.3 REQUIRED)
 find_package(xtl 0.4 REQUIRED)
-find_package(xeus 0.11.0 REQUIRED)
+find_package(xeus 0.12.0 REQUIRED)
 find_package(xproperty 0.7 REQUIRED)
 
 # Source files

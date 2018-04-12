@@ -23,7 +23,7 @@ namespace xw
 {
     /******************************
      * progress_style declaration *
-     *****************************/
+     ******************************/
 
     template <class D>
     class xprogress_style : public xstyle<D>

@@ -295,7 +295,7 @@ namespace xw
         data["method"] = "update";
         data["state"] = std::move(patch);
         data["buffer_paths"] = xeus::xjson::array();
-        m_comm.send(std::move(metadata), std::move(data));
+        m_comm.send(std::move(metadata), std::move(data), xeus::buffer_sequence());
     }
 
     template <class D>
@@ -306,7 +306,7 @@ namespace xw
         xeus::xjson data;
         data["method"] = "custom";
         data["content"] = std::move(content);
-        m_comm.send(std::move(metadata), std::move(data));
+        m_comm.send(std::move(metadata), std::move(data), xeus::buffer_sequence());
     }
 
     template <class D>
@@ -322,13 +322,13 @@ namespace xw
         metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
         xeus::xjson data;
         data["state"] = derived_cast().get_state();
-        m_comm.open(std::move(metadata), std::move(data));
+        m_comm.open(std::move(metadata), std::move(data), xeus::buffer_sequence());
     }
 
     template <class D>
     inline void xtransport<D>::close()
     {
-        m_comm.close(xeus::xjson::object(), xeus::xjson::object());
+        m_comm.close(xeus::xjson::object(), xeus::xjson::object(), xeus::buffer_sequence());
     }
 
     template <class D>
