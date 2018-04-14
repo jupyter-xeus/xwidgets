@@ -11,6 +11,9 @@
 
 #include <utility>
 
+#include "xeus/xjson.hpp"
+#include "xwidgets_config.hpp"
+
 namespace xw
 {
     /****************************
@@ -150,13 +153,7 @@ namespace xw
 
     template <template <class> class B, class... P>
     inline xgenerator<B, P...>& xgenerator<B, P...>::operator=(xgenerator&&) = default;
-}
 
-#include "xeus/xjson.hpp"
-#include "xwidgets_config.hpp"
-
-namespace xw
-{
     /***********************************************************
      * Specialization of cling::printValue for Jupyter Widgets *
      ***********************************************************/

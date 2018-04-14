@@ -7,16 +7,42 @@
 Compiler workarounds
 ====================
 
-This page tracks the workarounds for the various compiler issues that we encountered in the development. This is mostly of interest for developers interested in contributing to xwidgets.
+This page tracks the workarounds for the various compiler issues that we
+encountered in the development. This is mostly of interest for developers
+interested in contributing to xwidgets.
 
 Visual Studio 2017 and ``__declspec(dllexport)``
 ------------------------------------------------
 
-In ``xwidgets.cpp`` a number of widget types are precompiled, in order to improve the just-in-time compilation time in the context of the cling C++ interpreter.
+In ``xwidgets.cpp`` a number of widget types are precompiled, in order to
+improve the just-in-time compilation time in the context of the cling C++
+interpreter.
 
-However, with Visual Studio 2017, the introduction of ``__declspec(dllexport)`` instructions for certain widget types causes compilation errors. This is the case for widget types that are used as properties for other widgets such as ``xlayout``` and style widgets.
+However, with Visual Studio 2017, the introduction of ``__declspec(dllexport)``
+instructions for certain widget types causes compilation errors. This is the
+case for widget types that are used as properties for other widgets such as
+``xlayout``` and style widgets.
+
+The upstream `MSVC issue`_  issue appears to have been solved with VS2017 15.7
+(Preview 3).
 
 Visual Studio and CRTP bases
 ----------------------------
 
-If we have ``template <class T> class Foo : public Bar<Foo<T>>``, then within the implementation of ``Foo ``, ``Bar`` should be a template, and not refer to ``Bar<Foo<T>>``. However, unlike GCC and Clang, Visual Studio incorrectly makes ``Bar`` refer to the fully specialized template type.
+If we have ``template <class T> class Foo : public Bar<Foo<T>>``, then within
+the implementation of ``Foo ``, ``Bar`` should be a template, and not refer to
+``Bar<Foo<T>>``. However, unlike GCC and Clang, Visual Studio incorrectly makes
+``Bar`` refer to the fully specialized template type.
+
+Cling and complex types
+-----------------------
+
+The rich mime-type rendering of xeus-cling relies upon cling's ability to
+provide a fully qualified type string for a value. This appears to be bugged
+for complex types in cling 0.5, where certain template parameter lack their
+namespace qualification. The we work around `Cling type string`_ bug for
+xholder by creating an alias template for `xtransport` in the general namespace
+in the case of cling.
+
+.. _`MSVC issue`: https://developercommunity.visualstudio.com/content/problem/208938/compilation-error-c2057-expected-constant-expressi.html
+.. _`Cling type string`: https://github.com/root-project/cling/issues/228
