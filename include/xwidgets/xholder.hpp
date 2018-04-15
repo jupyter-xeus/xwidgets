@@ -12,6 +12,7 @@
 #include "xeus/xguid.hpp"
 #include "xeus/xjson.hpp"
 
+#include "xwidgets_config.hpp"
 #include "xmaterialize.hpp"
 
 namespace xw
@@ -138,7 +139,7 @@ namespace xw
         class xholder_impl
         {
         public:
-      
+
             xholder_impl() = default;
             xholder_impl(xholder_impl&&) = delete;
             xholder_impl& operator=(const xholder_impl&) = delete;
@@ -161,7 +162,7 @@ namespace xw
         class xholder_owning : public xholder_impl<CRTP>
         {
         public:
-        
+
             using base_type = xholder_impl<CRTP>;
 
             xholder_owning(const CRTP<D>& value)
@@ -551,5 +552,37 @@ namespace xw
     {
         return xholder<CRTP>(new detail::xholder_id<CRTP>(id));
     }
+
+    /***********************************************************
+     * Specialization of cling::printValue for Jupyter Widgets *
+     ***********************************************************/
+
+    template <template <class> class CRTP>
+    xeus::xjson mime_bundle_repr(const xholder<CRTP>& val)
+    {
+        xeus::xjson mime_bundle;
+
+        // application/vnd.jupyter.widget-view+json
+        xeus::xjson widgets_json;
+        widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
+        widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
+        widgets_json["model_id"] = val.id();
+        mime_bundle["application/vnd.jupyter.widget-view+json"] = std::move(widgets_json);
+
+        // text/plain
+        mime_bundle["text/plain"] = "A Jupyter widget";
+        return mime_bundle;
+    }
 }
+
+// Workaround for cling bug
+//   https://github.com/vgvassilev/cling/issues/180
+// a.k.a.
+//   https://github.com/root-project/cling/issues/228
+
+#ifdef __CLING__
+    template <class D>
+    using xtransport = xw::xtransport<D>;
+#endif
+
 #endif
