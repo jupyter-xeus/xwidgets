@@ -29,8 +29,8 @@ namespace xw
         using base_type = xobject<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(::xw::layout, derived_type, layout);
         XPROPERTY(std::vector<std::string>, derived_type, _dom_classes);
@@ -57,23 +57,21 @@ namespace xw
     }
 
     template <class D>
-    inline void xwidget<D>::apply_patch(const xeus::xjson& patch)
+    inline void xwidget<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(layout, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_dom_classes, patch);
+        set_property_from_patch(layout, patch, buffers);
+        set_property_from_patch(_dom_classes, patch, buffers);
     }
 
     template <class D>
-    inline xeus::xjson xwidget<D>::get_state() const
+    inline void xwidget<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(layout, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_dom_classes, state);
-
-        return state;
+        set_patch_from_property(layout, state, buffers);
+        set_patch_from_property(_dom_classes, state, buffers);
     }
 
     template <class D>

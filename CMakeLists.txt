@@ -69,6 +69,7 @@ find_package(xproperty 0.7 REQUIRED)
 
 set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaccordion.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbinary.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbox.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xboolean.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbutton.hpp
@@ -81,6 +82,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xfactory.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xholder.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xhtml.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/ximage.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlabel.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlayout.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlink.hpp
@@ -120,6 +122,7 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xcontroller.cpp
     ${XWIDGETS_SOURCE_DIR}/xdropdown.cpp
     ${XWIDGETS_SOURCE_DIR}/xhtml.cpp
+    ${XWIDGETS_SOURCE_DIR}/ximage.cpp
     ${XWIDGETS_SOURCE_DIR}/xlabel.cpp
     ${XWIDGETS_SOURCE_DIR}/xlayout.cpp
     ${XWIDGETS_SOURCE_DIR}/xlink.cpp

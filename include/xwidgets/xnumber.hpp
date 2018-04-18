@@ -28,8 +28,8 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         using value_type = typename xnumber_traits<derived_type>::value_type;
 
@@ -54,27 +54,25 @@ namespace xw
      **************************/
 
     template <class D>
-    inline xeus::xjson xnumber<D>::get_state() const
+    inline void xnumber<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(min, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(max, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(description, state);
-
-        return state;
+        set_patch_from_property(value, state, buffers);
+        set_patch_from_property(min, state, buffers);
+        set_patch_from_property(max, state, buffers);
+        set_patch_from_property(description, state, buffers);
     }
 
     template <class D>
-    inline void xnumber<D>::apply_patch(const xeus::xjson& patch)
+    inline void xnumber<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(min, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(max, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(description, patch);
+        set_property_from_patch(value, patch, buffers);
+        set_property_from_patch(min, patch, buffers);
+        set_property_from_patch(max, patch, buffers);
+        set_property_from_patch(description, patch, buffers);
     }
 
     template <class D>

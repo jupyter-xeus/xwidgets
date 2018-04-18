@@ -29,8 +29,8 @@ namespace xw
 
         using value_type = html_color;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(value_type, derived_type, value, "black");
         XPROPERTY(bool, derived_type, disabled);
@@ -55,25 +55,23 @@ namespace xw
      ********************************/
 
     template <class D>
-    inline xeus::xjson xcolor_picker<D>::get_state() const
+    inline void xcolor_picker<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
-
-        return state;
+        set_patch_from_property(value, state, buffers);
+        set_patch_from_property(disabled, state, buffers);
+        set_patch_from_property(value, state, buffers);
     }
 
     template <class D>
-    inline void xcolor_picker<D>::apply_patch(const xeus::xjson& patch)
+    inline void xcolor_picker<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(concise, patch);
+        set_property_from_patch(value, patch, buffers);
+        set_property_from_patch(disabled, patch, buffers);
+        set_property_from_patch(concise, patch, buffers);
     }
 
     template <class D>

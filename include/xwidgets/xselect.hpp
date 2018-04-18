@@ -27,8 +27,8 @@ namespace xw
         using derived_type = D;
         using options_type = typename base_type::options_type;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(int, derived_type, rows, 5);
 
@@ -63,8 +63,8 @@ namespace xw
         using derived_type = D;
         using options_type = typename base_type::options_type;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(int, derived_type, rows, 5);
 
@@ -90,21 +90,19 @@ namespace xw
      **************************/
 
     template <class D>
-    inline xeus::xjson xselect<D>::get_state() const
+    inline void xselect<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(rows, state);
-
-        return state;
+        set_patch_from_property(rows, state, buffers);
     }
 
     template <class D>
-    inline void xselect<D>::apply_patch(const xeus::xjson& patch)
+    inline void xselect<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(rows, patch);
+        set_property_from_patch(rows, patch, buffers);
     }
 
     template <class D>
@@ -138,21 +136,19 @@ namespace xw
      ***********************************/
 
     template <class D>
-    inline xeus::xjson xselect_multiple<D>::get_state() const
+    inline void xselect_multiple<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(rows, state);
-
-        return state;
+        set_patch_from_property(rows, state, buffers);
     }
 
     template <class D>
-    inline void xselect_multiple<D>::apply_patch(const xeus::xjson& patch)
+    inline void xselect_multiple<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(rows, patch);
+        set_property_from_patch(rows, patch, buffers);
     }
 
     template <class D>

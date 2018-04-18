@@ -486,10 +486,10 @@ namespace xw
      *******************/
 
     template <template <class> class CRTP, class... P>
-    void xmaker(xeus::xcomm&& comm, const xeus::xjson& state)
+    void xmaker(xeus::xcomm&& comm, const xeus::xjson& state, const xeus::buffer_sequence& buffers)
     {
         auto model = xgenerator<CRTP, P...>(std::move(comm), true);
-        model.apply_patch(state);
+        model.apply_patch(state, buffers);
         get_transport_registry().register_owning(reinterpret_cast<xmaterialize<CRTP, P...>&&>(model));
     }
 

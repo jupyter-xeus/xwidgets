@@ -37,8 +37,8 @@ namespace xw
         using base_type = xstyle<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(xtl::xoptional<html_color>, derived_type, button_color);
         XPROPERTY(std::string, derived_type, font_weight);
@@ -71,8 +71,8 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         void on_click(click_callback_type);
 
@@ -107,23 +107,21 @@ namespace xw
      ********************************/
 
     template <class D>
-    inline xeus::xjson xbutton_style<D>::get_state() const
+    inline void xbutton_style<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(button_color, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(font_weight, state);
-
-        return state;
+        set_patch_from_property(button_color, state, buffers);
+        set_patch_from_property(font_weight, state, buffers);
     }
 
     template <class D>
-    inline void xbutton_style<D>::apply_patch(const xeus::xjson& patch)
+    inline void xbutton_style<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(button_color, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(font_weight, patch);
+        set_property_from_patch(button_color, patch, buffers);
+        set_property_from_patch(font_weight, patch, buffers);
     }
 
     template <class D>
@@ -145,31 +143,29 @@ namespace xw
      **************************/
 
     template <class D>
-    inline xeus::xjson xbutton<D>::get_state() const
+    inline void xbutton<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(description, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(tooltip, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(icon, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(button_style, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(style, state);
-
-        return state;
+        set_patch_from_property(description, state, buffers);
+        set_patch_from_property(tooltip, state, buffers);
+        set_patch_from_property(disabled, state, buffers);
+        set_patch_from_property(icon, state, buffers);
+        set_patch_from_property(button_style, state, buffers);
+        set_patch_from_property(style, state, buffers);
     }
 
     template <class D>
-    inline void xbutton<D>::apply_patch(const xeus::xjson& patch)
+    inline void xbutton<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(description, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(tooltip, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(icon, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(button_style, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(style, patch);
+        set_property_from_patch(description, patch, buffers);
+        set_property_from_patch(tooltip, patch, buffers);
+        set_property_from_patch(disabled, patch, buffers);
+        set_property_from_patch(icon, patch, buffers);
+        set_property_from_patch(button_style, patch, buffers);
+        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>

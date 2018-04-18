@@ -31,8 +31,8 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         using options_type = std::vector<std::string>;
         using value_type = options_type::value_type;
@@ -75,8 +75,8 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         using options_type = std::vector<std::string>;
         using value_type = options_type;
@@ -111,27 +111,25 @@ namespace xw
      *****************************/
 
     template <class D>
-    inline xeus::xjson xselection<D>::get_state() const
+    inline void xselection<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(index, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_options_labels, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(description, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
-
-        return state;
+        set_patch_from_property(index, state, buffers);
+        set_patch_from_property(_options_labels, state, buffers);
+        set_patch_from_property(description, state, buffers);
+        set_patch_from_property(disabled, state, buffers);
     }
 
     template <class D>
-    inline void xselection<D>::apply_patch(const xeus::xjson& patch)
+    inline void xselection<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(index, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_options_labels, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(description, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch);
+        set_property_from_patch(index, patch, buffers);
+        set_property_from_patch(_options_labels, patch, buffers);
+        set_property_from_patch(description, patch, buffers);
+        set_property_from_patch(disabled, patch, buffers);
     }
 
     template <class D>
@@ -206,27 +204,25 @@ namespace xw
      **************************************/
 
     template <class D>
-    inline xeus::xjson xmultiple_selection<D>::get_state() const
+    inline void xmultiple_selection<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(index, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_options_labels, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(description, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(disabled, state);
-
-        return state;
+        set_patch_from_property(index, state, buffers);
+        set_patch_from_property(_options_labels, state, buffers);
+        set_patch_from_property(description, state, buffers);
+        set_patch_from_property(disabled, state, buffers);
     }
 
     template <class D>
-    inline void xmultiple_selection<D>::apply_patch(const xeus::xjson& patch)
+    inline void xmultiple_selection<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(index, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_options_labels, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(description, patch)
-        XOBJECT_SET_PROPERTY_FROM_PATCH(disabled, patch)
+        set_property_from_patch(index, patch, buffers);
+        set_property_from_patch(_options_labels, patch, buffers);
+        set_property_from_patch(description, patch, buffers);
+        set_property_from_patch(disabled, patch, buffers);
     }
 
     template <class D>

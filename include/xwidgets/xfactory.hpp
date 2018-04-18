@@ -28,7 +28,7 @@ namespace xw
     {
     public:
 
-        using maker_type = std::function<void(xeus::xcomm&&, const xeus::xjson&)>;
+        using maker_type = std::function<void(xeus::xcomm&&, const xeus::xjson&, const xeus::buffer_sequence&)>;
 
         void register_maker(const std::string& model_module,
                             const std::string& model_name,
@@ -36,7 +36,7 @@ namespace xw
                             const std::string& view_name,
                             maker_type maker);
 
-        void make(xeus::xcomm&& comm, const xeus::xjson& state) const;
+        void make(xeus::xcomm&& comm, const xeus::xjson& state, const xeus::buffer_sequence&) const;
 
     private:
 
@@ -58,13 +58,13 @@ namespace xw
         m_makers[model_module + model_name + view_module + view_name] = std::move(maker);
     }
 
-    inline void xfactory::make(xeus::xcomm&& comm, const xeus::xjson& state) const
+    inline void xfactory::make(xeus::xcomm&& comm, const xeus::xjson& state, const xeus::buffer_sequence& buffers) const
     {
         std::string model_module = state["_model_module"];
         std::string model_name = state["_model_name"];
         std::string view_module = state["_view_module"];
         std::string view_name = state["_view_name"];
-        m_makers.at(model_module + model_name + view_module + view_name)(std::move(comm), state);
+        m_makers.at(model_module + model_name + view_module + view_name)(std::move(comm), state, buffers);
     }
 
     inline xfactory& get_xfactory()

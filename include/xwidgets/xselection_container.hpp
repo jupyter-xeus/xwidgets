@@ -33,8 +33,8 @@ namespace xw
 
         using titles_type = std::vector<std::string>;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(titles_type, derived_type, _titles);
         XPROPERTY(xtl::xoptional<int>, derived_type, selected_index, 0);
@@ -56,23 +56,21 @@ namespace xw
      ***************************************/
 
     template <class D>
-    inline xeus::xjson xselection_container<D>::get_state() const
+    inline void xselection_container<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_titles, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(selected_index, state);
-
-        return state;
+        set_patch_from_property(_titles, state, buffers);
+        set_patch_from_property(selected_index, state, buffers);
     }
 
     template <class D>
-    inline void xselection_container<D>::apply_patch(const xeus::xjson& patch)
+    inline void xselection_container<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_titles, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(selected_index, patch);
+        set_property_from_patch(_titles, patch, buffers);
+        set_property_from_patch(selected_index, patch, buffers);
     }
 
     template <class D>
@@ -95,9 +93,11 @@ namespace xw
             _titles() = titles_type(this->children().size());
         }
         _titles()[i] = title;
+
         xeus::xjson state;
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_titles, state);
-        this->send_patch(std::move(state));
+        xeus::buffer_sequence buffers;
+        set_patch_from_property(_titles, state, buffers);
+        this->send_patch(std::move(state), std::move(buffers));
     }
 }
 

@@ -19,6 +19,7 @@
 #include "xeus/xcomm.hpp"
 #include "xeus/xinterpreter.hpp"
 
+#include "xbinary.hpp"
 #include "xfactory.hpp"
 #include "xholder.hpp"
 #include "xwidgets_config.hpp"
@@ -56,9 +57,10 @@ namespace xw
 
         const xeus::xjson& data = content["data"];
         const xeus::xjson& state = data["state"];
+        const xeus::buffer_sequence& buffers = msg.buffers();
 
         xfactory& factory = get_xfactory();
-        factory.make(std::move(comm), state);
+        factory.make(std::move(comm), state, buffers);
     }
 
     inline int register_widget_target()
@@ -97,8 +99,10 @@ namespace xw
         xeus::xguid id() const noexcept;
         void display() const;
 
-        void send_patch(xeus::xjson&&) const;
-        void send(xeus::xjson&&) const;
+        void send_patch(xeus::xjson&&, xeus::buffer_sequence&&) const;
+        void send(xeus::xjson&&, xeus::buffer_sequence&&) const;
+
+        const std::vector<xjson_path_type>& buffer_paths() const;
 
     protected:
 
@@ -281,32 +285,55 @@ namespace xw
                 return;
             }
         }
+
         xeus::xjson state;
-        state[property.name()] = property();
-        send_patch(std::move(state));
+        xeus::buffer_sequence buffers;
+        set_patch_from_property(property, state, buffers);
+        send_patch(std::move(state), std::move(buffers));
     }
 
     template <class D>
-    inline void xtransport<D>::send_patch(xeus::xjson&& patch) const
+    inline void xtransport<D>::send_patch(xeus::xjson&& patch, xeus::buffer_sequence&& buffers) const
     {
+        // extract buffer paths
+        auto paths = xeus::xjson::array();
+        extract_buffer_paths(derived_cast().buffer_paths(), patch, buffers, paths);
+
+        // metadata
         xeus::xjson metadata;
         metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
+
+        // data
         xeus::xjson data;
         data["method"] = "update";
         data["state"] = std::move(patch);
-        data["buffer_paths"] = xeus::xjson::array();
-        m_comm.send(std::move(metadata), std::move(data), xeus::buffer_sequence());
+        data["buffer_paths"] = std::move(paths);
+
+        // send
+        m_comm.send(std::move(metadata), std::move(data), std::move(buffers));
     }
 
     template <class D>
-    inline void xtransport<D>::send(xeus::xjson&& content) const
+    inline void xtransport<D>::send(xeus::xjson&& content, xeus::buffer_sequence&& buffers) const
     {
+        // metadata
         xeus::xjson metadata;
         metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
+
+        // data
         xeus::xjson data;
         data["method"] = "custom";
         data["content"] = std::move(content);
-        m_comm.send(std::move(metadata), std::move(data), xeus::buffer_sequence());
+
+        // send
+        m_comm.send(std::move(metadata), std::move(data), std::move(buffers));
+    }
+
+    template <class D>
+    inline const std::vector<xjson_path_type>& xtransport<D>::buffer_paths() const
+    {
+        static const std::vector<xjson_path_type> default_buffer_paths;
+        return default_buffer_paths;
     }
 
     template <class D>
@@ -318,11 +345,23 @@ namespace xw
     template <class D>
     inline void xtransport<D>::open()
     {
+        // extract buffer paths
+        xeus::xjson paths;
+        xeus::xjson state;
+        xeus::buffer_sequence buffers;
+        derived_cast().serialize_state(state, buffers);
+        extract_buffer_paths(derived_cast().buffer_paths(), state, buffers, paths);
+
+        // metadata
         xeus::xjson metadata;
         metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
+
+        // data
         xeus::xjson data;
-        data["state"] = derived_cast().get_state();
-        m_comm.open(std::move(metadata), std::move(data), xeus::buffer_sequence());
+        data["state"] = std::move(state);
+        data["buffer_paths"] = std::move(paths);
+
+        m_comm.open(std::move(metadata), std::move(data), std::move(buffers));
     }
 
     template <class D>
@@ -337,19 +376,22 @@ namespace xw
         const xeus::xjson& content = message.content();
         const xeus::xjson& data = content["data"];
         std::string method = data["method"];
+        const xeus::buffer_sequence& buffers = message.buffers();
         if (method == "update")
         {
-            auto it = data.find("state");
-            if (it != data.end())
-            {
-                m_hold = &(it.value());
-                derived_cast().apply_patch(it.value());
-                m_hold = nullptr;
-            }
+            const xeus::xjson& state = data["state"];
+            const xeus::xjson& buffer_paths = data["buffer_paths"];
+            m_hold = &(state);
+            insert_buffer_paths(const_cast<xeus::xjson&>(state), buffer_paths);
+            derived_cast().apply_patch(state, buffers);
+            m_hold = nullptr;
         }
         else if (method == "request_state")
         {
-            send_patch(derived_cast().get_state());
+            xeus::xjson state;
+            xeus::buffer_sequence buffers;
+            derived_cast().serialize_state(state, buffers);
+            send_patch(std::move(state), std::move(buffers));
         }
         else if (method == "custom")
         {

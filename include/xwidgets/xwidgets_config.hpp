@@ -72,6 +72,7 @@
                               XWIDGETS_CONCATENATE(.,XWIDGETS_CONCATENATE(XWIDGETS_CONTROLS_VERSION_MINOR,   \
                                                    XWIDGETS_CONCATENATE(.,XWIDGETS_CONTROLS_VERSION_PATCH)))))
 
+// Load libxwidgets runtime.
 #ifdef __CLING__
 #include "xwidgets_config_cling.hpp"
 #endif

@@ -31,8 +31,8 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(double, derived_type, value);
         XPROPERTY(bool, derived_type, pressed);
@@ -63,8 +63,8 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(double, derived_type, value);
 
@@ -105,8 +105,8 @@ namespace xw
         using xcontroller_button_list_type = std::vector<xholder<xtransport>>;
 #endif
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(int, derived_type, index);
         XPROPERTY(std::string, derived_type, name);
@@ -137,23 +137,21 @@ namespace xw
      *************************************/
 
     template <class D>
-    inline xeus::xjson xcontroller_button<D>::get_state() const
+    inline void xcontroller_button<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(pressed, state);
-
-        return state;
+        set_patch_from_property(value, state, buffers);
+        set_patch_from_property(pressed, state, buffers);
     }
 
     template <class D>
-    inline void xcontroller_button<D>::apply_patch(const xeus::xjson& patch)
+    inline void xcontroller_button<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(pressed, patch);
+        set_property_from_patch(value, patch, buffers);
+        set_property_from_patch(pressed, patch, buffers);
     }
 
     template <class D>
@@ -179,21 +177,19 @@ namespace xw
      ***********************************/
 
     template <class D>
-    inline xeus::xjson xcontroller_axis<D>::get_state() const
+    inline void xcontroller_axis<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(value, state);
-
-        return state;
+        set_patch_from_property(value, state, buffers);
     }
 
     template <class D>
-    inline void xcontroller_axis<D>::apply_patch(const xeus::xjson& patch)
+    inline void xcontroller_axis<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(value, patch);
+        set_property_from_patch(value, patch, buffers);
     }
 
     template <class D>
@@ -219,33 +215,31 @@ namespace xw
      ******************************/
 
     template <class D>
-    inline xeus::xjson xcontroller<D>::get_state() const
+    inline void xcontroller<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(index, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(name, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(mapping, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(connected, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(timestamp, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(buttons, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(axes, state);
-
-        return state;
+        set_patch_from_property(index, state, buffers);
+        set_patch_from_property(name, state, buffers);
+        set_patch_from_property(mapping, state, buffers);
+        set_patch_from_property(connected, state, buffers);
+        set_patch_from_property(timestamp, state, buffers);
+        set_patch_from_property(buttons, state, buffers);
+        set_patch_from_property(axes, state, buffers);
     }
 
     template <class D>
-    inline void xcontroller<D>::apply_patch(const xeus::xjson& patch)
+    inline void xcontroller<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(index, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(name, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(mapping, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(connected, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(timestamp, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(buttons, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(axes, patch);
+        set_property_from_patch(index, patch, buffers);
+        set_property_from_patch(name, patch, buffers);
+        set_property_from_patch(mapping, patch, buffers);
+        set_property_from_patch(connected, patch, buffers);
+        set_property_from_patch(timestamp, patch, buffers);
+        set_property_from_patch(buttons, patch, buffers);
+        set_property_from_patch(axes, patch, buffers);
     }
 
     template <class D>

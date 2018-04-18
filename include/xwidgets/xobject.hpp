@@ -69,8 +69,8 @@ namespace xw
 
         using base_type::derived_cast;
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module, "@jupyter-widgets/base");
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module_version, XWIDGETS_BASE_VERSION);
@@ -95,39 +95,42 @@ namespace xw
      * base xobject implementation *
      *******************************/
 
-    #define XOBJECT_SET_PROPERTY_FROM_PATCH(name, patch)                   \
-    if (patch.find(#name) != patch.end())                                  \
-    {                                                                      \
-        name = patch.at(#name).get<typename decltype(name)::value_type>(); \
+    template <class P>
+    inline void set_property_from_patch(P& property, const xeus::xjson& patch, const xeus::buffer_sequence&)
+    {
+        auto it = patch.find(property.name());
+        if (it != patch.end())
+        {
+            property = it->template get<typename P::value_type>();
+        }
     }
 
-    #define XOBJECT_SET_PATCH_FROM_PROPERTY(name, patch) \
-    patch[#name] = this->name();
-
-    template <class D>
-    inline xeus::xjson xobject<D>::get_state() const
+    template <class P>
+    inline void set_patch_from_property(const P& property, xeus::xjson& patch, xeus::buffer_sequence&)
     {
-        xeus::xjson state;
-
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_model_module, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_model_module_version, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_model_name, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_view_module, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_view_module_version, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(_view_name, state);
-
-        return state;
+        patch[property.name()] = property();
     }
 
     template <class D>
-    inline void xobject<D>::apply_patch(const xeus::xjson& patch)
+    inline void xobject<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_model_module, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_model_module_version, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_model_name, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_view_module, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_view_module_version, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(_view_name, patch);
+        set_patch_from_property(_model_module, state, buffers);
+        set_patch_from_property(_model_module_version, state, buffers);
+        set_patch_from_property(_model_name, state, buffers);
+        set_patch_from_property(_view_module, state, buffers);
+        set_patch_from_property(_view_module_version, state, buffers);
+        set_patch_from_property(_view_name, state, buffers);
+    }
+
+    template <class D>
+    inline void xobject<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    {
+        set_property_from_patch(_model_module, patch, buffers);
+        set_property_from_patch(_model_module_version, patch, buffers);
+        set_property_from_patch(_model_name, patch, buffers);
+        set_property_from_patch(_view_module, patch, buffers);
+        set_property_from_patch(_view_module_version, patch, buffers);
+        set_property_from_patch(_view_name, patch, buffers);
     }
 
     template <class D>

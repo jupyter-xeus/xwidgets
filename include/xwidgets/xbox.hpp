@@ -39,8 +39,8 @@ namespace xw
         using children_list_type = std::vector<xholder<xtransport>>;
 #endif
 
-        xeus::xjson get_state() const;
-        void apply_patch(const xeus::xjson&);
+        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
+        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::string, derived_type, box_style, "", XEITHER("success", "info", "warning", "danger", ""));
 
@@ -122,23 +122,21 @@ namespace xw
      ***********************/
 
     template <class D>
-    inline xeus::xjson xbox<D>::get_state() const
+    inline void xbox<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        xeus::xjson state = base_type::get_state();
+        base_type::serialize_state(state, buffers);
 
-        XOBJECT_SET_PATCH_FROM_PROPERTY(box_style, state);
-        XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
-
-        return state;
+        set_patch_from_property(box_style, state, buffers);
+        set_patch_from_property(children, state, buffers);
     }
 
     template <class D>
-    inline void xbox<D>::apply_patch(const xeus::xjson& patch)
+    inline void xbox<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        base_type::apply_patch(patch);
+        base_type::apply_patch(patch, buffers);
 
-        XOBJECT_SET_PROPERTY_FROM_PATCH(box_style, patch);
-        XOBJECT_SET_PROPERTY_FROM_PATCH(children, patch);
+        set_property_from_patch(box_style, patch, buffers);
+        set_property_from_patch(children, patch, buffers);
     }
 
     template <class D>
@@ -151,8 +149,9 @@ namespace xw
         this->children().emplace_back(make_id_holder<xtransport>(w.id()));
 #endif
         xeus::xjson state;
-        XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
-        this->send_patch(std::move(state));
+        xeus::buffer_sequence buffers;
+        set_patch_from_property(children, state, buffers);
+        this->send_patch(std::move(state), std::move(buffers));
     }
 
     template <class D>
@@ -161,8 +160,9 @@ namespace xw
     {
         this->children().emplace_back(make_owning_holder(std::move(w)));
         xeus::xjson state;
-        XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
-        this->send_patch(std::move(state));
+        xeus::buffer_sequence buffers;
+        set_patch_from_property(children, state, buffers);
+        this->send_patch(std::move(state), std::move(buffers));
     }
 
     template <class D>
@@ -191,8 +191,9 @@ namespace xw
         );
 #endif
         xeus::xjson state;
-        XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
-        this->send_patch(std::move(state));
+        xeus::buffer_sequence buffers;
+        set_patch_from_property(children, state, buffers);
+        this->send_patch(std::move(state), std::move(buffers));
     }
 
     template <class D>
@@ -200,8 +201,9 @@ namespace xw
     {
         this->children() = {};
         xeus::xjson state;
-        XOBJECT_SET_PATCH_FROM_PROPERTY(children, state);
-        this->send_patch(std::move(state));
+        xeus::buffer_sequence buffers;
+        set_patch_from_property(children, state, buffers);
+        this->send_patch(std::move(state), std::move(buffers));
     }
 
     template <class D>
