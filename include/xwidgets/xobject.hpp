@@ -54,6 +54,41 @@ namespace xtl
 
 namespace xw
 {
+    /**********************************************
+     * property serialization and deserialization *
+     **********************************************/
+
+    // Default serialization is JSON serialization
+    template <class T>
+    inline void serialize_value(const T& value, xeus::xjson& patch, xeus::buffer_sequence&, const std::string& name)
+    {
+        patch[name] = value;
+    }
+
+    template <class P>
+    inline void set_patch_from_property(const P& property, xeus::xjson& patch, xeus::buffer_sequence& buffers)
+    {
+        serialize_value(property(), patch, buffers, property.name());
+    }
+
+    // Default deserialization is JSON deserialization
+    template <class T>
+    inline void deserialize_value(T& value, const xeus::xjson& j, const xeus::buffer_sequence&)
+    {
+        value = j.template get<T>();
+    }
+
+    template <class P>
+    inline void set_property_from_patch(P& property, const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    {
+        auto it = patch.find(property.name());
+        if (it != patch.end())
+        {
+            typename P::value_type value;
+            deserialize_value(value, *it, buffers);
+            property = value;
+        }
+    }
 
     /****************************
      * base xobject declaration *
@@ -94,22 +129,6 @@ namespace xw
     /*******************************
      * base xobject implementation *
      *******************************/
-
-    template <class P>
-    inline void set_property_from_patch(P& property, const xeus::xjson& patch, const xeus::buffer_sequence&)
-    {
-        auto it = patch.find(property.name());
-        if (it != patch.end())
-        {
-            property = it->template get<typename P::value_type>();
-        }
-    }
-
-    template <class P>
-    inline void set_patch_from_property(const P& property, xeus::xjson& patch, xeus::buffer_sequence&)
-    {
-        patch[property.name()] = property();
-    }
 
     template <class D>
     inline void xobject<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const

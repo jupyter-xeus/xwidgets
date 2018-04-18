@@ -18,6 +18,29 @@
 
 namespace xw
 {
+    /**********************
+     * custom serializers *
+     **********************/
+
+    inline void serialize_value(const std::vector<char>& value,
+                                xeus::xjson& patch,
+                                xeus::buffer_sequence& buffers,
+                                const std::string& name)
+    {
+        patch[name] = xbuffer_reference_prefix() + std::to_string(buffers.size());
+        buffers.emplace_back(value.data(), value.size());
+    }
+
+    inline void deserialize_value(std::vector<char>& value,
+                                  const xeus::xjson& j,
+                                  const xeus::buffer_sequence& buffers)
+    {
+        std::size_t buffer_index = detail::buffer_index(j.template get<std::string>());
+        const auto& value_buffer = buffers[buffer_index];
+        const char* value_buf = value_buffer.data<const char>();
+        value = std::vector<char>(value_buf, value_buf + value_buffer.size());
+    }
+
     /*********************
      * image declaration *
      *********************/
@@ -105,31 +128,6 @@ namespace xw
         this->_view_module() = "@jupyter-widgets/controls";
         this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
         this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
-    }
-
-    /**********************
-     * custom serializers *
-     **********************/
-
-    inline void set_patch_from_property(const decltype(image::value)& property, xeus::xjson& patch, xeus::buffer_sequence& buffers)
-    {
-        patch[property.name()] = xbuffer_reference_prefix() + std::to_string(buffers.size());
-        buffers.emplace_back(property().data(), property().size());
-    }
-
-    inline void set_patch_from_property(const decltype(image_generator::value)& property, xeus::xjson& patch, xeus::buffer_sequence& buffers)
-    {
-        patch[property.name()] = xbuffer_reference_prefix() + std::to_string(buffers.size());
-        buffers.emplace_back(property().data(), property().size());
-    }
-
-    inline void set_property_from_patch(decltype(image::value)& property, const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
-    {
-        using value_type = typename decltype(image::value)::value_type;
-        std::size_t buffer_index = detail::buffer_index(patch[property.name()].template get<std::string>());
-        const auto& value_buffer = buffers[buffer_index];
-        const char* value_buf = value_buffer.data<const char>();
-        property = value_type(value_buf, value_buf + value_buffer.size());
     }
 
     /*********************
