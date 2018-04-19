@@ -111,23 +111,21 @@ namespace xw
      * custom serializers *
      **********************/
 
-    inline void set_patch_from_property(const decltype(image::value)& property, xeus::xjson& patch, xeus::buffer_sequence& buffers)
+    inline void set_patch_from_property(const decltype(image::value)& property,
+                                        xeus::xjson& patch,
+                                        xeus::buffer_sequence& buffers)
     {
         patch[property.name()] = xbuffer_reference_prefix() + std::to_string(buffers.size());
         buffers.emplace_back(property().data(), property().size());
     }
 
-    inline void set_patch_from_property(const decltype(image_generator::value)& property, xeus::xjson& patch, xeus::buffer_sequence& buffers)
-    {
-        patch[property.name()] = xbuffer_reference_prefix() + std::to_string(buffers.size());
-        buffers.emplace_back(property().data(), property().size());
-    }
-
-    inline void set_property_from_patch(decltype(image::value)& property, const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    inline void set_property_from_patch(decltype(image::value)& property,
+                                        const xeus::xjson& patch,
+                                        const xeus::buffer_sequence& buffers)
     {
         using value_type = typename decltype(image::value)::value_type;
-        std::size_t buffer_index = detail::buffer_index(patch[property.name()].template get<std::string>());
-        const auto& value_buffer = buffers[buffer_index];
+        std::size_t index = buffer_index(patch[property.name()].template get<std::string>());
+        const auto& value_buffer = buffers[index];
         const char* value_buf = value_buffer.data<const char>();
         property = value_type(value_buf, value_buf + value_buffer.size());
     }

@@ -19,8 +19,29 @@
 
 namespace xw
 {
-    // TODO: use a json_pointer
+    /****************
+     * Declarations *
+     ****************/
+
     using xjson_path_type = std::vector<std::string>;
+
+    void extract_buffer_paths(const std::vector<xjson_path_type>& to_check,
+                              const xeus::xjson& patch,
+                              const xeus::buffer_sequence& buffers,
+                              xeus::xjson& buffer_paths);
+
+    void insert_buffer_paths(xeus::xjson& patch,
+                             const xeus::xjson& buffer_paths);
+
+    const std::string& xbuffer_reference_prefix();
+
+    bool is_buffer_reference(const std::string& arg);
+
+    int buffer_index(const std::string& v);
+
+    /******************
+     * Implementation *
+     ******************/
 
     inline const std::string& xbuffer_reference_prefix()
     {
@@ -28,24 +49,24 @@ namespace xw
         return prefix;
     }
 
+    inline bool is_buffer_reference(const std::string& arg)
+    {
+        const std::string& prefix = xbuffer_reference_prefix();
+        return arg.size() > prefix.size() &&
+            std::equal(prefix.cbegin(), prefix.cend(), arg.cbegin());
+    }
+
+    inline int buffer_index(const std::string& v)
+    {
+        std::stringstream stream(v);
+        stream.ignore(xbuffer_reference_prefix().size());
+        int index = 0;
+        stream >> index;
+        return index;
+    }
+
     namespace detail
     {
-        inline bool is_buffer_reference(const std::string& arg)
-        {
-            const std::string& prefix = xbuffer_reference_prefix();
-            return arg.size() > prefix.size() && 
-                std::equal(prefix.cbegin(), prefix.cend(), arg.cbegin());
-        }
-
-        inline int buffer_index(const std::string& v)
-        {
-            std::stringstream stream(v);
-            stream.ignore(xbuffer_reference_prefix().size());
-            int index = 0;
-            stream >> index;
-            return index;
-        }
-
         inline const xeus::xjson& get_json(const xeus::xjson& patch,
                                            const xjson_path_type& path)
         {
@@ -102,9 +123,9 @@ namespace xw
             if (item.is_string())
             {
                 const std::string leaf = item.get<std::string>();
-                if (detail::is_buffer_reference(leaf))
+                if (is_buffer_reference(leaf))
                 {
-                    buffer_paths[detail::buffer_index(leaf)] = path;
+                    buffer_paths[buffer_index(leaf)] = path;
                 }
             }
         }

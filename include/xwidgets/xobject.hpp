@@ -54,7 +54,6 @@ namespace xtl
 
 namespace xw
 {
-
     /****************************
      * base xobject declaration *
      ****************************/
@@ -94,22 +93,6 @@ namespace xw
     /*******************************
      * base xobject implementation *
      *******************************/
-
-    template <class P>
-    inline void set_property_from_patch(P& property, const xeus::xjson& patch, const xeus::buffer_sequence&)
-    {
-        auto it = patch.find(property.name());
-        if (it != patch.end())
-        {
-            property = it->template get<typename P::value_type>();
-        }
-    }
-
-    template <class P>
-    inline void set_patch_from_property(const P& property, xeus::xjson& patch, xeus::buffer_sequence&)
-    {
-        patch[property.name()] = property();
-    }
 
     template <class D>
     inline void xobject<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const

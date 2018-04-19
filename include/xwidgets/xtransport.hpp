@@ -79,6 +79,26 @@ namespace xw
             .target(get_widget_target_name());
     }
 
+    /*****************
+     * Serialization *
+     *****************/
+
+    template <class P>
+    inline void set_property_from_patch(P& property, const xeus::xjson& patch, const xeus::buffer_sequence&)
+    {
+        auto it = patch.find(property.name());
+        if (it != patch.end())
+        {
+            property = it->template get<typename P::value_type>();
+        }
+    }
+
+    template <class P>
+    inline void set_patch_from_property(const P& property, xeus::xjson& patch, xeus::buffer_sequence&)
+    {
+        patch[property.name()] = property();
+    }
+
     /*******************************
      * base xtransport declaration *
      *******************************/
