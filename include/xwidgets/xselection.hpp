@@ -115,10 +115,10 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(index, state, buffers);
-        set_patch_from_property(_options_labels, state, buffers);
-        set_patch_from_property(description, state, buffers);
-        set_patch_from_property(disabled, state, buffers);
+        this->set_patch_from_property(index, state, buffers);
+        this->set_patch_from_property(_options_labels, state, buffers);
+        this->set_patch_from_property(description, state, buffers);
+        this->set_patch_from_property(disabled, state, buffers);
     }
 
     template <class D>
@@ -126,10 +126,10 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(index, patch, buffers);
-        set_property_from_patch(_options_labels, patch, buffers);
-        set_property_from_patch(description, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
+        this->set_property_from_patch(index, patch, buffers);
+        this->set_property_from_patch(_options_labels, patch, buffers);
+        this->set_property_from_patch(description, patch, buffers);
+        this->set_property_from_patch(disabled, patch, buffers);
     }
 
     template <class D>
@@ -208,10 +208,10 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(index, state, buffers);
-        set_patch_from_property(_options_labels, state, buffers);
-        set_patch_from_property(description, state, buffers);
-        set_patch_from_property(disabled, state, buffers);
+        this->set_patch_from_property(index, state, buffers);
+        this->set_patch_from_property(_options_labels, state, buffers);
+        this->set_patch_from_property(description, state, buffers);
+        this->set_patch_from_property(disabled, state, buffers);
     }
 
     template <class D>
@@ -219,10 +219,10 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(index, patch, buffers);
-        set_property_from_patch(_options_labels, patch, buffers);
-        set_property_from_patch(description, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
+        this->set_property_from_patch(index, patch, buffers);
+        this->set_property_from_patch(_options_labels, patch, buffers);
+        this->set_property_from_patch(description, patch, buffers);
+        this->set_property_from_patch(disabled, patch, buffers);
     }
 
     template <class D>

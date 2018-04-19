@@ -83,20 +83,16 @@ namespace xw
      * Serialization *
      *****************/
 
-    template <class P>
-    inline void set_property_from_patch(P& property, const xeus::xjson& patch, const xeus::buffer_sequence&)
+    template <class T>
+    inline void xwidgets_serialize(const T& value, xeus::xjson& patch, xeus::buffer_sequence&, const std::string& name)
     {
-        auto it = patch.find(property.name());
-        if (it != patch.end())
-        {
-            property = it->template get<typename P::value_type>();
-        }
+        patch[name] = value;
     }
 
-    template <class P>
-    inline void set_patch_from_property(const P& property, xeus::xjson& patch, xeus::buffer_sequence&)
+    template <class T>
+    inline void xwidgets_deserialize(T& value, const xeus::xjson& j, const xeus::buffer_sequence&)
     {
-        patch[property.name()] = property();
+        value = j.template get<T>();
     }
 
     /*******************************
@@ -140,6 +136,12 @@ namespace xw
 
         template <class P>
         void notify(const P& property) const;
+
+        template <class P>
+        void set_patch_from_property(const P&, xeus::xjson&, xeus::buffer_sequence&) const;
+
+        template <class P>
+        void set_property_from_patch(P&, const xeus::xjson&, const xeus::buffer_sequence&);
 
     private:
 
@@ -310,6 +312,20 @@ namespace xw
         xeus::buffer_sequence buffers;
         set_patch_from_property(property, state, buffers);
         send_patch(std::move(state), std::move(buffers));
+    }
+
+    template <class D>
+    template <class P>
+    inline void xtransport<D>::set_patch_from_property(const P& property, xeus::xjson& patch, xeus::buffer_sequence& buffers) const
+    {
+        derived_cast().set_patch_from_property_impl(property, patch, buffers);
+    }
+
+    template <class D>
+    template <class P>
+    inline void xtransport<D>::set_property_from_patch(P& property, const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    {
+        derived_cast().set_property_from_patch_impl(property, patch, buffers);
     }
 
     template <class D>

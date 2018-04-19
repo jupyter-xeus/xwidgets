@@ -59,9 +59,9 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(value, state, buffers);
-        set_patch_from_property(disabled, state, buffers);
-        set_patch_from_property(value, state, buffers);
+        this->set_patch_from_property(value, state, buffers);
+        this->set_patch_from_property(disabled, state, buffers);
+        this->set_patch_from_property(value, state, buffers);
     }
 
     template <class D>
@@ -69,9 +69,9 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(value, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(concise, patch, buffers);
+        this->set_property_from_patch(value, patch, buffers);
+        this->set_property_from_patch(disabled, patch, buffers);
+        this->set_property_from_patch(concise, patch, buffers);
     }
 
     template <class D>

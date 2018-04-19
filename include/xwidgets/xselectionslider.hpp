@@ -107,9 +107,9 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(orientation, state, buffers);
-        set_patch_from_property(readout, state, buffers);
-        set_patch_from_property(continuous_update, state, buffers);
+        this->set_patch_from_property(orientation, state, buffers);
+        this->set_patch_from_property(readout, state, buffers);
+        this->set_patch_from_property(continuous_update, state, buffers);
     }
 
     template <class D>
@@ -117,9 +117,9 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(readout, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
+        this->set_property_from_patch(orientation, patch, buffers);
+        this->set_property_from_patch(readout, patch, buffers);
+        this->set_property_from_patch(continuous_update, patch, buffers);
     }
 
     template <class D>
@@ -170,9 +170,9 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(orientation, state, buffers);
-        set_patch_from_property(readout, state, buffers);
-        set_patch_from_property(continuous_update, state, buffers);
+        this->set_patch_from_property(orientation, state, buffers);
+        this->set_patch_from_property(readout, state, buffers);
+        this->set_patch_from_property(continuous_update, state, buffers);
     }
 
     template <class D>
@@ -180,9 +180,9 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(readout, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
+        this->set_property_from_patch(orientation, patch, buffers);
+        this->set_property_from_patch(readout, patch, buffers);
+        this->set_property_from_patch(continuous_update, patch, buffers);
     }
 
     template <class D>

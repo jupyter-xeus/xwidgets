@@ -111,8 +111,8 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(description_width, state, buffers);
-        set_patch_from_property(bar_color, state, buffers);
+        this->set_patch_from_property(description_width, state, buffers);
+        this->set_patch_from_property(bar_color, state, buffers);
     }
 
     template <class D>
@@ -120,8 +120,8 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(description_width, patch, buffers);
-        set_property_from_patch(bar_color, patch, buffers);
+        this->set_property_from_patch(description_width, patch, buffers);
+        this->set_property_from_patch(bar_color, patch, buffers);
     }
 
     template <class D>
@@ -148,9 +148,9 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(orientation, state, buffers);
-        set_patch_from_property(bar_style, state, buffers);
-        set_patch_from_property(style, state, buffers);
+        this->set_patch_from_property(orientation, state, buffers);
+        this->set_patch_from_property(bar_style, state, buffers);
+        this->set_patch_from_property(style, state, buffers);
     }
 
     template <class D>
@@ -158,9 +158,9 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(bar_style, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->set_property_from_patch(orientation, patch, buffers);
+        this->set_property_from_patch(bar_style, patch, buffers);
+        this->set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>

@@ -73,12 +73,12 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(interval, state, buffers);
-        set_patch_from_property(step, state, buffers);
-        set_patch_from_property(disabled, state, buffers);
-        set_patch_from_property(_playing, state, buffers);
-        set_patch_from_property(_repeat, state, buffers);
-        set_patch_from_property(show_repeat, state, buffers);
+        this->set_patch_from_property(interval, state, buffers);
+        this->set_patch_from_property(step, state, buffers);
+        this->set_patch_from_property(disabled, state, buffers);
+        this->set_patch_from_property(_playing, state, buffers);
+        this->set_patch_from_property(_repeat, state, buffers);
+        this->set_patch_from_property(show_repeat, state, buffers);
     }
 
     template <class D>
@@ -86,12 +86,12 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(interval, patch, buffers);
-        set_property_from_patch(step, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(_playing, patch, buffers);
-        set_property_from_patch(_repeat, patch, buffers);
-        set_property_from_patch(show_repeat, patch, buffers);
+        this->set_property_from_patch(interval, patch, buffers);
+        this->set_property_from_patch(step, patch, buffers);
+        this->set_property_from_patch(disabled, patch, buffers);
+        this->set_property_from_patch(_playing, patch, buffers);
+        this->set_property_from_patch(_repeat, patch, buffers);
+        this->set_property_from_patch(show_repeat, patch, buffers);
     }
 
     template <class D>
