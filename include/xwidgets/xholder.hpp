@@ -1,3 +1,11 @@
+/***************************************************************************
+* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+*                                                                          *
+* Distributed under the terms of the BSD 3-Clause License.                 *
+*                                                                          *
+* The full license is in the file LICENSE, distributed with this software. *
+****************************************************************************/
+
 #ifndef XWIDGETS_HOLDER_HPP
 #define XWIDGETS_HOLDER_HPP
 
@@ -8,12 +16,10 @@
 #include "xtl/xany.hpp"
 #include "xtl/xclosure.hpp"
 
-#include "xeus/xcomm.hpp"
 #include "xeus/xguid.hpp"
 #include "xeus/xjson.hpp"
 
 #include "xwidgets_config.hpp"
-#include "xmaterialize.hpp"
 
 namespace xw
 {
@@ -481,18 +487,6 @@ namespace xw
         return it->second;
     }
 
-    /*******************
-     * xmaker template *
-     *******************/
-
-    template <template <class> class CRTP, class... P>
-    void xmaker(xeus::xcomm&& comm, const xeus::xjson& state, const xeus::buffer_sequence& buffers)
-    {
-        auto model = xgenerator<CRTP, P...>(std::move(comm), true);
-        model.apply_patch(state, buffers);
-        get_transport_registry().register_owning(reinterpret_cast<xmaterialize<CRTP, P...>&&>(model));
-    }
-
     namespace detail
     {
         template <template <class> class CRTP>
@@ -553,9 +547,9 @@ namespace xw
         return xholder<CRTP>(new detail::xholder_id<CRTP>(id));
     }
 
-    /***********************************************************
-     * Specialization of cling::printValue for Jupyter Widgets *
-     ***********************************************************/
+    /**********************************************************
+     * Specialization of mime_bundle_repr for Jupyter Widgets *
+     **********************************************************/
 
     template <template <class> class CRTP>
     xeus::xjson mime_bundle_repr(const xholder<CRTP>& val)

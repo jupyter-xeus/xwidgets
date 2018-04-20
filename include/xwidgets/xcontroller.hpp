@@ -15,6 +15,7 @@
 #include "xeus/xjson.hpp"
 
 #include "xmaterialize.hpp"
+#include "xmaker.hpp"
 #include "xwidget.hpp"
 
 namespace xw

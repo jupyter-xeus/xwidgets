@@ -154,9 +154,9 @@ namespace xw
     template <template <class> class B, class... P>
     inline xgenerator<B, P...>& xgenerator<B, P...>::operator=(xgenerator&&) = default;
 
-    /***********************************************************
-     * Specialization of cling::printValue for Jupyter Widgets *
-     ***********************************************************/
+    /**********************************************************
+     * Specialization of mime_bundle_repr for Jupyter Widgets *
+     **********************************************************/
 
     template <template <class> class B, class... P>
     xeus::xjson mime_bundle_repr(const xmaterialize<B, P...>& val)
