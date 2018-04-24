@@ -132,7 +132,15 @@ xleaflet_ is the C++ backend for the leaflet maps visualization library. The Pyt
     }
     </script>
 
-.. _xplot: https://github.com/quantstack/xplot.git
+.. image:: xproperty.svg
+    :alt: xproperty
+
+xproperty_ is the C++ implementation of the observer pattern underlying
+``xwidgets``. It is to ``xwidgets`` what the traitlets project is to
+``ipywidgets``.
+
+.. _xplot: https://github.com/QuantStack/xplot.git
 .. _bqplot: https://github.com/bloomberg/bqplot.git
-.. _xleaflet: https://github.com/quantstack/xleaflet.git
+.. _xleaflet: https://github.com/QuantStack/xleaflet.git
 .. _ipyleaflet: https://github.com/jupyter-widgets/ipyleaflet.git
+.. _xproperty: https://github.com/QuantStack/xproperty.git

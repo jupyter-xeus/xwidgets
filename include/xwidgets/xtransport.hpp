@@ -79,24 +79,42 @@ namespace xw
             .target(get_widget_target_name());
     }
 
-    /*****************
-     * Serialization *
-     *****************/
+    /**********************************************
+     * property serialization and deserialization *
+     **********************************************/
+
+    // Values
+
+    template <class T>
+    inline void xwidgets_serialize(const T& value, xeus::xjson& j, xeus::buffer_sequence&)
+    {
+        j = value;
+    }
+
+    template <class T>
+    inline void xwidgets_deserialize(T& value, const xeus::xjson& j, const xeus::buffer_sequence&)
+    {
+        value = j.template get<T>();
+    }
+
+    // Properties
 
     template <class P>
-    inline void set_property_from_patch(P& property, const xeus::xjson& patch, const xeus::buffer_sequence&)
+    inline void set_patch_from_property(const P& property, xeus::xjson& patch, xeus::buffer_sequence& buffers)
+    {
+        xwidgets_serialize(property(), patch[property.name()], buffers);
+    }
+
+    template <class P>
+    inline void set_property_from_patch(P& property, const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
         auto it = patch.find(property.name());
         if (it != patch.end())
         {
-            property = it->template get<typename P::value_type>();
+            typename P::value_type value;
+            xwidgets_deserialize(value, *it, buffers);
+            property = value;
         }
-    }
-
-    template <class P>
-    inline void set_patch_from_property(const P& property, xeus::xjson& patch, xeus::buffer_sequence&)
-    {
-        patch[property.name()] = property();
     }
 
     /*******************************
