@@ -11,7 +11,11 @@
 
 #include <utility>
 
+#include "xeus/xcomm.hpp"
 #include "xeus/xjson.hpp"
+#include "xeus/xmessage.hpp"
+
+#include "xtransport.hpp"
 #include "xwidgets_config.hpp"
 
 namespace xw
@@ -37,6 +41,12 @@ namespace xw
 
         xmaterialize(xmaterialize&&);
         xmaterialize& operator=(xmaterialize&&);
+
+        template <class PT>
+        void set_patch_from_property_impl(const PT&, xeus::xjson&, xeus::buffer_sequence&) const;
+
+        template <class PT>
+        void set_property_from_patch_impl(PT&, const xeus::xjson&, const xeus::buffer_sequence&);
     };
 
     /**************************
@@ -61,6 +71,12 @@ namespace xw
         xgenerator& operator=(xgenerator&&);
 
         xmaterialize<B, P...> finalize() &&;
+
+        template <class PT>
+        void set_patch_from_property_impl(const PT&, xeus::xjson&, xeus::buffer_sequence&) const;
+
+        template <class PT>
+        void set_property_from_patch_impl(PT&, const xeus::xjson&, const xeus::buffer_sequence&);
     };
 
     /******************
@@ -125,6 +141,26 @@ namespace xw
     template <template <class> class B, class... P>
     inline xmaterialize<B, P...>& xmaterialize<B, P...>::operator=(xmaterialize&& rhs) = default;
 
+    template <template <class> class B, class... P>
+    template <class PT>
+    inline void xmaterialize<B, P...>::set_patch_from_property_impl(const PT& property, xeus::xjson& patch, xeus::buffer_sequence& buffers) const
+    {
+        xwidgets_serialize(property(), patch, buffers, property.name());
+    }
+
+    template <template <class> class B, class... P>
+    template <class PT>
+    inline void xmaterialize<B, P...>::set_property_from_patch_impl(PT& property, const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    {
+        auto it = patch.find(property.name());
+        if (it != patch.end())
+        {
+            typename PT::value_type value;
+            xwidgets_deserialize(value, *it, buffers);
+            property = value;
+        }
+    }
+
     /*****************************
      * xgenerator implementation *
      *****************************/
@@ -153,6 +189,26 @@ namespace xw
 
     template <template <class> class B, class... P>
     inline xgenerator<B, P...>& xgenerator<B, P...>::operator=(xgenerator&&) = default;
+
+    template <template <class> class B, class... P>
+    template <class PT>
+    inline void xgenerator<B, P...>::set_patch_from_property_impl(const PT& property, xeus::xjson& patch, xeus::buffer_sequence& buffers) const
+    {
+        xwidgets_serialize(property(), patch, buffers, property.name());
+    }
+
+    template <template <class> class B, class... P>
+    template <class PT>
+    inline void xgenerator<B, P...>::set_property_from_patch_impl(PT& property, const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    {
+        auto it = patch.find(property.name());
+        if (it != patch.end())
+        {
+            typename PT::value_type value;
+            xwidgets_deserialize(value, *it, buffers);
+            property = value;
+        }
+    }
 
     /**********************************************************
      * Specialization of mime_bundle_repr for Jupyter Widgets *

@@ -142,8 +142,8 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(value, state, buffers);
-        set_patch_from_property(pressed, state, buffers);
+        this->set_patch_from_property(value, state, buffers);
+        this->set_patch_from_property(pressed, state, buffers);
     }
 
     template <class D>
@@ -151,8 +151,8 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(value, patch, buffers);
-        set_property_from_patch(pressed, patch, buffers);
+        this->set_property_from_patch(value, patch, buffers);
+        this->set_property_from_patch(pressed, patch, buffers);
     }
 
     template <class D>
@@ -182,7 +182,7 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(value, state, buffers);
+        this->set_patch_from_property(value, state, buffers);
     }
 
     template <class D>
@@ -190,7 +190,7 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(value, patch, buffers);
+        this->set_property_from_patch(value, patch, buffers);
     }
 
     template <class D>
@@ -220,13 +220,13 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(index, state, buffers);
-        set_patch_from_property(name, state, buffers);
-        set_patch_from_property(mapping, state, buffers);
-        set_patch_from_property(connected, state, buffers);
-        set_patch_from_property(timestamp, state, buffers);
-        set_patch_from_property(buttons, state, buffers);
-        set_patch_from_property(axes, state, buffers);
+        this->set_patch_from_property(index, state, buffers);
+        this->set_patch_from_property(name, state, buffers);
+        this->set_patch_from_property(mapping, state, buffers);
+        this->set_patch_from_property(connected, state, buffers);
+        this->set_patch_from_property(timestamp, state, buffers);
+        this->set_patch_from_property(buttons, state, buffers);
+        this->set_patch_from_property(axes, state, buffers);
     }
 
     template <class D>
@@ -234,13 +234,13 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(index, patch, buffers);
-        set_property_from_patch(name, patch, buffers);
-        set_property_from_patch(mapping, patch, buffers);
-        set_property_from_patch(connected, patch, buffers);
-        set_property_from_patch(timestamp, patch, buffers);
-        set_property_from_patch(buttons, patch, buffers);
-        set_property_from_patch(axes, patch, buffers);
+        this->set_property_from_patch(index, patch, buffers);
+        this->set_property_from_patch(name, patch, buffers);
+        this->set_property_from_patch(mapping, patch, buffers);
+        this->set_property_from_patch(connected, patch, buffers);
+        this->set_property_from_patch(timestamp, patch, buffers);
+        this->set_property_from_patch(buttons, patch, buffers);
+        this->set_property_from_patch(axes, patch, buffers);
     }
 
     template <class D>

@@ -117,8 +117,8 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(description_width, state, buffers);
-        set_patch_from_property(handle_color, state, buffers);
+        this->set_patch_from_property(description_width, state, buffers);
+        this->set_patch_from_property(handle_color, state, buffers);
     }
 
     template <class D>
@@ -126,8 +126,8 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(description_width, patch, buffers);
-        set_property_from_patch(handle_color, patch, buffers);
+        this->set_property_from_patch(description_width, patch, buffers);
+        this->set_property_from_patch(handle_color, patch, buffers);
     }
 
     template <class D>
@@ -154,13 +154,13 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(step, state, buffers);
-        set_patch_from_property(orientation, state, buffers);
-        set_patch_from_property(readout, state, buffers);
-        set_patch_from_property(readout_format, state, buffers);
-        set_patch_from_property(continuous_update, state, buffers);
-        set_patch_from_property(disabled, state, buffers);
-        set_patch_from_property(style, state, buffers);
+        this->set_patch_from_property(step, state, buffers);
+        this->set_patch_from_property(orientation, state, buffers);
+        this->set_patch_from_property(readout, state, buffers);
+        this->set_patch_from_property(readout_format, state, buffers);
+        this->set_patch_from_property(continuous_update, state, buffers);
+        this->set_patch_from_property(disabled, state, buffers);
+        this->set_patch_from_property(style, state, buffers);
     }
 
     template <class D>
@@ -168,13 +168,13 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(step, patch, buffers);
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(readout, patch, buffers);
-        set_property_from_patch(readout_format, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->set_property_from_patch(step, patch, buffers);
+        this->set_property_from_patch(orientation, patch, buffers);
+        this->set_property_from_patch(readout, patch, buffers);
+        this->set_property_from_patch(readout_format, patch, buffers);
+        this->set_property_from_patch(continuous_update, patch, buffers);
+        this->set_property_from_patch(disabled, patch, buffers);
+        this->set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>

@@ -13,11 +13,35 @@
 #include <string>
 #include <vector>
 
+#include "xbinary.hpp"
 #include "xmaterialize.hpp"
 #include "xwidget.hpp"
 
 namespace xw
 {
+    /**********************
+     * custom serializers *
+     **********************/
+
+    inline void xwidgets_serialize(const std::vector<char>& value,
+                                   xeus::xjson& patch,
+                                   xeus::buffer_sequence& buffers,
+                                   const std::string& name)
+    {
+        patch[name] = xbuffer_reference_prefix() + std::to_string(buffers.size());
+        buffers.emplace_back(value.data(), value.size());
+    }
+
+    inline void xwidgets_deserialize(std::vector<char>& value,
+                                     const xeus::xjson& j,
+                                     const xeus::buffer_sequence& buffers)
+    {
+        std::size_t index = buffer_index(j.template get<std::string>());
+        const auto& value_buffer = buffers[index];
+        const char* value_buf = value_buffer.data<const char>();
+        value = std::vector<char>(value_buf, value_buf + value_buffer.size());
+    }
+
     /*********************
      * image declaration *
      *********************/
@@ -65,10 +89,10 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(format, state, buffers);
-        set_patch_from_property(width, state, buffers);
-        set_patch_from_property(height, state, buffers);
-        set_patch_from_property(value, state, buffers);
+        this->set_patch_from_property(format, state, buffers);
+        this->set_patch_from_property(width, state, buffers);
+        this->set_patch_from_property(height, state, buffers);
+        this->set_patch_from_property(value, state, buffers);
     }
 
     template <class D>
@@ -76,10 +100,10 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(format, patch, buffers);
-        set_property_from_patch(width, patch, buffers);
-        set_property_from_patch(height, patch, buffers);
-        set_property_from_patch(value, patch, buffers);
+        this->set_property_from_patch(format, patch, buffers);
+        this->set_property_from_patch(width, patch, buffers);
+        this->set_property_from_patch(height, patch, buffers);
+        this->set_property_from_patch(value, patch, buffers);
     }
 
     template <class D>

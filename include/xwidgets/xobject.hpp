@@ -97,23 +97,23 @@ namespace xw
     template <class D>
     inline void xobject<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
-        set_patch_from_property(_model_module, state, buffers);
-        set_patch_from_property(_model_module_version, state, buffers);
-        set_patch_from_property(_model_name, state, buffers);
-        set_patch_from_property(_view_module, state, buffers);
-        set_patch_from_property(_view_module_version, state, buffers);
-        set_patch_from_property(_view_name, state, buffers);
+        this->set_patch_from_property(_model_module, state, buffers);
+        this->set_patch_from_property(_model_module_version, state, buffers);
+        this->set_patch_from_property(_model_name, state, buffers);
+        this->set_patch_from_property(_view_module, state, buffers);
+        this->set_patch_from_property(_view_module_version, state, buffers);
+        this->set_patch_from_property(_view_name, state, buffers);
     }
 
     template <class D>
     inline void xobject<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
-        set_property_from_patch(_model_module, patch, buffers);
-        set_property_from_patch(_model_module_version, patch, buffers);
-        set_property_from_patch(_model_name, patch, buffers);
-        set_property_from_patch(_view_module, patch, buffers);
-        set_property_from_patch(_view_module_version, patch, buffers);
-        set_property_from_patch(_view_name, patch, buffers);
+        this->set_property_from_patch(_model_module, patch, buffers);
+        this->set_property_from_patch(_model_module_version, patch, buffers);
+        this->set_property_from_patch(_model_name, patch, buffers);
+        this->set_property_from_patch(_view_module, patch, buffers);
+        this->set_property_from_patch(_view_module_version, patch, buffers);
+        this->set_property_from_patch(_view_name, patch, buffers);
     }
 
     template <class D>

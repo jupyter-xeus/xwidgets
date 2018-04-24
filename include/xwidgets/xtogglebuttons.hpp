@@ -99,14 +99,14 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(button_width, state, buffers);
+        this->set_patch_from_property(button_width, state, buffers);
     }
 
     template <class D>
     inline void xtogglebuttons_style<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-        set_property_from_patch(button_width, patch, buffers);
+        this->set_property_from_patch(button_width, patch, buffers);
     }
 
     template <class D>
@@ -133,10 +133,10 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(tooltips, state, buffers);
-        set_patch_from_property(icons, state, buffers);
-        set_patch_from_property(style, state, buffers);
-        set_patch_from_property(button_style, state, buffers);
+        this->set_patch_from_property(tooltips, state, buffers);
+        this->set_patch_from_property(icons, state, buffers);
+        this->set_patch_from_property(style, state, buffers);
+        this->set_patch_from_property(button_style, state, buffers);
     }
 
     template <class D>
@@ -144,10 +144,10 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(tooltips, patch, buffers);
-        set_property_from_patch(icons, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
-        set_property_from_patch(button_style, patch, buffers);
+        this->set_property_from_patch(tooltips, patch, buffers);
+        this->set_property_from_patch(icons, patch, buffers);
+        this->set_property_from_patch(style, patch, buffers);
+        this->set_property_from_patch(button_style, patch, buffers);
     }
 
     template <class D>

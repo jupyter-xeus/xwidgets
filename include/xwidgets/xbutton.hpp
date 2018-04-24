@@ -111,8 +111,8 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(button_color, state, buffers);
-        set_patch_from_property(font_weight, state, buffers);
+        this->set_patch_from_property(button_color, state, buffers);
+        this->set_patch_from_property(font_weight, state, buffers);
     }
 
     template <class D>
@@ -120,8 +120,8 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(button_color, patch, buffers);
-        set_property_from_patch(font_weight, patch, buffers);
+        this->set_property_from_patch(button_color, patch, buffers);
+        this->set_property_from_patch(font_weight, patch, buffers);
     }
 
     template <class D>
@@ -147,12 +147,12 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(description, state, buffers);
-        set_patch_from_property(tooltip, state, buffers);
-        set_patch_from_property(disabled, state, buffers);
-        set_patch_from_property(icon, state, buffers);
-        set_patch_from_property(button_style, state, buffers);
-        set_patch_from_property(style, state, buffers);
+        this->set_patch_from_property(description, state, buffers);
+        this->set_patch_from_property(tooltip, state, buffers);
+        this->set_patch_from_property(disabled, state, buffers);
+        this->set_patch_from_property(icon, state, buffers);
+        this->set_patch_from_property(button_style, state, buffers);
+        this->set_patch_from_property(style, state, buffers);
     }
 
     template <class D>
@@ -160,12 +160,12 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(description, patch, buffers);
-        set_property_from_patch(tooltip, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(icon, patch, buffers);
-        set_property_from_patch(button_style, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->set_property_from_patch(description, patch, buffers);
+        this->set_property_from_patch(tooltip, patch, buffers);
+        this->set_property_from_patch(disabled, patch, buffers);
+        this->set_property_from_patch(icon, patch, buffers);
+        this->set_property_from_patch(button_style, patch, buffers);
+        this->set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>

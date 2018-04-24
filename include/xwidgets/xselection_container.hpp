@@ -60,8 +60,8 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(_titles, state, buffers);
-        set_patch_from_property(selected_index, state, buffers);
+        this->set_patch_from_property(_titles, state, buffers);
+        this->set_patch_from_property(selected_index, state, buffers);
     }
 
     template <class D>
@@ -69,8 +69,8 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(_titles, patch, buffers);
-        set_property_from_patch(selected_index, patch, buffers);
+        this->set_property_from_patch(_titles, patch, buffers);
+        this->set_property_from_patch(selected_index, patch, buffers);
     }
 
     template <class D>
@@ -96,7 +96,7 @@ namespace xw
 
         xeus::xjson state;
         xeus::buffer_sequence buffers;
-        set_patch_from_property(_titles, state, buffers);
+        this->set_patch_from_property(_titles, state, buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 }
