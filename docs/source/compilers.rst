@@ -24,7 +24,9 @@ case for widget types that are used as properties for other widgets such as
 ``xlayout``` and style widgets.
 
 The upstream `MSVC issue`_  issue appears to have been solved with VS2017 15.7
-(Preview 3).
+(Preview 3). The impacted build numbers for Visual Studio are
+``_MSC_VER==1910``, ``_MSC_VER==1911```, ``_MSC_VER==1912```,
+``_MSC_VER==1913```.
 
 Visual Studio and CRTP bases
 ----------------------------
