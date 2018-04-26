@@ -53,6 +53,13 @@ cmake -D CMAKE_INSTALL_PREFIX=your_install_prefix
 make install
 ```
 
+## Documentation
+
+To get started with using `xwidgets`, check out the full documentation
+
+http://xwidgets.readthedocs.io/
+
+
 ## Dependencies
 
 All the dependencies of xwidgets are available for the conda package manager.
