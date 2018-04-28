@@ -26,6 +26,9 @@ xplot_ if the C++ backend for the bqplot_ 2-D plotting library
     #include <random>
     #include <vector>
 
+    #include "xwidgets/xbox.hpp"
+
+    #include "xplot/xtoolbar.hpp"
     #include "xplot/xfigure.hpp"
     #include "xplot/xmarks.hpp"
     #include "xplot/xaxes.hpp"
@@ -72,7 +75,13 @@ xplot_ if the C++ backend for the bqplot_ 2-D plotting library
     fig.add_mark(scatter);
     fig.add_axis(axis_x);
     fig.add_axis(axis_y);
-    fig
+
+    xpl::toolbar tb(fig);
+
+    xw::vbox b = xw::vbox_generator()
+        .children({fig, tb})
+        .finalize();
+    b
 
 **Output**
 
@@ -80,11 +89,12 @@ xplot_ if the C++ backend for the bqplot_ 2-D plotting library
 
     <script type="application/vnd.jupyter.widget-view+json">
     {
-        "model_id": "fe2a6edcbab64070be532d5e43086804",
+        "model_id": "05641ba7c6264280b8518034afef37fe",
         "version_major": 2,
         "version_minor": 0
     }
     </script>
+
 
 .. image:: xleaflet.svg
     :alt: xleaflet
