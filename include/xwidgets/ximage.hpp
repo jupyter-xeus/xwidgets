@@ -123,11 +123,15 @@ namespace xw
                                         const xeus::xjson& patch,
                                         const xeus::buffer_sequence& buffers)
     {
-        using value_type = typename decltype(image::value)::value_type;
-        std::size_t index = buffer_index(patch[property.name()].template get<std::string>());
-        const auto& value_buffer = buffers[index];
-        const char* value_buf = value_buffer.data<const char>();
-        property = value_type(value_buf, value_buf + value_buffer.size());
+        auto it = patch.find(property.name());
+        if (it != patch.end())
+        {
+            using value_type = typename decltype(image::value)::value_type;
+            std::size_t index = buffer_index(patch[property.name()].template get<std::string>());
+            const auto& value_buffer = buffers[index];
+            const char* value_buf = value_buffer.data<const char>();
+            property = value_type(value_buf, value_buf + value_buffer.size());
+        }
     }
 
     /*********************

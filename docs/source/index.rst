@@ -41,6 +41,12 @@ This software is licensed under the BSD-3-Clause license. See the LICENSE file f
    usage
 
 .. toctree::
+   :caption: AUTHORING CUSTOM WIDGETS
+   :maxdepth: 2
+
+   custom
+
+.. toctree::
    :caption: DEVELOPER ZONE
 
    compilers
