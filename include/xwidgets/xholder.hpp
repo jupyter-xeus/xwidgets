@@ -569,14 +569,4 @@ namespace xw
     }
 }
 
-// Workaround for cling bug
-//   https://github.com/vgvassilev/cling/issues/180
-// a.k.a.
-//   https://github.com/root-project/cling/issues/228
-
-#ifdef __CLING__
-    template <class D>
-    using xtransport = xw::xtransport<D>;
-#endif
-
 #endif
