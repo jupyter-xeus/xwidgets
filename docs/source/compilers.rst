@@ -36,15 +36,4 @@ the implementation of ``Foo ``, ``Bar`` should be a template, and not refer to
 ``Bar<Foo<T>>``. However, unlike GCC and Clang, Visual Studio incorrectly makes
 ``Bar`` refer to the fully specialized template type.
 
-Cling and complex types
------------------------
-
-The rich mime-type rendering of xeus-cling relies upon cling's ability to
-provide a fully qualified type string for a value. This appears to be bugged
-for complex types in cling 0.5, where certain template parameter lack their
-namespace qualification. The we work around `Cling type string`_ bug for
-xholder by creating an alias template for `xtransport` in the general namespace
-in the case of cling.
-
 .. _`MSVC issue`: https://developercommunity.visualstudio.com/content/problem/208938/compilation-error-c2057-expected-constant-expressi.html
-.. _`Cling type string`: https://github.com/root-project/cling/issues/228

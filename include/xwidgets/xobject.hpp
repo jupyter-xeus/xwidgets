@@ -13,44 +13,12 @@
 #include <unordered_map>
 
 #include "xtl/xoptional.hpp"
+#include "xtl/xjson.hpp"
 
 #include "xproperty/xobserved.hpp"
 
 #include "xmaterialize.hpp"
 #include "xtransport.hpp"
-
-namespace xtl
-{
-    /***********************************************************
-     * to_json and from_json specialization for xtl::xoptional *
-     ***********************************************************/
-
-    template <class D>
-    void to_json(xeus::xjson& j, const xoptional<D>& o)
-    {
-        if (!o.has_value())
-        {
-            j = nullptr;
-        }
-        else
-        {
-            j = o.value();
-        }
-    }
-
-    template <class D>
-    void from_json(const xeus::xjson& j, xoptional<D>& o)
-    {
-        if (j.is_null())
-        {
-            o = missing<D>();
-        }
-        else
-        {
-            o = j.get<D>();
-        }
-    }
-}
 
 namespace xw
 {
