@@ -3,7 +3,7 @@
 [![Travis](https://travis-ci.org/QuantStack/xwidgets.svg?branch=master)](https://travis-ci.org/QuantStack/xwidgets)
 [![Appveyor](https://ci.appveyor.com/api/projects/status/ebu4prxukyqpt1mm?svg=true)](https://ci.appveyor.com/project/QuantStack/xwidgets)
 [![Documentation](http://readthedocs.org/projects/xwidgets/badge/?version=latest)](https://xwidgets.readthedocs.io/en/latest/?badge=latest)
-[![Binder](https://img.shields.io/badge/launch-binder-brightgreen.svg)](https://mybinder.org/v2/gh/QuantStack/xwidgets/0.10.0?filepath=notebooks/xwidgets.ipynb)
+[![Binder](https://img.shields.io/badge/launch-binder-brightgreen.svg)](https://mybinder.org/v2/gh/QuantStack/xwidgets/0.11.0?filepath=notebooks/xwidgets.ipynb)
 [![Join the Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/QuantStack/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The C++ backend for Jupyter interactive widgets.
@@ -53,12 +53,18 @@ cmake -D CMAKE_INSTALL_PREFIX=your_install_prefix
 make install
 ```
 
+## Trying it online
+
+To try out xwidgets interactively in your web browser, just click on the binder
+link:
+
+[![Binder](binder-logo.svg)](https://mybinder.org/v2/gh/QuantStack/xwidgets/0.11.0?filepath=notebooks/xwidgets.ipynb)
+
 ## Documentation
 
 To get started with using `xwidgets`, check out the full documentation
 
 http://xwidgets.readthedocs.io/
-
 
 ## Dependencies
 
