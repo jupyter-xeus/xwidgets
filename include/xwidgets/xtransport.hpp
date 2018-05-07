@@ -164,9 +164,15 @@ namespace xw
         void handle_message(const xeus::xmessage&);
         void handle_custom_message(const xeus::xjson&);
 
+        bool same_patch(const std::string&,
+                        const xeus::xjson&,
+                        const xeus::buffer_sequence&,
+                        const xeus::xjson&,
+                        const xeus::buffer_sequence&) const;
+
         bool m_moved_from;
         std::list<message_callback_type> m_message_callbacks;
-        const xeus::xjson* m_hold;
+        const xeus::xmessage* m_hold;
         xeus::xcomm m_comm;
     };
 
@@ -315,18 +321,29 @@ namespace xw
     template <class P>
     inline void xtransport<D>::notify(const P& property) const
     {
-        if (m_hold != nullptr)
-        {
-            auto it = m_hold->find(property.name());
-            if (it != m_hold->end() && it.value() == property())
-            {
-                return;
-            }
-        }
-
         xeus::xjson state;
         xeus::buffer_sequence buffers;
         set_patch_from_property(property, state, buffers);
+
+        if (m_hold != nullptr)
+        {
+            const auto& hold_state = m_hold->content()["data"]["state"];
+            const auto& hold_buffers = m_hold->buffers();
+
+            auto it = hold_state.find(property.name());
+            if (it != hold_state.end())
+            {
+                if(same_patch(property.name(),
+                              *it,
+                              hold_buffers,
+                              state[property.name()],
+                              buffers))
+                {
+                    return;
+                }
+            }
+        }
+
         send_patch(std::move(state), std::move(buffers));
     }
 
@@ -414,12 +431,12 @@ namespace xw
         const xeus::xjson& content = message.content();
         const xeus::xjson& data = content["data"];
         std::string method = data["method"];
-        const xeus::buffer_sequence& buffers = message.buffers();
         if (method == "update")
         {
             const xeus::xjson& state = data["state"];
+            const auto& buffers = message.buffers();
             const xeus::xjson& buffer_paths = data["buffer_paths"];
-            m_hold = &(state);
+            m_hold = std::addressof(message);;
             insert_buffer_paths(const_cast<xeus::xjson&>(state), buffer_paths);
             derived_cast().apply_patch(state, buffers);
             m_hold = nullptr;
@@ -445,6 +462,36 @@ namespace xw
     inline void xtransport<D>::handle_custom_message(const xeus::xjson& /*content*/)
     {
     }
+
+    template <class D>
+    inline bool xtransport<D>::same_patch(const std::string& name,
+                                          const xeus::xjson& j1,
+                                          const xeus::buffer_sequence&,
+                                          const xeus::xjson& j2,
+                                          const xeus::buffer_sequence&) const
+         {
+             const auto& paths = derived_cast().buffer_paths();
+             // For a widget with no binary buffer, compare the patches
+             if (paths.empty())
+             {
+                 return j1 == j2;
+             }
+             else
+             {
+                 // For a property with no binary buffer, compare the patches
+                 if (std::find_if(paths.cbegin(), paths.cend(), [name](const auto& v) {
+                     return !v.empty() && v[0] == name;
+                 }) == paths.cend())
+                 {
+                    return j1 == j2;
+                 }
+                 else
+                 {
+                     // TODO: handle the comparison of binary buffers.
+                     return true;
+                 }
+             }
+         }
 
     /****************************************
      * to_json and from_json implementation *
