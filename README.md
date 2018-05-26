@@ -44,6 +44,14 @@ conda install widgetsnbextension -c conda-forge
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 ```
 
+This command defaults to installing the latest version of the JupyterLab
+extension. Depending on the version of `xwidgets` and `jupyterlab` you have
+installed you may need an older version.
+
+## Jupyterlab extension version compatibility
+
+Specific version of
+
 ## Installation from sources
 
 Or you can directly install it from the sources if you have all the dependencies already installed:
@@ -73,6 +81,7 @@ All the dependencies of xwidgets are available for the conda package manager.
 | `xwidgets` | `widgetsnbextension`  |     `xtl`      | `xproperty`   | `xeus`          | `nlohmann_json` |
 |------------|-----------------------|----------------|---------------|-----------------|-----------------|
 |  master    |      ~3.0.0           |  >=0.4.8,<0.5  | >=0.7.0,<0.8  | >=0.12.0,<0.13  | >=3.1.1,<4.0    |
+|  0.11.1    |      ~3.0.0           |  >=0.4.8,<0.5  | >=0.7.0,<0.8  | >=0.12.0,<0.13  | >=3.1.1,<4.0    |
 |  0.11.0    |      ~3.0.0           |  >=0.4.8,<0.5  | >=0.7.0,<0.8  | >=0.12.0,<0.13  | >=3.1.1,<4.0    |
 |  0.10.0    |      ~3.0.0           |  >=0.4.0,<0.5  | >=0.7.0,<0.8  | >=0.12.0,<0.13  | >=3.1.1,<4.0    |
 |  0.9.0     |      ~3.0.0           |  >=0.4.0,<0.5  | >=0.7.0,<0.8  | >=0.12.0,<0.13  | >=3.1.1,<4.0    |
