@@ -1,4 +1,4 @@
-# ![xwidgets](http://quantstack.net/assets/images/xwidgets.svg)
+# ![xwidgets](docs/source/xwidgets.svg)
 
 [![Travis](https://travis-ci.org/QuantStack/xwidgets.svg?branch=master)](https://travis-ci.org/QuantStack/xwidgets)
 [![Appveyor](https://ci.appveyor.com/api/projects/status/ebu4prxukyqpt1mm?svg=true)](https://ci.appveyor.com/project/QuantStack/xwidgets)
