@@ -10,13 +10,19 @@ The C++ backend for Jupyter interactive widgets.
 
 ## Introduction
 
-`xwidgets` is a C++ implementation of the Jupyter interactive widgets protocol. The Python reference implementation is available in the [ipywidgets](https://github.com/jupyter-widgets/ipywidgets) project.
+`xwidgets` is a C++ implementation of the Jupyter interactive widgets protocol.
+The Python reference implementation is available in the
+[ipywidgets](https://github.com/jupyter-widgets/ipywidgets) project.
 
-`xwidgets` enables the use of the Jupyter interactive widgets in the C++ notebook, powered by the `xeus-cling` kernel and the `cling` C++ interpreter from CERN. `xwidgets` can also be used to create applications making use of the Jupyter interactive widgets without the C++ kernel *per se*.
+`xwidgets` enables the use of the Jupyter interactive widgets in the C++
+notebook, powered by the `xeus-cling` kernel and the `cling` C++ interpreter
+from CERN. `xwidgets` can also be used to create applications making use of the
+Jupyter interactive widgets without the C++ kernel *per se*.
 
 ## Usage
 
-Launch the jupyter notebook with `jupyter notebook` and launch a new C++ notebook by selecting the **xeus C++14** kernel in the *new* dropdown.
+Launch the jupyter notebook with `jupyter notebook` and launch a new C++
+notebook by selecting the **xeus C++14** kernel in the *new* dropdown.
 
 ![Widgets](widgets.gif)
 
@@ -30,7 +36,8 @@ We provide a package for the conda package manager.
 conda install xeus-cling xwidgets -c QuantStack -c conda-forge
 ```
 
-Then, the front-end extension must be installed for either the classic notebook or JupyterLab.
+Then, the front-end extension must be installed for either the classic notebook
+or JupyterLab.
 
 - Installing the extension for the classic notebook
 
@@ -54,7 +61,8 @@ Specific version of
 
 ## Installation from sources
 
-Or you can directly install it from the sources if you have all the dependencies already installed:
+Or you can directly install it from the sources if you have all the
+dependencies already installed:
 
 ```bash
 cmake -D CMAKE_INSTALL_PREFIX=your_install_prefix
@@ -97,4 +105,5 @@ All the dependencies of xwidgets are available for the conda package manager.
 We use a shared copyright model that enables all contributors to maintain the
 copyright on their contributions.
 
-This software is licensed under the BSD-3-Clause license. See the [LICENSE](LICENSE) file for details.
+This software is licensed under the BSD-3-Clause license.
+See the [LICENSE](LICENSE) file for details.
