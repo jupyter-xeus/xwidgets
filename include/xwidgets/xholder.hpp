@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_HOLDER_HPP
 #define XWIDGETS_HOLDER_HPP
 
+#include <memory>
 #include <stdexcept>
 #include <unordered_map>
 #include <utility>
@@ -89,6 +90,12 @@ namespace xw
 
     template <template <class> class CRTP>
     xholder<CRTP> make_id_holder(xeus::xguid id);
+
+    template <template <class> class CRTP, class D, class... Args>
+    xholder<CRTP> make_shared_holder(Args&&... args);
+
+    template <template <class> class CRTP, class D>
+    xholder<CRTP> make_shared_holder(CRTP<D>* ptr);
 
     /*************************************
      * to_json and from_json declaration *
@@ -487,6 +494,10 @@ namespace xw
         return it->second;
     }
 
+    /*****************************
+     * xholder_id implementation *
+     *****************************/
+
     namespace detail
     {
         template <template <class> class CRTP>
@@ -545,6 +556,79 @@ namespace xw
     xholder<CRTP> make_id_holder(xeus::xguid id)
     {
         return xholder<CRTP>(new detail::xholder_id<CRTP>(id));
+    }
+
+    /*********************************
+     * xholder_shared implementation *
+     *********************************/
+
+    namespace detail
+    {
+        template <template <class> class CRTP, class D>
+        class xholder_shared : public xholder_impl<CRTP>
+        {
+        public:
+
+            using base_type = xholder_impl<CRTP>;
+            using pointer = std::shared_ptr<D>;
+
+            xholder_shared(pointer ptr)
+                : base_type(),
+                  p_value(ptr)
+            {
+            }
+
+            xholder_shared(CRTP<D>* ptr)
+                : base_type(),
+                  p_value(&(ptr->derived_cast()))
+            {
+            }
+
+            virtual ~xholder_shared() = default;
+            virtual base_type* clone() const override
+            {
+                return new xholder_shared(*this);
+            }
+            
+
+            virtual void display() const override
+            {
+                p_value->display();
+            }
+
+            virtual xeus::xguid id() const override
+            {
+                return p_value->id();
+            }
+
+            virtual xtl::any value() & override
+            {
+                return xtl::closure(*p_value);
+            }
+
+            virtual const xtl::any value() const & override
+            {
+                return xtl::closure(*p_value);
+            }
+
+        private:
+
+            pointer p_value;
+        };
+    }
+
+    template <template <class> class CRTP, class D, class... Args>
+    inline xholder<CRTP> make_shared_holder(Args&&... args)
+    {
+        using impl_type = detail::xholder_shared<CRTP, D>;
+        return xholder<CRTP>(new impl_type(std::make_shared<D>(std::forward<Args>(args)...)));
+    }
+
+    template <template <class> class CRTP, class D>
+    inline xholder<CRTP> make_shared_holder(CRTP<D>* ptr)
+    {
+        using impl_type = detail::xholder_shared<CRTP, D>;
+        return xholder<CRTP>(new impl_type(ptr));
     }
 
     /**********************************************************
