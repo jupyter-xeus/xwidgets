@@ -589,7 +589,6 @@ namespace xw
             {
                 return new xholder_shared(*this);
             }
-            
 
             virtual void display() const override
             {
