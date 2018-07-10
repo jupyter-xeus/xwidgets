@@ -49,6 +49,8 @@ namespace xw
         xholder(const CRTP<D>& rhs);
         template <class D>
         xholder(CRTP<D>&& rhs);
+        template <class D, class = std::enable_if_t<std::is_base_of<CRTP<D>, D>::value, void>>
+        xholder(std::shared_ptr<D> rhs);
         xholder(implementation_type* holder);
 
         xholder& operator=(const xholder& rhs);
@@ -58,6 +60,9 @@ namespace xw
         xholder& operator=(const CRTP<D>& rhs);
         template <class D>
         xholder& operator=(CRTP<D>&& rhs);
+        template <class D>
+        std::enable_if_t<std::is_base_of<CRTP<D>, D>::value, xholder&>
+        operator=(std::shared_ptr<D> ptr);
 
         void swap(xholder& rhs);
 
@@ -335,6 +340,13 @@ namespace xw
     }
 
     template <template <class> class CRTP>
+    template <class D, class>
+    xholder<CRTP>::xholder(std::shared_ptr<D> rhs)
+        : xholder(make_shared_holder<CRTP, D>(rhs))
+    {
+    }
+
+    template <template <class> class CRTP>
     xholder<CRTP>::xholder(xholder&& rhs)
         : p_holder(rhs.p_holder)
     {
@@ -375,6 +387,17 @@ namespace xw
     {
         using std::swap;
         xholder<CRTP> tmp(make_owning_holder(std::move(rhs)));
+        swap(tmp, *this);
+        return *this;
+    }
+
+    template <template <class> class CRTP>
+    template <class D>
+    std::enable_if_t<std::is_base_of<CRTP<D>, D>::value, xholder<CRTP>&>
+    xholder<CRTP>::operator=(std::shared_ptr<D> ptr)
+    {
+        using std::swap;
+        xholder<CRTP> tmp(make_shared_holder<CRTP, D>(ptr));
         swap(tmp, *this);
         return *this;
     }

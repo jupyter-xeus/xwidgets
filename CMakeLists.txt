@@ -204,17 +204,17 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
     message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 endif()
 
-# if(MSVC)
-#     target_compile_definitions(xwidgets PUBLIC -DNOMINMAX)
-#     target_compile_options(xwidgets PUBLIC /DGUID_WINDOWS /MP /bigobj)
-#     target_compile_options(xwidgets PUBLIC /wd4251 /wd 4996)
-#     # Allows to compile in debug without requiring each dependencies to
-#     # be compiled in debug
-#     if(${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
-#         set(CMAKE_CXX_FLAGS_DEBUG "/DNDEBUG /MD /Zi /Ob0 /Od /RTC1")
-#         message(STATUS "Overriding CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
-#     endif()
-# endif()
+if(MSVC)
+    target_compile_definitions(xwidgets PUBLIC -DNOMINMAX)
+    target_compile_options(xwidgets PUBLIC /DGUID_WINDOWS /MP /bigobj)
+    target_compile_options(xwidgets PUBLIC /wd4251 /wd 4996)
+    # Allows to compile in debug without requiring each dependencies to
+    # be compiled in debug
+    if(${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
+        set(CMAKE_CXX_FLAGS_DEBUG "/DNDEBUG /MD /Zi /Ob0 /Od /RTC1")
+        message(STATUS "Overriding CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
+    endif()
+endif()
 
 # Tests
 # =====

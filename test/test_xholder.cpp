@@ -92,4 +92,22 @@ namespace xw
         hm2.erase("y");
         ASSERT_EQ(button_tester::instance_count(), 0);
     }
+
+    TEST(xholder, constructor)
+    {
+        using holder = xholder<xwidget>;
+        button b1, b2;
+        auto b3 = std::make_shared<button>();
+
+        holder h1(b1);
+        holder h2(std::move(b2));
+        holder h3(b3);
+
+        button b11, b22;
+        auto b33 = std::make_shared<button>();
+
+        h1 = b11;
+        h2 = std::move(b22);
+        h3 = b33;
+    }
 }
