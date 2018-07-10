@@ -91,11 +91,8 @@ namespace xw
     template <template <class> class CRTP>
     xholder<CRTP> make_id_holder(xeus::xguid id);
 
-    template <template <class> class CRTP, class D, class... Args>
-    xholder<CRTP> make_shared_holder(Args&&... args);
-
     template <template <class> class CRTP, class D>
-    xholder<CRTP> make_shared_holder(CRTP<D>* ptr);
+    xholder<CRTP> make_shared_holder(std::shared_ptr<CRTP<D>> ptr);
 
     /*************************************
      * to_json and from_json declaration *
@@ -616,18 +613,12 @@ namespace xw
         };
     }
 
-    template <template <class> class CRTP, class D, class... Args>
-    inline xholder<CRTP> make_shared_holder(Args&&... args)
-    {
-        using impl_type = detail::xholder_shared<CRTP, D>;
-        return xholder<CRTP>(new impl_type(std::make_shared<D>(std::forward<Args>(args)...)));
-    }
-
     template <template <class> class CRTP, class D>
-    inline xholder<CRTP> make_shared_holder(CRTP<D>* ptr)
+    inline xholder<CRTP> make_shared_holder(std::shared_ptr<CRTP<D>> ptr)
     {
         using impl_type = detail::xholder_shared<CRTP, D>;
-        return xholder<CRTP>(new impl_type(ptr));
+        auto cast_ptr = std::static_pointer_cast<D>(ptr);
+        return xholder<CRTP>(new impl_type(cast_ptr));
     }
 
     /**********************************************************

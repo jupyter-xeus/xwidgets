@@ -46,6 +46,9 @@ namespace xw
         slider<double> s1, s2;
         hb.add(s1);
         hb.add(s2);
+
+        auto s3 = std::make_shared<slider<double>>();
+        hb.add(s3);
     }
 
     TEST(xwidgets, vbox)
@@ -54,6 +57,9 @@ namespace xw
         slider<double> s1, s2;
         vb.add(s1);
         vb.add(s2);
+
+        auto s3 = std::make_shared<slider<double>>();
+        vb.add(s3);
     }
 
     TEST(xwidgets, button_style)

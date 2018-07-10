@@ -53,6 +53,9 @@ namespace xw
         void add(xtransport<T>&& w);
 
         template <class T>
+        enable_xtransport_t<T> add(std::shared_ptr<T> w);
+
+        template <class T>
         void remove(const xtransport<T>& w);
 
         void clear();
@@ -159,6 +162,22 @@ namespace xw
     inline void xbox<D>::add(xtransport<T>&& w)
     {
         this->children().emplace_back(make_owning_holder(std::move(w)));
+        xeus::xjson state;
+        xeus::buffer_sequence buffers;
+        set_patch_from_property(children, state, buffers);
+        this->send_patch(std::move(state), std::move(buffers));
+    }
+
+    template <class D>
+    template <class T>
+    inline enable_xtransport_t<T> xbox<D>::add(std::shared_ptr<T> w)
+    {
+#ifdef _MSC_VER
+        this->children().emplace_back(make_shared_holder<transport_type, T>(w));
+#else
+        this->children().emplace_back(make_shared_holder<xtransport, T>(w));
+#endif
+        //this->children().emplace_back(make_shared_holder<(w));
         xeus::xjson state;
         xeus::buffer_sequence buffers;
         set_patch_from_property(children, state, buffers);

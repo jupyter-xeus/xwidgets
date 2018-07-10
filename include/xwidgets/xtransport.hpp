@@ -176,6 +176,15 @@ namespace xw
         xeus::xcomm m_comm;
     };
 
+    template <class T, class R = void>
+    struct enable_xtransport
+    {
+        using type = std::enable_if_t<std::is_base_of<xtransport<T>, T>::value, R>;
+    };
+
+    template <class T, class R = void>
+    using enable_xtransport_t = typename enable_xtransport<T, R>::type;
+
     /****************************************
      * to_json and from_json specialization *
      ****************************************/

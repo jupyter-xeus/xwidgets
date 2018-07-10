@@ -72,13 +72,12 @@ namespace xw
     {
         using map_type = std::map<std::string, xholder<xwidget>>;
         map_type hm1, hm2;
-        button_tester* b = new button_tester;
-        hm1["x"] = make_shared_holder<xwidget>(b);
+        hm1["x"] = make_shared_holder<xwidget, button_tester>(std::make_shared<button_tester>());
         hm2["x"] = hm1["x"];
         ASSERT_EQ(hm1["x"].id(), hm2["x"].id());
         ASSERT_EQ(button_tester::instance_count(), 1);
 
-        hm1["y"] = make_shared_holder<xwidget, button_tester>(4);;
+        hm1["y"] = make_shared_holder<xwidget, button_tester>(std::make_shared<button_tester>(4));
         hm2["y"] = hm1["y"];
         ASSERT_EQ(hm1["y"].template get<button_tester>().value(), hm2["y"].template get<button_tester>().value());
         ASSERT_EQ(button_tester::instance_count(), 2);
