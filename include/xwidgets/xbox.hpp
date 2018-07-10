@@ -177,7 +177,6 @@ namespace xw
 #else
         this->children().emplace_back(make_shared_holder<xtransport, T>(w));
 #endif
-        //this->children().emplace_back(make_shared_holder<(w));
         xeus::xjson state;
         xeus::buffer_sequence buffers;
         set_patch_from_property(children, state, buffers);
