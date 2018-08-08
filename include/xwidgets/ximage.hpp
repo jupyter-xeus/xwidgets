@@ -14,7 +14,7 @@
 #include <vector>
 
 #include "xmaterialize.hpp"
-#include "xwidget.hpp"
+#include "xmedia.hpp"
 
 namespace xw
 {
@@ -23,14 +23,12 @@ namespace xw
      *********************/
 
     template <class D>
-    class ximage : public xwidget<D>
+    class ximage : public xmedia<D>
     {
     public:
 
-        using base_type = xwidget<D>;
+        using base_type = xmedia<D>;
         using derived_type = D;
-
-        using value_type = std::vector<char>;
 
         void serialize_state(xeus::xjson& state, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
@@ -38,9 +36,6 @@ namespace xw
         XPROPERTY(std::string, derived_type, format, "png");
         XPROPERTY(std::string, derived_type, width, "");
         XPROPERTY(std::string, derived_type, height, "");
-        XPROPERTY(value_type, derived_type, value);
-
-        const std::vector<xjson_path_type>& buffer_paths() const;
 
     protected:
 
@@ -68,7 +63,6 @@ namespace xw
         set_patch_from_property(format, state, buffers);
         set_patch_from_property(width, state, buffers);
         set_patch_from_property(height, state, buffers);
-        set_patch_from_property(value, state, buffers);
     }
 
     template <class D>
@@ -79,14 +73,6 @@ namespace xw
         set_property_from_patch(format, patch, buffers);
         set_property_from_patch(width, patch, buffers);
         set_property_from_patch(height, patch, buffers);
-        set_property_from_patch(value, patch, buffers);
-    }
-
-    template <class D>
-    inline const std::vector<xjson_path_type>& ximage<D>::buffer_paths() const
-    {
-        static const std::vector<xjson_path_type> default_buffer_paths = {{"value"}};
-        return default_buffer_paths;
     }
 
     template <class D>
@@ -101,10 +87,17 @@ namespace xw
     {
         this->_model_name() = "ImageModel";
         this->_view_name() = "ImageView";
-        this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
-        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
-        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
+    }
+
+    inline image_generator image_from_file(const std::string& filename)
+    {
+        return image_generator().value(read_file(filename));
+    }
+
+    inline image_generator image_from_url(const std::string& url)
+    {
+        std::vector<char> value(url.cbegin(), url.cend());
+        return image_generator().value(value).format("url");
     }
 
     /**********************

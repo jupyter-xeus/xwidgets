@@ -87,6 +87,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlayout.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlink.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmaterialize.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmedia.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmaker.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumeral.hpp
