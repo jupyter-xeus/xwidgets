@@ -110,6 +110,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtogglebuttons.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtransport.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvalid.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvideo.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config_cling.hpp
@@ -142,6 +143,7 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xtogglebuttons.cpp
     ${XWIDGETS_SOURCE_DIR}/xradiobuttons.cpp
     ${XWIDGETS_SOURCE_DIR}/xvalid.cpp
+    ${XWIDGETS_SOURCE_DIR}/xvideo.cpp
 )
 
 # Output
