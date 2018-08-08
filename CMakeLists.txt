@@ -69,6 +69,7 @@ find_package(xproperty 0.7 REQUIRED)
 
 set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaccordion.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaudio.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbinary.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbox.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xboolean.hpp
@@ -118,6 +119,7 @@ set(XWIDGETS_HEADERS
 
 set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xaccordion.cpp
+    ${XWIDGETS_SOURCE_DIR}/xaudio.cpp
     ${XWIDGETS_SOURCE_DIR}/xbox.cpp
     ${XWIDGETS_SOURCE_DIR}/xbutton.cpp
     ${XWIDGETS_SOURCE_DIR}/xcheckbox.cpp
