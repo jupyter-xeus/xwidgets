@@ -69,6 +69,7 @@ find_package(xproperty 0.7 REQUIRED)
 
 set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaccordion.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaudio.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbinary.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbox.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xboolean.hpp
@@ -87,6 +88,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlayout.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlink.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmaterialize.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmedia.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmaker.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumeral.hpp
@@ -109,6 +111,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtogglebuttons.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtransport.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvalid.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvideo.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config_cling.hpp
@@ -116,6 +119,7 @@ set(XWIDGETS_HEADERS
 
 set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xaccordion.cpp
+    ${XWIDGETS_SOURCE_DIR}/xaudio.cpp
     ${XWIDGETS_SOURCE_DIR}/xbox.cpp
     ${XWIDGETS_SOURCE_DIR}/xbutton.cpp
     ${XWIDGETS_SOURCE_DIR}/xcheckbox.cpp
@@ -141,6 +145,7 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xtogglebuttons.cpp
     ${XWIDGETS_SOURCE_DIR}/xradiobuttons.cpp
     ${XWIDGETS_SOURCE_DIR}/xvalid.cpp
+    ${XWIDGETS_SOURCE_DIR}/xvideo.cpp
 )
 
 # Output
