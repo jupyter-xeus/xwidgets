@@ -101,12 +101,9 @@ namespace xw
                                        const xeus::xjson& path,
                                        std::size_t buffer_index)
         {
-            for (auto it = path.cbegin(); it != path.cend(); ++it)
-            {
-                xjson_path_type path = it.value();
-                detail::set_json(patch, path,
-                    xbuffer_reference_prefix() + std::to_string(buffer_index));
-            }
+            xjson_path_type p = path;
+            detail::set_json(patch, p,
+                xbuffer_reference_prefix() + std::to_string(buffer_index));
         }
     }
 
