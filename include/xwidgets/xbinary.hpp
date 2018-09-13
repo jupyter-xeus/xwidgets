@@ -73,7 +73,14 @@ namespace xw
             const xeus::xjson* current = &patch;
             for (const auto& item : path)
             {
-                current = &((*current)[item]);
+                if (!current->is_array())
+                {
+                    current = &((*current)[item]);
+                }
+                else
+                {
+                    current = &(*current)[std::stoul(item)];
+                }
             }
             return *current;
         }
@@ -84,7 +91,14 @@ namespace xw
             xeus::xjson* current = &patch;
             for (const auto& item : path)
             {
-                current = &((*current)[item]);
+                if (!current->is_array())
+                {
+                    current = &((*current)[item]);
+                }
+                else
+                {
+                    current = &(*current)[std::stoul(item)];
+                }
             }
             return *current;
         }
