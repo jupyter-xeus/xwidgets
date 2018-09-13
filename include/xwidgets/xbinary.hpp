@@ -67,40 +67,55 @@ namespace xw
 
     namespace detail
     {
-        inline const xeus::xjson& get_json(const xeus::xjson& patch,
+        inline const xeus::xjson* get_json(const xeus::xjson& patch,
                                            const xjson_path_type& path)
         {
             const xeus::xjson* current = &patch;
             for (const auto& item : path)
             {
-                if (!current->is_array())
-                {
-                    current = &((*current)[item]);
-                }
-                else
+                if (current->is_array())
                 {
                     current = &(*current)[std::stoul(item)];
                 }
+                else
+                {
+                    auto el = current->find(item);
+                    if (el != current->end())
+                    {
+                        current = &(*el);
+                    }
+                    else
+                    {
+                        return nullptr;
+                    }
+                }
             }
-            return *current;
+            return current;
         }
 
-        inline xeus::xjson& get_json(xeus::xjson& patch,
-                                     const xjson_path_type& path)
+        inline xeus::xjson* get_json(xeus::xjson& patch, const xjson_path_type& path)
         {
             xeus::xjson* current = &patch;
             for (const auto& item : path)
             {
-                if (!current->is_array())
-                {
-                    current = &((*current)[item]);
-                }
-                else
+                if (current->is_array())
                 {
                     current = &(*current)[std::stoul(item)];
                 }
+                else
+                {
+                    auto el = current->find(item);
+                    if (el != current->end())
+                    {
+                        current = &(*el);
+                    }
+                    else
+                    {
+                        return nullptr;
+                    }
+                }
             }
-            return *current;
+            return current;
         }
 
         template <class T>
@@ -108,7 +123,11 @@ namespace xw
                              const xjson_path_type& path,
                              const T& value)
         {
-            get_json(patch, path) = value;
+            xeus::xjson* json = get_json(patch, path);
+            if (json != nullptr)
+            {
+                (*json) = value;
+            }
         }
 
         inline void insert_buffer_path(xeus::xjson& patch,
@@ -127,13 +146,12 @@ namespace xw
                                      xeus::xjson& buffer_paths)
     {
         buffer_paths = xeus::xjson(buffers.size(), nullptr);
-
         for (const auto& path : to_check)
         {
-            const xeus::xjson& item = detail::get_json(patch, path);
-            if (item.is_string())
+            const xeus::xjson* item = detail::get_json(patch, path);
+            if (item != nullptr && item->is_string())
             {
-                const std::string leaf = item.get<std::string>();
+                const std::string leaf = item->get<std::string>();
                 if (is_buffer_reference(leaf))
                 {
                     buffer_paths[buffer_index(leaf)] = path;
