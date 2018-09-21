@@ -21,18 +21,18 @@ interpreter.
 However, with Visual Studio 2017, the introduction of ``__declspec(dllexport)``
 instructions for certain widget types causes compilation errors. This is the
 case for widget types that are used as properties for other widgets such as
-``xlayout``` and style widgets.
+``xlayout`` and style widgets.
 
 The upstream `MSVC issue`_  issue appears to have been solved with VS2017 15.7
 (Preview 3). The impacted build numbers for Visual Studio are
-``_MSC_VER==1910``, ``_MSC_VER==1911```, ``_MSC_VER==1912```,
-``_MSC_VER==1913```.
+``_MSC_VER==1910``, ``_MSC_VER==1911``, ``_MSC_VER==1912``,
+``_MSC_VER==1913``.
 
 Visual Studio and CRTP bases
 ----------------------------
 
 If we have ``template <class T> class Foo : public Bar<Foo<T>>``, then within
-the implementation of ``Foo ``, ``Bar`` should be a template, and not refer to
+the implementation of ``Foo``, ``Bar`` should be a template, and not refer to
 ``Bar<Foo<T>>``. However, unlike GCC and Clang, Visual Studio incorrectly makes
 ``Bar`` refer to the fully specialized template type.
 
