@@ -106,6 +106,7 @@ namespace xw
     inline void xtogglebuttons_style<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
+
         set_property_from_patch(button_width, patch, buffers);
     }
 

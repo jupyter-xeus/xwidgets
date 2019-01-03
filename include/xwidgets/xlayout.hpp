@@ -78,35 +78,6 @@ namespace xw
      *************************/
 
     template <class D>
-    inline void xlayout<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
-    {
-        base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(align_content, patch, buffers);
-        set_property_from_patch(align_items, patch, buffers);
-        set_property_from_patch(align_self, patch, buffers);
-        set_property_from_patch(bottom, patch, buffers);
-        set_property_from_patch(border, patch, buffers);
-        set_property_from_patch(display, patch, buffers);
-        set_property_from_patch(flex, patch, buffers);
-        set_property_from_patch(flex_flow, patch, buffers);
-        set_property_from_patch(height, patch, buffers);
-        set_property_from_patch(justify_content, patch, buffers);
-        set_property_from_patch(left, patch, buffers);
-        set_property_from_patch(margin, patch, buffers);
-        set_property_from_patch(max_height, patch, buffers);
-        set_property_from_patch(max_width, patch, buffers);
-        set_property_from_patch(overflow, patch, buffers);
-        set_property_from_patch(overflow_x, patch, buffers);
-        set_property_from_patch(overflow_y, patch, buffers);
-        set_property_from_patch(order, patch, buffers);
-        set_property_from_patch(padding, patch, buffers);
-        set_property_from_patch(right, patch, buffers);
-        set_property_from_patch(top, patch, buffers);
-        set_property_from_patch(width, patch, buffers);
-    }
-
-    template <class D>
     inline void xlayout<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
@@ -135,6 +106,35 @@ namespace xw
         set_patch_from_property(right, state, buffers);
         set_patch_from_property(top, state, buffers);
         set_patch_from_property(width, state, buffers);
+    }
+
+    template <class D>
+    inline void xlayout<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    {
+        base_type::apply_patch(patch, buffers);
+
+        set_property_from_patch(align_content, patch, buffers);
+        set_property_from_patch(align_items, patch, buffers);
+        set_property_from_patch(align_self, patch, buffers);
+        set_property_from_patch(bottom, patch, buffers);
+        set_property_from_patch(border, patch, buffers);
+        set_property_from_patch(display, patch, buffers);
+        set_property_from_patch(flex, patch, buffers);
+        set_property_from_patch(flex_flow, patch, buffers);
+        set_property_from_patch(height, patch, buffers);
+        set_property_from_patch(justify_content, patch, buffers);
+        set_property_from_patch(left, patch, buffers);
+        set_property_from_patch(margin, patch, buffers);
+        set_property_from_patch(max_height, patch, buffers);
+        set_property_from_patch(max_width, patch, buffers);
+        set_property_from_patch(overflow, patch, buffers);
+        set_property_from_patch(overflow_x, patch, buffers);
+        set_property_from_patch(overflow_y, patch, buffers);
+        set_property_from_patch(order, patch, buffers);
+        set_property_from_patch(padding, patch, buffers);
+        set_property_from_patch(right, patch, buffers);
+        set_property_from_patch(top, patch, buffers);
+        set_property_from_patch(width, patch, buffers);
     }
 
     template <class D>

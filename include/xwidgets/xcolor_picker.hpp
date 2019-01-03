@@ -61,7 +61,7 @@ namespace xw
 
         set_patch_from_property(value, state, buffers);
         set_patch_from_property(disabled, state, buffers);
-        set_patch_from_property(value, state, buffers);
+        set_patch_from_property(concise, state, buffers);
     }
 
     template <class D>

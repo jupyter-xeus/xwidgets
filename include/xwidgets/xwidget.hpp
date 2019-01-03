@@ -57,21 +57,21 @@ namespace xw
     }
 
     template <class D>
-    inline void xwidget<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
-    {
-        base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(layout, patch, buffers);
-        set_property_from_patch(_dom_classes, patch, buffers);
-    }
-
-    template <class D>
     inline void xwidget<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
 
         set_patch_from_property(layout, state, buffers);
         set_patch_from_property(_dom_classes, state, buffers);
+    }
+
+    template <class D>
+    inline void xwidget<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    {
+        base_type::apply_patch(patch, buffers);
+
+        set_property_from_patch(layout, patch, buffers);
+        set_property_from_patch(_dom_classes, patch, buffers);
     }
 
     template <class D>
