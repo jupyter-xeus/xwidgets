@@ -67,8 +67,8 @@ namespace xw
 
     namespace detail
     {
-        inline const xeus::xjson* get_json(const xeus::xjson& patch,
-                                           const xjson_path_type& path)
+        inline const xeus::xjson* get_buffers(const xeus::xjson& patch,
+                                              const xjson_path_type& path)
         {
             const xeus::xjson* current = &patch;
             for (const auto& item : path)
@@ -104,15 +104,7 @@ namespace xw
                 }
                 else
                 {
-                    auto el = current->find(item);
-                    if (el != current->end())
-                    {
-                        current = &(*el);
-                    }
-                    else
-                    {
-                        return nullptr;
-                    }
+                    current = &(*current)[item];
                 }
             }
             return current;
@@ -148,7 +140,7 @@ namespace xw
         buffer_paths = xeus::xjson(buffers.size(), nullptr);
         for (const auto& path : to_check)
         {
-            const xeus::xjson* item = detail::get_json(patch, path);
+            const xeus::xjson* item = detail::get_buffers(patch, path);
             if (item != nullptr && item->is_string())
             {
                 const std::string leaf = item->get<std::string>();
