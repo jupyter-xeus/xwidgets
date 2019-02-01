@@ -34,7 +34,7 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - conda info -a
-  - conda install gtest cmake xeus=0.18.1 nlohmann_json=3.3.0 cppzmq==4.3.0 xproperty==0.8.0 xtl==0.5.2 -c QuantStack -c conda-forge
+  - conda install gtest cmake xeus=0.18.1 nlohmann_json=3.3.0 cppzmq==4.3.0 xproperty==0.8.1 xtl==0.5.3 -c QuantStack -c conda-forge
   - cmake -G "NMake Makefiles" -D CMAKE_INSTALL_PREFIX=%MINICONDA%\\LIBRARY -DBUILD_TESTS=ON .
   - nmake test_xwidgets
   - cd test

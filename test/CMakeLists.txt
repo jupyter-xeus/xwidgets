@@ -47,7 +47,7 @@ if(DOWNLOAD_GTEST OR GTEST_SRC_DIR)
     # Add googletest directly to our build. This defines
     # the gtest and gtest_main targets.
     add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
-                     ${CMAKE_CURRENT_BINARY_DIR}/googletest-build)
+                     ${CMAKE_CURRENT_BINARY_DIR}/googletest-build EXCLUDE_FROM_ALL)
 
     set(GTEST_INCLUDE_DIRS "${gtest_SOURCE_DIR}/include")
     set(GTEST_BOTH_LIBRARIES  gtest_main gtest)
@@ -79,18 +79,17 @@ if("${isSystemDir}" STREQUAL "-1")
     set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 endif("${isSystemDir}" STREQUAL "-1")
 
-set(XWIDGETS_TEST_TARGET test_xwidgets)
-
-add_executable(${XWIDGETS_TEST_TARGET} ${XWIDGETS_TESTS} ${XWIDGETS_HEADERS})
+add_executable(test_xwidgets ${XWIDGETS_TESTS} ${XWIDGETS_HEADERS})
 if(DOWNLOAD_GTEST OR GTEST_SRC_DIR)
-    add_dependencies(${XWIDGETS_TEST_TARGET} gtest_main)
+    add_dependencies(test_xwidgets gtest_main)
 endif()
 
-target_compile_features(${XWIDGETS_TEST_TARGET} PRIVATE cxx_std_14)
+target_compile_features(test_xwidgets PRIVATE cxx_std_14)
 
-target_link_libraries(${XWIDGETS_TEST_TARGET}
-                        PRIVATE xwidgets
-                        PUBLIC  xtl
-                        PRIVATE xeus
-                        PRIVATE ${GTEST_BOTH_LIBRARIES}
-                        PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(test_xwidgets
+                      PRIVATE xwidgets
+                      PUBLIC  xtl
+                      PRIVATE xeus
+                      PRIVATE ${GTEST_BOTH_LIBRARIES}
+                      PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_include_directories(test_xwidgets PRIVATE XWIDGETS_INCLUDE_DIR)
