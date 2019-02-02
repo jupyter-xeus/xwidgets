@@ -17,11 +17,19 @@ install:
     - hash -r
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
-    - conda install gtest cmake xeus=0.18.1 nlohmann_json=3.3.0 cppzmq=4.3.0 xproperty=0.8.1 xtl=0.5.3 gcc-7 -c QuantStack -c conda-forge
+    # Install host dependencies
+    - conda install xeus=0.18.1 cppzmq=4.3.0 xproperty=0.8.1 nlohmann_json=3.4.0 -c conda-forge
+    # Install build dependencies
+    - conda install cmake -c conda-forge
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        conda install gxx_linux-64 -c conda-forge;
+      fi
+    # Activate root environment
+    - source activate root
     # Testing
     - mkdir build
     - cd build
-    - cmake -D CMAKE_INSTALL_PREFIX=$HOME/miniconda/ -D DOWNLOAD_GTEST=ON ..
+    - cmake -D CMAKE_INSTALL_PREFIX=$HOME/miniconda/ -D DOWNLOAD_GTEST=ON -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX ..
     - make -j2 install
     - cd test
 script:
