@@ -33,7 +33,7 @@ We provide a package for the conda package manager.
 - Installing `xwidgets` and the C++ kernel
 
 ```bash
-conda install xeus-cling xwidgets -c QuantStack -c conda-forge
+conda install xeus-cling xwidgets -c conda-forge
 ```
 
 Then, the front-end extension must be installed for either the classic notebook
@@ -54,10 +54,6 @@ jupyter labextension install @jupyter-widgets/jupyterlab-manager
 This command defaults to installing the latest version of the JupyterLab
 extension. Depending on the version of `xwidgets` and `jupyterlab` you have
 installed you may need an older version.
-
-## Jupyterlab extension version compatibility
-
-Specific version of
 
 ## Installation from sources
 
@@ -88,7 +84,7 @@ All the dependencies of xwidgets are available for the conda package manager.
 
 | `xwidgets` | `widgetsnbextension`  |     `xtl`      | `xproperty`   | `xeus`          | `nlohmann_json` |
 |------------|-----------------------|----------------|---------------|-----------------|-----------------|
-|  master    |      ^3.0.0           |  >=0.5.2,<0.6  | >=0.8.1,<0.9  | >=0.18.1,<0.19  | >=3.3.0,<4.0    |
+|  master    |      ^3.0.0           |  >=0.6.1,<0.7  | >=0.8.1,<0.9  | >=0.19.1,<0.20  | >=3.5.0,<4.0    |
 |  0.16.1    |      ^3.0.0           |  >=0.5.2,<0.6  | >=0.8.1,<0.9  | >=0.18.1,<0.19  | >=3.3.0,<4.0    |
 |  0.16.0    |      ^3.0.0           |  >=0.5.2,<0.6  | >=0.8.0,<0.9  | >=0.18.1,<0.19  | >=3.3.0,<4.0    |
 |  0.15.0    |      ^3.0.0           |  >=0.5.2,<0.6  | >=0.7.0,<0.8  | >=0.17.0,<0.18  | >=3.3.0,<4.0    |
