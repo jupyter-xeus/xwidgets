@@ -93,6 +93,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumeral.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xobject.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xoutput.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xpassword.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xplay.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprogress.hpp
@@ -132,6 +133,7 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xlayout.cpp
     ${XWIDGETS_SOURCE_DIR}/xlink.cpp
     ${XWIDGETS_SOURCE_DIR}/xnumeral.cpp
+    ${XWIDGETS_SOURCE_DIR}/xoutput.cpp
     ${XWIDGETS_SOURCE_DIR}/xpassword.cpp
     ${XWIDGETS_SOURCE_DIR}/xplay.cpp
     ${XWIDGETS_SOURCE_DIR}/xprogress.cpp
