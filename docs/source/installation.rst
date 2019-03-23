@@ -34,7 +34,7 @@ The package will also pull all the dependencies.
 
 .. code::
 
-    conda install -c QuantStack xwidgets 
+    conda install xwidgets -c conda-forge
 
 .. image:: cmake.svg
 
