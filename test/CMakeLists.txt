@@ -64,6 +64,7 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 set(XWIDGETS_TESTS
     main.cpp
+    test_xholder.cpp
     test_xwidgets.cpp
 )
 
