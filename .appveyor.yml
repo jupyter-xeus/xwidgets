@@ -35,7 +35,7 @@ install:
   - conda update -q conda
   - conda info -a
   # Install host dependencies
-  - conda install xeus=0.20.0 cppzmq=4.3.0 xproperty=0.8.1 nlohmann_json=3.6.1 -c conda-forge
+  - conda install xeus=0.21.1 cppzmq=4.3.0 xproperty=0.8.1 nlohmann_json=3.6.1 -c conda-forge
   # Install build dependencies
   - conda install gtest cmake -c conda-forge
   - cmake -G "NMake Makefiles" -D CMAKE_INSTALL_PREFIX=%MINICONDA%\\LIBRARY -DBUILD_TESTS=ON .
