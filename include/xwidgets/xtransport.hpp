@@ -142,6 +142,9 @@ namespace xw
 
         const std::vector<xjson_path_type>& buffer_paths() const;
 
+        template <class P>
+        void notify(const P& property) const;
+
     protected:
 
         xtransport();
@@ -155,9 +158,6 @@ namespace xw
         bool moved_from() const noexcept;
         void open();
         void close();
-
-        template <class P>
-        void notify(const P& property) const;
 
     private:
 

@@ -49,6 +49,14 @@ public:
 		return m_name;
 	}
 
+// INITIALIZE(owner, value, 1, min, 0)
+// owner_generator.value(owner, 1).min(owner, 0).finalize()
+
+// owner.init({
+// 	{"value", 0},
+// 	{"owner", 0}
+// });
+
 	T& ref() noexcept
 	{
 		return m_data;
@@ -64,7 +72,7 @@ public:
 		return m_data;
 	}
 
-	operator const T& () const noexcept
+	operator const T&() const noexcept
 	{
 		return m_data;
 	}
@@ -77,6 +85,11 @@ public:
 	T& operator()() noexcept
 	{
 		return m_data;
+	}
+
+	void set(const T& val) noexcept
+	{
+		m_data = val;
 	}
 
 	template <class X>
@@ -124,22 +137,74 @@ public:
 	}
 
 private:
+	std::string m_name;
 	T m_data;
-	const std::string m_name;
-	void* m_parent;
+
 	std::vector<std::function<void(T&)>> m_validator;
 	std::vector<std::function<void(const trait<T>&)>> m_observer;
 };
 
+template <class O, class T>
+class super_trait :
+	public trait<T>
+{
+public:
+	template <class IV, class X>
+	super_trait(const std::string& name,
+		  IV&& init,
+		  void(X::*observer)(const trait<T>&) const,
+		  X* parent
+		) :
+		trait<T>(name, std::forward<IV>(init), observer, parent),
+		m_owner(parent)
+	{
+	}
+
+	template <class IV, class V, class X>
+	super_trait(const std::string& name,
+		  IV&& init,
+		  V&& validator,
+		  void(X::*observer)(const trait<T>&) const,
+		  X* parent
+	) :
+		trait<T>(name, std::forward<IV>(init), std::forward<V>(validator), observer, parent),
+		m_owner(parent)
+	{
+	}
+
+	template <class X>
+	super_trait<O, T>& operator=(X&& new_data)
+	{
+		trait<T>::operator=(std::forward<X>(new_data));
+		return *this;
+	}
+
+	O& operator()(const T& other)
+	{
+		trait<T>::set(other);
+		return *m_owner;
+	}
+
+	T& operator()() {
+		return this->ref();
+	}
+
+	const T& operator()() const {
+		return this->ref();
+	}
+
+private:
+	O* m_owner;
+};
 
 #define XTRAIT_NODEFAULT(T, D, N) \
-	trait<T> N = trait<T>(#N, T(), &D::notify, this);
+	super_trait<D, T> N = super_trait<D, T>(#N, T(), &D::notify, this);
 
 #define XTRAIT_DEFAULT(T, D, N, V) \
-	trait<T> N = trait<T>(#N, T(V), &D::notify, this);
+	super_trait<D, T> N = super_trait<D, T>(#N, T(V), &D::notify, this);
 
 #define XTRAIT_GENERAL(T, D, N, V, Validator) \
-	trait<T> N = trait<T>(#N, T(V), Validator, &D::notify, this);
+	super_trait<D, T> N = super_trait<D, T>(#N, T(V), Validator, &D::notify, this);
 
 #define XTRAIT_OVERLOAD(_1, _2, _3, _4, _5, NAME, ...) NAME
 

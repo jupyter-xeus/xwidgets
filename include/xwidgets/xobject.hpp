@@ -15,7 +15,8 @@
 #include "xtl/xoptional.hpp"
 #include "xtl/xjson.hpp"
 
-#include "xproperty/xobserved.hpp"
+#include "xtrait.hpp"
+// #include "xproperty/xobserved.hpp"
 
 #include "xmaterialize.hpp"
 #include "xtransport.hpp"
@@ -27,7 +28,7 @@ namespace xw
      ****************************/
 
     template <class D>
-    class xobject : public xp::xobserved<D>, public xtransport<D>
+    class xobject : public xtransport<D>
     {
     public:
 
@@ -47,6 +48,7 @@ namespace xw
         XTRAIT(xtl::xoptional<std::string>, derived_type, _view_name, "WidgetView");
 
         using base_type::notify;
+        xobject(const xobject&) = default;
 
     protected:
 

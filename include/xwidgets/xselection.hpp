@@ -158,40 +158,40 @@ namespace xw
     inline void xselection<D>::setup_properties()
     {
         auto self = this->self();
-        self->template observe<decltype(self->value)>([](auto& owner) {
-            const options_type& opt = owner._options_labels();
-            auto new_index = index_type(std::find(opt.cbegin(), opt.cend(), owner.value()) - opt.cbegin());
-            if (new_index != owner.index())
-            {
-                owner.index = new_index;
-            }
-        });
+        // self->template observe<decltype(self->value)>([](auto& owner) {
+        //     const options_type& opt = owner._options_labels();
+        //     auto new_index = index_type(std::find(opt.cbegin(), opt.cend(), owner.value()) - opt.cbegin());
+        //     if (new_index != owner.index())
+        //     {
+        //         owner.index = new_index;
+        //     }
+        // });
 
-        self->template observe<decltype(self->index)>([](auto& owner) {
-            auto new_value = owner._options_labels()[owner.index()];
-            if (new_value != owner.value())
-            {
-                owner.value = new_value;
-            }
-        });
+        // self->template observe<decltype(self->index)>([](auto& owner) {
+        //     auto new_value = owner._options_labels()[owner.index()];
+        //     if (new_value != owner.value())
+        //     {
+        //         owner.value = new_value;
+        //     }
+        // });
 
-        self->template observe<decltype(self->_options_labels)>([](auto& owner) {
-            const options_type& opt = owner._options_labels();
-            auto position = std::find(opt.cbegin(), opt.cend(), owner.value());
-            if (position == opt.cend())
-            {
-                position = opt.cbegin();
-            }
-            owner.index = position - opt.cbegin();
-        });
+        // self->template observe<decltype(self->_options_labels)>([](auto& owner) {
+        //     const options_type& opt = owner._options_labels();
+        //     auto position = std::find(opt.cbegin(), opt.cend(), owner.value());
+        //     if (position == opt.cend())
+        //     {
+        //         position = opt.cbegin();
+        //     }
+        //     owner.index = position - opt.cbegin();
+        // });
 
-        self->template validate<decltype(self->value)>([](auto& owner, auto& proposal) {
-            const options_type& opt = owner._options_labels();
-            if (std::find(opt.cbegin(), opt.cend(), proposal) == opt.cend())
-            {
-                throw std::runtime_error("Invalid value");
-            }
-        });
+        // self->template validate<decltype(self->value)>([](auto& owner, auto& proposal) {
+        //     const options_type& opt = owner._options_labels();
+        //     if (std::find(opt.cbegin(), opt.cend(), proposal) == opt.cend())
+        //     {
+        //         throw std::runtime_error("Invalid value");
+        //     }
+        // });
     }
 
     template <class D>
