@@ -36,7 +36,7 @@ namespace xw
         void serialize_state(xeus::xjson& state, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(value_type, derived_type, value);
+        XTRAIT(value_type, derived_type, value);
 
         const std::vector<xjson_path_type>& buffer_paths() const;
 

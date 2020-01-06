@@ -35,11 +35,11 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::vector<std::string>, derived_type, tooltips);
+        XTRAIT(std::vector<std::string>, derived_type, tooltips);
 
-        XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
-        XPROPERTY(bool, derived_type, readout, true);
-        XPROPERTY(bool, derived_type, continuous_update, true);
+        XTRAIT(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
+        XTRAIT(bool, derived_type, readout, true);
+        XTRAIT(bool, derived_type, continuous_update, true);
 
     protected:
 
@@ -75,11 +75,11 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::vector<std::string>, derived_type, tooltips);
+        XTRAIT(std::vector<std::string>, derived_type, tooltips);
 
-        XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
-        XPROPERTY(bool, derived_type, readout, true);
-        XPROPERTY(bool, derived_type, continuous_update, true);
+        XTRAIT(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
+        XTRAIT(bool, derived_type, readout, true);
+        XTRAIT(bool, derived_type, continuous_update, true);
 
     protected:
 

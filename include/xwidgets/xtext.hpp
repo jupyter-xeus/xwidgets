@@ -33,8 +33,8 @@ namespace xw
 
         void on_submit(submit_callback_type);
 
-        XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(bool, derived_type, continuous_update, true);
+        XTRAIT(bool, derived_type, disabled);
+        XTRAIT(bool, derived_type, continuous_update, true);
 
         void handle_custom_message(const xeus::xjson&);
 

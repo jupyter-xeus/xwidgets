@@ -39,12 +39,12 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module, "@jupyter-widgets/base");
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module_version, XWIDGETS_BASE_VERSION);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_name, "WidgetModel");
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module, "@jupyter-widgets/base");
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module_version, XWIDGETS_BASE_VERSION);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_name, "WidgetView");
+        XTRAIT(xtl::xoptional<std::string>, derived_type, _model_module, "@jupyter-widgets/base");
+        XTRAIT(xtl::xoptional<std::string>, derived_type, _model_module_version, XWIDGETS_BASE_VERSION);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, _model_name, "WidgetModel");
+        XTRAIT(xtl::xoptional<std::string>, derived_type, _view_module, "@jupyter-widgets/base");
+        XTRAIT(xtl::xoptional<std::string>, derived_type, _view_module_version, XWIDGETS_BASE_VERSION);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, _view_name, "WidgetView");
 
         using base_type::notify;
 

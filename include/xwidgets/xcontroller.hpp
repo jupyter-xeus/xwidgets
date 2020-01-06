@@ -35,8 +35,8 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(double, derived_type, value);
-        XPROPERTY(bool, derived_type, pressed);
+        XTRAIT(double, derived_type, value);
+        XTRAIT(bool, derived_type, pressed);
 
     protected:
 
@@ -67,7 +67,7 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(double, derived_type, value);
+        XTRAIT(double, derived_type, value);
 
     protected:
 
@@ -109,13 +109,13 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(int, derived_type, index);
-        XPROPERTY(std::string, derived_type, name);
-        XPROPERTY(std::string, derived_type, mapping)
-        XPROPERTY(bool, derived_type, connected);
-        XPROPERTY(double, derived_type, timestamp);
-        XPROPERTY(xcontroller_button_list_type, derived_type, buttons);
-        XPROPERTY(xcontroller_axis_list_type, derived_type, axes);
+        XTRAIT(int, derived_type, index);
+        XTRAIT(std::string, derived_type, name);
+        XTRAIT(std::string, derived_type, mapping)
+        XTRAIT(bool, derived_type, connected);
+        XTRAIT(double, derived_type, timestamp);
+        XTRAIT(xcontroller_button_list_type, derived_type, buttons);
+        XTRAIT(xcontroller_axis_list_type, derived_type, axes);
 
     protected:
 

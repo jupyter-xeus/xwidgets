@@ -33,11 +33,11 @@ namespace xw
 
         using value_type = typename xnumber_traits<derived_type>::value_type;
 
-        XPROPERTY(std::string, derived_type, description);
+        XTRAIT(std::string, derived_type, description);
 
-        XPROPERTY(value_type, derived_type, value);
-        XPROPERTY(value_type, derived_type, min);
-        XPROPERTY(value_type, derived_type, max, value_type(100));
+        XTRAIT(value_type, derived_type, value);
+        XTRAIT(value_type, derived_type, min);
+        XTRAIT(value_type, derived_type, max, value_type(100));
 
     protected:
 

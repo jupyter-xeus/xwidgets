@@ -40,8 +40,8 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(xtl::xoptional<html_color>, derived_type, button_color);
-        XPROPERTY(std::string, derived_type, font_weight);
+        XTRAIT(xtl::xoptional<html_color>, derived_type, button_color);
+        XTRAIT(std::string, derived_type, font_weight);
 
     protected:
 
@@ -76,13 +76,13 @@ namespace xw
 
         void on_click(click_callback_type);
 
-        XPROPERTY(std::string, derived_type, description);
+        XTRAIT(std::string, derived_type, description);
 
-        XPROPERTY(std::string, derived_type, tooltip);
-        XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(std::string, derived_type, icon);
-        XPROPERTY(std::string, derived_type, button_style, "", XEITHER("primary", "success", "info", "warning", "danger", ""));
-        XPROPERTY(::xw::button_style, derived_type, style);
+        XTRAIT(std::string, derived_type, tooltip);
+        XTRAIT(bool, derived_type, disabled);
+        XTRAIT(std::string, derived_type, icon);
+        XTRAIT(std::string, derived_type, button_style, "", XEITHER("primary", "success", "info", "warning", "danger", ""));
+        XTRAIT(::xw::button_style, derived_type, style);
 
         void handle_custom_message(const xeus::xjson&);
 

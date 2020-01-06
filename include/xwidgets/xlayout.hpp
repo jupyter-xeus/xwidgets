@@ -32,32 +32,32 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, align_content, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly", "stretch", "inherit", "inital", "unset"));
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, align_items, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset"));
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, align_self, {}, XEITHER_OPTIONAL("auto", "flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset"));
+        XTRAIT(xtl::xoptional<std::string>, derived_type, align_content, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "space-between", "space-around", "space-evenly", "stretch", "inherit", "inital", "unset"));
+        XTRAIT(xtl::xoptional<std::string>, derived_type, align_items, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset"));
+        XTRAIT(xtl::xoptional<std::string>, derived_type, align_self, {}, XEITHER_OPTIONAL("auto", "flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset"));
 
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, bottom);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, border);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, display);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, flex);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, flex_flow);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, height);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, justify_content, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "space-between", "space-around", "inherit", "inital", "unset"));
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, left);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, margin);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, max_height);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, max_width);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, min_height);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, min_width);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, overflow, {}, XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset"));
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, overflow_x, {}, XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset"));
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, overflow_y, {}, XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset"));
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, order);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, padding);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, right);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, top);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, visibility);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, width);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, bottom);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, border);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, display);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, flex);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, flex_flow);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, height);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, justify_content, {}, XEITHER_OPTIONAL("flex-start", "flex-end", "center", "space-between", "space-around", "inherit", "inital", "unset"));
+        XTRAIT(xtl::xoptional<std::string>, derived_type, left);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, margin);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, max_height);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, max_width);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, min_height);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, min_width);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, overflow, {}, XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset"));
+        XTRAIT(xtl::xoptional<std::string>, derived_type, overflow_x, {}, XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset"));
+        XTRAIT(xtl::xoptional<std::string>, derived_type, overflow_y, {}, XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset"));
+        XTRAIT(xtl::xoptional<std::string>, derived_type, order);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, padding);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, right);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, top);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, visibility);
+        XTRAIT(xtl::xoptional<std::string>, derived_type, width);
 
     protected:
 

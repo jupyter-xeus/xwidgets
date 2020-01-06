@@ -36,8 +36,8 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, description_width);
-        XPROPERTY(xtl::xoptional<html_color>, derived_type, bar_color);
+        XTRAIT(std::string, derived_type, description_width);
+        XTRAIT(xtl::xoptional<html_color>, derived_type, bar_color);
 
     protected:
 
@@ -70,9 +70,9 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
-        XPROPERTY(std::string, derived_type, bar_style, "", XEITHER("success", "info", "warning", "danger", ""));
-        XPROPERTY(::xw::progress_style, derived_type, style);
+        XTRAIT(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
+        XTRAIT(std::string, derived_type, bar_style, "", XEITHER("success", "info", "warning", "danger", ""));
+        XTRAIT(::xw::progress_style, derived_type, style);
 
     protected:
 

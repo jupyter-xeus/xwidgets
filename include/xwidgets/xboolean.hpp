@@ -31,10 +31,10 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, description);
+        XTRAIT(std::string, derived_type, description);
 
-        XPROPERTY(bool, derived_type, value);
-        XPROPERTY(bool, derived_type, disabled);
+        XTRAIT(bool, derived_type, value);
+        XTRAIT(bool, derived_type, disabled);
 
     protected:
 

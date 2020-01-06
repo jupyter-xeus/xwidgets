@@ -12,7 +12,7 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_set>
-
+#include <iostream>
 #include "xtl/xoptional.hpp"
 
 #define XEITHER(...)                                                         \

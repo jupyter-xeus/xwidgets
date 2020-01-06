@@ -12,6 +12,7 @@
 #include <string>
 
 #include "xwidget.hpp"
+#include "xtrait.hpp"
 
 namespace xw
 {
@@ -30,9 +31,9 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, description);
-        XPROPERTY(std::string, derived_type, value);
-        XPROPERTY(std::string, derived_type, placeholder, "\u00A0");
+        XTRAIT(std::string, derived_type, description);
+        XTRAIT(std::string, derived_type, value);
+        XTRAIT(std::string, derived_type, placeholder, "\u00A0");
 
     protected:
 

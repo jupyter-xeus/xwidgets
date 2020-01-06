@@ -31,12 +31,12 @@ namespace xw
         void serialize_state(xeus::xjson& state, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(value_type, derived_type, interval, value_type(100));
-        XPROPERTY(value_type, derived_type, step, value_type(1));
-        XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(bool, derived_type, _playing);
-        XPROPERTY(bool, derived_type, _repeat);
-        XPROPERTY(bool, derived_type, show_repeat, true);
+        XTRAIT(value_type, derived_type, interval, value_type(100));
+        XTRAIT(value_type, derived_type, step, value_type(1));
+        XTRAIT(bool, derived_type, disabled);
+        XTRAIT(bool, derived_type, _playing);
+        XTRAIT(bool, derived_type, _repeat);
+        XTRAIT(bool, derived_type, show_repeat, true);
 
     protected:
 

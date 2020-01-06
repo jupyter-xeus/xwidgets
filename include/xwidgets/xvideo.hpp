@@ -33,12 +33,12 @@ namespace xw
         void serialize_state(xeus::xjson& state, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, format, "mp4");
-        XPROPERTY(std::string, derived_type, width, "");
-        XPROPERTY(std::string, derived_type, height, "");
-        XPROPERTY(bool, derived_type, autoplay, true);
-        XPROPERTY(bool, derived_type, loop, true);
-        XPROPERTY(bool, derived_type, controls, true);
+        XTRAIT(std::string, derived_type, format, "mp4");
+        XTRAIT(std::string, derived_type, width, "");
+        XTRAIT(std::string, derived_type, height, "");
+        XTRAIT(bool, derived_type, autoplay, true);
+        XTRAIT(bool, derived_type, loop, true);
+        XTRAIT(bool, derived_type, controls, true);
 
     protected:
 

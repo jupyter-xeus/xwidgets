@@ -31,9 +31,9 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(value_type, derived_type, step);
-        XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(bool, derived_type, continuous_update);
+        XTRAIT(value_type, derived_type, step);
+        XTRAIT(bool, derived_type, disabled);
+        XTRAIT(bool, derived_type, continuous_update);
 
     protected:
 

@@ -36,8 +36,8 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, description_width);
-        XPROPERTY(xtl::xoptional<html_color>, derived_type, handle_color);
+        XTRAIT(std::string, derived_type, description_width);
+        XTRAIT(xtl::xoptional<html_color>, derived_type, handle_color);
 
     protected:
 
@@ -70,13 +70,13 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(value_type, derived_type, step, value_type(1));
-        XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
-        XPROPERTY(bool, derived_type, readout, true);
-        XPROPERTY(std::string, derived_type, readout_format, ".2f");
-        XPROPERTY(bool, derived_type, continuous_update, true);
-        XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(::xw::slider_style, derived_type, style);
+        XTRAIT(value_type, derived_type, step, value_type(1));
+        XTRAIT(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
+        XTRAIT(bool, derived_type, readout, true);
+        XTRAIT(std::string, derived_type, readout_format, ".2f");
+        XTRAIT(bool, derived_type, continuous_update, true);
+        XTRAIT(bool, derived_type, disabled);
+        XTRAIT(::xw::slider_style, derived_type, style);
 
     protected:
 
@@ -190,36 +190,36 @@ namespace xw
     inline void xslider<D>::setup_properties()
     {
         auto self = this->self();
-        self->template validate<decltype(self->value)>([](auto& owner, auto& proposal) {
-            if (proposal > owner.max())
+        self->value.add_validator([this](auto& proposal) {
+            if (proposal > this->max())
             {
-                proposal = owner.max();
+                proposal = this->max();
             }
-            if (proposal < owner.min())
+            if (proposal < this->min())
             {
-                proposal = owner.min();
+                proposal = this->min();
             }
         });
 
-        self->template validate<decltype(self->min)>([](auto& owner, auto& proposal) {
-            if (proposal > owner.max())
+        self->min.add_validator([this](auto& proposal) {
+            if (proposal > this->max())
             {
                 throw std::runtime_error("setting min > max");
             }
-            if (proposal > owner.value())
+            if (proposal > this->value())
             {
-                owner.value = proposal;
+                this->value = proposal;
             }
         });
 
-        self->template validate<decltype(self->max)>([](auto& owner, auto& proposal) {
-            if (proposal < owner.min())
+        self->max.add_validator([this](auto& proposal) {
+            if (proposal < this->min())
             {
                 throw std::runtime_error("setting max < min");
             }
-            if (proposal < owner.value())
+            if (proposal < this->value())
             {
-                owner.value = proposal;
+                this->value = proposal;
             }
         });
     }

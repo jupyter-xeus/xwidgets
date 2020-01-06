@@ -35,7 +35,7 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, button_width);
+        XTRAIT(std::string, derived_type, button_width);
 
     protected:
 
@@ -76,10 +76,10 @@ namespace xw
 
         using base_type::base_type;
 
-        XPROPERTY(std::vector<std::string>, derived_type, tooltips);
-        XPROPERTY(std::vector<std::string>, derived_type, icons);
-        XPROPERTY(::xw::togglebuttons_style, derived_type, style);
-        XPROPERTY(std::string, derived_type, button_style, "", XEITHER("primary", "success", "info", "warning", "danger", ""));
+        XTRAIT(std::vector<std::string>, derived_type, tooltips);
+        XTRAIT(std::vector<std::string>, derived_type, icons);
+        XTRAIT(::xw::togglebuttons_style, derived_type, style);
+        XTRAIT(std::string, derived_type, button_style, "", XEITHER("primary", "success", "info", "warning", "danger", ""));
 
     private:
 

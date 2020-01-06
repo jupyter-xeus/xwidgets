@@ -32,9 +32,9 @@ namespace xw
         void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
         void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, tooltip);
-        XPROPERTY(std::string, derived_type, icon);
-        XPROPERTY(std::string, derived_type, button_style, "", XEITHER("primary", "success", "info", "warning", "danger", ""));
+        XTRAIT(std::string, derived_type, tooltip);
+        XTRAIT(std::string, derived_type, icon);
+        XTRAIT(std::string, derived_type, button_style, "", XEITHER("primary", "success", "info", "warning", "danger", ""));
 
     protected:
 
