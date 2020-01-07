@@ -330,7 +330,7 @@ namespace xw
     template <class P>
     inline void xtransport<D>::notify(const P& property) const
     {
-        xeus::xjson state;
+        auto state = xeus::xjson::object();
         xeus::buffer_sequence buffers;
         set_patch_from_property(property, state, buffers);
 
@@ -364,11 +364,11 @@ namespace xw
         extract_buffer_paths(derived_cast().buffer_paths(), patch, buffers, paths);
 
         // metadata
-        xeus::xjson metadata;
+        auto metadata = xeus::xjson::object();
         metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
 
         // data
-        xeus::xjson data;
+        auto data = xeus::xjson::object();
         data["method"] = "update";
         data["state"] = std::move(patch);
         data["buffer_paths"] = std::move(paths);
@@ -381,11 +381,11 @@ namespace xw
     inline void xtransport<D>::send(xeus::xjson&& content, xeus::buffer_sequence&& buffers) const
     {
         // metadata
-        xeus::xjson metadata;
+        auto metadata = xeus::xjson::object();
         metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
 
         // data
-        xeus::xjson data;
+        auto data = xeus::xjson::object();
         data["method"] = "custom";
         data["content"] = std::move(content);
 
