@@ -28,8 +28,8 @@ namespace xw
 
         using value_type = typename base_type::value_type;
 
-        void serialize_state(xeus::xjson& state, xeus::buffer_sequence&) const;
-        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
+        void serialize_state(nl::json& state, xeus::buffer_sequence&) const;
+        void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(value_type, derived_type, interval, value_type(100));
         XPROPERTY(value_type, derived_type, step, value_type(1));
@@ -69,7 +69,7 @@ namespace xw
      ************************/
 
     template <class D>
-    inline void xplay<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
+    inline void xplay<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
 
@@ -82,7 +82,7 @@ namespace xw
     }
 
     template <class D>
-    inline void xplay<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    inline void xplay<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
 

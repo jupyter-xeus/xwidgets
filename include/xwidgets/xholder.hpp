@@ -14,13 +14,16 @@
 #include <unordered_map>
 #include <utility>
 
+#include "nlohmann/json.hpp"
+
 #include "xtl/xany.hpp"
 #include "xtl/xclosure.hpp"
 
 #include "xeus/xguid.hpp"
-#include "xeus/xjson.hpp"
 
 #include "xwidgets_config.hpp"
+
+namespace nl = nlohmann;
 
 namespace xw
 {
@@ -104,10 +107,10 @@ namespace xw
      *************************************/
 
     template <template <class> class CRTP>
-    void to_json(xeus::xjson& j, const xholder<CRTP>& o);
+    void to_json(nl::json& j, const xholder<CRTP>& o);
 
     template <template <class> class CRTP>
-    void from_json(const xeus::xjson& j, xholder<CRTP>& o);
+    void from_json(const nl::json& j, xholder<CRTP>& o);
 
     /*************************
      * xregistry declaration *
@@ -470,13 +473,13 @@ namespace xw
      ****************************************/
 
     template <template <class> class CRTP>
-    inline void to_json(xeus::xjson& j, const xholder<CRTP>& o)
+    inline void to_json(nl::json& j, const xholder<CRTP>& o)
     {
         j = "IPY_MODEL_" + std::string(o.id());
     }
 
     template <template <class> class CRTP>
-    void from_json(const xeus::xjson& j, xholder<CRTP>& o)
+    void from_json(const nl::json& j, xholder<CRTP>& o)
     {
         std::string prefixed_guid = j;
         xeus::xguid guid = prefixed_guid.substr(10).c_str();
@@ -649,12 +652,12 @@ namespace xw
      **********************************************************/
 
     template <template <class> class CRTP>
-    xeus::xjson mime_bundle_repr(const xholder<CRTP>& val)
+    nl::json mime_bundle_repr(const xholder<CRTP>& val)
     {
-        xeus::xjson mime_bundle;
+        nl::json mime_bundle;
 
         // application/vnd.jupyter.widget-view+json
-        xeus::xjson widgets_json;
+        nl::json widgets_json;
         widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
         widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
         widgets_json["model_id"] = val.id();

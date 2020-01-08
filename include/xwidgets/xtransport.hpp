@@ -37,8 +37,8 @@ namespace xw
 
     inline void xobject_comm_opened(xeus::xcomm&& comm, const xeus::xmessage& msg)
     {
-        const xeus::xjson& content = msg.content();
-        const xeus::xjson& metadata = msg.metadata();
+        const nl::json& content = msg.content();
+        const nl::json& metadata = msg.metadata();
 
         std::string version;
         try
@@ -55,8 +55,8 @@ namespace xw
             throw std::runtime_error("Incompatible widget protocol versions");
         }
 
-        const xeus::xjson& data = content["data"];
-        const xeus::xjson& state = data["state"];
+        const nl::json& data = content["data"];
+        const nl::json& state = data["state"];
         const xeus::buffer_sequence& buffers = msg.buffers();
 
         xfactory& factory = get_xfactory();
@@ -86,13 +86,13 @@ namespace xw
     // Values
 
     template <class T>
-    inline void xwidgets_serialize(const T& value, xeus::xjson& j, xeus::buffer_sequence&)
+    inline void xwidgets_serialize(const T& value, nl::json& j, xeus::buffer_sequence&)
     {
         j = value;
     }
 
     template <class T>
-    inline void xwidgets_deserialize(T& value, const xeus::xjson& j, const xeus::buffer_sequence&)
+    inline void xwidgets_deserialize(T& value, const nl::json& j, const xeus::buffer_sequence&)
     {
         value = j.template get<T>();
     }
@@ -100,13 +100,13 @@ namespace xw
     // Properties
 
     template <class P>
-    inline void set_patch_from_property(const P& property, xeus::xjson& patch, xeus::buffer_sequence& buffers)
+    inline void set_patch_from_property(const P& property, nl::json& patch, xeus::buffer_sequence& buffers)
     {
         xwidgets_serialize(property(), patch[property.name()], buffers);
     }
 
     template <class P>
-    inline void set_property_from_patch(P& property, const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    inline void set_property_from_patch(P& property, const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         auto it = patch.find(property.name());
         if (it != patch.end())
@@ -126,7 +126,7 @@ namespace xw
     {
     public:
 
-        using message_callback_type = std::function<void(const xeus::xjson&)>;
+        using message_callback_type = std::function<void(const nl::json&)>;
 
         using derived_type = D;
 
@@ -137,8 +137,8 @@ namespace xw
         xeus::xguid id() const noexcept;
         void display() const;
 
-        void send_patch(xeus::xjson&&, xeus::buffer_sequence&&) const;
-        void send(xeus::xjson&&, xeus::buffer_sequence&&) const;
+        void send_patch(nl::json&&, xeus::buffer_sequence&&) const;
+        void send(nl::json&&, xeus::buffer_sequence&&) const;
 
         const std::vector<xjson_path_type>& buffer_paths() const;
 
@@ -162,12 +162,12 @@ namespace xw
     private:
 
         void handle_message(const xeus::xmessage&);
-        void handle_custom_message(const xeus::xjson&);
+        void handle_custom_message(const nl::json&);
 
         bool same_patch(const std::string&,
-                        const xeus::xjson&,
+                        const nl::json&,
                         const xeus::buffer_sequence&,
-                        const xeus::xjson&,
+                        const nl::json&,
                         const xeus::buffer_sequence&) const;
 
         bool m_moved_from;
@@ -190,10 +190,10 @@ namespace xw
      ****************************************/
 
     template <class D>
-    void to_json(xeus::xjson& j, const xtransport<D>& o);
+    void to_json(nl::json& j, const xtransport<D>& o);
 
     template <class D>
-    void from_json(const xeus::xjson& j, xtransport<D>& o);
+    void from_json(const nl::json& j, xtransport<D>& o);
 
     /**********************************
      * base xtransport implementation *
@@ -308,10 +308,10 @@ namespace xw
     template <class D>
     inline void xtransport<D>::display() const
     {
-        xeus::xjson mime_bundle;
+        nl::json mime_bundle;
 
         // application/vnd.jupyter.widget-view+json
-        xeus::xjson widgets_json;
+        nl::json widgets_json;
         widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
         widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
         widgets_json["model_id"] = this->id();
@@ -322,15 +322,15 @@ namespace xw
 
         ::xeus::get_interpreter().display_data(
             std::move(mime_bundle),
-            xeus::xjson::object(),
-            xeus::xjson::object());
+            nl::json::object(),
+            nl::json::object());
     }
 
     template <class D>
     template <class P>
     inline void xtransport<D>::notify(const P& property) const
     {
-        xeus::xjson state;
+        nl::json state;
         xeus::buffer_sequence buffers;
         set_patch_from_property(property, state, buffers);
 
@@ -357,18 +357,18 @@ namespace xw
     }
 
     template <class D>
-    inline void xtransport<D>::send_patch(xeus::xjson&& patch, xeus::buffer_sequence&& buffers) const
+    inline void xtransport<D>::send_patch(nl::json&& patch, xeus::buffer_sequence&& buffers) const
     {
         // extract buffer paths
-        auto paths = xeus::xjson::array();
+        auto paths = nl::json::array();
         extract_buffer_paths(derived_cast().buffer_paths(), patch, buffers, paths);
 
         // metadata
-        xeus::xjson metadata;
+        nl::json metadata;
         metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
 
         // data
-        xeus::xjson data;
+        nl::json data;
         data["method"] = "update";
         data["state"] = std::move(patch);
         data["buffer_paths"] = std::move(paths);
@@ -378,14 +378,14 @@ namespace xw
     }
 
     template <class D>
-    inline void xtransport<D>::send(xeus::xjson&& content, xeus::buffer_sequence&& buffers) const
+    inline void xtransport<D>::send(nl::json&& content, xeus::buffer_sequence&& buffers) const
     {
         // metadata
-        xeus::xjson metadata;
+        nl::json metadata;
         metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
 
         // data
-        xeus::xjson data;
+        nl::json data;
         data["method"] = "custom";
         data["content"] = std::move(content);
 
@@ -410,18 +410,18 @@ namespace xw
     inline void xtransport<D>::open()
     {
         // extract buffer paths
-        xeus::xjson paths;
-        xeus::xjson state;
+        nl::json paths;
+        nl::json state;
         xeus::buffer_sequence buffers;
         derived_cast().serialize_state(state, buffers);
         extract_buffer_paths(derived_cast().buffer_paths(), state, buffers, paths);
 
         // metadata
-        xeus::xjson metadata;
+        nl::json metadata;
         metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
 
         // data
-        xeus::xjson data;
+        nl::json data;
         data["state"] = std::move(state);
         data["buffer_paths"] = std::move(paths);
 
@@ -431,28 +431,28 @@ namespace xw
     template <class D>
     inline void xtransport<D>::close()
     {
-        m_comm.close(xeus::xjson::object(), xeus::xjson::object(), xeus::buffer_sequence());
+        m_comm.close(nl::json::object(), nl::json::object(), xeus::buffer_sequence());
     }
 
     template <class D>
     inline void xtransport<D>::handle_message(const xeus::xmessage& message)
     {
-        const xeus::xjson& content = message.content();
-        const xeus::xjson& data = content["data"];
+        const nl::json& content = message.content();
+        const nl::json& data = content["data"];
         std::string method = data["method"];
         if (method == "update")
         {
-            const xeus::xjson& state = data["state"];
+            const nl::json& state = data["state"];
             const auto& buffers = message.buffers();
-            const xeus::xjson& buffer_paths = data["buffer_paths"];
+            const nl::json& buffer_paths = data["buffer_paths"];
             m_hold = std::addressof(message);;
-            insert_buffer_paths(const_cast<xeus::xjson&>(state), buffer_paths);
+            insert_buffer_paths(const_cast<nl::json&>(state), buffer_paths);
             derived_cast().apply_patch(state, buffers);
             m_hold = nullptr;
         }
         else if (method == "request_state")
         {
-            xeus::xjson state;
+            nl::json state;
             xeus::buffer_sequence buffers;
             derived_cast().serialize_state(state, buffers);
             send_patch(std::move(state), std::move(buffers));
@@ -468,15 +468,15 @@ namespace xw
     }
 
     template <class D>
-    inline void xtransport<D>::handle_custom_message(const xeus::xjson& /*content*/)
+    inline void xtransport<D>::handle_custom_message(const nl::json& /*content*/)
     {
     }
 
     template <class D>
     inline bool xtransport<D>::same_patch(const std::string& name,
-                                          const xeus::xjson& j1,
+                                          const nl::json& j1,
                                           const xeus::buffer_sequence&,
-                                          const xeus::xjson& j2,
+                                          const nl::json& j2,
                                           const xeus::buffer_sequence&) const
          {
              const auto& paths = derived_cast().buffer_paths();
@@ -507,13 +507,13 @@ namespace xw
      ****************************************/
 
     template <class D>
-    inline void to_json(xeus::xjson& j, const xtransport<D>& o)
+    inline void to_json(nl::json& j, const xtransport<D>& o)
     {
         j = "IPY_MODEL_" + std::string(o.id());
     }
 
     template <class D>
-    inline void from_json(const xeus::xjson& j, xtransport<D>& o)
+    inline void from_json(const nl::json& j, xtransport<D>& o)
     {
         std::string prefixed_guid = j;
         xeus::xguid guid = prefixed_guid.substr(10).c_str();

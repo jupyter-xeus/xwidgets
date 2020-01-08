@@ -172,7 +172,7 @@ property of the image widget reads:
 .. code::
 
     inline void set_patch_from_property(const decltype(image::value)& property,
-                                        xeus::xjson& patch,
+                                        nl::json& patch,
                                         xeus::buffer_sequence& buffers)
     {
         patch[property.name()] = xbuffer_reference_prefix() + std::to_string(buffers.size());
@@ -199,7 +199,7 @@ The default implementation of ``set_patch_from_property`` reads:
 
     template <class P>
     inline void set_patch_from_property(const P& property,
-                                        xeus::xjson& patch,
+                                        nl::json& patch,
                                         xeus::buffer_sequence& buffers)
     {
         xwidgets_serialize(property(), patch[property.name()], buffers);
@@ -246,7 +246,7 @@ property of the image widget reads:
 .. code::
 
     inline void set_property_from_patch(decltype(image::value)& property,
-                                        const xeus::xjson& patch,
+                                        const nl::json& patch,
                                         const xeus::buffer_sequence& buffers)
     {
         auto it = patch.find(property.name());
@@ -279,7 +279,7 @@ The default implementation of ``set_property_from_patch`` reads:
 
     template <class P>
     inline void set_property_from_patch(P& property,
-                                        const xeus::xjson& patch,
+                                        const nl::json& patch,
                                         const xeus::buffer_sequence& buffers)
     {
         auto it = patch.find(property.name());

@@ -14,9 +14,12 @@
 #include <unordered_map>
 #include <utility>
 
+#include "nlohmann/json.hpp"
+
 #include "xeus/xcomm.hpp"
 #include "xeus/xguid.hpp"
-#include "xeus/xjson.hpp"
+
+namespace nl = nlohmann;
 
 namespace xw
 {
@@ -28,7 +31,7 @@ namespace xw
     {
     public:
 
-        using maker_type = std::function<void(xeus::xcomm&&, const xeus::xjson&, const xeus::buffer_sequence&)>;
+        using maker_type = std::function<void(xeus::xcomm&&, const nl::json&, const xeus::buffer_sequence&)>;
 
         void register_maker(const std::string& model_module,
                             const std::string& model_name,
@@ -36,7 +39,7 @@ namespace xw
                             const std::string& view_name,
                             maker_type maker);
 
-        void make(xeus::xcomm&& comm, const xeus::xjson& state, const xeus::buffer_sequence&) const;
+        void make(xeus::xcomm&& comm, const nl::json& state, const xeus::buffer_sequence&) const;
 
     private:
 
@@ -58,7 +61,7 @@ namespace xw
         m_makers[model_module + model_name + view_module + view_name] = std::move(maker);
     }
 
-    inline void xfactory::make(xeus::xcomm&& comm, const xeus::xjson& state, const xeus::buffer_sequence& buffers) const
+    inline void xfactory::make(xeus::xcomm&& comm, const nl::json& state, const xeus::buffer_sequence& buffers) const
     {
         std::string model_module = state["_model_module"];
         std::string model_name = state["_model_name"];
