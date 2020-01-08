@@ -12,11 +12,13 @@
 #include <string>
 #include <vector>
 
-#include "xeus/xjson.hpp"
+#include "nlohmann/json.hpp"
 
 #include "xmaterialize.hpp"
 #include "xmaker.hpp"
 #include "xwidget.hpp"
+
+namespace nl = nlohmann;
 
 namespace xw
 {
@@ -32,8 +34,8 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
-        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
+        void serialize_state(nl::json&, xeus::buffer_sequence&) const;
+        void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(double, derived_type, value);
         XPROPERTY(bool, derived_type, pressed);
@@ -64,8 +66,8 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
-        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
+        void serialize_state(nl::json&, xeus::buffer_sequence&) const;
+        void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(double, derived_type, value);
 
@@ -106,8 +108,8 @@ namespace xw
         using xcontroller_button_list_type = std::vector<xholder<xtransport>>;
 #endif
 
-        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
-        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
+        void serialize_state(nl::json&, xeus::buffer_sequence&) const;
+        void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(int, derived_type, index);
         XPROPERTY(std::string, derived_type, name);
@@ -138,7 +140,7 @@ namespace xw
      *************************************/
 
     template <class D>
-    inline void xcontroller_button<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
+    inline void xcontroller_button<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
 
@@ -147,7 +149,7 @@ namespace xw
     }
 
     template <class D>
-    inline void xcontroller_button<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    inline void xcontroller_button<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
 
@@ -178,7 +180,7 @@ namespace xw
      ***********************************/
 
     template <class D>
-    inline void xcontroller_axis<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
+    inline void xcontroller_axis<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
 
@@ -186,7 +188,7 @@ namespace xw
     }
 
     template <class D>
-    inline void xcontroller_axis<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    inline void xcontroller_axis<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
 
@@ -216,7 +218,7 @@ namespace xw
      ******************************/
 
     template <class D>
-    inline void xcontroller<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
+    inline void xcontroller<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
 
@@ -230,7 +232,7 @@ namespace xw
     }
 
     template <class D>
-    inline void xcontroller<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    inline void xcontroller<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
 

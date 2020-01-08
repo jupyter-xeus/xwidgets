@@ -9,12 +9,15 @@
 #ifndef XWIDGETS_MAKER_HPP
 #define XWIDGETS_MAKER_HPP
 
+#include "nlohmann/json.hpp"
+
 #include "xeus/xcomm.hpp"
-#include "xeus/xjson.hpp"
 #include "xeus/xmessage.hpp"
 
 #include "xholder.hpp"
 #include "xmaterialize.hpp"
+
+namespace nl = nlohmann;
 
 namespace xw
 {
@@ -23,7 +26,7 @@ namespace xw
      *******************/
 
     template <template <class> class CRTP, class... P>
-    void xmaker(xeus::xcomm&& comm, const xeus::xjson& state, const xeus::buffer_sequence& buffers)
+    void xmaker(xeus::xcomm&& comm, const nl::json& state, const xeus::buffer_sequence& buffers)
     {
         auto model = xgenerator<CRTP, P...>(std::move(comm), true);
         model.apply_patch(state, buffers);

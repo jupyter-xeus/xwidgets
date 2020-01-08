@@ -36,8 +36,8 @@ namespace xw
 
         using base_type::derived_cast;
 
-        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
-        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
+        void serialize_state(nl::json&, xeus::buffer_sequence&) const;
+        void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module, "@jupyter-widgets/base");
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _model_module_version, XWIDGETS_BASE_VERSION);
@@ -63,7 +63,7 @@ namespace xw
      *******************************/
 
     template <class D>
-    inline void xobject<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
+    inline void xobject<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         set_patch_from_property(_model_module, state, buffers);
         set_patch_from_property(_model_module_version, state, buffers);
@@ -74,7 +74,7 @@ namespace xw
     }
 
     template <class D>
-    inline void xobject<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    inline void xobject<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         set_property_from_patch(_model_module, patch, buffers);
         set_property_from_patch(_model_module_version, patch, buffers);

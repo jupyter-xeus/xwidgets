@@ -11,8 +11,11 @@
 
 #include <utility>
 
-#include "xeus/xjson.hpp"
+#include "nlohmann/json.hpp"
+
 #include "xwidgets_config.hpp"
+
+namespace nl = nlohmann;
 
 namespace xw
 {
@@ -159,12 +162,12 @@ namespace xw
      **********************************************************/
 
     template <template <class> class B, class... P>
-    xeus::xjson mime_bundle_repr(const xmaterialize<B, P...>& val)
+    nl::json mime_bundle_repr(const xmaterialize<B, P...>& val)
     {
-        xeus::xjson mime_bundle;
+        nl::json mime_bundle;
 
         // application/vnd.jupyter.widget-view+json
-        xeus::xjson widgets_json;
+        nl::json widgets_json;
         widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
         widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
         widgets_json["model_id"] = val.id();

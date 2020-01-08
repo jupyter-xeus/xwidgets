@@ -28,8 +28,8 @@ namespace xw
         using base_type = xboolean<D>;
         using derived_type = D;
 
-        void serialize_state(xeus::xjson&, xeus::buffer_sequence&) const;
-        void apply_patch(const xeus::xjson&, const xeus::buffer_sequence&);
+        void serialize_state(nl::json&, xeus::buffer_sequence&) const;
+        void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::string, derived_type, readout, "Invalid");
 
@@ -52,7 +52,7 @@ namespace xw
      *************************/
 
     template <class D>
-    inline void xvalid<D>::serialize_state(xeus::xjson& state, xeus::buffer_sequence& buffers) const
+    inline void xvalid<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
 
@@ -60,7 +60,7 @@ namespace xw
     }
 
     template <class D>
-    inline void xvalid<D>::apply_patch(const xeus::xjson& patch, const xeus::buffer_sequence& buffers)
+    inline void xvalid<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
 

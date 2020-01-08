@@ -14,8 +14,11 @@
 #include <string>
 #include <vector>
 
-#include "xeus/xjson.hpp"
+#include "nlohmann/json.hpp"
+
 #include "xeus/xmessage.hpp"
+
+namespace nl = nlohmann;
 
 namespace xw
 {
@@ -26,12 +29,12 @@ namespace xw
     using xjson_path_type = std::vector<std::string>;
 
     void extract_buffer_paths(const std::vector<xjson_path_type>& to_check,
-                              const xeus::xjson& patch,
+                              const nl::json& patch,
                               const xeus::buffer_sequence& buffers,
-                              xeus::xjson& buffer_paths);
+                              nl::json& buffer_paths);
 
-    void insert_buffer_paths(xeus::xjson& patch,
-                             const xeus::xjson& buffer_paths);
+    void insert_buffer_paths(nl::json& patch,
+                             const nl::json& buffer_paths);
 
     const std::string& xbuffer_reference_prefix();
 
@@ -67,10 +70,10 @@ namespace xw
 
     namespace detail
     {
-        inline const xeus::xjson* get_buffers(const xeus::xjson& patch,
-                                              const xjson_path_type& path)
+        inline const nl::json* get_buffers(const nl::json& patch,
+                                           const xjson_path_type& path)
         {
-            const xeus::xjson* current = &patch;
+            const nl::json* current = &patch;
             for (const auto& item : path)
             {
                 if (current->is_array())
@@ -93,9 +96,9 @@ namespace xw
             return current;
         }
 
-        inline xeus::xjson* get_json(xeus::xjson& patch, const xjson_path_type& path)
+        inline nl::json* get_json(nl::json& patch, const xjson_path_type& path)
         {
-            xeus::xjson* current = &patch;
+            nl::json* current = &patch;
             for (const auto& item : path)
             {
                 if (current->is_array())
@@ -111,19 +114,19 @@ namespace xw
         }
 
         template <class T>
-        inline void set_json(xeus::xjson& patch,
+        inline void set_json(nl::json& patch,
                              const xjson_path_type& path,
                              const T& value)
         {
-            xeus::xjson* json = get_json(patch, path);
+            nl::json* json = get_json(patch, path);
             if (json != nullptr)
             {
                 (*json) = value;
             }
         }
 
-        inline void insert_buffer_path(xeus::xjson& patch,
-                                       const xeus::xjson& path,
+        inline void insert_buffer_path(nl::json& patch,
+                                       const nl::json& path,
                                        std::size_t buffer_index)
         {
             xjson_path_type p = path;
@@ -133,14 +136,14 @@ namespace xw
     }
 
     inline void extract_buffer_paths(const std::vector<xjson_path_type>& to_check,
-                                     const xeus::xjson& patch,
+                                     const nl::json& patch,
                                      const xeus::buffer_sequence& buffers,
-                                     xeus::xjson& buffer_paths)
+                                     nl::json& buffer_paths)
     {
-        buffer_paths = xeus::xjson(buffers.size(), nullptr);
+        buffer_paths = nl::json(buffers.size(), nullptr);
         for (const auto& path : to_check)
         {
-            const xeus::xjson* item = detail::get_buffers(patch, path);
+            const nl::json* item = detail::get_buffers(patch, path);
             if (item != nullptr && item->is_string())
             {
                 const std::string leaf = item->get<std::string>();
@@ -152,8 +155,8 @@ namespace xw
         }
     }
 
-    inline void insert_buffer_paths(xeus::xjson& patch,
-                                    const xeus::xjson& buffer_paths)
+    inline void insert_buffer_paths(nl::json& patch,
+                                    const nl::json& buffer_paths)
     {
         for (std::size_t i = 0; i != buffer_paths.size(); ++i)
         {
