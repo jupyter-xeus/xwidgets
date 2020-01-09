@@ -185,7 +185,7 @@ namespace xw
             owner.index = position - opt.cbegin();
         });
 
-        self->template validate<typename decltype(self->value)::value_type>("value", [](auto& owner, auto& proposal) {
+        self->template validate<value_type>("value", [](auto& owner, auto& proposal) {
             const options_type& opt = owner._options_labels();
             if (std::find(opt.cbegin(), opt.cend(), proposal) == opt.cend())
             {
@@ -285,7 +285,7 @@ namespace xw
             owner.index = index_type();
         });
 
-        self->template validate<typename decltype(self->value)::value_type>("value", [](auto& owner, auto& proposal) {
+        self->template validate<value_type>("value", [](auto& owner, auto& proposal) {
             const options_type& opt = owner._options_labels();
             for (const auto& val : proposal)
             {

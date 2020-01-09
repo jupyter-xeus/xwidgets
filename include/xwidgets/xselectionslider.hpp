@@ -71,6 +71,7 @@ namespace xw
         using base_type = xmultiple_selection<D>;
         using derived_type = D;
         using options_type = typename base_type::options_type;
+        using value_type = typename base_type::value_type;
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
@@ -142,7 +143,7 @@ namespace xw
         }
 
         auto self = this->self();
-        self->template validate<typename decltype(self->_options_labels)::value_type>("_options_labels", [](auto&, auto& proposal) {
+        self->template validate<options_type>("_options_labels", [](auto&, auto& proposal) {
             if (proposal.empty())
             {
                 throw std::runtime_error("Empty collection passed to selection slider");
@@ -205,7 +206,7 @@ namespace xw
         }
 
         auto self = this->self();
-        self->template validate<typename decltype(self->_options_labels)::value_type>("value", [](auto&, auto& proposal) {
+        self->template validate<value_type>("value", [](auto&, auto& proposal) {
             if (proposal.empty())
             {
                 throw std::runtime_error("Empty collection passed to selection slider");
@@ -225,7 +226,7 @@ namespace xw
         }
 
         auto self = this->self();
-        self->template validate<typename decltype(self->_options_labels)::value_type>("_options_labels", [](auto&, auto& proposal) {
+        self->template validate<options_type>("_options_labels", [](auto&, auto& proposal) {
             if (proposal.empty())
             {
                 throw std::runtime_error("Empty collection passed to selection slider");
