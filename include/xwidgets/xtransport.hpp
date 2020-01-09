@@ -100,12 +100,6 @@ namespace xw
     // Properties
 
     template <class P>
-    inline void set_patch_from_property(const P& property, nl::json& patch, xeus::buffer_sequence& buffers)
-    {
-        xwidgets_serialize(property(), patch[property.name()], buffers);
-    }
-
-    template <class P>
     inline void set_property_from_patch(P& property, const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         auto it = patch.find(property.name());
@@ -332,7 +326,7 @@ namespace xw
     {
         nl::json state;
         xeus::buffer_sequence buffers;
-        set_patch_from_property(property, state, buffers);
+        xwidgets_serialize(property(), state[property.name()], buffers);
 
         if (m_hold != nullptr)
         {

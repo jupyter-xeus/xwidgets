@@ -115,10 +115,10 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(index, state, buffers);
-        set_patch_from_property(_options_labels, state, buffers);
-        set_patch_from_property(description, state, buffers);
-        set_patch_from_property(disabled, state, buffers);
+        xwidgets_serialize(index(), state["index"], buffers);
+        xwidgets_serialize(_options_labels(), state["_options_labels"], buffers);
+        xwidgets_serialize(description(), state["description"], buffers);
+        xwidgets_serialize(disabled(), state["disabled"], buffers);
     }
 
     template <class D>
@@ -208,10 +208,10 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(index, state, buffers);
-        set_patch_from_property(_options_labels, state, buffers);
-        set_patch_from_property(description, state, buffers);
-        set_patch_from_property(disabled, state, buffers);
+        xwidgets_serialize(index(), state["index"], buffers);
+        xwidgets_serialize(_options_labels(), state["_options_labels"], buffers);
+        xwidgets_serialize(description(), state["description"], buffers);
+        xwidgets_serialize(disabled(), state["disabled"], buffers);
     }
 
     template <class D>

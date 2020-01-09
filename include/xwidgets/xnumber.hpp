@@ -58,10 +58,10 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(value, state, buffers);
-        set_patch_from_property(min, state, buffers);
-        set_patch_from_property(max, state, buffers);
-        set_patch_from_property(description, state, buffers);
+        xwidgets_serialize(value(), state["value"], buffers);
+        xwidgets_serialize(min(), state["min"], buffers);
+        xwidgets_serialize(max(), state["max"], buffers);
+        xwidgets_serialize(description(), state["description"], buffers);
     }
 
     template <class D>

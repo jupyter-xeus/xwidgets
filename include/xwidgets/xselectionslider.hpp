@@ -108,9 +108,9 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(orientation, state, buffers);
-        set_patch_from_property(readout, state, buffers);
-        set_patch_from_property(continuous_update, state, buffers);
+        xwidgets_serialize(orientation(), state["orientation"], buffers);
+        xwidgets_serialize(readout(), state["readout"], buffers);
+        xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
     }
 
     template <class D>
@@ -171,9 +171,9 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(orientation, state, buffers);
-        set_patch_from_property(readout, state, buffers);
-        set_patch_from_property(continuous_update, state, buffers);
+        xwidgets_serialize(orientation(), state["orientation"], buffers);
+        xwidgets_serialize(readout(), state["readout"], buffers);
+        xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
     }
 
     template <class D>

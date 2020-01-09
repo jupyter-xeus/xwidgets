@@ -58,12 +58,18 @@ namespace xw
      * xmedia implementation *
      *************************/
 
+    inline void xwidgets_serialize(const std::vector<char>& value, nl::json& j, xeus::buffer_sequence& buffers)
+    {
+        j = xbuffer_reference_prefix() + std::to_string(buffers.size());
+        buffers.emplace_back(value.data(), value.size());
+    }
+
     template <class D>
     inline void xmedia<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(value, state, buffers);
+        xwidgets_serialize(value(), state["value"], buffers);
     }
 
     template <class D>
