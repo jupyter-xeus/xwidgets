@@ -63,12 +63,12 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(format, state, buffers);
-        set_patch_from_property(width, state, buffers);
-        set_patch_from_property(height, state, buffers);
-        set_patch_from_property(autoplay, state, buffers);
-        set_patch_from_property(loop, state, buffers);
-        set_patch_from_property(controls, state, buffers);
+        xwidgets_serialize(format(), state["format"], buffers);
+        xwidgets_serialize(width(), state["width"], buffers);
+        xwidgets_serialize(height(), state["height"], buffers);
+        xwidgets_serialize(autoplay(), state["autoplay"], buffers);
+        xwidgets_serialize(loop(), state["loop"], buffers);
+        xwidgets_serialize(controls(), state["controls"], buffers);
     }
 
     template <class D>
@@ -101,14 +101,6 @@ namespace xw
     /**********************
      * custom serializers *
      **********************/
-
-    inline void set_patch_from_property(const decltype(video::value)& property,
-                                        nl::json& patch,
-                                        xeus::buffer_sequence& buffers)
-    {
-        patch[property.name()] = xbuffer_reference_prefix() + std::to_string(buffers.size());
-        buffers.emplace_back(property().data(), property().size());
-    }
 
     inline void set_property_from_patch(decltype(video::value)& property,
                                         const nl::json& patch,

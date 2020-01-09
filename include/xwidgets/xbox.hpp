@@ -129,8 +129,8 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(box_style, state, buffers);
-        set_patch_from_property(children, state, buffers);
+        xwidgets_serialize(box_style(), state["box_style"], buffers);
+        xwidgets_serialize(children(), state["children"], buffers);
     }
 
     template <class D>
@@ -153,7 +153,7 @@ namespace xw
 #endif
         nl::json state;
         xeus::buffer_sequence buffers;
-        set_patch_from_property(children, state, buffers);
+        xwidgets_serialize(children(), state["box_style"], buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 
@@ -164,7 +164,7 @@ namespace xw
         this->children().emplace_back(make_owning_holder(std::move(w)));
         nl::json state;
         xeus::buffer_sequence buffers;
-        set_patch_from_property(children, state, buffers);
+        xwidgets_serialize(children(), state["box_style"], buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 
@@ -179,7 +179,7 @@ namespace xw
 #endif
         nl::json state;
         xeus::buffer_sequence buffers;
-        set_patch_from_property(children, state, buffers);
+        xwidgets_serialize(children(), state["box_style"], buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 
@@ -210,7 +210,7 @@ namespace xw
 #endif
         nl::json state;
         xeus::buffer_sequence buffers;
-        set_patch_from_property(children, state, buffers);
+        xwidgets_serialize(children(), state["box_style"], buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 
@@ -220,7 +220,7 @@ namespace xw
         this->children() = {};
         nl::json state;
         xeus::buffer_sequence buffers;
-        set_patch_from_property(children, state, buffers);
+        xwidgets_serialize(children(), state["box_style"], buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 

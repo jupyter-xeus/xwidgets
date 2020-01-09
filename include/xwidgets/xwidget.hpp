@@ -61,8 +61,8 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(layout, state, buffers);
-        set_patch_from_property(_dom_classes, state, buffers);
+        xwidgets_serialize(layout(), state["layout"], buffers);
+        xwidgets_serialize(_dom_classes(), state["_dom_classes"], buffers);
     }
 
     template <class D>

@@ -111,8 +111,8 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(description_width, state, buffers);
-        set_patch_from_property(bar_color, state, buffers);
+        xwidgets_serialize(description_width(), state["description_width"], buffers);
+        xwidgets_serialize(bar_color(), state["bar_color"], buffers);
     }
 
     template <class D>
@@ -148,9 +148,9 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(orientation, state, buffers);
-        set_patch_from_property(bar_style, state, buffers);
-        set_patch_from_property(style, state, buffers);
+        xwidgets_serialize(orientation(), state["orientation"], buffers);
+        xwidgets_serialize(bar_style(), state["bar_style"], buffers);
+        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>

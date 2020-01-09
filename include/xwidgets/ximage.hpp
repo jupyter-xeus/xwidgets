@@ -60,9 +60,9 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(format, state, buffers);
-        set_patch_from_property(width, state, buffers);
-        set_patch_from_property(height, state, buffers);
+        xwidgets_serialize(format(), state["format"], buffers);
+        xwidgets_serialize(width(), state["width"], buffers);
+        xwidgets_serialize(height(), state["height"], buffers);
     }
 
     template <class D>
@@ -103,14 +103,6 @@ namespace xw
     /**********************
      * custom serializers *
      **********************/
-
-    inline void set_patch_from_property(const decltype(image::value)& property,
-                                        nl::json& patch,
-                                        xeus::buffer_sequence& buffers)
-    {
-        patch[property.name()] = xbuffer_reference_prefix() + std::to_string(buffers.size());
-        buffers.emplace_back(property().data(), property().size());
-    }
 
     inline void set_property_from_patch(decltype(image::value)& property,
                                         const nl::json& patch,

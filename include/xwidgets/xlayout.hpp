@@ -82,30 +82,30 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        set_patch_from_property(align_content, state, buffers);
-        set_patch_from_property(align_items, state, buffers);
-        set_patch_from_property(align_self, state, buffers);
-        set_patch_from_property(bottom, state, buffers);
-        set_patch_from_property(border, state, buffers);
-        set_patch_from_property(display, state, buffers);
-        set_patch_from_property(flex, state, buffers);
-        set_patch_from_property(flex_flow, state, buffers);
-        set_patch_from_property(height, state, buffers);
-        set_patch_from_property(justify_content, state, buffers);
-        set_patch_from_property(left, state, buffers);
-        set_patch_from_property(margin, state, buffers);
-        set_patch_from_property(max_height, state, buffers);
-        set_patch_from_property(max_width, state, buffers);
-        set_patch_from_property(min_height, state, buffers);
-        set_patch_from_property(min_width, state, buffers);
-        set_patch_from_property(overflow, state, buffers);
-        set_patch_from_property(overflow_x, state, buffers);
-        set_patch_from_property(overflow_y, state, buffers);
-        set_patch_from_property(order, state, buffers);
-        set_patch_from_property(padding, state, buffers);
-        set_patch_from_property(right, state, buffers);
-        set_patch_from_property(top, state, buffers);
-        set_patch_from_property(width, state, buffers);
+        xwidgets_serialize(align_content(), state["align_content"], buffers);
+        xwidgets_serialize(align_items(), state["align_items"], buffers);
+        xwidgets_serialize(align_self(), state["align_self"], buffers);
+        xwidgets_serialize(bottom(), state["bottom"], buffers);
+        xwidgets_serialize(border(), state["border"], buffers);
+        xwidgets_serialize(display(), state["display"], buffers);
+        xwidgets_serialize(flex(), state["flex"], buffers);
+        xwidgets_serialize(flex_flow(), state["flex_flow"], buffers);
+        xwidgets_serialize(height(), state["height"], buffers);
+        xwidgets_serialize(justify_content(), state["justify_content"], buffers);
+        xwidgets_serialize(left(), state["left"], buffers);
+        xwidgets_serialize(margin(), state["margin"], buffers);
+        xwidgets_serialize(max_height(), state["max_height"], buffers);
+        xwidgets_serialize(max_width(), state["max_width"], buffers);
+        xwidgets_serialize(min_height(), state["min_height"], buffers);
+        xwidgets_serialize(min_width(), state["min_width"], buffers);
+        xwidgets_serialize(overflow(), state["overflow"], buffers);
+        xwidgets_serialize(overflow_x(), state["overflow_x"], buffers);
+        xwidgets_serialize(overflow_y(), state["overflow_y"], buffers);
+        xwidgets_serialize(order(), state["order"], buffers);
+        xwidgets_serialize(padding(), state["padding"], buffers);
+        xwidgets_serialize(right(), state["right"], buffers);
+        xwidgets_serialize(top(), state["top"], buffers);
+        xwidgets_serialize(width(), state["width"], buffers);
     }
 
     template <class D>

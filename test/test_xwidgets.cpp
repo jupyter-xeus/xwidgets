@@ -33,11 +33,11 @@ namespace xw
         hb.add(s1);
         hb.add(s2);
         hb.add(s3);
-        ASSERT_EQ(3, hb.children().size());
+        ASSERT_EQ(3u, hb.children().size());
         hb.remove(s1);
-        ASSERT_EQ(2, hb.children().size());
+        ASSERT_EQ(2u, hb.children().size());
         hb.clear();
-        ASSERT_EQ(0, hb.children().size());
+        ASSERT_EQ(0u, hb.children().size());
     }
 
     TEST(xwidgets, hbox)
