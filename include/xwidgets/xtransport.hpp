@@ -120,8 +120,6 @@ namespace xw
     {
     public:
 
-        using message_callback_type = std::function<void(const nl::json&)>;
-
         using derived_type = D;
 
         derived_type& derived_cast() & noexcept;
@@ -165,7 +163,6 @@ namespace xw
                         const xeus::buffer_sequence&) const;
 
         bool m_moved_from;
-        std::list<message_callback_type> m_message_callbacks;
         const xeus::xmessage* m_hold;
         xeus::xcomm m_comm;
     };
@@ -228,7 +225,6 @@ namespace xw
     template <class D>
     inline xtransport<D>::xtransport(const xtransport& other)
         : m_moved_from(false),
-          m_message_callbacks(other.m_message_callbacks),
           m_hold(nullptr),
           m_comm(other.m_comm)
     {
@@ -239,7 +235,6 @@ namespace xw
     template <class D>
     inline xtransport<D>::xtransport(xtransport&& other)
         : m_moved_from(false),
-          m_message_callbacks(std::move(other.m_message_callbacks)),
           m_hold(nullptr),
           m_comm(std::move(other.m_comm))
     {
@@ -252,7 +247,6 @@ namespace xw
     inline xtransport<D>& xtransport<D>::operator=(const xtransport& other)
     {
         m_moved_from = false;
-        m_message_callbacks = other.m_message_callbacks;
         get_transport_registry().unregister(this->id());
         m_hold = nullptr;
         m_comm = other.m_comm;
@@ -266,7 +260,6 @@ namespace xw
     {
         other.m_moved_from = true;
         m_moved_from = false;
-        m_message_callbacks = std::move(other.m_message_callbacks);
         get_transport_registry().unregister(this->id());
         m_hold = nullptr;
         m_comm = std::move(other.m_comm);
