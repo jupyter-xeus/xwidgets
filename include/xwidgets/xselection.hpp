@@ -158,7 +158,7 @@ namespace xw
     inline void xselection<D>::setup_properties()
     {
         auto self = this->self();
-        self->template observe<decltype(self->value)>([](auto& owner) {
+        self->observe("value", [](auto& owner) {
             const options_type& opt = owner._options_labels();
             auto new_index = index_type(std::find(opt.cbegin(), opt.cend(), owner.value()) - opt.cbegin());
             if (new_index != owner.index())
@@ -167,7 +167,7 @@ namespace xw
             }
         });
 
-        self->template observe<decltype(self->index)>([](auto& owner) {
+        self->observe("index", [](auto& owner) {
             auto new_value = owner._options_labels()[owner.index()];
             if (new_value != owner.value())
             {
@@ -175,7 +175,7 @@ namespace xw
             }
         });
 
-        self->template observe<decltype(self->_options_labels)>([](auto& owner) {
+        self->observe("_options_labels", [](auto& owner) {
             const options_type& opt = owner._options_labels();
             auto position = std::find(opt.cbegin(), opt.cend(), owner.value());
             if (position == opt.cend())
@@ -185,7 +185,7 @@ namespace xw
             owner.index = position - opt.cbegin();
         });
 
-        self->template validate<decltype(self->value)>([](auto& owner, auto& proposal) {
+        self->template validate<typename decltype(self->value)::value_type>("value", [](auto& owner, auto& proposal) {
             const options_type& opt = owner._options_labels();
             if (std::find(opt.cbegin(), opt.cend(), proposal) == opt.cend())
             {
@@ -256,7 +256,7 @@ namespace xw
     inline void xmultiple_selection<D>::setup_properties()
     {
         auto self = this->self();
-        self->template observe<decltype(self->value)>([](auto& owner) {
+        self->observe("value", [](auto& owner) {
             const options_type& opt = owner._options_labels();
             index_type new_index;
             for (const auto& val : owner.value())
@@ -269,7 +269,7 @@ namespace xw
             }
         });
 
-        self->template observe<decltype(self->index)>([](auto& owner) {
+        self->observe("index", [](auto& owner) {
             value_type new_value;
             for (const auto& i : owner.index())
             {
@@ -281,11 +281,11 @@ namespace xw
             }
         });
 
-        self->template observe<decltype(self->_options_labels)>([](auto& owner) {
+        self->observe("_options_labels", [](auto& owner) {
             owner.index = index_type();
         });
 
-        self->template validate<decltype(self->value)>([](auto& owner, auto& proposal) {
+        self->template validate<typename decltype(self->value)::value_type>("value", [](auto& owner, auto& proposal) {
             const options_type& opt = owner._options_labels();
             for (const auto& val : proposal)
             {

@@ -142,7 +142,7 @@ namespace xw
         }
 
         auto self = this->self();
-        self->template validate<decltype(self->_options_labels)>([](auto&, auto& proposal) {
+        self->template validate<typename decltype(self->_options_labels)::value_type>("_options_labels", [](auto&, auto& proposal) {
             if (proposal.empty())
             {
                 throw std::runtime_error("Empty collection passed to selection slider");
@@ -205,7 +205,7 @@ namespace xw
         }
 
         auto self = this->self();
-        self->template validate<decltype(self->_options_labels)>([](auto&, auto& proposal) {
+        self->template validate<typename decltype(self->_options_labels)::value_type>("value", [](auto&, auto& proposal) {
             if (proposal.empty())
             {
                 throw std::runtime_error("Empty collection passed to selection slider");
@@ -225,7 +225,7 @@ namespace xw
         }
 
         auto self = this->self();
-        self->template validate<decltype(self->_options_labels)>([](auto&, auto& proposal) {
+        self->template validate<typename decltype(self->_options_labels)::value_type>("_options_labels", [](auto&, auto& proposal) {
             if (proposal.empty())
             {
                 throw std::runtime_error("Empty collection passed to selection slider");
