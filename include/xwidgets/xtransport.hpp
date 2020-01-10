@@ -148,8 +148,8 @@ namespace xw
         void open();
         void close();
 
-        template <class P>
-        void notify(const P& property) const;
+        template <class T>
+        void notify(const std::string& name, const T& value) const;
 
     private:
 
@@ -314,25 +314,25 @@ namespace xw
     }
 
     template <class D>
-    template <class P>
-    inline void xtransport<D>::notify(const P& property) const
+    template <class T>
+    inline void xtransport<D>::notify(const std::string& name, const T& value) const
     {
         nl::json state;
         xeus::buffer_sequence buffers;
-        xwidgets_serialize(property(), state[property.name()], buffers);
+        xwidgets_serialize(value, state[name], buffers);
 
         if (m_hold != nullptr)
         {
             const auto& hold_state = m_hold->content()["data"]["state"];
             const auto& hold_buffers = m_hold->buffers();
 
-            auto it = hold_state.find(property.name());
+            auto it = hold_state.find(name);
             if (it != hold_state.end())
             {
-                if(same_patch(property.name(),
+                if(same_patch(name,
                               *it,
                               hold_buffers,
-                              state[property.name()],
+                              state[name],
                               buffers))
                 {
                     return;
