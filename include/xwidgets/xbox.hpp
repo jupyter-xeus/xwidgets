@@ -93,8 +93,6 @@ namespace xw
 
     using hbox = xmaterialize<xhbox>;
 
-    using hbox_generator = xgenerator<xhbox>;
-
     /********************
      * vbox declaration *
      ********************/
@@ -117,8 +115,6 @@ namespace xw
     };
 
     using vbox = xmaterialize<xvbox>;
-
-    using vbox_generator = xgenerator<xvbox>;
 
     /***********************
      * xbox implementation *
@@ -153,7 +149,7 @@ namespace xw
 #endif
         nl::json state;
         xeus::buffer_sequence buffers;
-        xwidgets_serialize(children(), state["box_style"], buffers);
+        xwidgets_serialize(children(), state["children"], buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 
@@ -164,7 +160,7 @@ namespace xw
         this->children().emplace_back(make_owning_holder(std::move(w)));
         nl::json state;
         xeus::buffer_sequence buffers;
-        xwidgets_serialize(children(), state["box_style"], buffers);
+        xwidgets_serialize(children(), state["children"], buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 
@@ -179,7 +175,7 @@ namespace xw
 #endif
         nl::json state;
         xeus::buffer_sequence buffers;
-        xwidgets_serialize(children(), state["box_style"], buffers);
+        xwidgets_serialize(children(), state["children"], buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 
@@ -210,7 +206,7 @@ namespace xw
 #endif
         nl::json state;
         xeus::buffer_sequence buffers;
-        xwidgets_serialize(children(), state["box_style"], buffers);
+        xwidgets_serialize(children(), state["children"], buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 
@@ -220,7 +216,7 @@ namespace xw
         this->children() = {};
         nl::json state;
         xeus::buffer_sequence buffers;
-        xwidgets_serialize(children(), state["box_style"], buffers);
+        xwidgets_serialize(children(), state["children"], buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 
@@ -286,16 +282,10 @@ namespace xw
     extern template class xmaterialize<xhbox>;
     extern template xmaterialize<xhbox>::xmaterialize();
     extern template class xtransport<xmaterialize<xhbox>>;
-    extern template class xgenerator<xhbox>;
-    extern template xgenerator<xhbox>::xgenerator();
-    extern template class xtransport<xgenerator<xhbox>>;
 
     extern template class xmaterialize<xvbox>;
     extern template xmaterialize<xvbox>::xmaterialize();
     extern template class xtransport<xmaterialize<xvbox>>;
-    extern template class xgenerator<xvbox>;
-    extern template xgenerator<xvbox>::xgenerator();
-    extern template class xtransport<xgenerator<xvbox>>;
 #endif
 }
 #endif

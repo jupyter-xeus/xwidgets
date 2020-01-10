@@ -41,8 +41,6 @@ namespace xw
 
     using tab = xmaterialize<xtab>;
 
-    using tab_generator = xgenerator<xtab>;
-
     /***********************
      * xtab implementation *
      ***********************/
@@ -81,9 +79,6 @@ namespace xw
     extern template class xmaterialize<xtab>;
     extern template xmaterialize<xtab>::xmaterialize();
     extern template class xtransport<xmaterialize<xtab>>;
-    extern template class xgenerator<xtab>;
-    extern template xgenerator<xtab>::xgenerator();
-    extern template class xtransport<xgenerator<xtab>>;
 #endif
 }
 

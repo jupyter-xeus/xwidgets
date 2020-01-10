@@ -48,8 +48,6 @@ namespace xw
 
     using togglebutton = xmaterialize<xtogglebutton>;
 
-    using togglebutton_generator = xgenerator<xtogglebutton>;
-
     /********************************
      * xtogglebutton implementation *
      ********************************/
@@ -96,9 +94,6 @@ namespace xw
     extern template class xmaterialize<xtogglebutton>;
     extern template xmaterialize<xtogglebutton>::xmaterialize();
     extern template class xtransport<xmaterialize<xtogglebutton>>;
-    extern template class xgenerator<xtogglebutton>;
-    extern template xgenerator<xtogglebutton>::xgenerator();
-    extern template class xtransport<xgenerator<xtogglebutton>>;
 #endif
 }
 

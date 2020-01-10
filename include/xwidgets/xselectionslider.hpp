@@ -57,8 +57,6 @@ namespace xw
 
     using selectionslider = xmaterialize<xselectionslider>;
 
-    using selectionslider_generator = xgenerator<xselectionslider>;
-
     /*************************************
      * selection_rangeslider declaration *
      *************************************/
@@ -96,8 +94,6 @@ namespace xw
     };
 
     using selection_rangeslider = xmaterialize<xselection_rangeslider>;
-
-    using selection_rangeslider_generator = xgenerator<xselection_rangeslider>;
 
     /***********************************
      * xselectionslider implementation *
@@ -142,8 +138,7 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        auto self = this->self();
-        self->template validate<options_type>("_options_labels", [](auto&, auto& proposal) {
+        this->template validate<options_type>("_options_labels", [](auto&, auto& proposal) {
             if (proposal.empty())
             {
                 throw std::runtime_error("Empty collection passed to selection slider");
@@ -193,7 +188,6 @@ namespace xw
         set_defaults();
     }
 
-
     template <class D>
     inline xselection_rangeslider<D>::xselection_rangeslider(options_type&& options)
         : base_type(std::move(options))
@@ -205,8 +199,7 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        auto self = this->self();
-        self->template validate<value_type>("value", [](auto&, auto& proposal) {
+        this->template validate<value_type>("value", [](auto&, auto& proposal) {
             if (proposal.empty())
             {
                 throw std::runtime_error("Empty collection passed to selection slider");
@@ -225,8 +218,7 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        auto self = this->self();
-        self->template validate<options_type>("_options_labels", [](auto&, auto& proposal) {
+        this->template validate<options_type>("_options_labels", [](auto&, auto& proposal) {
             if (proposal.empty())
             {
                 throw std::runtime_error("Empty collection passed to selection slider");
@@ -254,16 +246,10 @@ namespace xw
     extern template class xmaterialize<xselectionslider>;
     extern template xmaterialize<xselectionslider>::xmaterialize();
     extern template class xtransport<xmaterialize<xselectionslider>>;
-    extern template class xgenerator<xselectionslider>;
-    extern template xgenerator<xselectionslider>::xgenerator();
-    extern template class xtransport<xgenerator<xselectionslider>>;
 
     extern template class xmaterialize<xselection_rangeslider>;
     extern template xmaterialize<xselection_rangeslider>::xmaterialize();
     extern template class xtransport<xmaterialize<xselection_rangeslider>>;
-    extern template class xgenerator<xselection_rangeslider>;
-    extern template xgenerator<xselection_rangeslider>::xgenerator();
-    extern template class xtransport<xgenerator<xselection_rangeslider>>;
 #endif
 }
 #endif

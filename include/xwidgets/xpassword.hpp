@@ -43,8 +43,6 @@ namespace xw
 
     using password = xmaterialize<xpassword>;
 
-    using password_generator = xgenerator<xpassword>;
-
     /****************************
      * xpassword implementation *
      ****************************/
@@ -87,9 +85,6 @@ namespace xw
     extern template class xmaterialize<xpassword>;
     extern template xmaterialize<xpassword>::xmaterialize();
     extern template class xtransport<xmaterialize<xpassword>>;
-    extern template class xgenerator<xpassword>;
-    extern template xgenerator<xpassword>::xgenerator();
-    extern template class xtransport<xgenerator<xpassword>>;
 #endif
 }
 

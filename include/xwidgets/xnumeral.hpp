@@ -49,16 +49,7 @@ namespace xw
     using numeral = xmaterialize<xnumeral, T>;
 
     template <class T>
-    using numeral_generator = xgenerator<xnumeral, T>;
-
-    template <class T>
     struct xnumber_traits<numeral<T>>
-    {
-        using value_type = T;
-    };
-
-    template <class T>
-    struct xnumber_traits<numeral_generator<T>>
     {
         using value_type = T;
     };
@@ -109,23 +100,14 @@ namespace xw
     extern template class xmaterialize<xnumeral, int>;
     extern template xmaterialize<xnumeral, int>::xmaterialize();
     extern template class xtransport<xmaterialize<xnumeral, int>>;
-    extern template class xgenerator<xnumeral, int>;
-    extern template xgenerator<xnumeral, int>::xgenerator();
-    extern template class xtransport<xgenerator<xnumeral, int>>;
 
     extern template class xmaterialize<xnumeral, float>;
     extern template xmaterialize<xnumeral, float>::xmaterialize();
     extern template class xtransport<xmaterialize<xnumeral, float>>;
-    extern template class xgenerator<xnumeral, float>;
-    extern template xgenerator<xnumeral, float>::xgenerator();
-    extern template class xtransport<xgenerator<xnumeral, float>>;
 
     extern template class xmaterialize<xnumeral, double>;
     extern template xmaterialize<xnumeral, double>::xmaterialize();
     extern template class xtransport<xmaterialize<xnumeral, double>>;
-    extern template class xgenerator<xnumeral, double>;
-    extern template xgenerator<xnumeral, double>::xgenerator();
-    extern template class xtransport<xgenerator<xnumeral, double>>;
 #endif
 }
 

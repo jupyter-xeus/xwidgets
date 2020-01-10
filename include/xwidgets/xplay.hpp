@@ -50,16 +50,8 @@ namespace xw
 
     using play = xmaterialize<xplay>;
 
-    using play_generator = xgenerator<xplay>;
-
     template <>
     struct xnumber_traits<play>
-    {
-        using value_type = int;
-    };
-
-    template <>
-    struct xnumber_traits<play_generator>
     {
         using value_type = int;
     };
@@ -116,9 +108,6 @@ namespace xw
     extern template class xmaterialize<xplay>;
     extern template xmaterialize<xplay>::xmaterialize();
     extern template class xtransport<xmaterialize<xplay>>;
-    extern template class xgenerator<xplay>;
-    extern template xgenerator<xplay>::xgenerator();
-    extern template class xtransport<xgenerator<xplay>>;
 #endif
 }
 

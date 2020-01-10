@@ -6,15 +6,9 @@ namespace xw
     template class xmaterialize<xvideo>;
     template xmaterialize<xvideo>::xmaterialize();
     template class xtransport<xmaterialize<xvideo>>;
-    template class xgenerator<xvideo>;
-    template xgenerator<xvideo>::xgenerator();
-    template class xtransport<xgenerator<xvideo>>;
 #else
     template class XWIDGETS_API xmaterialize<xvideo>;
     template xmaterialize<xvideo>::xmaterialize();
     template class XWIDGETS_API xtransport<xmaterialize<xvideo>>;
-    template class XWIDGETS_API xgenerator<xvideo>;
-    template xgenerator<xvideo>::xgenerator();
-    template class XWIDGETS_API xtransport<xgenerator<xvideo>>;
 #endif
 }

@@ -48,8 +48,6 @@ namespace xw
 
     using dropdown = xmaterialize<xdropdown>;
 
-    using dropdown_generator = xgenerator<xdropdown>;
-
     /****************************
      * xdropdown implementation *
      ****************************/
@@ -100,9 +98,6 @@ namespace xw
     extern template class xmaterialize<xdropdown>;
     extern template xmaterialize<xdropdown>::xmaterialize();
     extern template class xtransport<xmaterialize<xdropdown>>;
-    extern template class xgenerator<xdropdown>;
-    extern template xgenerator<xdropdown>::xgenerator();
-    extern template class xtransport<xgenerator<xdropdown>>;
 #endif
 }
 #endif

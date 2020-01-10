@@ -55,8 +55,6 @@ namespace xw
 
     using link = xmaterialize<xlink>;
 
-    using link_generator = xgenerator<xlink>;
-
     /********************************
      * directional_link declaration *
      ********************************/
@@ -92,8 +90,6 @@ namespace xw
     };
 
     using directional_link = xmaterialize<xdirectional_link>;
-
-    using directional_link_generator = xgenerator<xdirectional_link>;
 
     /************************
      * xlink implementation *
@@ -186,13 +182,9 @@ namespace xw
 #ifndef _WIN32
     extern template class xmaterialize<xlink>;
     extern template class xtransport<xmaterialize<xlink>>;
-    extern template class xgenerator<xlink>;
-    extern template class xtransport<xgenerator<xlink>>;
 
     extern template class xmaterialize<xdirectional_link>;
     extern template class xtransport<xmaterialize<xdirectional_link>>;
-    extern template class xgenerator<xdirectional_link>;
-    extern template class xtransport<xgenerator<xdirectional_link>>;
 #endif
 }
 #endif

@@ -52,8 +52,6 @@ namespace xw
 
     using controller_button = xmaterialize<xcontroller_button>;
 
-    using controller_button_generator = xgenerator<xcontroller_button>;
-
     /********************************
      * xcontroller_axis declaration *
      ********************************/
@@ -82,8 +80,6 @@ namespace xw
     };
 
     using controller_axis = xmaterialize<xcontroller_axis>;
-
-    using controller_axis_generator = xgenerator<xcontroller_axis>;
 
     /***************************
      * xcontroller declaration *
@@ -132,8 +128,6 @@ namespace xw
     };
 
     using controller = xmaterialize<xcontroller>;
-
-    using controller_generator = xmaterialize<xcontroller>;
 
     /*************************************
      * xcontroller_button implementation *
@@ -289,23 +283,14 @@ namespace xw
     extern template class xmaterialize<xcontroller_button>;
     extern template xmaterialize<xcontroller_button>::xmaterialize();
     extern template class xtransport<xmaterialize<xcontroller_button>>;
-    extern template class xgenerator<xcontroller_button>;
-    extern template xgenerator<xcontroller_button>::xgenerator();
-    extern template class xtransport<xgenerator<xcontroller_button>>;
 
     extern template class xmaterialize<xcontroller_axis>;
     extern template xmaterialize<xcontroller_axis>::xmaterialize();
     extern template class xtransport<xmaterialize<xcontroller_axis>>;
-    extern template class xgenerator<xcontroller_axis>;
-    extern template xgenerator<xcontroller_axis>::xgenerator();
-    extern template class xtransport<xgenerator<xcontroller_axis>>;
 
     extern template class xmaterialize<xcontroller>;
     extern template xmaterialize<xcontroller>::xmaterialize();
     extern template class xtransport<xmaterialize<xcontroller>>;
-    extern template class xgenerator<xcontroller>;
-    extern template xgenerator<xcontroller>::xgenerator();
-    extern template class xtransport<xgenerator<xcontroller>>;
 #endif
 }
 

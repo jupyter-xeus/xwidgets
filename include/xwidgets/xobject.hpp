@@ -52,10 +52,6 @@ namespace xw
 
         xobject();
         xobject(xeus::xcomm&&, bool owning = false);
-        using concrete_type = xconcrete_type_t<D>;
-
-        concrete_type* self();
-        const concrete_type* self() const;
     };
 
     /*******************************
@@ -65,12 +61,12 @@ namespace xw
     template <class D>
     inline void xobject<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
-        xwidgets_serialize(_model_module(), state[""], buffers);
-        xwidgets_serialize(_model_module_version(), state[""], buffers);
-        xwidgets_serialize(_model_name(), state[""], buffers);
-        xwidgets_serialize(_view_module(), state[""], buffers);
-        xwidgets_serialize(_view_module_version(), state[""], buffers);
-        xwidgets_serialize(_view_name(), state[""], buffers);
+        xwidgets_serialize(_model_module(), state["_model_module"], buffers);
+        xwidgets_serialize(_model_module_version(), state["_model_module_version"], buffers);
+        xwidgets_serialize(_model_name(), state["_model_name"], buffers);
+        xwidgets_serialize(_view_module(), state["_view_module"], buffers);
+        xwidgets_serialize(_view_module_version(), state["_view_module_version"], buffers);
+        xwidgets_serialize(_view_name(), state["_view_name"], buffers);
     }
 
     template <class D>
@@ -94,18 +90,6 @@ namespace xw
     inline xobject<D>::xobject(xeus::xcomm&& com, bool owning)
         : base_type(std::move(com), owning)
     {
-    }
-
-    template <class D>
-    inline auto xobject<D>::self() -> concrete_type*
-    {
-        return reinterpret_cast<concrete_type*>(this);
-    }
-
-    template <class D>
-    inline auto xobject<D>::self() const -> const concrete_type*
-    {
-        return reinterpret_cast<const concrete_type*>(this);
     }
 }
 

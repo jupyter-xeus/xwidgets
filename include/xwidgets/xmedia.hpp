@@ -52,8 +52,6 @@ namespace xw
 
     using media = xmaterialize<xmedia>;
 
-    using media_generator = xgenerator<xmedia>;
-
     /*************************
      * xmedia implementation *
      *************************/
@@ -118,9 +116,6 @@ namespace xw
     extern template class xmaterialize<xmedia>;
     extern template xmaterialize<xmedia>::xmaterialize();
     extern template class xtransport<xmaterialize<xmedia>>;
-    extern template class xgenerator<xmedia>;
-    extern template xgenerator<xmedia>::xgenerator();
-    extern template class xtransport<xgenerator<xmedia>>;
 #endif
 }
 #endif

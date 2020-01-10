@@ -6,15 +6,9 @@ namespace xw
     template class xmaterialize<xaudio>;
     template xmaterialize<xaudio>::xmaterialize();
     template class xtransport<xmaterialize<xaudio>>;
-    template class xgenerator<xaudio>;
-    template xgenerator<xaudio>::xgenerator();
-    template class xtransport<xgenerator<xaudio>>;
 #else
     template class XWIDGETS_API xmaterialize<xaudio>;
     template xmaterialize<xaudio>::xmaterialize();
     template class XWIDGETS_API xtransport<xmaterialize<xaudio>>;
-    template class XWIDGETS_API xgenerator<xaudio>;
-    template xgenerator<xaudio>::xgenerator();
-    template class XWIDGETS_API xtransport<xgenerator<xaudio>>;
 #endif
 }

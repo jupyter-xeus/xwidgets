@@ -6,15 +6,9 @@ namespace xw
     template class xmaterialize<xlayout>;
     template xmaterialize<xlayout>::xmaterialize();
     template class xtransport<xmaterialize<xlayout>>;
-    template class xgenerator<xlayout>;
-    template xgenerator<xlayout>::xgenerator();
-    template class xtransport<xgenerator<xlayout>>;
 #else
     template class XWIDGETS_API xmaterialize<xlayout>;
     template xmaterialize<xlayout>::xmaterialize();
     template class XWIDGETS_API xtransport<xmaterialize<xlayout>>;
-    template class XWIDGETS_API xgenerator<xlayout>;
-    template xgenerator<xlayout>::xgenerator();
-    template class XWIDGETS_API xtransport<xgenerator<xlayout>>;
 #endif
 }

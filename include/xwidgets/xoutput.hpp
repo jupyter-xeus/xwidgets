@@ -54,8 +54,6 @@ namespace xw
 
     using output = xmaterialize<xoutput>;
 
-    using output_generator = xgenerator<xoutput>;
-
     template <class O>
     class output_guard
     {
@@ -150,9 +148,6 @@ namespace xw
     extern template class xmaterialize<xoutput>;
     extern template xmaterialize<xoutput>::xmaterialize();
     extern template class xtransport<xmaterialize<xoutput>>;
-    extern template class xgenerator<xoutput>;
-    extern template xgenerator<xoutput>::xgenerator();
-    extern template class xtransport<xgenerator<xoutput>>;
 #endif
 }
 #endif

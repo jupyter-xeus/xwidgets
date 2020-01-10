@@ -49,8 +49,6 @@ namespace xw
 
     using image = xmaterialize<ximage>;
 
-    using image_generator = xgenerator<ximage>;
-
     /*************************
      * ximage implementation *
      *************************/
@@ -89,15 +87,15 @@ namespace xw
         this->_view_name() = "ImageView";
     }
 
-    inline image_generator image_from_file(const std::string& filename)
+    inline auto image_from_file(const std::string& filename)
     {
-        return image_generator().value(read_file(filename));
+        return image::initialize().value(read_file(filename));
     }
 
-    inline image_generator image_from_url(const std::string& url)
+    inline auto image_from_url(const std::string& url)
     {
         std::vector<char> value(url.cbegin(), url.cend());
-        return image_generator().value(value).format("url");
+        return image::initialize().value(value).format("url");
     }
 
     /**********************
@@ -127,9 +125,6 @@ namespace xw
     extern template class xmaterialize<ximage>;
     extern template xmaterialize<ximage>::xmaterialize();
     extern template class xtransport<xmaterialize<ximage>>;
-    extern template class xgenerator<ximage>;
-    extern template xgenerator<ximage>::xgenerator();
-    extern template class xtransport<xgenerator<ximage>>;
 #endif
 }
 #endif
