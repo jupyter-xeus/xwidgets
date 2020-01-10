@@ -51,8 +51,6 @@ namespace xw
 
     using slider_style = xmaterialize<xslider_style>;
 
-    using slider_style_generator = xgenerator<xslider_style>;
-
     /**********************
      * slider declaration *
      **********************/
@@ -94,16 +92,7 @@ namespace xw
     using slider = xmaterialize<xslider, T>;
 
     template <class T>
-    using slider_generator = xgenerator<xslider, T>;
-
-    template <class T>
     struct xnumber_traits<slider<T>>
-    {
-        using value_type = T;
-    };
-
-    template <class T>
-    struct xnumber_traits<slider_generator<T>>
     {
         using value_type = T;
     };
@@ -189,8 +178,7 @@ namespace xw
     template <class D>
     inline void xslider<D>::setup_properties()
     {
-        auto self = this->self();
-        self->template validate<value_type>("value", [](auto& owner, auto& proposal) {
+        this->template validate<value_type>("value", [](auto& owner, auto& proposal) {
             if (proposal > owner.max())
             {
                 proposal = owner.max();
@@ -201,7 +189,7 @@ namespace xw
             }
         });
 
-        self->template validate<value_type>("min", [](auto& owner, auto& proposal) {
+        this->template validate<value_type>("min", [](auto& owner, auto& proposal) {
             if (proposal > owner.max())
             {
                 throw std::runtime_error("setting min > max");
@@ -212,7 +200,7 @@ namespace xw
             }
         });
 
-        self->template validate<value_type>("max", [](auto& owner, auto& proposal) {
+        this->template validate<value_type>("max", [](auto& owner, auto& proposal) {
             if (proposal < owner.min())
             {
                 throw std::runtime_error("setting max < min");
@@ -239,30 +227,18 @@ namespace xw
     extern template class xmaterialize<xslider_style>;
     extern template xmaterialize<xslider_style>::xmaterialize();
     extern template class xtransport<xmaterialize<xslider_style>>;
-    extern template class xgenerator<xslider_style>;
-    extern template xgenerator<xslider_style>::xgenerator();
-    extern template class xtransport<xgenerator<xslider_style>>;
 
     extern template class xmaterialize<xslider, int>;
     extern template xmaterialize<xslider, int>::xmaterialize();
     extern template class xtransport<xmaterialize<xslider, int>>;
-    extern template class xgenerator<xslider, int>;
-    extern template xgenerator<xslider, int>::xgenerator();
-    extern template class xtransport<xgenerator<xslider, int>>;
 
     extern template class xmaterialize<xslider, float>;
     extern template xmaterialize<xslider, float>::xmaterialize();
     extern template class xtransport<xmaterialize<xslider, float>>;
-    extern template class xgenerator<xslider, float>;
-    extern template xgenerator<xslider, float>::xgenerator();
-    extern template class xtransport<xgenerator<xslider, float>>;
 
     extern template class xmaterialize<xslider, double>;
     extern template xmaterialize<xslider, double>::xmaterialize();
     extern template class xtransport<xmaterialize<xslider, double>>;
-    extern template class xgenerator<xslider, double>;
-    extern template xgenerator<xslider, double>::xgenerator();
-    extern template class xtransport<xgenerator<xslider, double>>;
 #endif
 }
 

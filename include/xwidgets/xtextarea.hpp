@@ -44,7 +44,6 @@ namespace xw
     };
 
     using textarea = xmaterialize<xtextarea>;
-    using textarea_generator = xgenerator<xtextarea>;
 
     /****************************
      * xtextarea implementation *
@@ -92,9 +91,6 @@ namespace xw
     extern template class xmaterialize<xtextarea>;
     extern template xmaterialize<xtextarea>::xmaterialize();
     extern template class xtransport<xmaterialize<xtextarea>>;
-    extern template class xgenerator<xtextarea>;
-    extern template xgenerator<xtextarea>::xgenerator();
-    extern template class xtransport<xgenerator<xtextarea>>;
 #endif
 }
 

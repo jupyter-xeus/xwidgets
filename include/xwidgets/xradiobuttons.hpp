@@ -48,8 +48,6 @@ namespace xw
 
     using radiobuttons = xmaterialize<xradiobuttons>;
 
-    using radiobuttons_generator = xgenerator<xradiobuttons>;
-
     /********************************
      * xradiobuttons implementation *
      ********************************/
@@ -100,9 +98,6 @@ namespace xw
     extern template class xmaterialize<xradiobuttons>;
     extern template xmaterialize<xradiobuttons>::xmaterialize();
     extern template class xtransport<xmaterialize<xradiobuttons>>;
-    extern template class xgenerator<xradiobuttons>;
-    extern template xgenerator<xradiobuttons>::xgenerator();
-    extern template class xtransport<xgenerator<xradiobuttons>>;
 #endif
 }
 #endif

@@ -41,8 +41,6 @@ namespace xw
 
     using accordion = xmaterialize<xaccordion>;
 
-    using accordion_generator = xgenerator<xaccordion>;
-
     /*****************************
      * xaccordion implementation *
      *****************************/
@@ -81,9 +79,6 @@ namespace xw
     extern template class xmaterialize<xaccordion>;
     extern template xmaterialize<xaccordion>::xmaterialize();
     extern template class xtransport<xmaterialize<xaccordion>>;
-    extern template class xgenerator<xaccordion>;
-    extern template xgenerator<xaccordion>::xgenerator();
-    extern template class xtransport<xgenerator<xaccordion>>;
 #endif
 }
 

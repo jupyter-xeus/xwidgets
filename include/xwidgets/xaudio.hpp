@@ -50,8 +50,6 @@ namespace xw
 
     using audio = xmaterialize<xaudio>;
 
-    using audio_generator = xgenerator<xaudio>;
-
     /*************************
      * xaudio implementation *
      *************************/
@@ -111,15 +109,15 @@ namespace xw
         }
     }
 
-    inline audio_generator audio_from_file(const std::string& filename)
+    inline auto audio_from_file(const std::string& filename)
     {
-        return audio_generator().value(read_file(filename));
+        return audio::initialize().value(read_file(filename));
     }
 
-    inline audio_generator audio_from_url(const std::string& url)
+    inline auto audio_from_url(const std::string& url)
     {
         std::vector<char> value(url.cbegin(), url.cend());
-        return audio_generator().value(value).format("url");
+        return audio::initialize().value(value).format("url");
     }
 
     /*********************
@@ -130,9 +128,6 @@ namespace xw
     extern template class xmaterialize<xaudio>;
     extern template xmaterialize<xaudio>::xmaterialize();
     extern template class xtransport<xmaterialize<xaudio>>;
-    extern template class xgenerator<xaudio>;
-    extern template xgenerator<xaudio>::xgenerator();
-    extern template class xtransport<xgenerator<xaudio>>;
 #endif
 }
 #endif

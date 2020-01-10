@@ -33,6 +33,10 @@ namespace xw
 
         template <class... A>
         xmaterialize(A&&...);
+
+        template <class... A>
+        static xmaterialize initialize(A&&...);
+
         ~xmaterialize();
 
         xmaterialize(const xmaterialize&);
@@ -40,50 +44,14 @@ namespace xw
 
         xmaterialize(xmaterialize&&);
         xmaterialize& operator=(xmaterialize&&);
-    };
-
-    /**************************
-     * xgenerator declaration *
-     **************************/
-
-    template <template <class> class B, class... P>
-    class xgenerator final : public B<xgenerator<B, P...>>
-    {
-    public:
-
-        using self_type = xgenerator<B, P...>;
-        using base_type = B<self_type>;
-
-        template <class... A>
-        xgenerator(A&&...);
-
-        xgenerator(const xgenerator&);
-        xgenerator& operator=(const xgenerator&);
-
-        xgenerator(xgenerator&&);
-        xgenerator& operator=(xgenerator&&);
 
         xmaterialize<B, P...> finalize() &&;
+
+    private:
+
+        template <class... A>
+        xmaterialize(bool open, A&&...);
     };
-
-    /******************
-     * xconcrete_type *
-     ******************/
-
-    template <class D>
-    struct xconcrete_type
-    {
-        using type = D;
-    };
-
-    template <template <class> class B, class... P>
-    struct xconcrete_type<xgenerator<B, P...>>
-    {
-        using type = xmaterialize<B, P...>;
-    };
-
-    template <class D>
-    using xconcrete_type_t = typename xconcrete_type<D>::type;
 
     /*******************************
      * xmaterialize implementation *
@@ -92,9 +60,27 @@ namespace xw
     template <template <class> class B, class... P>
     template <class... A>
     inline xmaterialize<B, P...>::xmaterialize(A&&... args)
+        : xmaterialize(true, std::forward<A>(args)...)
+    {
+    }
+
+    // private constructor determining whether the comm should be open
+    template <template <class> class B, class... P>
+    template <class... A>
+    inline xmaterialize<B, P...>::xmaterialize(bool op, A&&... args)
         : base_type(std::forward<A>(args)...)
     {
-        this->open();
+        if (op)
+        {
+            this->open();
+        }
+    }
+
+    template <template <class> class B, class... P>
+    template <class... A>
+    inline auto xmaterialize<B, P...>::initialize(A&&... args) -> xmaterialize
+    {
+        return xmaterialize(false, std::forward<A>(args)...);
     }
 
     template <template <class> class B, class... P>
@@ -128,34 +114,11 @@ namespace xw
     template <template <class> class B, class... P>
     inline xmaterialize<B, P...>& xmaterialize<B, P...>::operator=(xmaterialize&& rhs) = default;
 
-    /*****************************
-     * xgenerator implementation *
-     *****************************/
-
     template <template <class> class B, class... P>
-    template <class... A>
-    inline xgenerator<B, P...>::xgenerator(A&&... args)
-        : base_type(std::forward<A>(args)...)
-    {
-    }
-
-    template <template <class> class B, class... P>
-    inline xmaterialize<B, P...> xgenerator<B, P...>::finalize() &&
+    inline xmaterialize<B, P...> xmaterialize<B, P...>::finalize() &&
     {
         return reinterpret_cast<typename xmaterialize<B, P...>::base_type&&>(*this);
     }
-
-    template <template <class> class B, class... P>
-    inline xgenerator<B, P...>::xgenerator(const xgenerator&) = default;
-
-    template <template <class> class B, class... P>
-    inline xgenerator<B, P...>& xgenerator<B, P...>::operator=(const xgenerator&) = default;
-
-    template <template <class> class B, class... P>
-    inline xgenerator<B, P...>::xgenerator(xgenerator&&) = default;
-
-    template <template <class> class B, class... P>
-    inline xgenerator<B, P...>& xgenerator<B, P...>::operator=(xgenerator&&) = default;
 
     /**********************************************************
      * Specialization of mime_bundle_repr for Jupyter Widgets *
@@ -176,6 +139,16 @@ namespace xw
         // text/plain
         mime_bundle["text/plain"] = "A Jupyter widget";
         return mime_bundle;
+    }
+
+    /*************
+     * Generator *
+     *************/  
+
+    template <template <class> class B, class... P, class... A>
+    inline xmaterialize<B, P...> generator(A&&... args)
+    {
+        return xmaterialize<B, P...>::initialize(std::forward<A>(args)...);
     }
 }
 

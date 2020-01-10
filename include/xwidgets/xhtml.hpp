@@ -41,8 +41,6 @@ namespace xw
 
     using html = xmaterialize<xhtml>;
 
-    using html_generator = xgenerator<xhtml>;
-
     /************************
      * xhtml implementation *
      ************************/
@@ -81,9 +79,6 @@ namespace xw
     extern template class xmaterialize<xhtml>;
     extern template xmaterialize<xhtml>::xmaterialize();
     extern template class xtransport<xmaterialize<xhtml>>;
-    extern template class xgenerator<xhtml>;
-    extern template xgenerator<xhtml>::xgenerator();
-    extern template class xtransport<xgenerator<xhtml>>;
 #endif
 }
 

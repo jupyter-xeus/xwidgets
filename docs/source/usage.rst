@@ -100,29 +100,14 @@ Providing a constructor for ``slider`` with a large number of such attributes wo
 
 .. code:: cpp
 
-    auto button = xw::slider_generator<double>()
+    auto button = xw::slider<double>::initialize()
         .min(1.0)
         .max(9.0)
         .value(4.0)
         .orientation("vertical")
         .finalize();
 
-This is a classical approach: calls to ``min``, ``max``, ``value`` and ``orientation`` all return the ``slider_generator`` instance (by value, which is optimized with C++ move semantics and copy ellision). The ``finalize()`` method transforms the generator class into the corresponding ``xmaterialize`` instance, resulting in the communication of the appropriate message for the creation of the front-end counterpart, with the proper data.
-
-For each widget type, the generator type is the name of the widget, suffixed with ``_generator``. For example, we have:
-
-.. code:: cpp
-
-    using button_generator = xgenerator<xbutton>;
-
-Similarly, for template widget types, we have
-
-.. code:: cpp
-
-    template <class T>
-    using slider_generator = xgenerator<xslider, T>;
-
-Just like ``xmaterialize``, ``xgenerator`` closes the CRTP in a *final* way, but does not implement the RAII logic. Instead, it provides the ``finalize`` method which can convert it into an actual widget.
+This is a classical approach: calls to ``min``, ``max``, ``value`` and ``orientation`` all return the ``slider`` instance (by rvalue reference, which is optimized with C++ move semantics and copy ellision). The ``finalize()`` triggers the creation of the front-end object with the data.
 
 Widget Events
 -------------

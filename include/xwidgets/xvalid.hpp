@@ -45,8 +45,6 @@ namespace xw
 
     using valid = xmaterialize<xvalid>;
 
-    using valid_generator = xgenerator<xvalid>;
-
     /*************************
      * xvalid implementation *
      *************************/
@@ -89,9 +87,6 @@ namespace xw
     extern template class xmaterialize<xvalid>;
     extern template xmaterialize<xvalid>::xmaterialize();
     extern template class xtransport<xmaterialize<xvalid>>;
-    extern template class xgenerator<xvalid>;
-    extern template xgenerator<xvalid>::xgenerator();
-    extern template class xtransport<xgenerator<xvalid>>;
 #endif
 }
 #endif

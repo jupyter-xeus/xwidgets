@@ -48,8 +48,6 @@ namespace xw
 
     using color_picker = xmaterialize<xcolor_picker>;
 
-    using color_picker_generator = xgenerator<xcolor_picker>;
-
     /********************************
      * xcolor_picker implementation *
      ********************************/
@@ -100,9 +98,6 @@ namespace xw
     extern template class xmaterialize<xcolor_picker>;
     extern template xmaterialize<xcolor_picker>::xmaterialize();
     extern template class xtransport<xmaterialize<xcolor_picker>>;
-    extern template class xgenerator<xcolor_picker>;
-    extern template xgenerator<xcolor_picker>::xgenerator();
-    extern template class xtransport<xgenerator<xcolor_picker>>;
 #endif 
 }
 

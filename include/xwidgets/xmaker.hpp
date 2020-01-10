@@ -28,7 +28,7 @@ namespace xw
     template <template <class> class CRTP, class... P>
     void xmaker(xeus::xcomm&& comm, const nl::json& state, const xeus::buffer_sequence& buffers)
     {
-        auto model = xgenerator<CRTP, P...>(std::move(comm), true);
+        auto model = xmaterialize<CRTP, P...>::initialize(std::move(comm), true);
         model.apply_patch(state, buffers);
         get_transport_registry().register_owning(reinterpret_cast<xmaterialize<CRTP, P...>&&>(model));
     }

@@ -54,7 +54,7 @@ xplot_ if the C++ backend for the bqplot_ 2-D plotting library
     xpl::linear_scale scale_x, scale_y;
     xpl::linear_scale scale_size;
 
-    auto scatter = xpl::scatter_generator(scale_x, scale_y, scale_size)
+    auto scatter = xpl::scatter::initialize(scale_x, scale_y, scale_size)
         .x(data_x)
         .y(data_y)
         .size(data_c)
@@ -78,7 +78,7 @@ xplot_ if the C++ backend for the bqplot_ 2-D plotting library
 
     xpl::toolbar tb(fig);
 
-    xw::vbox b = xw::vbox_generator()
+    xw::vbox b = xw::vbox::initialize()
         .children({fig, tb})
         .finalize();
     b
@@ -110,18 +110,18 @@ xleaflet_ is the C++ backend for the leaflet maps visualization library. The Pyt
     #include "xleaflet/xmap.hpp"
     #include "xleaflet/xmarker.hpp"
 
-    auto html = xw::html_generator()
+    auto html = xw::html::initialize()
         .value("Hello from an <b>xwidget</b> in an <b>xmarker</b>!")
         .finalize();
 
     std::array<double, 2> center = {52.204793, 360.121558};
 
-    auto map = xlf::map_generator()
+    auto map = xlf::map::initialize()
         .center(center)
         .zoom(15)
         .finalize();
 
-    auto marker = xlf::marker_generator()
+    auto marker = xlf::marker::initialize()
         .location(center)
         .draggable(false)
         .popup(html)

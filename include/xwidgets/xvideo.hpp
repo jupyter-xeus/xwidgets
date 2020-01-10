@@ -52,8 +52,6 @@ namespace xw
 
     using video = xmaterialize<xvideo>;
 
-    using video_generator = xgenerator<xvideo>;
-
     /*************************
      * xvideo implementation *
      *************************/
@@ -117,15 +115,15 @@ namespace xw
         }
     }
 
-    inline video_generator video_from_file(const std::string& filename)
+    inline auto video_from_file(const std::string& filename)
     {
-        return video_generator().value(read_file(filename));
+        return video::initialize().value(read_file(filename));
     }
 
-    inline video_generator video_from_url(const std::string& url)
+    inline auto video_from_url(const std::string& url)
     {
         std::vector<char> value(url.cbegin(), url.cend());
-        return video_generator().value(value).format("url");
+        return video::initialize().value(value).format("url");
     }
 
     /*********************
@@ -136,9 +134,6 @@ namespace xw
     extern template class xmaterialize<xvideo>;
     extern template xmaterialize<xvideo>::xmaterialize();
     extern template class xtransport<xmaterialize<xvideo>>;
-    extern template class xgenerator<xvideo>;
-    extern template xgenerator<xvideo>::xgenerator();
-    extern template class xtransport<xgenerator<xvideo>>;
 #endif
 }
 #endif

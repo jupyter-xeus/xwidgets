@@ -44,8 +44,6 @@ namespace xw
 
     using checkbox = xmaterialize<xcheckbox>;
 
-    using checkbox_generator = xgenerator<xcheckbox>;
-
     /****************************
      * xcheckbox implementation *
      ****************************/
@@ -88,8 +86,6 @@ namespace xw
     extern template class xmaterialize<xcheckbox>;
     extern template xmaterialize<xcheckbox>::xmaterialize();
     extern template class xtransport<xmaterialize<xcheckbox>>;
-    extern template class xgenerator<xcheckbox>;
-    extern template xgenerator<xcheckbox>::xgenerator();
 #endif
 }
 

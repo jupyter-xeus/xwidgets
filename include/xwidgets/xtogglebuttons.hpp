@@ -50,8 +50,6 @@ namespace xw
 
     using togglebuttons_style = xmaterialize<xtogglebuttons_style>;
 
-    using togglebuttons_style_generator = xgenerator<xtogglebuttons_style>;
-
     /*****************************
      * togglebuttons declaration *
      *****************************/
@@ -87,8 +85,6 @@ namespace xw
     };
 
     using togglebuttons = xmaterialize<xtogglebuttons>;
-
-    using togglebuttons_generator = xgenerator<xtogglebuttons>;
 
     /***************************************
      * xtogglebuttons_style implementation *
@@ -185,16 +181,10 @@ namespace xw
     extern template class xmaterialize<xtogglebuttons_style>;
     extern template xmaterialize<xtogglebuttons_style>::xmaterialize();
     extern template class xtransport<xmaterialize<xtogglebuttons_style>>;
-    extern template class xgenerator<xtogglebuttons_style>;
-    extern template xgenerator<xtogglebuttons_style>::xgenerator();
-    extern template class xtransport<xgenerator<xtogglebuttons_style>>;
 
     extern template class xmaterialize<xtogglebuttons>;
     extern template xmaterialize<xtogglebuttons>::xmaterialize();
     extern template class xtransport<xmaterialize<xtogglebuttons>>;
-    extern template class xgenerator<xtogglebuttons>;
-    extern template xgenerator<xtogglebuttons>::xgenerator();
-    extern template class xtransport<xgenerator<xtogglebuttons>>;
 #endif
 }
 #endif

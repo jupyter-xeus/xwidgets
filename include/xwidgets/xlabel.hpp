@@ -41,8 +41,6 @@ namespace xw
 
     using label = xmaterialize<xlabel>;
 
-    using label_generator = xgenerator<xlabel>;
-
     /*************************
      * xlabel implementation *
      *************************/
@@ -81,9 +79,6 @@ namespace xw
     extern template class xmaterialize<xlabel>;
     extern template xmaterialize<xlabel>::xmaterialize();
     extern template class xtransport<xmaterialize<xlabel>>;
-    extern template class xgenerator<xlabel>;
-    extern template xgenerator<xlabel>::xgenerator();
-    extern template class xtransport<xgenerator<xlabel>>;
 #endif
 }
 
