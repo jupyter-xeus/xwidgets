@@ -58,5 +58,5 @@ This software is licensed under the BSD-3-Clause license. See the LICENSE file f
    related_projects
 
 .. _ipywidgets: https://github.com/jupyter-widgets/ipywidgets
-.. _xeus-cling: https://github.com/QuantStack/xeus-cling
+.. _xeus-cling: https://github.com/jupyter-xeus/xeus-cling
 .. _cling: https://root.cern.ch/cling

@@ -153,4 +153,4 @@ xproperty_ is the C++ implementation of the observer pattern underlying
 .. _bqplot: https://github.com/bloomberg/bqplot.git
 .. _xleaflet: https://github.com/QuantStack/xleaflet.git
 .. _ipyleaflet: https://github.com/jupyter-widgets/ipyleaflet.git
-.. _xproperty: https://github.com/QuantStack/xproperty.git
+.. _xproperty: https://github.com/jupyter-xeus/xproperty.git
