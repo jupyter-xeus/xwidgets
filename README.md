@@ -1,7 +1,7 @@
 # ![xwidgets](docs/source/xwidgets.svg)
 
 [![Travis](https://travis-ci.org/jupyter-xeus/xwidgets.svg?branch=master)](https://travis-ci.org/jupyter-xeus/xwidgets)
-[![Appveyor](https://ci.appveyor.com/api/projects/status/ymlf86gel4vrauri?svg=true)](https://ci.appveyor.com/project/jupyter-xeus/xwidgets)
+[![Appveyor](https://ci.appveyor.com/api/projects/status/kjoatvulm28dpr3r?svg=true)](https://ci.appveyor.com/project/jupyter-xeus/xwidgets)
 [![Documentation](http://readthedocs.org/projects/xwidgets/badge/?version=latest)](https://xwidgets.readthedocs.io/en/latest/?badge=latest)
 [![Binder](https://img.shields.io/badge/launch-binder-brightgreen.svg)](https://mybinder.org/v2/gh/jupyter-xeus/xwidgets/stable?filepath=notebooks/xwidgets.ipynb)
 [![Join the Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/QuantStack/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -85,6 +85,7 @@ All the dependencies of xwidgets are available for the conda package manager.
 | `xwidgets` | `widgetsnbextension`  |     `xtl`       | `xproperty`    | `xeus`          | `nlohmann_json` |
 |------------|-----------------------|-----------------|----------------|-----------------|-----------------|
 |  master    |      ^3.0.0           |  >=0.6.11,<0.7  | >=0.1O.0,<0.11 | >=0.21.1,<0.24  | >=3.6.1,<4.0    |
+|  0.20.0    |      ^3.0.0           |  >=0.6.11,<0.7  | >=0.1O.0,<0.11 | >=0.21.1,<0.24  | >=3.6.1,<4.0    |
 |  0.19.0    |      ^3.0.0           |  >=0.6.5,<0.7   | >=0.8.1,<0.9   | >=0.21.1,<0.22  | >=3.6.1,<4.0    |
 |  0.18.0    |      ^3.0.0           |  >=0.6.5,<0.7   | >=0.8.1,<0.9   | >=0.20.0,<0.21  | >=3.6.1,<4.0    |
 |  0.17.0    |      ^3.0.0           |  >=0.6.1,<0.7   | >=0.8.1,<0.9   | >=0.19.1,<0.20  | >=3.5.0,<4.0    |
