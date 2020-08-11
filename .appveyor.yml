@@ -37,8 +37,8 @@ install:
   # Install host dependencies
   - conda install xeus=0.24.0 cppzmq xproperty=0.10.0 nlohmann_json -c conda-forge
   # Install build dependencies
-  - conda install gtest cmake -c conda-forge
-  - cmake -G "NMake Makefiles" -D CMAKE_INSTALL_PREFIX=%MINICONDA%\\LIBRARY -DBUILD_TESTS=ON .
+  - conda install cmake -c conda-forge
+  - cmake -G "NMake Makefiles" -D CMAKE_INSTALL_PREFIX=%MINICONDA%\\LIBRARY -DDOWNLOAD_GTEST=ON .
   - nmake test_xwidgets
   - cd test
 
