@@ -144,6 +144,7 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xtextarea.cpp
     ${XWIDGETS_SOURCE_DIR}/xtogglebutton.cpp
     ${XWIDGETS_SOURCE_DIR}/xtogglebuttons.cpp
+    ${XWIDGETS_SOURCE_DIR}/xtransport.cpp
     ${XWIDGETS_SOURCE_DIR}/xradiobuttons.cpp
     ${XWIDGETS_SOURCE_DIR}/xvalid.cpp
     ${XWIDGETS_SOURCE_DIR}/xvideo.cpp

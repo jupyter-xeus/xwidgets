@@ -115,8 +115,27 @@ namespace xw
      * base xtransport declaration *
      *******************************/
 
+    struct xtransport_base {
+    protected:
+      static void finalize_open(xeus::xcomm &comm, nl::json &&paths,
+                                nl::json &&state, xeus::buffer_sequence &&buffers);
+      static void finalize_close(xeus::xcomm &comm);
+      static void finalize_display(xeus::xguid const &id);
+      static bool finalize_same_patch(const std::vector<xjson_path_type> &paths,
+                                      const std::string &, const nl::json &,
+                                      const xeus::buffer_sequence &,
+                                      const nl::json &,
+                                      const xeus::buffer_sequence &);
+      static void finalize_send_patch(xeus::xcomm const &comm, nl::json &&patch,
+                                      xeus::buffer_sequence &&buffers,
+                                      nl::json &&paths);
+      static void finalize_send(xeus::xcomm const &comm, nl::json &&content,
+                                xeus::buffer_sequence &&buffers);
+      static const std::vector<xjson_path_type> &finalize_buffer_paths();
+    };
+
     template <class D>
-    class xtransport
+    class xtransport : public xtransport_base
     {
     public:
 
@@ -295,22 +314,7 @@ namespace xw
     template <class D>
     inline void xtransport<D>::display() const
     {
-        nl::json mime_bundle;
-
-        // application/vnd.jupyter.widget-view+json
-        nl::json widgets_json;
-        widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
-        widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
-        widgets_json["model_id"] = this->id();
-        mime_bundle["application/vnd.jupyter.widget-view+json"] = std::move(widgets_json);
-
-        // text/plain
-        mime_bundle["text/plain"] = "A Jupyter widget";
-
-        ::xeus::get_interpreter().display_data(
-            std::move(mime_bundle),
-            nl::json::object(),
-            nl::json::object());
+      finalize_display(this->id());
     }
 
     template <class D>
@@ -349,42 +353,19 @@ namespace xw
         // extract buffer paths
         auto paths = nl::json::array();
         extract_buffer_paths(derived_cast().buffer_paths(), patch, buffers, paths);
-
-        // metadata
-        nl::json metadata;
-        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
-
-        // data
-        nl::json data;
-        data["method"] = "update";
-        data["state"] = std::move(patch);
-        data["buffer_paths"] = std::move(paths);
-
-        // send
-        m_comm.send(std::move(metadata), std::move(data), std::move(buffers));
+        finalize_send_patch(m_comm, std::move(patch), std::move(buffers), std::move(paths));
     }
 
     template <class D>
     inline void xtransport<D>::send(nl::json&& content, xeus::buffer_sequence&& buffers) const
     {
-        // metadata
-        nl::json metadata;
-        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
-
-        // data
-        nl::json data;
-        data["method"] = "custom";
-        data["content"] = std::move(content);
-
-        // send
-        m_comm.send(std::move(metadata), std::move(data), std::move(buffers));
+      finalize_send(m_comm, std::move(content), std::move(buffers));
     }
 
     template <class D>
     inline const std::vector<xjson_path_type>& xtransport<D>::buffer_paths() const
     {
-        static const std::vector<xjson_path_type> default_buffer_paths;
-        return default_buffer_paths;
+      return finalize_buffer_paths();
     }
 
     template <class D>
@@ -392,6 +373,7 @@ namespace xw
     {
         return m_moved_from;
     }
+
 
     template <class D>
     inline void xtransport<D>::open()
@@ -403,22 +385,13 @@ namespace xw
         derived_cast().serialize_state(state, buffers);
         extract_buffer_paths(derived_cast().buffer_paths(), state, buffers, paths);
 
-        // metadata
-        nl::json metadata;
-        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
-
-        // data
-        nl::json data;
-        data["state"] = std::move(state);
-        data["buffer_paths"] = std::move(paths);
-
-        m_comm.open(std::move(metadata), std::move(data), std::move(buffers));
+        finalize_open(m_comm, std::move(paths), std::move(state), std::move(buffers));
     }
 
     template <class D>
     inline void xtransport<D>::close()
     {
-        m_comm.close(nl::json::object(), nl::json::object(), xeus::buffer_sequence());
+      finalize_close(m_comm);
     }
 
     template <class D>
@@ -462,31 +435,12 @@ namespace xw
     template <class D>
     inline bool xtransport<D>::same_patch(const std::string& name,
                                           const nl::json& j1,
-                                          const xeus::buffer_sequence&,
+                                          const xeus::buffer_sequence& bs1,
                                           const nl::json& j2,
-                                          const xeus::buffer_sequence&) const
+                                          const xeus::buffer_sequence& bs2) const
          {
              const auto& paths = derived_cast().buffer_paths();
-             // For a widget with no binary buffer, compare the patches
-             if (paths.empty())
-             {
-                 return j1 == j2;
-             }
-             else
-             {
-                 // For a property with no binary buffer, compare the patches
-                 if (std::find_if(paths.cbegin(), paths.cend(), [name](const auto& v) {
-                     return !v.empty() && v[0] == name;
-                 }) == paths.cend())
-                 {
-                    return j1 == j2;
-                 }
-                 else
-                 {
-                     // TODO: handle the comparison of binary buffers.
-                     return true;
-                 }
-             }
+             return finalize_same_patch(paths, name, j1, bs1, j2, bs2);
          }
 
     /****************************************
