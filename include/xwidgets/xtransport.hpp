@@ -228,7 +228,7 @@ namespace xw
           m_hold(nullptr),
           m_comm(other.m_comm)
     {
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        m_comm.on_message([this](const xeus::xmessage& msg) { return this->handle_message(msg); });
         get_transport_registry().register_weak(this);
     }
 
@@ -239,7 +239,7 @@ namespace xw
           m_comm(std::move(other.m_comm))
     {
         other.m_moved_from = true;
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        m_comm.on_message([this](const xeus::xmessage& msg) { return this->handle_message(msg); });
         get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
     }
 
@@ -250,7 +250,7 @@ namespace xw
         get_transport_registry().unregister(this->id());
         m_hold = nullptr;
         m_comm = other.m_comm;
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        m_comm.on_message([this](const xeus::xmessage& msg) { return this->handle_message(msg); });
         get_transport_registry().register_weak(this);
         return *this;
     }
@@ -263,7 +263,7 @@ namespace xw
         get_transport_registry().unregister(this->id());
         m_hold = nullptr;
         m_comm = std::move(other.m_comm);
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        m_comm.on_message([this](const xeus::xmessage& msg) { return this->handle_message(msg); });
         get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
         return *this;
     }
