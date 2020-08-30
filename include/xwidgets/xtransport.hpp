@@ -115,7 +115,7 @@ namespace xw
      * base xtransport declaration *
      *******************************/
 
-    struct xtransport_base {
+    struct XWIDGETS_API xtransport_base {
     protected:
       static void finalize_open(xeus::xcomm &comm, nl::json &&paths,
                                 nl::json &&state, xeus::buffer_sequence &&buffers);
