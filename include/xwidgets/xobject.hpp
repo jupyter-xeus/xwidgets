@@ -21,9 +21,9 @@
 
 namespace xw
 {
-    /****************************
-     * base xobject declaration *
-     ****************************/
+    /***********************
+     * xobject declaration *
+     ***********************/
 
     template <class D>
     class xobject : public xp::xobserved<D>, public xtransport<D>
@@ -59,9 +59,9 @@ namespace xw
 #endif
     };
 
-    /*******************************
-     * base xobject implementation *
-     *******************************/
+    /**************************
+     * xobject implementation *
+     **************************/
 
     template <class D>
     inline void xobject<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const

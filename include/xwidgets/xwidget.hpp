@@ -17,9 +17,9 @@
 
 namespace xw
 {
-    /******************************
-     * base xwidgets declarations *
-     ******************************/
+    /*************************
+     * xwidgets declarations *
+     *************************/
 
     template <class D>
     class xwidget : public xobject<D>
@@ -45,9 +45,9 @@ namespace xw
         void set_defaults();
     };
 
-    /********************************
-     * base xwidgets implementation *
-     ********************************/
+    /***************************
+     * xwidgets implementation *
+     ***************************/
 
     template <class D>
     inline xwidget<D>::xwidget()
