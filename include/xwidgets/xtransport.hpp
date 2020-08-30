@@ -111,28 +111,69 @@ namespace xw
         }
     }
 
-    /*******************************
-     * base xtransport declaration *
-     *******************************/
+    /***********************
+     * xcommon declaration *
+     ***********************/
 
-    template <class D>
-    class xtransport
+    class XWIDGETS_API xcommon
     {
     public:
 
+        xeus::xguid id() const noexcept;
+        void display() const;
+
+    protected:
+
+        xcommon();
+        xcommon(xeus::xcomm&&);
+        ~xcommon();
+        xcommon(const xcommon&);
+        xcommon(xcommon&&);
+        xcommon& operator=(const xcommon&);
+        xcommon& operator=(xcommon&&);
+
+        bool moved_from() const noexcept;
+        void handle_custom_message(const nl::json&);
+        xeus::xcomm& comm();
+        const xeus::xcomm& comm() const;
+        const xeus::xmessage*& hold();
+        const xeus::xmessage* const& hold() const;
+        const std::vector<xjson_path_type>& buffer_paths() const;
+
+        template <class T>
+        void notify(const std::string& name, const T& value) const;
+        void send(nl::json&&, xeus::buffer_sequence&&) const;
+        void send_patch(nl::json&&, xeus::buffer_sequence&&) const;
+
+    private:
+
+        bool same_patch(const std::string&,
+                        const nl::json&,
+                        const xeus::buffer_sequence&,
+                        const nl::json&,
+                        const xeus::buffer_sequence&) const;
+
+        bool m_moved_from;
+        const xeus::xmessage* m_hold;
+        xeus::xcomm m_comm;
+        std::vector<xjson_path_type> m_buffer_paths;
+    };
+
+    /**************************
+     * xtransport declaration *
+     **************************/
+
+    template <class D>
+    class xtransport : public xcommon
+    {
+    public:
+
+        using base_type = xcommon;
         using derived_type = D;
 
         derived_type& derived_cast() & noexcept;
         const derived_type& derived_cast() const & noexcept;
         derived_type derived_cast() && noexcept;
-
-        xeus::xguid id() const noexcept;
-        void display() const;
-
-        void send_patch(nl::json&&, xeus::buffer_sequence&&) const;
-        void send(nl::json&&, xeus::buffer_sequence&&) const;
-
-        const std::vector<xjson_path_type>& buffer_paths() const;
 
     protected:
 
@@ -144,27 +185,12 @@ namespace xw
         xtransport& operator=(const xtransport&);
         xtransport& operator=(xtransport&&);
 
-        bool moved_from() const noexcept;
         void open();
         void close();
-
-        template <class T>
-        void notify(const std::string& name, const T& value) const;
 
     private:
 
         void handle_message(const xeus::xmessage&);
-        void handle_custom_message(const nl::json&);
-
-        bool same_patch(const std::string&,
-                        const nl::json&,
-                        const xeus::buffer_sequence&,
-                        const nl::json&,
-                        const xeus::buffer_sequence&) const;
-
-        bool m_moved_from;
-        const xeus::xmessage* m_hold;
-        xeus::xcomm m_comm;
     };
 
     template <class T, class R = void>
@@ -180,120 +206,71 @@ namespace xw
      * to_json and from_json specialization *
      ****************************************/
 
-    template <class D>
-    void to_json(nl::json& j, const xtransport<D>& o);
+    void to_json(nl::json& j, const xcommon& o);
 
     template <class D>
     void from_json(const nl::json& j, xtransport<D>& o);
 
-    /**********************************
-     * base xtransport implementation *
-     **********************************/
+    /**************************
+     * xcommon implementation *
+     **************************/
 
-    template <class D>
-    inline xtransport<D>::xtransport()
+    inline xcommon::xcommon()
         : m_moved_from(false),
           m_hold(nullptr),
           m_comm(get_widget_target(), xeus::new_xguid())
     {
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        get_transport_registry().register_weak(this);
     }
 
-    template <class D>
-    inline xtransport<D>::~xtransport()
+    inline xcommon::~xcommon()
     {
-        if (!m_moved_from)
-        {
-            get_transport_registry().unregister(this->id());
-        }
     }
 
-    template <class D>
-    inline xtransport<D>::xtransport(xeus::xcomm&& comm, bool owning)
+    inline xcommon::xcommon(xeus::xcomm&& comm)
         : m_moved_from(false),
           m_hold(nullptr),
           m_comm(std::move(comm))
     {
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        if (!owning)
-        {
-            get_transport_registry().register_weak(this);
-        }
     }
 
-    template <class D>
-    inline xtransport<D>::xtransport(const xtransport& other)
+    inline xcommon::xcommon(const xcommon& other)
         : m_moved_from(false),
           m_hold(nullptr),
           m_comm(other.m_comm)
     {
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        get_transport_registry().register_weak(this);
     }
 
-    template <class D>
-    inline xtransport<D>::xtransport(xtransport&& other)
+    inline xcommon::xcommon(xcommon&& other)
         : m_moved_from(false),
           m_hold(nullptr),
           m_comm(std::move(other.m_comm))
     {
         other.m_moved_from = true;
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
     }
 
-    template <class D>
-    inline xtransport<D>& xtransport<D>::operator=(const xtransport& other)
+    inline xcommon& xcommon::operator=(const xcommon& other)
     {
         m_moved_from = false;
-        get_transport_registry().unregister(this->id());
         m_hold = nullptr;
         m_comm = other.m_comm;
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        get_transport_registry().register_weak(this);
         return *this;
     }
 
-    template <class D>
-    inline xtransport<D>& xtransport<D>::operator=(xtransport&& other)
+    inline xcommon& xcommon::operator=(xcommon&& other)
     {
         other.m_moved_from = true;
         m_moved_from = false;
-        get_transport_registry().unregister(this->id());
         m_hold = nullptr;
         m_comm = std::move(other.m_comm);
-        m_comm.on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
         return *this;
     }
 
-    template <class D>
-    inline auto xtransport<D>::derived_cast() & noexcept -> derived_type&
-    {
-        return *static_cast<derived_type*>(this);
-    }
-
-    template <class D>
-    inline auto xtransport<D>::derived_cast() const & noexcept -> const derived_type&
-    {
-        return *static_cast<const derived_type*>(this);
-    }
-
-    template <class D>
-    inline auto xtransport<D>::derived_cast() && noexcept -> derived_type
-    {
-        return *static_cast<derived_type*>(this);
-    }
-
-    template <class D>
-    inline auto xtransport<D>::id() const noexcept -> xeus::xguid
+    inline auto xcommon::id() const noexcept -> xeus::xguid
     {
         return m_comm.id();
     }
 
-    template <class D>
-    inline void xtransport<D>::display() const
+    inline void xcommon::display() const
     {
         nl::json mime_bundle;
 
@@ -313,9 +290,106 @@ namespace xw
             nl::json::object());
     }
 
-    template <class D>
+    inline void xcommon::send(nl::json&& content, xeus::buffer_sequence&& buffers) const
+    {
+        // metadata
+        nl::json metadata;
+        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
+
+        // data
+        nl::json data;
+        data["method"] = "custom";
+        data["content"] = std::move(content);
+
+        // send
+        m_comm.send(std::move(metadata), std::move(data), std::move(buffers));
+    }
+
+    inline void xcommon::handle_custom_message(const nl::json& /*content*/)
+    {
+    }
+    
+    inline xeus::xcomm& xcommon::comm()
+    {
+        return m_comm;
+    }
+
+    inline const xeus::xcomm& xcommon::comm() const
+    {
+        return m_comm;
+    }
+
+    inline const xeus::xmessage*& xcommon::hold()
+    {
+        return m_hold;
+    }
+
+    inline const xeus::xmessage* const& xcommon::hold() const
+    {
+        return m_hold;
+    }
+
+    inline bool xcommon::moved_from() const noexcept
+    {
+        return m_moved_from;
+    }
+
+    inline const std::vector<xjson_path_type>& xcommon::buffer_paths() const
+    {
+        return m_buffer_paths;
+    }
+
+    inline void xcommon::send_patch(nl::json&& patch, xeus::buffer_sequence&& buffers) const
+    {
+        // extract buffer paths
+        auto paths = nl::json::array();
+        extract_buffer_paths(buffer_paths(), patch, buffers, paths);
+
+        // metadata
+        nl::json metadata;
+        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
+
+        // data
+        nl::json data;
+        data["method"] = "update";
+        data["state"] = std::move(patch);
+        data["buffer_paths"] = std::move(paths);
+
+        // send
+        m_comm.send(std::move(metadata), std::move(data), std::move(buffers));
+    }
+
+    inline bool xcommon::same_patch(const std::string& name,
+                                    const nl::json& j1,
+                                    const xeus::buffer_sequence&,
+                                    const nl::json& j2,
+                                    const xeus::buffer_sequence&) const
+    {
+        const auto& paths = buffer_paths();
+        // For a widget with no binary buffer, compare the patches
+        if (paths.empty())
+        {
+            return j1 == j2;
+        }
+        else
+        {
+            // For a property with no binary buffer, compare the patches
+            if (std::find_if(paths.cbegin(), paths.cend(), [name](const auto& v) {
+                return !v.empty() && v[0] == name;
+            }) == paths.cend())
+            {
+                return j1 == j2;
+            }
+            else
+            {
+                // TODO: handle the comparison of binary buffers.
+                return true;
+            }
+        }
+    }
+
     template <class T>
-    inline void xtransport<D>::notify(const std::string& name, const T& value) const
+    inline void xcommon::notify(const std::string& name, const T& value) const
     {
         nl::json state;
         xeus::buffer_sequence buffers;
@@ -343,65 +417,106 @@ namespace xw
         send_patch(std::move(state), std::move(buffers));
     }
 
+    /*****************************
+     * xtransport implementation *
+     *****************************/
+
     template <class D>
-    inline void xtransport<D>::send_patch(nl::json&& patch, xeus::buffer_sequence&& buffers) const
+    inline xtransport<D>::xtransport()
+        : xcommon()
     {
-        // extract buffer paths
-        auto paths = nl::json::array();
-        extract_buffer_paths(derived_cast().buffer_paths(), patch, buffers, paths);
-
-        // metadata
-        nl::json metadata;
-        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
-
-        // data
-        nl::json data;
-        data["method"] = "update";
-        data["state"] = std::move(patch);
-        data["buffer_paths"] = std::move(paths);
-
-        // send
-        m_comm.send(std::move(metadata), std::move(data), std::move(buffers));
+        this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        get_transport_registry().register_weak(this);
     }
 
     template <class D>
-    inline void xtransport<D>::send(nl::json&& content, xeus::buffer_sequence&& buffers) const
+    inline xtransport<D>::~xtransport()
     {
-        // metadata
-        nl::json metadata;
-        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
-
-        // data
-        nl::json data;
-        data["method"] = "custom";
-        data["content"] = std::move(content);
-
-        // send
-        m_comm.send(std::move(metadata), std::move(data), std::move(buffers));
+        if (!this->moved_from())
+        {
+            get_transport_registry().unregister(this->id());
+        }
     }
 
     template <class D>
-    inline const std::vector<xjson_path_type>& xtransport<D>::buffer_paths() const
+    inline xtransport<D>::xtransport(xeus::xcomm&& comm, bool owning)
+        : xcommon(std::move(comm))
     {
-        static const std::vector<xjson_path_type> default_buffer_paths;
-        return default_buffer_paths;
+        this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        if (!owning)
+        {
+            get_transport_registry().register_weak(this);
+        }
     }
 
     template <class D>
-    inline bool xtransport<D>::moved_from() const noexcept
+    inline xtransport<D>::xtransport(const xtransport& other)
+        : xcommon(other)
     {
-        return m_moved_from;
+        this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        get_transport_registry().register_weak(this);
+    }
+
+    template <class D>
+    inline xtransport<D>::xtransport(xtransport&& other)
+        : xcommon(std::move(other))
+    {
+        this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
+    }
+
+    template <class D>
+    inline xtransport<D>& xtransport<D>::operator=(const xtransport& other)
+    {
+        base_type::operator=(other);
+        get_transport_registry().unregister(this->id());
+        this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        get_transport_registry().register_weak(this);
+        return *this;
+    }
+
+    template <class D>
+    inline xtransport<D>& xtransport<D>::operator=(xtransport&& other)
+    {
+        base_type::operator=(std::move(other));
+        get_transport_registry().unregister(this->id());
+        this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
+        get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
+        return *this;
+    }
+
+    template <class D>
+    inline auto xtransport<D>::derived_cast() & noexcept -> derived_type&
+    {
+        return *static_cast<derived_type*>(this);
+    }
+
+    template <class D>
+    inline auto xtransport<D>::derived_cast() const & noexcept -> const derived_type&
+    {
+        return *static_cast<const derived_type*>(this);
+    }
+
+    template <class D>
+    inline auto xtransport<D>::derived_cast() && noexcept -> derived_type
+    {
+        return *static_cast<derived_type*>(this);
     }
 
     template <class D>
     inline void xtransport<D>::open()
     {
-        // extract buffer paths
-        nl::json paths;
+        // serialize state
         nl::json state;
         xeus::buffer_sequence buffers;
+
+        /*D*/
         derived_cast().serialize_state(state, buffers);
-        extract_buffer_paths(derived_cast().buffer_paths(), state, buffers, paths);
+        /*D*/
+        
+        // extract buffer paths
+        nl::json paths;
+        extract_buffer_paths(buffer_paths(), state, buffers, paths);
 
         // metadata
         nl::json metadata;
@@ -412,13 +527,13 @@ namespace xw
         data["state"] = std::move(state);
         data["buffer_paths"] = std::move(paths);
 
-        m_comm.open(std::move(metadata), std::move(data), std::move(buffers));
+        this->comm().open(std::move(metadata), std::move(data), std::move(buffers));
     }
 
     template <class D>
     inline void xtransport<D>::close()
     {
-        m_comm.close(nl::json::object(), nl::json::object(), xeus::buffer_sequence());
+        this->comm().close(nl::json::object(), nl::json::object(), xeus::buffer_sequence());
     }
 
     template <class D>
@@ -432,16 +547,20 @@ namespace xw
             const nl::json& state = data["state"];
             const auto& buffers = message.buffers();
             const nl::json& buffer_paths = data["buffer_paths"];
-            m_hold = std::addressof(message);;
+            this->hold() = std::addressof(message);;
             insert_buffer_paths(const_cast<nl::json&>(state), buffer_paths);
+            /*D*/
             derived_cast().apply_patch(state, buffers);
-            m_hold = nullptr;
+            /*D*/
+            this->hold() = nullptr;
         }
         else if (method == "request_state")
         {
             nl::json state;
             xeus::buffer_sequence buffers;
+            /*D*/
             derived_cast().serialize_state(state, buffers);
+            /*D*/
             send_patch(std::move(state), std::move(buffers));
         }
         else if (method == "custom")
@@ -449,52 +568,18 @@ namespace xw
             auto it = data.find("content");
             if (it != data.end())
             {
+                /*D*/
                 derived_cast().handle_custom_message(it.value());
+                /*D*/
             }
         }
     }
-
-    template <class D>
-    inline void xtransport<D>::handle_custom_message(const nl::json& /*content*/)
-    {
-    }
-
-    template <class D>
-    inline bool xtransport<D>::same_patch(const std::string& name,
-                                          const nl::json& j1,
-                                          const xeus::buffer_sequence&,
-                                          const nl::json& j2,
-                                          const xeus::buffer_sequence&) const
-         {
-             const auto& paths = derived_cast().buffer_paths();
-             // For a widget with no binary buffer, compare the patches
-             if (paths.empty())
-             {
-                 return j1 == j2;
-             }
-             else
-             {
-                 // For a property with no binary buffer, compare the patches
-                 if (std::find_if(paths.cbegin(), paths.cend(), [name](const auto& v) {
-                     return !v.empty() && v[0] == name;
-                 }) == paths.cend())
-                 {
-                    return j1 == j2;
-                 }
-                 else
-                 {
-                     // TODO: handle the comparison of binary buffers.
-                     return true;
-                 }
-             }
-         }
 
     /****************************************
      * to_json and from_json implementation *
      ****************************************/
 
-    template <class D>
-    inline void to_json(nl::json& j, const xtransport<D>& o)
+    inline void to_json(nl::json& j, const xcommon& o)
     {
         j = "IPY_MODEL_" + std::string(o.id());
     }
@@ -505,7 +590,9 @@ namespace xw
         std::string prefixed_guid = j;
         xeus::xguid guid = prefixed_guid.substr(10).c_str();
         auto& holder = get_transport_registry().find(guid);
+        /*D*/
         o.derived_cast() = std::move(holder.template get<D>());
+        /*D*/
     }
 }
 
