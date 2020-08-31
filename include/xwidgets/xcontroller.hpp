@@ -14,6 +14,7 @@
 
 #include "nlohmann/json.hpp"
 
+#include "xfactory.hpp"
 #include "xmaterialize.hpp"
 #include "xmaker.hpp"
 #include "xwidget.hpp"
