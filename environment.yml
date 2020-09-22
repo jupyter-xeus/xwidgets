@@ -2,6 +2,6 @@ name: xwidgets
 channels:
   - conda-forge
 dependencies:
-  - xeus-cling=0.9.0
+  - xeus-cling=0.10.0
   - xwidgets=0.20.2
   - widgetsnbextension >=3.0.0

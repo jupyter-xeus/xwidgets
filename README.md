@@ -6,7 +6,7 @@
 [![Binder](https://img.shields.io/badge/launch-binder-brightgreen.svg)](https://mybinder.org/v2/gh/jupyter-xeus/xwidgets/stable?filepath=notebooks/xwidgets.ipynb)
 [![Join the Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/QuantStack/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-The C++ backend for Jupyter interactive widgets.
+A C++ backend for Jupyter interactive widgets.
 
 ## Introduction
 
@@ -94,14 +94,6 @@ All the dependencies of xwidgets are available for the conda package manager.
 |  0.16.1    |      ^3.0.0           |  >=0.5.2,<0.6   | >=0.8.1,<0.9   | >=0.18.1,<0.19  | >=3.3.0,<4.0    |
 |  0.16.0    |      ^3.0.0           |  >=0.5.2,<0.6   | >=0.8.0,<0.9   | >=0.18.1,<0.19  | >=3.3.0,<4.0    |
 |  0.15.0    |      ^3.0.0           |  >=0.5.2,<0.6   | >=0.7.0,<0.8   | >=0.17.0,<0.18  | >=3.3.0,<4.0    |
-|  0.14.0    |      ^3.0.0           |  >=0.4.8,<0.5   | >=0.7.0,<0.8   | >=0.15.0,<0.16  | >=3.3.0,<4.0    |
-|  0.13.1    |      ^3.0.0           |  >=0.4.8,<0.5   | >=0.7.0,<0.8   | >=0.14.1,<0.15  | >=3.1.2,<4.0    |
-|  0.13.0    |      ^3.0.0           |  >=0.4.8,<0.5   | >=0.7.0,<0.8   | >=0.13.0,<0.14  | >=3.1.1,<4.0    |
-|  0.12.2    |      ~3.0.0           |  >=0.4.8,<0.5   | >=0.7.0,<0.8   | >=0.13.0,<0.14  | >=3.1.1,<4.0    |
-|  0.12.1    |      ~3.0.0           |  >=0.4.8,<0.5   | >=0.7.0,<0.8   | >=0.13.0,<0.14  | >=3.1.1,<4.0    |
-|  0.12.0    |      ~3.0.0           |  >=0.4.8,<0.5   | >=0.7.0,<0.8   | >=0.13.0,<0.14  | >=3.1.1,<4.0    |
-|  0.11.1    |      ~3.0.0           |  >=0.4.8,<0.5   | >=0.7.0,<0.8   | >=0.12.0,<0.13  | >=3.1.1,<4.0    |
-|  0.11.0    |      ~3.0.0           |  >=0.4.8,<0.5  | >=0.7.0,<0.8  | >=0.12.0,<0.13  | >=3.1.1,<4.0    |
 
 ## License
 
