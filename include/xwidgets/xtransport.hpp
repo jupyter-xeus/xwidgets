@@ -140,6 +140,9 @@ namespace xw
         const xeus::xmessage* const& hold() const;
         const std::vector<xjson_path_type>& buffer_paths() const;
 
+        void open(nl::json&& patch, xeus::buffer_sequence&& buffers);
+        void close();
+
         template <class T>
         void notify(const std::string& name, const T& value) const;
         void send(nl::json&&, xeus::buffer_sequence&&) const;
@@ -359,6 +362,32 @@ namespace xw
         m_comm.send(std::move(metadata), std::move(data), std::move(buffers));
     }
 
+    inline void xcommon::open(nl::json&& patch, xeus::buffer_sequence&& buffers)
+    {
+        // extract buffer paths
+        auto paths = nl::json::array();
+        extract_buffer_paths(buffer_paths(), patch, buffers, paths);
+
+        // metadata
+        nl::json metadata;
+        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
+
+        // data
+        nl::json data;
+
+        data["state"] = std::move(patch);
+        data["buffer_paths"] = std::move(paths);
+
+        // open
+        m_comm.open(std::move(metadata), std::move(data), std::move(buffers));
+    }
+
+    inline void xcommon::close()
+    {
+        // close
+        m_comm.close(nl::json::object(), nl::json::object(), xeus::buffer_sequence());
+    } 
+
     inline bool xcommon::same_patch(const std::string& name,
                                     const nl::json& j1,
                                     const xeus::buffer_sequence&,
@@ -509,31 +538,16 @@ namespace xw
         // serialize state
         nl::json state;
         xeus::buffer_sequence buffers;
-
-        /*D*/
         derived_cast().serialize_state(state, buffers);
-        /*D*/
-        
-        // extract buffer paths
-        nl::json paths;
-        extract_buffer_paths(buffer_paths(), state, buffers, paths);
 
-        // metadata
-        nl::json metadata;
-        metadata["version"] = XWIDGETS_PROTOCOL_VERSION;
-
-        // data
-        nl::json data;
-        data["state"] = std::move(state);
-        data["buffer_paths"] = std::move(paths);
-
-        this->comm().open(std::move(metadata), std::move(data), std::move(buffers));
+        // open comm
+        base_type::open(std::move(state), std::move(buffers));        
     }
 
     template <class D>
     inline void xtransport<D>::close()
     {
-        this->comm().close(nl::json::object(), nl::json::object(), xeus::buffer_sequence());
+        base_type::close();
     }
 
     template <class D>
@@ -541,7 +555,8 @@ namespace xw
     {
         const nl::json& content = message.content();
         const nl::json& data = content["data"];
-        std::string method = data["method"];
+        const std::string method = data["method"];
+
         if (method == "update")
         {
             const nl::json& state = data["state"];
