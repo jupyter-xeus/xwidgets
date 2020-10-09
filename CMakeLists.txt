@@ -76,6 +76,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcheckbox.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcolor.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcolor_picker.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcommon.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcontroller.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xdropdown.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xeither.hpp
@@ -125,6 +126,7 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xcheckbox.cpp
     ${XWIDGETS_SOURCE_DIR}/xcolor_picker.cpp
     ${XWIDGETS_SOURCE_DIR}/xcontroller.cpp
+    ${XWIDGETS_SOURCE_DIR}/xcommon.cpp
     ${XWIDGETS_SOURCE_DIR}/xdropdown.cpp
     ${XWIDGETS_SOURCE_DIR}/xhtml.cpp
     ${XWIDGETS_SOURCE_DIR}/ximage.cpp

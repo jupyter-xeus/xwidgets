@@ -20,13 +20,17 @@
 #include "xeus/xinterpreter.hpp"
 
 #include "xbinary.hpp"
+<<<<<<< HEAD
 #include "xfactory.hpp"
+=======
 #include "xcommon.hpp"
+>>>>>>> b0addaa... split-xcommon-cpp
 #include "xholder.hpp"
 #include "xwidgets_config.hpp"
 
 namespace xw
 {
+<<<<<<< HEAD
     /**********************************
      * Comm target handling functions *
      **********************************/
@@ -80,6 +84,26 @@ namespace xw
             .target(get_widget_target_name());
     }
 
+    /**********************************************
+     * property serialization and deserialization *
+     **********************************************/
+
+    // Values
+
+    template <class T>
+    inline void xwidgets_serialize(const T& value, nl::json& j, xeus::buffer_sequence&)
+    {
+        j = value;
+    }
+
+    template <class T>
+    inline void xwidgets_deserialize(T& value, const nl::json& j, const xeus::buffer_sequence&)
+    {
+        value = j.template get<T>();
+    }
+
+=======
+>>>>>>> b0addaa... split-xcommon-cpp
     // Properties
 
     template <class P>
