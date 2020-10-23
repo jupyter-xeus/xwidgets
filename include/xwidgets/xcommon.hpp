@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "xeus/xcomm.hpp"
+#include "xeus/xinterpreter.hpp"
 
 #include "xbinary.hpp"
 #include "xcommon.hpp"
