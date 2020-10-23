@@ -10,7 +10,6 @@
 #define XOBJECT_HPP
 
 #include <string>
-#include <unordered_map>
 
 #include "xtl/xoptional.hpp"
 #include "xtl/xjson.hpp"
@@ -50,8 +49,14 @@ namespace xw
 
     protected:
 
+// MSVC wrongly raises compiler error C2385 over ambiguous call to constructor
+// without this workaround.
+#ifdef _WIN32
         xobject();
         xobject(xeus::xcomm&&, bool owning = false);
+#else
+        using base_type::base_type;
+#endif
     };
 
     /*******************************
@@ -80,6 +85,7 @@ namespace xw
         set_property_from_patch(_view_name, patch, buffers);
     }
 
+#ifdef _WIN32
     template <class D>
     inline xobject<D>::xobject()
         : base_type()
@@ -91,6 +97,7 @@ namespace xw
         : base_type(std::move(com), owning)
     {
     }
+#endif
 }
 
 #endif

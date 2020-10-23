@@ -36,4 +36,11 @@ the implementation of ``Foo``, ``Bar`` should be a template, and not refer to
 ``Bar<Foo<T>>``. However, unlike GCC and Clang, Visual Studio incorrectly makes
 ``Bar`` refer to the fully specialized template type.
 
+Visual Studio and ambiguous calls to base constructors in mixins
+----------------------------------------------------------------
+
+In ``xobject.hpp``, we explicitely define constructors instead of making use of the
+``using`` statement for the base constructor because MSVC wrongly reports that the
+call to the base class constructor is ambiguous in derived classes.
+
 .. _`MSVC issue`: https://developercommunity.visualstudio.com/content/problem/208938/compilation-error-c2057-expected-constant-expressi.html
