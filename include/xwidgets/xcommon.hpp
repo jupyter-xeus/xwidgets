@@ -16,6 +16,7 @@
 
 #include "xbinary.hpp"
 #include "xcommon.hpp"
+#include "xfactory.hpp"
 #include "xholder.hpp"
 #include "xwidgets_config.hpp"
 

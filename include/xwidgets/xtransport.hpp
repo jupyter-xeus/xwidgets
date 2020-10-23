@@ -20,7 +20,6 @@
 #include "xeus/xinterpreter.hpp"
 
 #include "xbinary.hpp"
-#include "xfactory.hpp"
 #include "xcommon.hpp"
 #include "xholder.hpp"
 #include "xwidgets_config.hpp"
