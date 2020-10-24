@@ -16,6 +16,8 @@
 #include "xeus/xcomm.hpp"
 #include "xeus/xinterpreter.hpp"
 
+#include "xproperty/xobserved.hpp"
+
 #include "xbinary.hpp"
 #include "xcommon.hpp"
 #include "xholder.hpp"
@@ -43,16 +45,15 @@ namespace xw
      **************************/
 
     template <class D>
-    class xtransport : public xcommon
+    class xtransport : public xcommon, public xp::xobserved<D>
     {
     public:
 
         using base_type = xcommon;
         using derived_type = D;
+        using observed_type = xp::xobserved<D>;
 
-        derived_type& derived_cast() & noexcept;
-        const derived_type& derived_cast() const & noexcept;
-        derived_type derived_cast() && noexcept;
+        using base_type::notify;
 
     protected:
 
@@ -94,7 +95,7 @@ namespace xw
 
     template <class D>
     inline xtransport<D>::xtransport()
-        : base_type()
+        : base_type(), observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         get_transport_registry().register_weak(this);
@@ -111,7 +112,7 @@ namespace xw
 
     template <class D>
     inline xtransport<D>::xtransport(xeus::xcomm&& comm, bool owning)
-        : xcommon(std::move(comm))
+        : xcommon(std::move(comm)), observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         if (!owning)
@@ -122,7 +123,7 @@ namespace xw
 
     template <class D>
     inline xtransport<D>::xtransport(const xtransport& other)
-        : xcommon(other)
+        : xcommon(other), observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         get_transport_registry().register_weak(this);
@@ -130,7 +131,7 @@ namespace xw
 
     template <class D>
     inline xtransport<D>::xtransport(xtransport&& other)
-        : xcommon(std::move(other))
+        : xcommon(std::move(other)), observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
@@ -157,30 +158,12 @@ namespace xw
     }
 
     template <class D>
-    inline auto xtransport<D>::derived_cast() & noexcept -> derived_type&
-    {
-        return *static_cast<derived_type*>(this);
-    }
-
-    template <class D>
-    inline auto xtransport<D>::derived_cast() const & noexcept -> const derived_type&
-    {
-        return *static_cast<const derived_type*>(this);
-    }
-
-    template <class D>
-    inline auto xtransport<D>::derived_cast() && noexcept -> derived_type
-    {
-        return *static_cast<derived_type*>(this);
-    }
-
-    template <class D>
     inline void xtransport<D>::open()
     {
         // serialize state
         nl::json state;
         xeus::buffer_sequence buffers;
-        derived_cast().serialize_state(state, buffers);
+        this->derived_cast().serialize_state(state, buffers);
 
         // open comm
         base_type::open(std::move(state), std::move(buffers));        
@@ -207,7 +190,7 @@ namespace xw
             this->hold() = std::addressof(message);;
             insert_buffer_paths(const_cast<nl::json&>(state), buffer_paths);
             /*D*/
-            derived_cast().apply_patch(state, buffers);
+            this->derived_cast().apply_patch(state, buffers);
             /*D*/
             this->hold() = nullptr;
         }
@@ -216,7 +199,7 @@ namespace xw
             nl::json state;
             xeus::buffer_sequence buffers;
             /*D*/
-            derived_cast().serialize_state(state, buffers);
+            this->derived_cast().serialize_state(state, buffers);
             /*D*/
             send_patch(std::move(state), std::move(buffers));
         }
@@ -226,7 +209,7 @@ namespace xw
             if (it != data.end())
             {
                 /*D*/
-                derived_cast().handle_custom_message(it.value());
+                this->derived_cast().handle_custom_message(it.value());
                 /*D*/
             }
         }
