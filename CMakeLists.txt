@@ -139,6 +139,7 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xpassword.cpp
     ${XWIDGETS_SOURCE_DIR}/xplay.cpp
     ${XWIDGETS_SOURCE_DIR}/xprogress.cpp
+    ${XWIDGETS_SOURCE_DIR}/xregistry.cpp
     ${XWIDGETS_SOURCE_DIR}/xselect.cpp
     ${XWIDGETS_SOURCE_DIR}/xslider.cpp
     ${XWIDGETS_SOURCE_DIR}/xselectionslider.cpp

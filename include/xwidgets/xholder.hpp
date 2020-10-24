@@ -132,20 +132,16 @@ namespace xw
         template <class D>
         void register_owning(xtransport<D>&& model);
 
-        void unregister(xeus::xguid id);
+        XWIDGETS_API void unregister(xeus::xguid id);
 
-        typename storage_type::mapped_type& find(xeus::xguid id);
+        XWIDGETS_API typename storage_type::mapped_type& find(xeus::xguid id);
 
     private:
 
         storage_type m_storage;
     };
 
-    inline xregistry& get_transport_registry()
-    {
-        static xregistry instance;
-        return instance;
-    }
+    XWIDGETS_API xregistry& get_transport_registry();
 
     /**************************
      * holder implementations *
@@ -500,21 +496,6 @@ namespace xw
     void xregistry::register_owning(xtransport<D>&& model)
     {
         m_storage[model.id()] = make_owning_holder(std::move(model));
-    }
-
-    inline void xregistry::unregister(xeus::xguid id)
-    {
-        m_storage.erase(id);
-    }
-
-    inline auto xregistry::find(xeus::xguid id) -> typename storage_type::mapped_type&
-    {
-        auto it = m_storage.find(id);
-        if (it == m_storage.end())
-        {
-            throw std::runtime_error("Could not find specified id in transport registry");
-        }
-        return it->second;
     }
 
     /*****************************
