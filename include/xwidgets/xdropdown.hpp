@@ -94,10 +94,7 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xdropdown>;
-    extern template xmaterialize<xdropdown>::xmaterialize();
     extern template class xtransport<xmaterialize<xdropdown>>;
-#endif
 }
 #endif

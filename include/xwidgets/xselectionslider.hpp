@@ -242,14 +242,10 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xselectionslider>;
-    extern template xmaterialize<xselectionslider>::xmaterialize();
     extern template class xtransport<xmaterialize<xselectionslider>>;
 
     extern template class xmaterialize<xselection_rangeslider>;
-    extern template xmaterialize<xselection_rangeslider>::xmaterialize();
     extern template class xtransport<xmaterialize<xselection_rangeslider>>;
-#endif
 }
 #endif

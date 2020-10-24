@@ -83,10 +83,7 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xvalid>;
-    extern template xmaterialize<xvalid>::xmaterialize();
     extern template class xtransport<xmaterialize<xvalid>>;
-#endif
 }
 #endif

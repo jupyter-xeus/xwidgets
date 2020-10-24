@@ -82,11 +82,8 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xcheckbox>;
-    extern template xmaterialize<xcheckbox>::xmaterialize();
     extern template class xtransport<xmaterialize<xcheckbox>>;
-#endif
 }
 
 #endif

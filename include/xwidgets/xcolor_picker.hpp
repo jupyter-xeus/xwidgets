@@ -94,11 +94,8 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xcolor_picker>;
-    extern template xmaterialize<xcolor_picker>::xmaterialize();
     extern template class xtransport<xmaterialize<xcolor_picker>>;
-#endif 
 }
 
 #endif
