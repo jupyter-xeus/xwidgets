@@ -86,6 +86,8 @@ namespace xw
     template <class D>
     inline void xmedia<D>::set_defaults()
     {
+        this->buffer_paths() = {{ "value" }}; 
+
         this->_model_module() = "@jupyter-widgets/controls";
         this->_view_module() = "@jupyter-widgets/controls";
         this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;

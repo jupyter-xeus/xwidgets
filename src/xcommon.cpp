@@ -30,14 +30,16 @@ namespace xw
     xcommon::xcommon(const xcommon& other)
         : m_moved_from(false),
           m_hold(nullptr),
-          m_comm(other.m_comm)
+          m_comm(other.m_comm),
+          m_buffer_paths(other.m_buffer_paths)
     {
     }
 
     xcommon::xcommon(xcommon&& other)
         : m_moved_from(false),
           m_hold(nullptr),
-          m_comm(std::move(other.m_comm))
+          m_comm(std::move(other.m_comm)),
+          m_buffer_paths(std::move(other.m_buffer_paths))
     {
         other.m_moved_from = true;
     }
@@ -47,6 +49,7 @@ namespace xw
         m_moved_from = false;
         m_hold = nullptr;
         m_comm = other.m_comm;
+        m_buffer_paths = other.m_buffer_paths;
         return *this;
     }
 
@@ -56,6 +59,7 @@ namespace xw
         m_moved_from = false;
         m_hold = nullptr;
         m_comm = std::move(other.m_comm);
+        m_buffer_paths = std::move(other.m_buffer_paths);
         return *this;
     }
 
@@ -126,6 +130,11 @@ namespace xw
     bool xcommon::moved_from() const noexcept
     {
         return m_moved_from;
+    }
+
+    std::vector<xjson_path_type>& xcommon::buffer_paths()
+    {
+        return m_buffer_paths;
     }
 
     const std::vector<xjson_path_type>& xcommon::buffer_paths() const
