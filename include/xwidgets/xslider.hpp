@@ -223,23 +223,17 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xslider_style>;
-    extern template xmaterialize<xslider_style>::xmaterialize();
     extern template class xtransport<xmaterialize<xslider_style>>;
 
     extern template class xmaterialize<xslider, int>;
-    extern template xmaterialize<xslider, int>::xmaterialize();
     extern template class xtransport<xmaterialize<xslider, int>>;
 
     extern template class xmaterialize<xslider, float>;
-    extern template xmaterialize<xslider, float>::xmaterialize();
     extern template class xtransport<xmaterialize<xslider, float>>;
 
     extern template class xmaterialize<xslider, double>;
-    extern template xmaterialize<xslider, double>::xmaterialize();
     extern template class xtransport<xmaterialize<xslider, double>>;
-#endif
 }
 
 #endif

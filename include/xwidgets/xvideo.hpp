@@ -130,10 +130,7 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xvideo>;
-    extern template xmaterialize<xvideo>::xmaterialize();
     extern template class xtransport<xmaterialize<xvideo>>;
-#endif
 }
 #endif

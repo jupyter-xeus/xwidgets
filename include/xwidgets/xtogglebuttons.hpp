@@ -177,14 +177,10 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xtogglebuttons_style>;
-    extern template xmaterialize<xtogglebuttons_style>::xmaterialize();
     extern template class xtransport<xmaterialize<xtogglebuttons_style>>;
 
     extern template class xmaterialize<xtogglebuttons>;
-    extern template xmaterialize<xtogglebuttons>::xmaterialize();
     extern template class xtransport<xmaterialize<xtogglebuttons>>;
-#endif
 }
 #endif

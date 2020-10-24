@@ -96,19 +96,14 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xnumeral, int>;
-    extern template xmaterialize<xnumeral, int>::xmaterialize();
     extern template class xtransport<xmaterialize<xnumeral, int>>;
 
     extern template class xmaterialize<xnumeral, float>;
-    extern template xmaterialize<xnumeral, float>::xmaterialize();
     extern template class xtransport<xmaterialize<xnumeral, float>>;
 
     extern template class xmaterialize<xnumeral, double>;
-    extern template xmaterialize<xnumeral, double>::xmaterialize();
     extern template class xtransport<xmaterialize<xnumeral, double>>;
-#endif
 }
 
 #endif

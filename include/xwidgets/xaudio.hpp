@@ -124,10 +124,7 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xaudio>;
-    extern template xmaterialize<xaudio>::xmaterialize();
     extern template class xtransport<xmaterialize<xaudio>>;
-#endif
 }
 #endif

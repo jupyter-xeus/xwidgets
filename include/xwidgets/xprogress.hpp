@@ -170,23 +170,17 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xprogress_style>;
-    extern template xmaterialize<xprogress_style>::xmaterialize();
     extern template class xtransport<xmaterialize<xprogress_style>>;
 
     extern template class xmaterialize<xprogress, int>;
-    extern template xmaterialize<xprogress, int>::xmaterialize();
     extern template class xtransport<xmaterialize<xprogress, int>>;
 
     extern template class xmaterialize<xprogress, float>;
-    extern template xmaterialize<xprogress, float>::xmaterialize();
     extern template class xtransport<xmaterialize<xprogress, float>>;
 
     extern template class xmaterialize<xprogress, double>;
-    extern template xmaterialize<xprogress, double>::xmaterialize();
     extern template class xtransport<xmaterialize<xprogress, double>>;
-#endif
 }
 
 #endif

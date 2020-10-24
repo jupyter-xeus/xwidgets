@@ -280,19 +280,14 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xcontroller_button>;
-    extern template xmaterialize<xcontroller_button>::xmaterialize();
     extern template class xtransport<xmaterialize<xcontroller_button>>;
 
     extern template class xmaterialize<xcontroller_axis>;
-    extern template xmaterialize<xcontroller_axis>::xmaterialize();
     extern template class xtransport<xmaterialize<xcontroller_axis>>;
 
     extern template class xmaterialize<xcontroller>;
-    extern template xmaterialize<xcontroller>::xmaterialize();
     extern template class xtransport<xmaterialize<xcontroller>>;
-#endif
 }
 
 #endif

@@ -179,12 +179,10 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
     extern template class xmaterialize<xlink>;
     extern template class xtransport<xmaterialize<xlink>>;
 
     extern template class xmaterialize<xdirectional_link>;
     extern template class xtransport<xmaterialize<xdirectional_link>>;
-#endif
 }
 #endif

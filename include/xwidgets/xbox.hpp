@@ -278,14 +278,13 @@ namespace xw
      * precompiled types *
      *********************/
 
-#ifndef _WIN32
+    extern template class xmaterialize<xbox>;
+    extern template class xtransport<xmaterialize<xbox>>;
+
     extern template class xmaterialize<xhbox>;
-    extern template xmaterialize<xhbox>::xmaterialize();
     extern template class xtransport<xmaterialize<xhbox>>;
 
     extern template class xmaterialize<xvbox>;
-    extern template xmaterialize<xvbox>::xmaterialize();
     extern template class xtransport<xmaterialize<xvbox>>;
-#endif
 }
 #endif

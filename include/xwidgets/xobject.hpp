@@ -51,7 +51,7 @@ namespace xw
 
 // MSVC wrongly raises compiler error C2385 over ambiguous call to constructor
 // without this workaround.
-#ifdef _WIN32
+#ifdef _MSC_VER
         xobject();
         xobject(xeus::xcomm&&, bool owning = false);
 #else
@@ -85,7 +85,7 @@ namespace xw
         set_property_from_patch(_view_name, patch, buffers);
     }
 
-#ifdef _WIN32
+#ifdef _MSC_VER
     template <class D>
     inline xobject<D>::xobject()
         : base_type()
