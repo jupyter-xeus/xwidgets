@@ -147,68 +147,15 @@ Making use of the Jupyter serialization protocol in ``xwidgets``
 
 The serialization is handled by the free function
 
-``set_patch_from_property(property, patch, buffers);``
+``xwidgets_serialize(value, patch, buffers);``
 
 where
 
-- the first argument is a const reference to the property,
-- the second argument (``patch``) is a reference to the JSON patch being
-  written.
+- the first argument is a const reference to the value,
+- the second argument (``patch``) to the JSON object being written.
 - the third argument (``buffers``) is a reference to the sequence of buffers of
   the message.
 
-When the function is called, ``patch`` and ``buffers`` may already hold data
-from earlier properties for which the function was called. New buffers may be
-appended and new property names added to the ``patch`` argument.
-
-**Overloading** ``set_patch_from_property``
-
-To specify the serialization of an attribute of a widget, one can overload the
-``set_patch_from_property`` function for the relevant property.
-
-For example, the overload of ``set_patch_from_property`` for the ``value``
-property of the image widget reads:
-
-.. code::
-
-    inline void set_patch_from_property(const decltype(image::value)& property,
-                                        nl::json& patch,
-                                        xeus::buffer_sequence& buffers)
-    {
-        patch[property.name()] = xbuffer_reference_prefix() + std::to_string(buffers.size());
-        buffers.emplace_back(property().data(), property().size());
-    }
-
-.. note::
-
-    ``decltype(image::value)`` is the type of the ``value`` property of the
-    image widget, which is unique to the image widget, (more precisely, its
-    type is an internal class of the image class). No other attribute of
-    another widget can have the same type.
-
-    This specialization is a better match than the default one and is picked-up
-    by argument-dependent lookup, however, this will not apply to properties of
-    other widgets or other properties of this widget also holding a
-    ``std::vector<char>``.
-
-**Overloading** ``xwidgets_serialize``
-
-The default implementation of ``set_patch_from_property`` reads:
-
-.. code::
-
-    template <class P>
-    inline void set_patch_from_property(const P& property,
-                                        nl::json& patch,
-                                        xeus::buffer_sequence& buffers)
-    {
-        xwidgets_serialize(property(), patch[property.name()], buffers);
-    }
-
-which means that the default behavior is to call into ``xwidgets_serialize``
-with the value held by the property. A way to specify a serialization method
-for a user-defined type is to overload the ``xwidgets_serialize`` method for
-that type in the same namespace where the type is defined. Then, it will be
 picked up by argument-dependent lookup, and apply to all xwidgets properties
 holding values of that type.
 
@@ -216,9 +163,9 @@ holding values of that type.
 
     The default implementation of ``xwidgets_serialize`` simply invokes the
     JSON serialization for that type. In most cases, overloading
-    ``xwidgets_serialize`` or ``set_patch_from_property`` is not necessary.
-    This is mostly relevant for properties for which one wants to bypass JSON
-    serialization or make use of binary serialization.
+    ``xwidgets_serialize`` is not necessary. This is mostly relevant for
+    properties for which one wants to bypass JSON serialization or make
+    use of binary serialization.
 
 **Deserialization**
 
