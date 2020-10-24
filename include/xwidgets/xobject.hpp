@@ -14,8 +14,6 @@
 #include "xtl/xoptional.hpp"
 #include "xtl/xjson.hpp"
 
-#include "xproperty/xobserved.hpp"
-
 #include "xmaterialize.hpp"
 #include "xtransport.hpp"
 
@@ -26,7 +24,7 @@ namespace xw
      ***********************/
 
     template <class D>
-    class xobject : public xp::xobserved<D>, public xtransport<D>
+    class xobject : public xtransport<D>
     {
     public:
 
@@ -45,18 +43,9 @@ namespace xw
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_module_version, XWIDGETS_BASE_VERSION);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, _view_name, "WidgetView");
 
-        using base_type::notify;
-
     protected:
 
-// MSVC wrongly raises compiler error C2385 over ambiguous call to constructor
-// without this workaround.
-#ifdef _MSC_VER
-        xobject();
-        xobject(xeus::xcomm&&, bool owning = false);
-#else
         using base_type::base_type;
-#endif
     };
 
     /**************************
@@ -84,20 +73,6 @@ namespace xw
         set_property_from_patch(_view_module_version, patch, buffers);
         set_property_from_patch(_view_name, patch, buffers);
     }
-
-#ifdef _MSC_VER
-    template <class D>
-    inline xobject<D>::xobject()
-        : base_type()
-    {
-    }
-
-    template <class D>
-    inline xobject<D>::xobject(xeus::xcomm&& com, bool owning)
-        : base_type(std::move(com), owning)
-    {
-    }
-#endif
 }
 
 #endif
