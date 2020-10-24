@@ -38,8 +38,6 @@ namespace xw
 
         XPROPERTY(value_type, derived_type, value);
 
-        const std::vector<xjson_path_type>& buffer_paths() const;
-
     protected:
 
         xmedia();
@@ -76,13 +74,6 @@ namespace xw
         base_type::apply_patch(patch, buffers);
 
         set_property_from_patch(value, patch, buffers);
-    }
-
-    template <class D>
-    inline const std::vector<xjson_path_type>& xmedia<D>::buffer_paths() const
-    {
-        static const std::vector<xjson_path_type> default_buffer_paths = {{"value"}};
-        return default_buffer_paths;
     }
 
     template <class D>
