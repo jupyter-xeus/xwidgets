@@ -11,11 +11,9 @@
 
 #include "xeus/xcomm.hpp"
 
-#include "xwidgets_config.hpp"
-
 namespace xw
 {
-    XWIDGETS_API xeus::xtarget* get_widget_target();
+    xeus::xtarget* get_widget_target();
 }
 
 #endif

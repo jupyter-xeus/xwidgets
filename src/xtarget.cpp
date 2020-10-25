@@ -14,8 +14,9 @@
 #include "xeus/xinterpreter.hpp"
 
 #include "xwidgets/xfactory.hpp"
-#include "xwidgets/xtarget.hpp"
 #include "xwidgets/xwidgets_config.hpp"
+
+#include "xtarget.hpp"
 
 namespace xw
 {
