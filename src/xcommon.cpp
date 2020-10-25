@@ -7,7 +7,7 @@
 
 #include "xeus/xinterpreter.hpp"
 
-#include "xwidgets/xtarget.hpp"
+#include "xtarget.hpp"
 
 namespace xw
 {

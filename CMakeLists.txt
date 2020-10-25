@@ -106,7 +106,6 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstyle.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xradiobuttons.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtab.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtarget.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtext.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtextarea.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtogglebutton.hpp
@@ -146,6 +145,7 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xselectionslider.cpp
     ${XWIDGETS_SOURCE_DIR}/xtab.cpp
     ${XWIDGETS_SOURCE_DIR}/xtarget.cpp
+    ${XWIDGETS_SOURCE_DIR}/xtarget.hpp
     ${XWIDGETS_SOURCE_DIR}/xtext.cpp
     ${XWIDGETS_SOURCE_DIR}/xtextarea.cpp
     ${XWIDGETS_SOURCE_DIR}/xtogglebutton.cpp
