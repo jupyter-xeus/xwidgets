@@ -122,6 +122,7 @@ set(XWIDGETS_HEADERS
 set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xaccordion.cpp
     ${XWIDGETS_SOURCE_DIR}/xaudio.cpp
+    ${XWIDGETS_SOURCE_DIR}/xbinary.cpp
     ${XWIDGETS_SOURCE_DIR}/xbox.cpp
     ${XWIDGETS_SOURCE_DIR}/xbutton.cpp
     ${XWIDGETS_SOURCE_DIR}/xcheckbox.cpp

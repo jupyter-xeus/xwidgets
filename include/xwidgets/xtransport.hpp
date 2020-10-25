@@ -18,10 +18,8 @@
 
 #include "xproperty/xobserved.hpp"
 
-#include "xbinary.hpp"
 #include "xcommon.hpp"
 #include "xholder.hpp"
-#include "xtarget.hpp"
 #include "xwidgets_config.hpp"
 
 namespace xw

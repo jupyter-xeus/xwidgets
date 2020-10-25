@@ -1,11 +1,13 @@
 #include "xwidgets/xcommon.hpp"
 
-#include "xeus/xinterpreter.hpp"
-
 #include <algorithm>
 #include <string>
 #include <utility>
 #include <vector>
+
+#include "xeus/xinterpreter.hpp"
+
+#include "xwidgets/xtarget.hpp"
 
 namespace xw
 {

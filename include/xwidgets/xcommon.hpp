@@ -10,14 +10,12 @@
 #define XWIDGETS_COMMON_HPP
 
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "xeus/xcomm.hpp"
 
 #include "xbinary.hpp"
-#include "xcommon.hpp"
-#include "xholder.hpp"
-#include "xtarget.hpp"
 #include "xwidgets_config.hpp"
 
 namespace xw
