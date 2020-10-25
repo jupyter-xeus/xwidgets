@@ -129,6 +129,7 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xcontroller.cpp
     ${XWIDGETS_SOURCE_DIR}/xcommon.cpp
     ${XWIDGETS_SOURCE_DIR}/xdropdown.cpp
+    ${XWIDGETS_SOURCE_DIR}/xfactory.cpp
     ${XWIDGETS_SOURCE_DIR}/xhtml.cpp
     ${XWIDGETS_SOURCE_DIR}/ximage.cpp
     ${XWIDGETS_SOURCE_DIR}/xlabel.cpp
