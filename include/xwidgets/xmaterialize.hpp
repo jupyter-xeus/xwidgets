@@ -117,7 +117,7 @@ namespace xw
     template <template <class> class B, class... P>
     inline xmaterialize<B, P...> xmaterialize<B, P...>::finalize() &&
     {
-        return reinterpret_cast<typename xmaterialize<B, P...>::base_type&&>(*this);
+        return *this;
     }
 
     /**********************************************************
