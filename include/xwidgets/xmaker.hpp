@@ -16,6 +16,7 @@
 
 #include "xholder.hpp"
 #include "xmaterialize.hpp"
+#include "xregistry.hpp"
 
 namespace nl = nlohmann;
 

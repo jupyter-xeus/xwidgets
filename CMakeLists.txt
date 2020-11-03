@@ -97,6 +97,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xpassword.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xplay.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprogress.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xregistry.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselect.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselection.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselection_container.hpp
@@ -130,6 +131,8 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xcommon.cpp
     ${XWIDGETS_SOURCE_DIR}/xdropdown.cpp
     ${XWIDGETS_SOURCE_DIR}/xfactory.cpp
+    ${XWIDGETS_SOURCE_DIR}/xholder.cpp
+    ${XWIDGETS_SOURCE_DIR}/xholder_id.cpp
     ${XWIDGETS_SOURCE_DIR}/xhtml.cpp
     ${XWIDGETS_SOURCE_DIR}/ximage.cpp
     ${XWIDGETS_SOURCE_DIR}/xlabel.cpp

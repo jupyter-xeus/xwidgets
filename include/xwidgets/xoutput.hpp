@@ -64,7 +64,7 @@ namespace xw
 
     private:
 
-        xholder<xtransport> m_out;
+        xholder m_out;
     };
 
     /**************************
@@ -129,7 +129,7 @@ namespace xw
 
     template <class O>
     inline output_guard<O>::output_guard(const xoutput<O>& out)
-        : m_out(make_id_holder<xtransport>(out.id()))
+        : m_out(make_id_holder(out.id()))
     {
         m_out.template get<O>().capture();
     }

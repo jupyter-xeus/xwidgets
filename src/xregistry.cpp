@@ -1,5 +1,4 @@
-#include "xwidgets/xholder.hpp"
-// TODO: separate xregistry declaration in own header
+#include "xwidgets/xregistry.hpp"
 
 namespace xw
 {

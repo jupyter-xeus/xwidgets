@@ -20,6 +20,7 @@
 
 #include "xcommon.hpp"
 #include "xholder.hpp"
+#include "xregistry.hpp"
 #include "xwidgets_config.hpp"
 
 namespace xw

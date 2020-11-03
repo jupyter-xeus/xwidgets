@@ -23,7 +23,7 @@ namespace nl = nlohmann;
 
 namespace xw
 {
-    XWIDGETS_API class xfactory
+    class XWIDGETS_API xfactory
     {
     public:
 
