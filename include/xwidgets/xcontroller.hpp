@@ -94,16 +94,8 @@ namespace xw
         using base_type = xwidget<D>;
         using derived_type = D;
 
-#ifdef _MSC_VER
-        template <class T>
-        using transport_type = xtransport<T>;
-
-        using xcontroller_axis_list_type = std::vector<xholder<transport_type>>;
-        using xcontroller_button_list_type = std::vector<xholder<transport_type>>;
-#else
-        using xcontroller_axis_list_type = std::vector<xholder<xtransport>>;
-        using xcontroller_button_list_type = std::vector<xholder<xtransport>>;
-#endif
+        using xcontroller_axis_list_type = std::vector<xholder>;
+        using xcontroller_button_list_type = std::vector<xholder>;
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);

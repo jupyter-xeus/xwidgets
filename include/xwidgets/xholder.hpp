@@ -11,15 +11,15 @@
 
 #include <memory>
 #include <stdexcept>
-#include <unordered_map>
+#include <string>
 #include <utility>
+
+#include "xeus/xguid.hpp"
 
 #include "nlohmann/json.hpp"
 
 #include "xtl/xany.hpp"
 #include "xtl/xclosure.hpp"
-
-#include "xeus/xguid.hpp"
 
 #include "xwidgets_config.hpp"
 
@@ -29,30 +29,31 @@ namespace xw
 {
     namespace detail
     {
-        template <template <class> class CRTP>
         class xholder_impl;
     }
+
+    template <class D>
+    class xtransport;
 
     /***********************
      * xholder declaration *
      ***********************/
 
-    template <template <class> class CRTP>
-    class xholder
+    class XWIDGETS_API xholder
     {
     public:
 
-        using implementation_type = detail::xholder_impl<CRTP>;
+        using implementation_type = detail::xholder_impl;
 
         xholder();
         ~xholder();
         xholder(const xholder& rhs);
         xholder(xholder&& rhs);
         template <class D>
-        xholder(const CRTP<D>& rhs);
+        xholder(const xtransport<D>& rhs);
         template <class D>
-        xholder(CRTP<D>&& rhs);
-        template <class D, class = std::enable_if_t<std::is_base_of<CRTP<D>, D>::value, void>>
+        xholder(xtransport<D>&& rhs);
+        template <class D, class = std::enable_if_t<std::is_base_of<xtransport<D>, D>::value, void>>
         xholder(std::shared_ptr<D> rhs);
         xholder(implementation_type* holder);
 
@@ -60,11 +61,11 @@ namespace xw
         xholder& operator=(xholder&& rhs);
 
         template <class D>
-        xholder& operator=(const CRTP<D>& rhs);
+        xholder& operator=(const xtransport<D>& rhs);
         template <class D>
-        xholder& operator=(CRTP<D>&& rhs);
+        xholder& operator=(xtransport<D>&& rhs);
         template <class D>
-        std::enable_if_t<std::is_base_of<CRTP<D>, D>::value, xholder&>
+        std::enable_if_t<std::is_base_of<xtransport<D>, D>::value, xholder&>
         operator=(std::shared_ptr<D> ptr);
 
         void swap(xholder& rhs);
@@ -87,69 +88,43 @@ namespace xw
         implementation_type* p_holder;
     };
 
-    template <template <class> class CRTP>
-    inline void swap(xholder<CRTP>& lhs, xholder<CRTP>& rhs);
+    XWIDGETS_API void swap(xholder& lhs, xholder& rhs);
 
-    template <template <class> class CRTP, class D>
-    xholder<CRTP> make_weak_holder(CRTP<D>* ptr);
+    /******************************
+     * holder makers declarations *
+     ******************************/
 
-    template <template <class> class CRTP, class D>
-    xholder<CRTP> make_owning_holder(CRTP<D>&& value);
+    template <class D>
+    xholder make_weak_holder(xtransport<D>* ptr);
 
-    template <template <class> class CRTP>
-    xholder<CRTP> make_id_holder(xeus::xguid id);
+    template <class D>
+    xholder make_owning_holder(xtransport<D>&& value);
 
-    template <template <class> class CRTP, class D>
-    xholder<CRTP> make_shared_holder(std::shared_ptr<CRTP<D>> ptr);
+    XWIDGETS_API xholder make_id_holder(xeus::xguid id);
+
+    template <class D>
+    xholder make_shared_holder(std::shared_ptr<xtransport<D>> ptr);
 
     /*************************************
      * to_json and from_json declaration *
      *************************************/
 
-    template <template <class> class CRTP>
-    void to_json(nl::json& j, const xholder<CRTP>& o);
+    XWIDGETS_API void to_json(nl::json& j, const xholder& o);
 
-    template <template <class> class CRTP>
-    void from_json(const nl::json& j, xholder<CRTP>& o);
+    XWIDGETS_API void from_json(const nl::json& j, xholder& o);
+
+    /********************************
+     * mime_bundle_repr declaration *
+     ********************************/
+
+    XWIDGETS_API nl::json mime_bundle_repr(const xholder& val);
 
     /*************************
-     * xregistry declaration *
+     * holder implementation *
      *************************/
-
-    template <class D>
-    class xtransport;
-
-    class xregistry
-    {
-    public:
-
-        using holder_type = xholder<xtransport>;
-        using storage_type = std::unordered_map<xeus::xguid, holder_type>;
-
-        template <class D>
-        void register_weak(xtransport<D>* ptr);
-
-        template <class D>
-        void register_owning(xtransport<D>&& model);
-
-        XWIDGETS_API void unregister(xeus::xguid id);
-
-        XWIDGETS_API typename storage_type::mapped_type& find(xeus::xguid id);
-
-    private:
-
-        storage_type m_storage;
-    };
-
-    XWIDGETS_API xregistry& get_transport_registry();
-
-    /**************************
-     * holder implementations *
-     **************************/
 
     namespace detail
     {
-        template <template <class> class CRTP>
         class xholder_impl
         {
         public:
@@ -172,20 +147,20 @@ namespace xw
             xholder_impl(const xholder_impl&) = default;
         };
 
-        template <template <class> class CRTP, class D>
-        class xholder_owning : public xholder_impl<CRTP>
+        template <class D>
+        class xholder_owning : public xholder_impl
         {
         public:
 
-            using base_type = xholder_impl<CRTP>;
+            using base_type = xholder_impl;
 
-            xholder_owning(const CRTP<D>& value)
+            xholder_owning(const xtransport<D>& value)
                 : base_type(),
                   m_value(value.derived_cast())
             {
             }
 
-            xholder_owning(CRTP<D>&& value)
+            xholder_owning(xtransport<D>&& value)
                 : base_type(),
                   m_value(std::move(value.derived_cast()))
             {
@@ -230,14 +205,14 @@ namespace xw
             D m_value;
         };
 
-        template <template <class> class CRTP, class D>
-        class xholder_weak : public xholder_impl<CRTP>
+        template <class D>
+        class xholder_weak : public xholder_impl
         {
         public:
 
-            using base_type = xholder_impl<CRTP>;
+            using base_type = xholder_impl;
 
-            xholder_weak(CRTP<D>* ptr)
+            xholder_weak(xtransport<D>* ptr)
                 : base_type(),
                   p_value(&(ptr->derived_cast()))
             {
@@ -282,298 +257,13 @@ namespace xw
 
             D* p_value;
         };
-    }
 
-    template <template <class> class CRTP, class D>
-    xholder<CRTP> make_weak_holder(CRTP<D>* ptr)
-    {
-        return xholder<CRTP>(new detail::xholder_weak<CRTP, D>(ptr));
-    }
-
-    template <template <class> class CRTP, class D>
-    xholder<CRTP> make_owning_holder(CRTP<D>&& value)
-    {
-        return xholder<CRTP>(new detail::xholder_owning<CRTP, D>(std::move(value)));
-    }
-
-    /**************************
-     * xholder implementation *
-     **************************/
-
-    template <template <class> class CRTP>
-    xholder<CRTP>::xholder()
-        : p_holder(nullptr)
-    {
-    }
-
-    template <template <class> class CRTP>
-    xholder<CRTP>::xholder(detail::xholder_impl<CRTP>* holder)
-        : p_holder(holder)
-    {
-    }
-
-    template <template <class> class CRTP>
-    xholder<CRTP>::~xholder()
-    {
-        delete p_holder;
-    }
-
-    template <template <class> class CRTP>
-    xholder<CRTP>::xholder(const xholder& rhs)
-        : p_holder(rhs.p_holder ? rhs.p_holder->clone() : nullptr)
-    {
-    }
-
-    template <template <class> class CRTP>
-    template <class D>
-    xholder<CRTP>::xholder(const CRTP<D>& rhs)
-        : xholder(make_id_holder<CRTP>(rhs.id()))
-    {
-    }
-
-    template <template <class> class CRTP>
-    template <class D>
-    xholder<CRTP>::xholder(CRTP<D>&& rhs)
-        : xholder(make_owning_holder(std::move(rhs)))
-    {
-    }
-
-    template <template <class> class CRTP>
-    template <class D, class>
-    xholder<CRTP>::xholder(std::shared_ptr<D> rhs)
-        : xholder(make_shared_holder<CRTP, D>(rhs))
-    {
-    }
-
-    template <template <class> class CRTP>
-    xholder<CRTP>::xholder(xholder&& rhs)
-        : p_holder(rhs.p_holder)
-    {
-        rhs.p_holder = nullptr;
-    }
-
-    template <template <class> class CRTP>
-    xholder<CRTP>& xholder<CRTP>::operator=(const xholder& rhs)
-    {
-        using std::swap;
-        xholder tmp(rhs);
-        swap(*this, tmp);
-        return *this;
-    }
-
-    template <template <class> class CRTP>
-    xholder<CRTP>& xholder<CRTP>::operator=(xholder&& rhs)
-    {
-        using std::swap;
-        xholder tmp(std::move(rhs));
-        swap(*this, tmp);
-        return *this;
-    }
-
-    template <template <class> class CRTP>
-    template <class D>
-    xholder<CRTP>& xholder<CRTP>::operator=(const CRTP<D>& rhs)
-    {
-        using std::swap;
-        xholder<CRTP> tmp(make_id_holder<CRTP>(rhs.id()));
-        swap(tmp, *this);
-        return *this;
-    }
-
-    template <template <class> class CRTP>
-    template <class D>
-    xholder<CRTP>& xholder<CRTP>::operator=(CRTP<D>&& rhs)
-    {
-        using std::swap;
-        xholder<CRTP> tmp(make_owning_holder(std::move(rhs)));
-        swap(tmp, *this);
-        return *this;
-    }
-
-    template <template <class> class CRTP>
-    template <class D>
-    std::enable_if_t<std::is_base_of<CRTP<D>, D>::value, xholder<CRTP>&>
-    xholder<CRTP>::operator=(std::shared_ptr<D> ptr)
-    {
-        using std::swap;
-        xholder<CRTP> tmp(make_shared_holder<CRTP, D>(ptr));
-        swap(tmp, *this);
-        return *this;
-    }
-
-    template <template <class> class CRTP>
-    void xholder<CRTP>::swap(xholder& rhs)
-    {
-        std::swap(p_holder, rhs.p_holder);
-    }
-
-    template <template <class> class CRTP>
-    void xholder<CRTP>::display() const
-    {
-        check_holder();
-        p_holder->display();
-    }
-
-    template <template <class> class CRTP>
-    xeus::xguid xholder<CRTP>::id() const
-    {
-        check_holder();
-        return p_holder->id();
-    }
-
-    template <template <class> class CRTP>
-    xtl::any xholder<CRTP>::value() &
-    {
-        check_holder();
-        return p_holder->value();
-    }
-
-    template <template <class> class CRTP>
-    const xtl::any xholder<CRTP>::value() const &
-    {
-        check_holder();
-        return p_holder->value();
-    }
-
-    template <template <class> class CRTP>
-    template <class D>
-    D& xholder<CRTP>::get() &
-    {
-        return xtl::any_cast<xtl::closure_wrapper<D&>>(this->value()).get();
-    }
-
-    template <template <class> class CRTP>
-    template <class D>
-    const D& xholder<CRTP>::get() const &
-    {
-        return xtl::any_cast<xtl::closure_wrapper<const D&>>(this->value()).get();
-    }
-
-    template <template <class> class CRTP>
-    void xholder<CRTP>::check_holder() const
-    {
-        if (p_holder == nullptr)
-        {
-            throw std::runtime_error("The holder does not contain a widget");
-        }
-    }
-
-    template <template <class> class CRTP>
-    inline void swap(xholder<CRTP>& lhs, xholder<CRTP>& rhs)
-    {
-        lhs.swap(rhs);
-    }
-
-    /****************************************
-     * to_json and from_json implementation *
-     ****************************************/
-
-    template <template <class> class CRTP>
-    inline void to_json(nl::json& j, const xholder<CRTP>& o)
-    {
-        j = "IPY_MODEL_" + std::string(o.id());
-    }
-
-    template <template <class> class CRTP>
-    void from_json(const nl::json& j, xholder<CRTP>& o)
-    {
-        std::string prefixed_guid = j;
-        xeus::xguid guid = prefixed_guid.substr(10).c_str();
-        o = make_id_holder<CRTP>(guid);
-    }
-
-    /****************************
-     * xregistry implementation *
-     ****************************/
-
-    template <class D>
-    void xregistry::register_weak(xtransport<D>* ptr)
-    {
-        m_storage[ptr->id()] = make_weak_holder(ptr);
-    }
-
-    template <class D>
-    void xregistry::register_owning(xtransport<D>&& model)
-    {
-        m_storage[model.id()] = make_owning_holder(std::move(model));
-    }
-
-    /*****************************
-     * xholder_id implementation *
-     *****************************/
-
-    namespace detail
-    {
-        template <template <class> class CRTP>
-        class xholder_id : public xholder_impl<CRTP>
+        template <class D>
+        class xholder_shared : public xholder_impl
         {
         public:
 
-            using base_type = xholder_impl<CRTP>;
-
-            xholder_id(xeus::xguid id)
-                : base_type(),
-                  m_id(id)
-            {
-            }
-
-            virtual ~xholder_id() = default;
-
-            virtual base_type* clone() const override
-            {
-                return new xholder_id(*this);
-            }
-
-            virtual void display() const override
-            {
-                auto& holder = get_transport_registry().find(m_id);
-                holder.display();
-            }
-
-            virtual xeus::xguid id() const override
-            {
-                auto& holder = get_transport_registry().find(m_id);
-                return holder.id();
-            }
-
-            virtual xtl::any value() & override
-            {
-                auto& holder = get_transport_registry().find(m_id);
-                return holder.value();
-            }
-
-            virtual const xtl::any value() const & override
-            {
-                const auto& holder = get_transport_registry().find(m_id);
-                return holder.value();
-            }
-
-        private:
-
-            xholder_id(const xholder_id&) = default;
-            xholder_id(xholder_id&&) = default;
-            xeus::xguid m_id;
-        };
-    }
-
-    template <template <class> class CRTP>
-    xholder<CRTP> make_id_holder(xeus::xguid id)
-    {
-        return xholder<CRTP>(new detail::xholder_id<CRTP>(id));
-    }
-
-    /*********************************
-     * xholder_shared implementation *
-     *********************************/
-
-    namespace detail
-    {
-        template <template <class> class CRTP, class D>
-        class xholder_shared : public xholder_impl<CRTP>
-        {
-        public:
-
-            using base_type = xholder_impl<CRTP>;
+            using base_type = xholder_impl;
             using pointer = std::shared_ptr<D>;
 
             xholder_shared(pointer ptr)
@@ -582,7 +272,7 @@ namespace xw
             {
             }
 
-            xholder_shared(CRTP<D>* ptr)
+            xholder_shared(xtransport<D>* ptr)
                 : base_type(),
                   p_value(&(ptr->derived_cast()))
             {
@@ -620,33 +310,84 @@ namespace xw
         };
     }
 
-    template <template <class> class CRTP, class D>
-    inline xholder<CRTP> make_shared_holder(std::shared_ptr<CRTP<D>> ptr)
+    template <class D>
+    xholder make_weak_holder(xtransport<D>* ptr)
     {
-        using impl_type = detail::xholder_shared<CRTP, D>;
-        auto cast_ptr = std::static_pointer_cast<D>(ptr);
-        return xholder<CRTP>(new impl_type(cast_ptr));
+        return xholder(new detail::xholder_weak<D>(ptr));
     }
 
-    /**********************************************************
-     * Specialization of mime_bundle_repr for Jupyter Widgets *
-     **********************************************************/
-
-    template <template <class> class CRTP>
-    nl::json mime_bundle_repr(const xholder<CRTP>& val)
+    template <class D>
+    xholder make_owning_holder(xtransport<D>&& value)
     {
-        nl::json mime_bundle;
+        return xholder(new detail::xholder_owning<D>(std::move(value)));
+    }
 
-        // application/vnd.jupyter.widget-view+json
-        nl::json widgets_json;
-        widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
-        widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
-        widgets_json["model_id"] = val.id();
-        mime_bundle["application/vnd.jupyter.widget-view+json"] = std::move(widgets_json);
+    template <class D>
+    inline xholder make_shared_holder(std::shared_ptr<xtransport<D>> ptr)
+    {
+        return xholder(new detail::xholder_shared<D>(std::static_pointer_cast<D>(ptr)));
+    }
 
-        // text/plain
-        mime_bundle["text/plain"] = "A Jupyter widget";
-        return mime_bundle;
+    /*******************************************
+     * xholder template methods implementation *
+     *******************************************/
+
+    template <class D>
+    xholder::xholder(const xtransport<D>& rhs)
+        : xholder(make_id_holder(rhs.id()))
+    {
+    }
+
+    template <class D>
+    xholder::xholder(xtransport<D>&& rhs)
+        : xholder(make_owning_holder(std::move(rhs)))
+    {
+    }
+
+    template <class D, class>
+    xholder::xholder(std::shared_ptr<D> rhs)
+        : xholder(make_shared_holder<D>(rhs))
+    {
+    }
+
+    template <class D>
+    xholder& xholder::operator=(const xtransport<D>& rhs)
+    {
+        using std::swap;
+        xholder tmp(make_id_holder(rhs.id()));
+        swap(tmp, *this);
+        return *this;
+    }
+
+    template <class D>
+    xholder& xholder::operator=(xtransport<D>&& rhs)
+    {
+        using std::swap;
+        xholder tmp(make_owning_holder(std::move(rhs)));
+        swap(tmp, *this);
+        return *this;
+    }
+
+    template <class D>
+    std::enable_if_t<std::is_base_of<xtransport<D>, D>::value, xholder&>
+    xholder::operator=(std::shared_ptr<D> ptr)
+    {
+        using std::swap;
+        xholder tmp(make_shared_holder<D>(ptr));
+        swap(tmp, *this);
+        return *this;
+    }
+
+    template <class D>
+    D& xholder::get() &
+    {
+        return xtl::any_cast<xtl::closure_wrapper<D&>>(this->value()).get();
+    }
+
+    template <class D>
+    const D& xholder::get() const &
+    {
+        return xtl::any_cast<xtl::closure_wrapper<const D&>>(this->value()).get();
     }
 }
 

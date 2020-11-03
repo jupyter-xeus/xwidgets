@@ -29,15 +29,7 @@ namespace xw
 
         using base_type = xwidget<D>;
         using derived_type = D;
-
-#ifdef _MSC_VER
-        template <class T>
-        using transport_type = xtransport<T>;
-
-        using children_list_type = std::vector<xholder<transport_type>>;
-#else
-        using children_list_type = std::vector<xholder<xtransport>>;
-#endif
+        using children_list_type = std::vector<xholder>;
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
@@ -142,11 +134,7 @@ namespace xw
     template <class T>
     inline void xbox<D>::add(const xtransport<T>& w)
     {
-#ifdef _MSC_VER
-        this->children().emplace_back(make_id_holder<transport_type>(w.id()));
-#else
-        this->children().emplace_back(make_id_holder<xtransport>(w.id()));
-#endif
+        this->children().emplace_back(make_id_holder(w.id()));
         nl::json state;
         xeus::buffer_sequence buffers;
         xwidgets_serialize(children(), state["children"], buffers);
@@ -168,11 +156,7 @@ namespace xw
     template <class T>
     inline enable_xtransport_t<T> xbox<D>::add(std::shared_ptr<T> w)
     {
-#ifdef _MSC_VER
-        this->children().emplace_back(make_shared_holder<transport_type, T>(w));
-#else
-        this->children().emplace_back(make_shared_holder<xtransport, T>(w));
-#endif
+        this->children().emplace_back(make_shared_holder<T>(w));
         nl::json state;
         xeus::buffer_sequence buffers;
         xwidgets_serialize(children(), state["children"], buffers);
@@ -183,27 +167,15 @@ namespace xw
     template <class T>
     inline void xbox<D>::remove(const xtransport<T>& w)
     {
-#ifdef _MSC_VER
         this->children().erase(
             std::remove_if(
                 this->children().begin(), this->children().end(),
-                [&w](const xholder<transport_type>& element) {
+                [&w](const xholder& element) {
                     return element.id() == w.id();
                 }
             ),
             this->children().end()
         );
-#else
-        this->children().erase(
-            std::remove_if(
-                this->children().begin(), this->children().end(),
-                [&w](const xholder<xtransport>& element) {
-                    return element.id() == w.id();
-                }
-            ),
-            this->children().end()
-        );
-#endif
         nl::json state;
         xeus::buffer_sequence buffers;
         xwidgets_serialize(children(), state["children"], buffers);
