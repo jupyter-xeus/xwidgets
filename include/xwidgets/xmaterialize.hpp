@@ -51,6 +51,8 @@ namespace xw
 
         template <class... A>
         xmaterialize(bool open, A&&...);
+
+        bool m_generator;
     };
 
     /*******************************
@@ -60,17 +62,17 @@ namespace xw
     template <template <class> class B, class... P>
     template <class... A>
     inline xmaterialize<B, P...>::xmaterialize(A&&... args)
-        : xmaterialize(true, std::forward<A>(args)...)
+        : xmaterialize(false, std::forward<A>(args)...)
     {
     }
 
     // private constructor determining whether the comm should be open
     template <template <class> class B, class... P>
     template <class... A>
-    inline xmaterialize<B, P...>::xmaterialize(bool op, A&&... args)
-        : base_type(std::forward<A>(args)...)
+    inline xmaterialize<B, P...>::xmaterialize(bool generator, A&&... args)
+        : base_type(std::forward<A>(args)...), m_generator(generator)
     {
-        if (op)
+        if (!m_generator)
         {
             this->open();
         }
@@ -80,13 +82,13 @@ namespace xw
     template <class... A>
     inline auto xmaterialize<B, P...>::initialize(A&&... args) -> xmaterialize
     {
-        return xmaterialize(false, std::forward<A>(args)...);
+        return xmaterialize(true, std::forward<A>(args)...);
     }
 
     template <template <class> class B, class... P>
     inline xmaterialize<B, P...>::~xmaterialize()
     {
-        if (!this->moved_from())
+        if (!m_generator && !this->moved_from())
         {
             this->close();
         }
@@ -102,7 +104,10 @@ namespace xw
     template <template <class> class B, class... P>
     inline xmaterialize<B, P...>& xmaterialize<B, P...>::operator=(const xmaterialize& rhs)
     {
-        this->close();
+        if (!m_generator)
+        {
+            this->close();
+        }
         base_type::operator=(rhs);
         this->open();
         return *this;
