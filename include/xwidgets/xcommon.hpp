@@ -96,6 +96,12 @@ namespace xw
 
     void XWIDGETS_API to_json(nl::json& j, const xcommon& o);
 
+    /***********************************
+     * mime_bundle_repr specialization *
+     ***********************************/
+
+    nl::json XWIDGETS_API mime_bundle_repr(const xcommon& val);
+
     /********************************************
      * xcommon template methods implementations *
      ********************************************/

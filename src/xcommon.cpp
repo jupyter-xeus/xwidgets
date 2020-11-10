@@ -223,4 +223,20 @@ namespace xw
     {
         j = "IPY_MODEL_" + std::string(o.id());
     }
+
+    nl::json mime_bundle_repr(const xcommon& val)
+    {
+        nl::json mime_bundle;
+
+        // application/vnd.jupyter.widget-view+json
+        nl::json widgets_json;
+        widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
+        widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
+        widgets_json["model_id"] = val.id();
+        mime_bundle["application/vnd.jupyter.widget-view+json"] = std::move(widgets_json);
+
+        // text/plain
+        mime_bundle["text/plain"] = "A Jupyter widget with unique id: " + std::string(val.id());
+        return mime_bundle;
+    }
 }

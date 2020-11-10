@@ -14,6 +14,7 @@
 #include "nlohmann/json.hpp"
 
 #include "xwidgets_config.hpp"
+#include "xcommon.hpp"
 
 namespace nl = nlohmann;
 
@@ -132,18 +133,7 @@ namespace xw
     template <template <class> class B, class... P>
     nl::json mime_bundle_repr(const xmaterialize<B, P...>& val)
     {
-        nl::json mime_bundle;
-
-        // application/vnd.jupyter.widget-view+json
-        nl::json widgets_json;
-        widgets_json["version_major"] = XWIDGETS_PROTOCOL_VERSION_MAJOR;
-        widgets_json["version_minor"] = XWIDGETS_PROTOCOL_VERSION_MINOR;
-        widgets_json["model_id"] = val.id();
-        mime_bundle["application/vnd.jupyter.widget-view+json"] = std::move(widgets_json);
-
-        // text/plain
-        mime_bundle["text/plain"] = "A Jupyter widget";
-        return mime_bundle;
+        return mime_bundle_repr(static_cast<const xcommon&>(val));
     }
 
     /*************
