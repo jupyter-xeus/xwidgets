@@ -77,6 +77,7 @@ namespace xw
 
     extern template class xmaterialize<xtab>;
     extern template class xtransport<xmaterialize<xtab>>;
+    extern template nl::json mime_bundle_repr<xtab>(const xmaterialize<xtab>&);
 }
 
 #endif

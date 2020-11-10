@@ -96,5 +96,6 @@ namespace xw
 
     extern template class xmaterialize<xdropdown>;
     extern template class xtransport<xmaterialize<xdropdown>>;
+    extern template nl::json mime_bundle_repr<xdropdown>(const xmaterialize<xdropdown>&);
 }
 #endif

@@ -225,15 +225,19 @@ namespace xw
 
     extern template class xmaterialize<xslider_style>;
     extern template class xtransport<xmaterialize<xslider_style>>;
+    extern template nl::json mime_bundle_repr<xslider_style>(const xmaterialize<xslider_style>&);
 
     extern template class xmaterialize<xslider, int>;
     extern template class xtransport<xmaterialize<xslider, int>>;
+    extern template nl::json mime_bundle_repr<xslider, int>(const xmaterialize<xslider, int>&);
 
     extern template class xmaterialize<xslider, float>;
     extern template class xtransport<xmaterialize<xslider, float>>;
+    extern template nl::json mime_bundle_repr<xslider, float>(const xmaterialize<xslider, float>&);
 
     extern template class xmaterialize<xslider, double>;
     extern template class xtransport<xmaterialize<xslider, double>>;
+    extern template nl::json mime_bundle_repr<xslider, double>(const xmaterialize<xslider, double>&);
 }
 
 #endif

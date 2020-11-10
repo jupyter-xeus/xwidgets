@@ -252,11 +252,14 @@ namespace xw
 
     extern template class xmaterialize<xbox>;
     extern template class xtransport<xmaterialize<xbox>>;
+    extern template nl::json mime_bundle_repr<xbox>(const xmaterialize<xbox>&);
 
     extern template class xmaterialize<xhbox>;
     extern template class xtransport<xmaterialize<xhbox>>;
+    extern template nl::json mime_bundle_repr<xhbox>(const xmaterialize<xhbox>&);   
 
     extern template class xmaterialize<xvbox>;
     extern template class xtransport<xmaterialize<xvbox>>;
+    extern template nl::json mime_bundle_repr<xvbox>(const xmaterialize<xvbox>&);
 }
 #endif

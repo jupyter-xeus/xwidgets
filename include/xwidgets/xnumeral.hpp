@@ -98,12 +98,15 @@ namespace xw
 
     extern template class xmaterialize<xnumeral, int>;
     extern template class xtransport<xmaterialize<xnumeral, int>>;
+    extern template nl::json mime_bundle_repr<xnumeral, int>(const xmaterialize<xnumeral, int>&);
 
     extern template class xmaterialize<xnumeral, float>;
     extern template class xtransport<xmaterialize<xnumeral, float>>;
+    extern template nl::json mime_bundle_repr<xnumeral, float>(const xmaterialize<xnumeral, float>&);
 
     extern template class xmaterialize<xnumeral, double>;
     extern template class xtransport<xmaterialize<xnumeral, double>>;
+    extern template nl::json mime_bundle_repr<xnumeral, double>(const xmaterialize<xnumeral, double>&);
 }
 
 #endif

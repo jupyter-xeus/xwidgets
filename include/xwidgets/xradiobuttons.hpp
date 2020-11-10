@@ -96,5 +96,6 @@ namespace xw
 
     extern template class xmaterialize<xradiobuttons>;
     extern template class xtransport<xmaterialize<xradiobuttons>>;
+    extern template nl::json mime_bundle_repr<xradiobuttons>(const xmaterialize<xradiobuttons>&);
 }
 #endif

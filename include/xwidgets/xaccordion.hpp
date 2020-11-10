@@ -77,6 +77,7 @@ namespace xw
 
     extern template class xmaterialize<xaccordion>;
     extern template class xtransport<xmaterialize<xaccordion>>;
+    extern template nl::json mime_bundle_repr<xaccordion>(const xmaterialize<xaccordion>&);
 }
 
 #endif
