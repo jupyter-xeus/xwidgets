@@ -18,7 +18,7 @@ install:
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
     # Install host dependencies
-    - conda install xeus=0.24.2 cppzmq xproperty=0.10.0 nlohmann_json -c conda-forge
+    - conda install xeus=0.25.0 cppzmq xproperty=0.10.0 nlohmann_json -c conda-forge
     # Install build dependencies
     - conda install cmake -c conda-forge
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
