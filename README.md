@@ -1,6 +1,6 @@
 # ![xwidgets](docs/source/xwidgets.svg)
 
-[![Travis](https://travis-ci.org/jupyter-xeus/xwidgets.svg?branch=master)](https://travis-ci.org/jupyter-xeus/xwidgets)
+[![Azure Pipelines](https://dev.azure.com/jupyter-xeus/jupyter-xeus/_apis/build/status/jupyter-xeus.xwidgets?branchName=master)](https://dev.azure.com/jupyter-xeus/jupyter-xeus/_build/latest?definitionId=6&branchName=master)
 [![Appveyor](https://ci.appveyor.com/api/projects/status/kjoatvulm28dpr3r?svg=true)](https://ci.appveyor.com/project/jupyter-xeus/xwidgets)
 [![Documentation](http://readthedocs.org/projects/xwidgets/badge/?version=latest)](https://xwidgets.readthedocs.io/en/latest/?badge=latest)
 [![Binder](https://img.shields.io/badge/launch-binder-brightgreen.svg)](https://mybinder.org/v2/gh/jupyter-xeus/xwidgets/stable?filepath=notebooks/xwidgets.ipynb)
