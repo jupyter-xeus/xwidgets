@@ -1,0 +1,11 @@
+name: xwidgets
+channels:
+  - conda-forge
+dependencies:
+  # Build dependencies
+  - cmake
+  # Host dependencies
+  - xeus=0.25.0
+  - cppzmq
+  - xproperty=0.10.0
+  - nlohmann_json

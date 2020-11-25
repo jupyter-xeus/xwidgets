@@ -1,0 +1,36 @@
+parameters:
+  - name: 'platform'
+    type: string
+
+steps:
+  - script: |
+      conda config --set always_yes yes --set changeps1 no
+      conda update -q conda
+      conda env create --file environment-dev.yml
+    displayName: Install dependencies
+
+  - script: |
+      source activate xwidgets
+      conda install gxx_linux-64 libcxx -c conda-forge
+    condition: eq('${{ parameters.platform }}', 'Linux')
+    displayName: Install conda-forge compilers
+
+  - script: |
+      source activate xwidgets
+      mkdir build
+      cd build
+      cmake -DCMAKE_PREFIX_PATH=$CONDA_PREFIX -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX -DDOWNLOAD_GTEST=ON -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX $(Build.SourcesDirectory)
+    displayName: Configure xwidgets
+    workingDirectory: $(Build.BinariesDirectory)
+
+  - script: |
+      source activate xwidgets
+      make install -j2
+    displayName: Build xwidgets
+    workingDirectory: $(Build.BinariesDirectory)/build
+
+  - script: |
+      source activate xwidgets
+      ./test_xwidgets
+    displayName: Test xwidgets
+    workingDirectory: $(Build.BinariesDirectory)/build/test
