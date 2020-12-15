@@ -32,6 +32,14 @@ namespace xw
         j = value;
     }
 
+    // Specialization for binary buffers   
+
+    inline void xwidgets_serialize(const std::vector<char>& value, nl::json& j, xeus::buffer_sequence& buffers)
+    {
+        j = xbuffer_reference_prefix() + std::to_string(buffers.size());
+        buffers.emplace_back(value.data(), value.size());
+    }
+
     template <class T>
     inline void xwidgets_deserialize(T& value, const nl::json& j, const xeus::buffer_sequence&)
     {
