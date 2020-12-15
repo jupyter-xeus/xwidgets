@@ -184,8 +184,8 @@ where
 ``set_property_from_patch`` is called for each property of the widget.
 
 The default behavior of ``set_property_from_patch`` is to invoke the JSON
-deserialization for each property. However, just like
-``set_patch_from_property``, it can be overloaded for a specific property type.
+deserialization for each property and it can be specialized for a specific
+property type.
 
 For example, the overload of ``set_property_from_patch`` for the ``value``
 property of the image widget reads:
