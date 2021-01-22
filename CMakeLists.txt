@@ -59,9 +59,9 @@ message(STATUS "xwidgets binary version: v${XWIDGETS_BINARY_VERSION}")
 # Dependencies
 # ============
 
-find_package(xtl 0.6.5 REQUIRED)
-find_package(xeus 0.21.1 REQUIRED)
-find_package(xproperty 0.10.0 REQUIRED)
+find_package(xtl 0.7.0 REQUIRED)
+find_package(xeus 1.0.0 REQUIRED)
+find_package(xproperty 0.11.0 REQUIRED)
 
 # Source files
 # ============
