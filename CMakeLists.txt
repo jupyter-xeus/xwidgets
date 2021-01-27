@@ -56,6 +56,13 @@ set(XWIDGETS_BINARY_VERSION
     ${XWIDGETS_BINARY_CURRENT}.${XWIDGETS_BINARY_REVISION}.${XWIDGETS_BINARY_AGE})
 message(STATUS "xwidgets binary version: v${XWIDGETS_BINARY_VERSION}")
 
+# Build options
+# =============
+
+option(DISABLE_ARCH_NATIVE "disable -march=native flag" OFF)
+option(XWIDGETS_BUILD_SHARED_LIBS "Build xwidgets shared library." ON)
+option(XWIDGETS_BUILD_STATIC_LIBS "Build xwidgets static library (default if BUILD_SHARED_LIBS is OFF)." ON)
+
 # Dependencies
 # ============
 
@@ -159,75 +166,98 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xvideo.cpp
 )
 
-# Output
-# ======
-
-add_library(xwidgets SHARED ${XWIDGETS_SOURCES} ${XWIDGETS_HEADERS})
-target_include_directories(xwidgets PUBLIC $<BUILD_INTERFACE:${XWIDGETS_INCLUDE_DIR}>
-                                           $<INSTALL_INTERFACE:include>)
-
-target_link_libraries(xwidgets
-                      PUBLIC xtl
-                      PUBLIC xeus)
-
-set_target_properties(xwidgets PROPERTIES
-                      PUBLIC_HEADER "${XWIDGETS_HEADERS}"
-                      COMPILE_DEFINITIONS "XWIDGETS_EXPORTS"
-                      PREFIX ""
-                      VERSION ${XWIDGETS_BINARY_VERSION}
-                      SOVERSION ${XWIDGETS_BINARY_CURRENT}
-                      OUTPUT_NAME "libxwidgets")
-
-# Compilation flags
-# =================
+# Targets and link
+# ================
 
 include(CheckCXXCompilerFlag)
-string(TOUPPER "${CMAKE_BUILD_TYPE}" U_CMAKE_BUILD_TYPE)
-OPTION(DISABLE_ARCH_NATIVE "disable -march=native flag" OFF)
 
-set_target_properties(xwidgets PROPERTIES
-    CXX_EXTENSIONS OFF
-    CXX_STANDARD_REQUIRED 14)
+macro(xwidgets_create_target target_name linkage output_name)
+    string(TOUPPER "${linkage}" linkage_upper)
 
-target_compile_features(xwidgets PRIVATE cxx_std_14)
+    if (NOT ${linkage_upper} MATCHES "^(SHARED|STATIC)$")
+        message(FATAL_ERROR "Invalid library linkage: ${linkage}")
+    endif ()
 
-if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-    target_compile_options(xwidgets PUBLIC -Wunused-parameter -Wextra -Wreorder)
-    if (NOT DISABLE_ARCH_NATIVE)
-        target_compile_options(xwidgets PUBLIC -march=native)
+    if (${linkage_upper} STREQUAL "STATIC")
+        set(XEUS_TARGET_NAME xeus-static)
+    else()
+        set(XEUS_TARGET_NAME xeus)
     endif()
 
-    # Enable link time optimization and set the default symbol
-    # visibility to hidden (very important to obtain small binaries)
-    if (NOT ${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
-        # Check for Link Time Optimization support
-        # (GCC/Clang)
-        CHECK_CXX_COMPILER_FLAG("-flto" HAS_LTO_FLAG)
-        if (HAS_LTO_FLAG)
-            target_compile_options(xwidgets PUBLIC -flto)
+    # Output
+    # ======
+
+    add_library(${target_name} ${linkage_upper} ${XWIDGETS_SOURCES} ${XWIDGETS_HEADERS})
+    target_include_directories(${target_name} PUBLIC $<BUILD_INTERFACE:${XWIDGETS_INCLUDE_DIR}>
+                                               $<INSTALL_INTERFACE:include>)
+
+    target_link_libraries(${target_name}
+                          PUBLIC xtl
+                          PUBLIC ${XEUS_TARGET_NAME}
+                          PUBLIC xproperty)
+
+    set_target_properties(${target_name} PROPERTIES
+                          PUBLIC_HEADER "${XWIDGETS_HEADERS}"
+                          COMPILE_DEFINITIONS "XWIDGETS_EXPORTS"
+                          PREFIX ""
+                          VERSION ${XWIDGETS_BINARY_VERSION}
+                          SOVERSION ${XWIDGETS_BINARY_CURRENT}
+                          OUTPUT_NAME "lib${output_name}")
+
+    # Compilation flags
+    # =================
+
+    string(TOUPPER "${CMAKE_BUILD_TYPE}" U_CMAKE_BUILD_TYPE)
+
+    set_target_properties(${target_name} PROPERTIES
+        CXX_EXTENSIONS OFF
+        CXX_STANDARD_REQUIRED 14)
+
+    target_compile_features(${target_name} PRIVATE cxx_std_14)
+
+    if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
+        target_compile_options(${target_name} PUBLIC -Wunused-parameter -Wextra -Wreorder)
+        if (NOT DISABLE_ARCH_NATIVE)
+            target_compile_options(${target_name} PUBLIC -march=native)
         endif()
 
-        # Intel equivalent to LTO is called IPO
-        if (CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-            CHECK_CXX_COMPILER_FLAG("-ipo" HAS_IPO_FLAG)
-            if (HAS_IPO_FLAG)
-                target_compile_options(xwidgets PUBLIC -ipo)
-            endif()
+        message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
+    endif()
+
+    if (${linkage_upper} STREQUAL "STATIC")
+        target_compile_definitions(${target_name} PUBLIC XWIGDETS_STATIC_LIB)
+    endif ()
+
+    if(MSVC)
+        target_compile_definitions(${target_name} PUBLIC -DNOMINMAX)
+        target_compile_options(${target_name} PUBLIC /DGUID_WINDOWS /MP /bigobj)
+        target_compile_options(${target_name} PUBLIC /wd4251 /wd 4996)
+        # Allows to compile in debug without requiring each dependencies to
+        # be compiled in debug
+        if(${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
+            set(CMAKE_CXX_FLAGS_DEBUG "/DNDEBUG /MD /Zi /Ob0 /Od /RTC1")
+            message(STATUS "Overriding CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
         endif()
     endif()
-    message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
+endmacro()
+
+set(xwidgets_targets "")
+
+if (XWIDGETS_BUILD_SHARED_LIBS)
+    xwidgets_create_target(xwidgets SHARED xwidgets)
+    list(APPEND xwidgets_targets xwidgets)
 endif()
 
-if(MSVC)
-    target_compile_definitions(xwidgets PUBLIC -DNOMINMAX)
-    target_compile_options(xwidgets PUBLIC /DGUID_WINDOWS /MP /bigobj)
-    target_compile_options(xwidgets PUBLIC /wd4251 /wd 4996)
-    # Allows to compile in debug without requiring each dependencies to
-    # be compiled in debug
-    if(${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
-        set(CMAKE_CXX_FLAGS_DEBUG "/DNDEBUG /MD /Zi /Ob0 /Od /RTC1")
-        message(STATUS "Overriding CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
-    endif()
+if (XWIDGETS_BUILD_STATIC_LIBS)
+    # On Windows, a static library should use a different output name
+    # to avoid the conflict with the import library of a shared one.
+    if (CMAKE_HOST_WIN32)
+        xwidgets_create_target(xwidgets-static STATIC xwidgets-static)
+    else ()
+        xwidgets_create_target(xwidgets-static STATIC xwidgets)
+    endif ()
+
+    list(APPEND xwidgets_targets xwidgets-static)
 endif()
 
 # Tests
@@ -249,7 +279,7 @@ endif()
 
 set(XWIDGETS_CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}" CACHE STRING "install path for xwidgetsConfig.cmake")
 
-install(TARGETS xwidgets
+install(TARGETS ${xwidgets_targets}
         EXPORT ${PROJECT_NAME}-targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
