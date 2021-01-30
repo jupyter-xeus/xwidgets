@@ -9,9 +9,6 @@
 cmake_minimum_required(VERSION 3.8)
 project(xwidgets)
 
-message(STATUS "Forcing tests build type to Release")
-set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-
 set(XWIDGETS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(XWIDGETS_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
