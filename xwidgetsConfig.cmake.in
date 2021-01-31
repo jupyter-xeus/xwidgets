@@ -14,9 +14,18 @@
 #   xwidgets_LIBRARY - the library for dynamic linking
 
 @PACKAGE_INIT@
-if(NOT TARGET xwidgets)
+if(NOT TARGET xwidgets AND NOT TARGET xwidgets-static)
   include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")
 
-  get_target_property(@PROJECT_NAME@_INCLUDE_DIR xwidgets INTERFACE_INCLUDE_DIRECTORIES)
-  get_target_property(@PROJECT_NAME@_LIBRARY xwidgets LOCATION)
+  if (TARGET xwidgets AND TARGET xwidgets-static)
+    get_target_property(@PROJECT_NAME@_INCLUDE_DIR xwidgets INTERFACE_INCLUDE_DIRECTORIES)
+    get_target_property(@PROJECT_NAME@_LIBRARY xwidgets LOCATION)
+    get_target_property(@PROJECT_NAME@_STATIC_LIBRARY xwidgets-static LOCATION)  
+  elseif (TARGET xwidgets)
+    get_target_property(@PROJECT_NAME@_INCLUDE_DIR xwidgets INTERFACE_INCLUDE_DIRECTORIES)
+    get_target_property(@PROJECT_NAME@_LIBRARY xwidgets LOCATION)
+  elseif (TARGET xwidgets-static)
+    get_target_property(@PROJECT_NAME@_INCLUDE_DIR xwidgets-static INTERFACE_INCLUDE_DIRECTORIES)
+    get_target_property(@PROJECT_NAME@_STATIC_LIBRARY xwidgets-static LOCATION)  
+  endif()
 endif()
