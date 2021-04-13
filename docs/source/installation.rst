@@ -21,20 +21,17 @@
 Installation
 ============
 
-xwidgets is a header-only library but depends on some traditional libraries that need to be installed.
-On Linux, installation of the dependencies can be done through the package manager, anaconda or manual compilation.
-
 .. image:: conda.svg
 
-Using the conda package
------------------------
+Using the conda-forge package
+-----------------------------
 
-A package for xwidgets is available on the conda package manager.
+A package for xwidgets is available on the mamba (or conda) package manager.
 The package will also pull all the dependencies.
 
 .. code::
 
-    conda install xwidgets -c conda-forge
+    mamba install xwidgets -c conda-forge
 
 .. image:: cmake.svg
 

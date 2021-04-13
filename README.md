@@ -28,12 +28,12 @@ notebook by selecting the **xeus C++14** kernel in the *new* dropdown.
 
 ## Installation
 
-We provide a package for the conda package manager.
+We provide a package for the mamba (or conda) package manager.
 
 - Installing `xwidgets` and the C++ kernel
 
 ```bash
-conda install xeus-cling xwidgets -c conda-forge
+mamba install xeus-cling xwidgets -c conda-forge
 ```
 
 Then, the front-end extension must be installed for either the classic notebook
@@ -42,7 +42,7 @@ or JupyterLab.
 - Installing the extension for the classic notebook
 
 ```
-conda install widgetsnbextension -c conda-forge
+mamba install widgetsnbextension -c conda-forge
 ```
 
 - Installing the JupyterLab extension
@@ -80,7 +80,7 @@ http://xwidgets.readthedocs.io/
 
 ## Dependencies
 
-All the dependencies of xwidgets are available for the conda package manager.
+All the dependencies of xwidgets are available for the mamba (or conda) package manager.
 
 | `xwidgets` | `widgetsnbextension`  |     `xtl`       | `xproperty`    | `xeus`          | `nlohmann_json` |
 |------------|-----------------------|-----------------|----------------|-----------------|-----------------|
