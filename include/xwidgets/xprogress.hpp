@@ -172,15 +172,19 @@ namespace xw
 
     extern template class xmaterialize<xprogress_style>;
     extern template class xtransport<xmaterialize<xprogress_style>>;
+    extern template nl::json mime_bundle_repr<xprogress_style>(const xmaterialize<xprogress_style>&);
 
     extern template class xmaterialize<xprogress, int>;
     extern template class xtransport<xmaterialize<xprogress, int>>;
+    extern template nl::json mime_bundle_repr<xprogress, int>(const xmaterialize<xprogress, int>&);
 
     extern template class xmaterialize<xprogress, float>;
     extern template class xtransport<xmaterialize<xprogress, float>>;
+    extern template nl::json mime_bundle_repr<xprogress, float>(const xmaterialize<xprogress, float>&);
 
     extern template class xmaterialize<xprogress, double>;
     extern template class xtransport<xmaterialize<xprogress, double>>;
+    extern template nl::json mime_bundle_repr<xprogress, double>(const xmaterialize<xprogress, double>&);
 }
 
 #endif

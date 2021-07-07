@@ -185,8 +185,10 @@ namespace xw
 
     extern template class xmaterialize<xselect>;
     extern template class xtransport<xmaterialize<xselect>>;
+    extern template nl::json mime_bundle_repr<xselect>(const xmaterialize<xselect>&);
 
     extern template class xmaterialize<xselect_multiple>;
     extern template class xtransport<xmaterialize<xselect_multiple>>;
+    extern template nl::json mime_bundle_repr<xselect_multiple>(const xmaterialize<xselect_multiple>&);
 }
 #endif

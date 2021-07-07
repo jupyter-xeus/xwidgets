@@ -274,12 +274,15 @@ namespace xw
 
     extern template class xmaterialize<xcontroller_button>;
     extern template class xtransport<xmaterialize<xcontroller_button>>;
+    extern template nl::json mime_bundle_repr<xcontroller_button>(const xmaterialize<xcontroller_button>&);
 
     extern template class xmaterialize<xcontroller_axis>;
     extern template class xtransport<xmaterialize<xcontroller_axis>>;
+    extern template nl::json mime_bundle_repr<xcontroller_axis>(const xmaterialize<xcontroller_axis>&);
 
     extern template class xmaterialize<xcontroller>;
     extern template class xtransport<xmaterialize<xcontroller>>;
+    extern template nl::json mime_bundle_repr<xcontroller>(const xmaterialize<xcontroller>&);
 }
 
 #endif

@@ -126,5 +126,6 @@ namespace xw
 
     extern template class xmaterialize<xaudio>;
     extern template class xtransport<xmaterialize<xaudio>>;
+    extern template nl::json mime_bundle_repr<xaudio>(const xmaterialize<xaudio>&);
 }
 #endif

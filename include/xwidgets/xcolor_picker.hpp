@@ -96,6 +96,7 @@ namespace xw
 
     extern template class xmaterialize<xcolor_picker>;
     extern template class xtransport<xmaterialize<xcolor_picker>>;
+    extern template nl::json mime_bundle_repr<xcolor_picker>(const xmaterialize<xcolor_picker>&);
 }
 
 #endif

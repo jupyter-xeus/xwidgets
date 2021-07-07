@@ -244,8 +244,10 @@ namespace xw
 
     extern template class xmaterialize<xselectionslider>;
     extern template class xtransport<xmaterialize<xselectionslider>>;
+    extern template nl::json mime_bundle_repr<xselectionslider>(const xmaterialize<xselectionslider>&);
 
     extern template class xmaterialize<xselection_rangeslider>;
     extern template class xtransport<xmaterialize<xselection_rangeslider>>;
+    extern template nl::json mime_bundle_repr<xselection_rangeslider>(const xmaterialize<xselection_rangeslider>&);
 }
 #endif

@@ -106,6 +106,7 @@ namespace xw
 
     extern template class xmaterialize<xplay>;
     extern template class xtransport<xmaterialize<xplay>>;
+    extern template nl::json mime_bundle_repr<xplay>(const xmaterialize<xplay>&);
 }
 
 #endif

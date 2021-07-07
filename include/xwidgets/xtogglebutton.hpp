@@ -92,6 +92,7 @@ namespace xw
 
     extern template class xmaterialize<xtogglebutton>;
     extern template class xtransport<xmaterialize<xtogglebutton>>;
+    extern template nl::json mime_bundle_repr<xtogglebutton>(const xmaterialize<xtogglebutton>&);
 }
 
 #endif

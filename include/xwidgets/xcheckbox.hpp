@@ -84,6 +84,7 @@ namespace xw
 
     extern template class xmaterialize<xcheckbox>;
     extern template class xtransport<xmaterialize<xcheckbox>>;
+    extern template nl::json mime_bundle_repr<xcheckbox>(const xmaterialize<xcheckbox>&);
 }
 
 #endif

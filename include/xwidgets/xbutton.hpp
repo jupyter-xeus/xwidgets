@@ -207,8 +207,10 @@ namespace xw
 
     extern template class xmaterialize<xbutton_style>;
     extern template class xtransport<xmaterialize<xbutton_style>>;
+    extern template nl::json mime_bundle_repr<xbutton_style>(const xmaterialize<xbutton_style>&);
 
     extern template class xmaterialize<xbutton>;
     extern template class xtransport<xmaterialize<xbutton>>;
+    extern template nl::json mime_bundle_repr<xbutton>(const xmaterialize<xbutton>&);
 }
 #endif
