@@ -44,6 +44,8 @@ namespace xw
         template <class T>
         void add(xtransport<T>&& w);
 
+        void add(const xeus::xguid & id);
+
         template <class T>
         enable_xtransport_t<T> add(std::shared_ptr<T> w);
 
@@ -128,6 +130,17 @@ namespace xw
 
         set_property_from_patch(box_style, patch, buffers);
         set_property_from_patch(children, patch, buffers);
+    }
+
+
+    template <class D>
+    inline void xbox<D>::add(const xeus::xguid & id)
+    {
+        this->children().emplace_back(make_id_holder(id));
+        nl::json state;
+        xeus::buffer_sequence buffers;
+        xwidgets_serialize(children(), state["children"], buffers);
+        this->send_patch(std::move(state), std::move(buffers));
     }
 
     template <class D>
