@@ -132,7 +132,6 @@ namespace xw
         set_property_from_patch(children, patch, buffers);
     }
 
-
     template <class D>
     inline void xbox<D>::add(const xeus::xguid & id)
     {

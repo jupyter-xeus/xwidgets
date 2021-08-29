@@ -43,6 +43,8 @@ namespace xw
 
     protected:
 
+        xlink(const xholder & s, const  std::string & sn, const xholder & t, const  std::string & tn);
+
         template <class S, class T>
         xlink(xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn);
 
@@ -79,6 +81,8 @@ namespace xw
 
     protected:
 
+        xdirectional_link(const xholder & s, const  std::string & sn, const xholder & t, const  std::string & tn);
+
         template <class S, class T>
         xdirectional_link(const xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn);
 
@@ -111,6 +115,17 @@ namespace xw
 
         set_property_from_patch(source, patch, buffers);
         set_property_from_patch(target, patch, buffers);
+    }
+
+    template <class D>
+    inline xlink<D>::xlink(const xholder & s, const  std::string & sn, const xholder & t, const  std::string & tn)
+        : base_type()
+    {
+        set_defaults();
+        std::get<0>(this->source()) = s;
+        std::get<1>(this->source()) = sn;
+        std::get<0>(this->target()) = t;
+        std::get<1>(this->target()) = tn;
     }
 
     template <class D>
@@ -153,6 +168,17 @@ namespace xw
 
         set_property_from_patch(source, patch, buffers);
         set_property_from_patch(target, patch, buffers);
+    }
+
+    template <class D>
+    inline xdirectional_link<D>::xdirectional_link(const xholder & s, const  std::string & sn, const xholder & t, const  std::string & tn)
+        : base_type()
+    {
+        set_defaults();
+        std::get<0>(this->source()) = s;
+        std::get<1>(this->source()) = sn;
+        std::get<0>(this->target()) = t;
+        std::get<1>(this->target()) = tn;
     }
 
     template <class D>
