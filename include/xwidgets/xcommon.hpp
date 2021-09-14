@@ -37,7 +37,7 @@ namespace xw
     inline void xwidgets_serialize(const std::vector<char>& value, nl::json& j, xeus::buffer_sequence& buffers)
     {
         j = xbuffer_reference_prefix() + std::to_string(buffers.size());
-        buffers.emplace_back(value.data(), value.size());
+        buffers.push_back(value);
     }
 
     template <class T>

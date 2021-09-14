@@ -6,6 +6,8 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
+#include <sstream>
+
 #include "xwidgets/xbinary.hpp"
 
 namespace nl = nlohmann;

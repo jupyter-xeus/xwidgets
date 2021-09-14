@@ -110,8 +110,7 @@ namespace xw
             using value_type = typename decltype(video::value)::value_type;
             std::size_t index = buffer_index(patch[property.name()].template get<std::string>());
             const auto& value_buffer = buffers[index];
-            const char* value_buf = value_buffer.data<const char>();
-            property = value_type(value_buf, value_buf + value_buffer.size());
+            property = value_type(value_buffer.data(), value_buffer.data() + value_buffer.size());
         }
     }
 
