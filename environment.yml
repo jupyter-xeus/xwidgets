@@ -3,5 +3,5 @@ channels:
   - conda-forge
 dependencies:
   - xeus-cling=0.13.0
-  - xwidgets=0.26.0
+  - xwidgets=0.26.1
   - widgetsnbextension >=3.0.0
