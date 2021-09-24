@@ -228,7 +228,7 @@ macro(xwidgets_create_target target_name linkage output_name)
     if(MSVC)
         target_compile_definitions(${target_name} PUBLIC -DNOMINMAX)
         target_compile_options(${target_name} PUBLIC /DGUID_WINDOWS /MP /bigobj)
-        target_compile_options(${target_name} PUBLIC /wd4251 /wd 4996)
+        target_compile_options(${target_name} PUBLIC /wd4251 /wd4996)
         # Allows to compile in debug without requiring each dependencies to
         # be compiled in debug
         if(${U_CMAKE_BUILD_TYPE} MATCHES DEBUG)
