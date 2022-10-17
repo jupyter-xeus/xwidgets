@@ -56,7 +56,6 @@ message(STATUS "xwidgets binary version: v${XWIDGETS_BINARY_VERSION}")
 # Build options
 # =============
 
-option(DISABLE_ARCH_NATIVE "disable -march=native flag" OFF)
 option(XWIDGETS_BUILD_SHARED_LIBS "Build xwidgets shared library." ON)
 option(XWIDGETS_BUILD_STATIC_LIBS "Build xwidgets static library (default if BUILD_SHARED_LIBS is OFF)." ON)
 
@@ -214,9 +213,6 @@ macro(xwidgets_create_target target_name linkage output_name)
 
     if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Intel")
         target_compile_options(${target_name} PUBLIC -Wunused-parameter -Wextra -Wreorder)
-        if (NOT DISABLE_ARCH_NATIVE)
-            target_compile_options(${target_name} PUBLIC -march=native)
-        endif()
 
         message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
     endif()
@@ -260,14 +256,12 @@ endif()
 # Tests
 # =====
 
-OPTION(BUILD_TESTS "xwidgets test suite" OFF)
-OPTION(DOWNLOAD_GTEST "build gtest from downloaded sources" OFF)
+OPTION(XWIDGETS_BUILD_TESTS "xwidgets test suite" OFF)
 
-if(DOWNLOAD_GTEST OR GTEST_SRC_DIR)
-    set(BUILD_TESTS ON)
-endif()
+include(CTest)
 
-if(BUILD_TESTS)
+if(XWIDGETS_BUILD_TESTS)
+    set(BUILD_TESTING ON)
     add_subdirectory(test)
 endif()
 

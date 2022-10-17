@@ -6,7 +6,7 @@
 * The full license is in the file LICENSE, distributed with this software. *
 ****************************************************************************/
 
-#include "gtest/gtest.h"
+#include "doctest/doctest.h"
 
 #include <map>
 #include <string>
@@ -15,16 +15,6 @@
 
 namespace xw
 {
-    TEST(xholder, adding_in_map)
-    {
-        std::map<std::string, xholder> hm;
-        button b;
-        std::string desc = "coincoin";
-        b.description = desc;
-        hm["x"] = std::move(b);
-        std::string res = hm["x"].template get<button>().description();
-        ASSERT_EQ(desc, res);
-    }
 
     class button_tester : public xwidget<button_tester>
     {
@@ -67,47 +57,61 @@ namespace xw
     };
 
     int button_tester::m_instance_count = 0;
-
-    TEST(xholder, shared)
+    
+    TEST_SUITE("xholder")
     {
-        using map_type = std::map<std::string, xholder>;
-        map_type hm1, hm2;
-        hm1["x"] = make_shared_holder<button_tester>(std::make_shared<button_tester>());
-        hm2["x"] = hm1["x"];
-        ASSERT_EQ(hm1["x"].id(), hm2["x"].id());
-        ASSERT_EQ(button_tester::instance_count(), 1);
+        TEST_CASE("adding_in_map")
+        {
+            std::map<std::string, xholder> hm;
+            button b;
+            std::string desc = "coincoin";
+            b.description = desc;
+            hm["x"] = std::move(b);
+            std::string res = hm["x"].template get<button>().description();
+            REQUIRE_EQ(desc, res);
+        }
 
-        hm1["y"] = make_shared_holder<button_tester>(std::make_shared<button_tester>(4));
-        hm2["y"] = hm1["y"];
-        ASSERT_EQ(hm1["y"].template get<button_tester>().value(), hm2["y"].template get<button_tester>().value());
-        ASSERT_EQ(button_tester::instance_count(), 2);
+        TEST_CASE("shared")
+        {
+            using map_type = std::map<std::string, xholder>;
+            map_type hm1, hm2;
+            hm1["x"] = make_shared_holder<button_tester>(std::make_shared<button_tester>());
+            hm2["x"] = hm1["x"];
+            REQUIRE_EQ(hm1["x"].id(), hm2["x"].id());
+            REQUIRE_EQ(button_tester::instance_count(), 1);
 
-        hm1.erase("x");
-        ASSERT_EQ(button_tester::instance_count(), 2);
-        hm2.erase("x");
-        ASSERT_EQ(button_tester::instance_count(), 1);
+            hm1["y"] = make_shared_holder<button_tester>(std::make_shared<button_tester>(4));
+            hm2["y"] = hm1["y"];
+            REQUIRE_EQ(hm1["y"].template get<button_tester>().value(), hm2["y"].template get<button_tester>().value());
+            REQUIRE_EQ(button_tester::instance_count(), 2);
 
-        hm1.erase("y");
-        ASSERT_EQ(button_tester::instance_count(), 1);
-        hm2.erase("y");
-        ASSERT_EQ(button_tester::instance_count(), 0);
-    }
+            hm1.erase("x");
+            REQUIRE_EQ(button_tester::instance_count(), 2);
+            hm2.erase("x");
+            REQUIRE_EQ(button_tester::instance_count(), 1);
 
-    TEST(xholder, constructor)
-    {
-        using holder = xholder;
-        button b1, b2;
-        auto b3 = std::make_shared<button>();
+            hm1.erase("y");
+            REQUIRE_EQ(button_tester::instance_count(), 1);
+            hm2.erase("y");
+            REQUIRE_EQ(button_tester::instance_count(), 0);
+        }
 
-        holder h1(b1);
-        holder h2(std::move(b2));
-        holder h3(b3);
+        TEST_CASE("constructor")
+        {
+            using holder = xholder;
+            button b1, b2;
+            auto b3 = std::make_shared<button>();
 
-        button b11, b22;
-        auto b33 = std::make_shared<button>();
+            holder h1(b1);
+            holder h2(std::move(b2));
+            holder h3(b3);
 
-        h1 = b11;
-        h2 = std::move(b22);
-        h3 = b33;
+            button b11, b22;
+            auto b33 = std::make_shared<button>();
+
+            h1 = b11;
+            h2 = std::move(b22);
+            h3 = b33;
+        }
     }
 }
