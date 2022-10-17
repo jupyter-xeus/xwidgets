@@ -4,6 +4,8 @@ channels:
 dependencies:
   # Build dependencies
   - cmake
+  - cxx-compiler
+  - ninja
   # Host dependencies
   - xeus-zmq=1.0.0
   - cppzmq
