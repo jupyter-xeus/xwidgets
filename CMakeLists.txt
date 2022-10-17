@@ -64,7 +64,7 @@ option(XWIDGETS_BUILD_STATIC_LIBS "Build xwidgets static library (default if BUI
 # ============
 
 find_package(xtl 0.7.0 REQUIRED)
-find_package(xeus 1.0.0 REQUIRED)
+find_package(xeus 3.0.0 REQUIRED)
 find_package(xproperty 0.11.0 REQUIRED)
 
 # Source files
