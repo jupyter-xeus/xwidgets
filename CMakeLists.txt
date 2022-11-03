@@ -62,9 +62,21 @@ option(XWIDGETS_BUILD_STATIC_LIBS "Build xwidgets static library (default if BUI
 # Dependencies
 # ============
 
-find_package(xtl 0.7.0 REQUIRED)
-find_package(xeus 3.0.0 REQUIRED)
-find_package(xproperty 0.11.0 REQUIRED)
+set(xtl_REQUIRED_VERSION 0.7.0)
+set(xeus_REQUIRED_VERSION 0.7.0)
+set(xproperty_REQUIRED_VERSIOn 0.11.0)
+
+if (NOT TARGET xtl)
+    find_package(xtl ${xtl_REQUIRED_VERSION} REQUIRED)
+endif ()
+
+if (NOT TARGET xeus)
+    find_package(xeus ${xeus_REQUIRED_VERSION} REQUIRED)
+endif ()
+
+if (NOT TARGET xproperty)
+    find_package(xproperty ${xeus_REQUIRED_VERSION} REQUIRED)
+endif ()
 
 # Source files
 # ============
@@ -281,6 +293,16 @@ install(TARGETS ${xwidgets_targets}
 export(EXPORT ${PROJECT_NAME}-targets
        FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake")
 
+# Configure 'xwidgetsConfig.cmake' for a build tree
+set(XWIDGETS_CONFIG_CODE "####### Expanded from \@XWIDGETS_CONFIG_CODE\@ #######\n")
+set(XWIDGETS_CONFIG_CODE "${XWIDGETS_CONFIG_CODE}set(CMAKE_MODULE_PATH \"${CMAKE_CURRENT_SOURCE_DIR}/cmake;\${CMAKE_MODULE_PATH}\")\n")
+set(XWIDGETS_CONFIG_CODE "${XWIDGETS_CONFIG_CODE}##################################################")
+configure_package_config_file(${PROJECT_NAME}Config.cmake.in
+                              "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+                              INSTALL_DESTINATION ${PROJECT_BINARY_DIR})
+
+# Configure 'xwidgetsConfig.cmake' for an install tree
+set(XWIDGETS_CONFIG_CODE "")
 configure_package_config_file(${PROJECT_NAME}Config.cmake.in
                               "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
                               INSTALL_DESTINATION ${XWIDGETS_CMAKECONFIG_INSTALL_DIR})
