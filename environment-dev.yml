@@ -7,7 +7,7 @@ dependencies:
   - cxx-compiler
   - ninja
   # Host dependencies
-  - xeus=3.0.1
+  - xeus=3.0.3
   - cppzmq
   - xproperty=0.11.0
   - nlohmann_json=3.9.1

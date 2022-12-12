@@ -63,7 +63,7 @@ option(XWIDGETS_BUILD_STATIC_LIBS "Build xwidgets static library (default if BUI
 # ============
 
 set(xtl_REQUIRED_VERSION 0.7.0)
-set(xeus_REQUIRED_VERSION 0.7.0)
+set(xeus_REQUIRED_VERSION 3.0.3)
 set(xproperty_REQUIRED_VERSIOn 0.11.0)
 
 if (NOT TARGET xtl)
@@ -75,7 +75,7 @@ if (NOT TARGET xeus)
 endif ()
 
 if (NOT TARGET xproperty)
-    find_package(xproperty ${xeus_REQUIRED_VERSION} REQUIRED)
+    find_package(xproperty ${xproperty_REQUIRED_VERSION} REQUIRED)
 endif ()
 
 # Source files
