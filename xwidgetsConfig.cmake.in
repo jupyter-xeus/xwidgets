@@ -20,7 +20,7 @@
 include(CMakeFindDependencyMacro)
 find_dependency(xtl @xtl_REQUIRED_VERSION@)
 find_dependency(xeus @xeus_REQUIRED_VERSION@)
-find_dependency(xproperty @xeus_REQUIRED_VERSION@)
+find_dependency(xproperty @xproperty_REQUIRED_VERSION@)
 
 if(NOT TARGET xwidgets AND NOT TARGET xwidgets-static)
   include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")
