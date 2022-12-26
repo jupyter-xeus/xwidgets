@@ -23,7 +23,7 @@
 // Project version
 #define XWIDGETS_VERSION_MAJOR 0
 #define XWIDGETS_VERSION_MINOR 27
-#define XWIDGETS_VERSION_PATCH 2
+#define XWIDGETS_VERSION_PATCH 3
 
 // Binary version
 #define XWIDGETS_BINARY_CURRENT 1
