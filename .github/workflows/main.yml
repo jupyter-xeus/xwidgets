@@ -59,6 +59,11 @@ jobs:
       shell: bash -l -eo pipefail {0}
       run: cmake --install build/
 
+    - name: Test notebook
+      if: ${{ startsWith(matrix.os, 'ubuntu') }}
+      shell: bash -l -eo pipefail {0}
+      run: papermill notebooks/xwidgets.ipynb "$(mktemp -d)/out.ipynb"
+
   win:
     runs-on: ${{ matrix.os }}
 
