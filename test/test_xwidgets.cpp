@@ -6,22 +6,9 @@
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
 
-#include "doctest/doctest.h"
-#include "xwidgets/xbox.hpp"
-#include "xwidgets/xbutton.hpp"
-#include "xwidgets/xcheckbox.hpp"
-#include "xwidgets/xhtml.hpp"
-#include "xwidgets/xlabel.hpp"
-#include "xwidgets/xlayout.hpp"
-#include "xwidgets/xnumeral.hpp"
-#include "xwidgets/xpassword.hpp"
-#include "xwidgets/xplay.hpp"
-#include "xwidgets/xprogress.hpp"
-#include "xwidgets/xslider.hpp"
-#include "xwidgets/xtext.hpp"
-#include "xwidgets/xtextarea.hpp"
-#include "xwidgets/xtogglebutton.hpp"
-#include "xwidgets/xvalid.hpp"
+#include <doctest/doctest.h>
+
+#include "xwidgets/xall.hpp"
 
 namespace xw
 {

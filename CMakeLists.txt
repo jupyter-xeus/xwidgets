@@ -82,6 +82,7 @@ endif ()
 # ============
 
 set(XWIDGETS_HEADERS
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xall.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaccordion.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xall.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaudio.hpp
