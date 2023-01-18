@@ -36,7 +36,7 @@ set(XWIDGETS_TESTS
 
 add_executable(test_xwidgets ${XWIDGETS_TESTS} ${XWIDGETS_HEADERS})
 
-target_compile_features(test_xwidgets PRIVATE cxx_std_14)
+target_compile_features(test_xwidgets PRIVATE cxx_std_17)
 
 target_link_libraries(test_xwidgets
                       PRIVATE xwidgets
