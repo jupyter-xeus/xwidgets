@@ -35,7 +35,7 @@ namespace xw
         XPROPERTY(value_type, derived_type, step, value_type(1));
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(bool, derived_type, playing);
-        XPROPERTY(bool, derived_type, _repeat);
+        XPROPERTY(bool, derived_type, repeat);
         XPROPERTY(bool, derived_type, show_repeat, true);
 
     protected:
@@ -69,7 +69,7 @@ namespace xw
         xwidgets_serialize(step(), state["step"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(playing(), state["playing"], buffers);
-        xwidgets_serialize(_repeat(), state["_repeat"], buffers);
+        xwidgets_serialize(repeat(), state["repeat"], buffers);
         xwidgets_serialize(show_repeat(), state["show_repeat"], buffers);
     }
 
@@ -82,7 +82,7 @@ namespace xw
         set_property_from_patch(step, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(playing, patch, buffers);
-        set_property_from_patch(_repeat, patch, buffers);
+        set_property_from_patch(repeat, patch, buffers);
         set_property_from_patch(show_repeat, patch, buffers);
     }
 
