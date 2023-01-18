@@ -35,7 +35,7 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(titles_type, derived_type, _titles);
+        XPROPERTY(titles_type, derived_type, titles);
         XPROPERTY(xtl::xoptional<int>, derived_type, selected_index, 0);
 
         void set_title(typename titles_type::size_type i, std::string title);
@@ -59,7 +59,7 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(_titles(), state["_titles"], buffers);
+        xwidgets_serialize(titles(), state["titles"], buffers);
         xwidgets_serialize(selected_index(), state["selected_index"], buffers);
     }
 
@@ -69,7 +69,7 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(_titles, patch, buffers);
+        set_property_from_patch(titles, patch, buffers);
         set_property_from_patch(selected_index, patch, buffers);
     }
 
@@ -88,15 +88,15 @@ namespace xw
     template <class D>
     inline void xselection_container<D>::set_title(typename titles_type::size_type i, std::string title)
     {
-        if (_titles().size() != this->children().size())
+        if (titles().size() != this->children().size())
         {
-            _titles() = titles_type(this->children().size());
+            titles() = titles_type(this->children().size());
         }
-        _titles()[i] = title;
+        titles()[i] = title;
 
         nl::json state;
         xeus::buffer_sequence buffers;
-        xwidgets_serialize(_titles(), state["_titles"], buffers);
+        xwidgets_serialize(titles(), state["titles"], buffers);
         this->send_patch(std::move(state), std::move(buffers));
     }
 }
