@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_BOX_HPP
 #define XWIDGETS_BOX_HPP
@@ -44,7 +44,7 @@ namespace xw
         template <class T>
         void add(xtransport<T>&& w);
 
-        void add(const xeus::xguid & id);
+        void add(const xeus::xguid& id);
 
         template <class T>
         enable_xtransport_t<T> add(std::shared_ptr<T> w);
@@ -133,7 +133,7 @@ namespace xw
     }
 
     template <class D>
-    inline void xbox<D>::add(const xeus::xguid & id)
+    inline void xbox<D>::add(const xeus::xguid& id)
     {
         this->children().emplace_back(make_id_holder(id));
         nl::json state;
@@ -181,8 +181,10 @@ namespace xw
     {
         this->children().erase(
             std::remove_if(
-                this->children().begin(), this->children().end(),
-                [&w](const xholder& element) {
+                this->children().begin(),
+                this->children().end(),
+                [&w](const xholder& element)
+                {
                     return element.id() == w.id();
                 }
             ),

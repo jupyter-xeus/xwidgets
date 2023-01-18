@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_BUTTON_HPP
 #define XWIDGETS_BUTTON_HPP
@@ -15,12 +15,11 @@
 #include <string>
 #include <utility>
 
-#include "xtl/xoptional.hpp"
-
 #include "xcolor.hpp"
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xstyle.hpp"
+#include "xtl/xoptional.hpp"
 #include "xwidget.hpp"
 
 namespace xw
@@ -79,7 +78,13 @@ namespace xw
         XPROPERTY(std::string, derived_type, tooltip);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(std::string, derived_type, icon);
-        XPROPERTY(std::string, derived_type, button_style, "", XEITHER("primary", "success", "info", "warning", "danger", ""));
+        XPROPERTY(
+            std::string,
+            derived_type,
+            button_style,
+            "",
+            XEITHER("primary", "success", "info", "warning", "danger", "")
+        );
         XPROPERTY(::xw::button_style, derived_type, style);
 
         void handle_custom_message(const nl::json&);

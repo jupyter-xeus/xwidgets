@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_COMMON_HPP
 #define XWIDGETS_COMMON_HPP
@@ -13,9 +13,8 @@
 #include <utility>
 #include <vector>
 
-#include "xeus/xcomm.hpp"
-
 #include "xbinary.hpp"
+#include "xeus/xcomm.hpp"
 #include "xwidgets_config.hpp"
 
 namespace xw
@@ -32,7 +31,7 @@ namespace xw
         j = value;
     }
 
-    // Specialization for binary buffers   
+    // Specialization for binary buffers
 
     inline void xwidgets_serialize(const std::vector<char>& value, nl::json& j, xeus::buffer_sequence& buffers)
     {
@@ -86,11 +85,9 @@ namespace xw
 
     private:
 
-        bool same_patch(const std::string&,
-                        const nl::json&,
-                        const xeus::buffer_sequence&,
-                        const nl::json&,
-                        const xeus::buffer_sequence&) const;
+        bool
+        same_patch(const std::string&, const nl::json&, const xeus::buffer_sequence&, const nl::json&, const xeus::buffer_sequence&)
+            const;
 
         bool m_moved_from;
         const xeus::xmessage* m_hold;
@@ -129,11 +126,7 @@ namespace xw
             auto it = hold_state.find(name);
             if (it != hold_state.end())
             {
-                if(same_patch(name,
-                              *it,
-                              hold_buffers,
-                              state[name],
-                              buffers))
+                if (same_patch(name, *it, hold_buffers, state[name], buffers))
                 {
                     return;
                 }

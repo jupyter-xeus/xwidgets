@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_SELECTION_CONTAINER_HPP
 #define XWIDGETS_SELECTION_CONTAINER_HPP
@@ -12,10 +12,9 @@
 #include <string>
 #include <vector>
 
-#include "xtl/xoptional.hpp"
-
 #include "xbox.hpp"
 #include "xmaterialize.hpp"
+#include "xtl/xoptional.hpp"
 
 namespace xw
 {
@@ -65,7 +64,8 @@ namespace xw
     }
 
     template <class D>
-    inline void xselection_container<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
+    inline void
+    xselection_container<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
 

@@ -1,16 +1,16 @@
 /***************************************************************************
-* Copyright (c) 2018, Sylvain Corlay, Johan Mabille an                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2018, Sylvain Corlay, Johan Mabille an                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_MEDIA_HPP
 #define XWIDGETS_MEDIA_HPP
 
-#include <fstream>
 #include <cstddef>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -80,7 +80,7 @@ namespace xw
     template <class D>
     inline void xmedia<D>::set_defaults()
     {
-        this->buffer_paths() = {{ "value" }}; 
+        this->buffer_paths() = {{"value"}};
 
         this->_model_module() = "@jupyter-widgets/controls";
         this->_view_module() = "@jupyter-widgets/controls";

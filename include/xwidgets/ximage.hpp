@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_IMAGE_HPP
 #define XWIDGETS_IMAGE_HPP
@@ -102,9 +102,11 @@ namespace xw
      * custom serializers *
      **********************/
 
-    inline void set_property_from_patch(decltype(image::value)& property,
-                                        const nl::json& patch,
-                                        const xeus::buffer_sequence& buffers)
+    inline void set_property_from_patch(
+        decltype(image::value)& property,
+        const nl::json& patch,
+        const xeus::buffer_sequence& buffers
+    )
     {
         auto it = patch.find(property.name());
         if (it != patch.end())

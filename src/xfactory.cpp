@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #include "xwidgets/xfactory.hpp"
 
@@ -14,11 +14,13 @@ namespace nl = nlohmann;
 
 namespace xw
 {
-    void xfactory::register_maker(const std::string& model_module,
-                                  const std::string& model_name,
-                                  const std::string& view_module,
-                                  const std::string& view_name,
-                                  maker_type maker)
+    void xfactory::register_maker(
+        const std::string& model_module,
+        const std::string& model_name,
+        const std::string& view_module,
+        const std::string& view_name,
+        maker_type maker
+    )
     {
         m_makers[model_module + model_name + view_module + view_name] = std::move(maker);
     }
@@ -38,4 +40,3 @@ namespace xw
         return factory;
     }
 }
-

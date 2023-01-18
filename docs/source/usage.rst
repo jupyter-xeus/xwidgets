@@ -82,7 +82,7 @@ In fact, these final classes are typedefs on a special template parameterized by
 
     using button = xmaterialize<xbutton>;
 
-Similarly, for template widget types, we also make use of the ``xmaterialize`` class, which 
+Similarly, for template widget types, we also make use of the ``xmaterialize`` class, which
 
 .. code:: cpp
 
@@ -173,5 +173,5 @@ In this example, we validate the proposed values for a numerical text. Negative 
     });
 
 For more details about the API for ``xproperty``, we refer to the ``xproperty`` documentation.
- 
+
 .. _xproperty: https://github.com/jupyter-xeus/xproperty

@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_SELECTIONSLIDER_HPP
 #define XWIDGETS_SELECTIONSLIDER_HPP
@@ -138,12 +138,16 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<options_type>("_options_labels", [](auto&, auto& proposal) {
-            if (proposal.empty())
+        this->template validate<options_type>(
+            "_options_labels",
+            [](auto&, auto& proposal)
             {
-                throw std::runtime_error("Empty collection passed to selection slider");
+                if (proposal.empty())
+                {
+                    throw std::runtime_error("Empty collection passed to selection slider");
+                }
             }
-        });
+        );
     }
 
     template <class D>
@@ -172,7 +176,8 @@ namespace xw
     }
 
     template <class D>
-    inline void xselection_rangeslider<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
+    inline void
+    xselection_rangeslider<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
 
@@ -199,12 +204,16 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<value_type>("value", [](auto&, auto& proposal) {
-            if (proposal.empty())
+        this->template validate<value_type>(
+            "value",
+            [](auto&, auto& proposal)
             {
-                throw std::runtime_error("Empty collection passed to selection slider");
+                if (proposal.empty())
+                {
+                    throw std::runtime_error("Empty collection passed to selection slider");
+                }
             }
-        });
+        );
     }
 
     template <class D>
@@ -218,12 +227,16 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<options_type>("_options_labels", [](auto&, auto& proposal) {
-            if (proposal.empty())
+        this->template validate<options_type>(
+            "_options_labels",
+            [](auto&, auto& proposal)
             {
-                throw std::runtime_error("Empty collection passed to selection slider");
+                if (proposal.empty())
+                {
+                    throw std::runtime_error("Empty collection passed to selection slider");
+                }
             }
-        });
+        );
     }
 
     template <class D>

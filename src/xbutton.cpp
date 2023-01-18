@@ -2,7 +2,7 @@
 
 namespace xw
 {
-#if defined(_MSC_VER) && (_MSC_VER==1910 || _MSC_VER==1911 || _MSC_VER==1912 || _MSC_VER==1913)
+#if defined(_MSC_VER) && (_MSC_VER == 1910 || _MSC_VER == 1911 || _MSC_VER == 1912 || _MSC_VER == 1913)
     template class xmaterialize<xbutton_style>;
     template class xtransport<xmaterialize<xbutton_style>>;
 #else
