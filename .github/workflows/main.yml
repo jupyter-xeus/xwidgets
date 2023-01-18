@@ -9,8 +9,13 @@ on:
     - main
 
 jobs:
-  unix:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: pre-commit/action@v3.0.0
 
+  unix:
     runs-on: ${{ matrix.os }}
 
     strategy:
