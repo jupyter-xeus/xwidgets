@@ -36,10 +36,16 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::vector<std::string>, derived_type, tooltips);
-
         XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
         XPROPERTY(bool, derived_type, readout, true);
         XPROPERTY(bool, derived_type, continuous_update, true);
+        XPROPERTY(
+            std::string,
+            derived_type,
+            behavior,
+            "drag-tap",
+            XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap")
+        );
 
     protected:
 
@@ -79,6 +85,13 @@ namespace xw
         XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
         XPROPERTY(bool, derived_type, readout, true);
         XPROPERTY(bool, derived_type, continuous_update, true);
+        XPROPERTY(
+            std::string,
+            derived_type,
+            behavior,
+            "drag-tap",
+            XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap")
+        );
 
     protected:
 
@@ -107,6 +120,7 @@ namespace xw
         xwidgets_serialize(orientation(), state["orientation"], buffers);
         xwidgets_serialize(readout(), state["readout"], buffers);
         xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
+        xwidgets_serialize(behavior(), state["behavior"], buffers);
     }
 
     template <class D>
@@ -117,6 +131,7 @@ namespace xw
         set_property_from_patch(orientation, patch, buffers);
         set_property_from_patch(readout, patch, buffers);
         set_property_from_patch(continuous_update, patch, buffers);
+        set_property_from_patch(behavior, patch, buffers);
     }
 
     template <class D>
@@ -173,6 +188,7 @@ namespace xw
         xwidgets_serialize(orientation(), state["orientation"], buffers);
         xwidgets_serialize(readout(), state["readout"], buffers);
         xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
+        xwidgets_serialize(behavior(), state["behavior"], buffers);
     }
 
     template <class D>
@@ -184,6 +200,7 @@ namespace xw
         set_property_from_patch(orientation, patch, buffers);
         set_property_from_patch(readout, patch, buffers);
         set_property_from_patch(continuous_update, patch, buffers);
+        set_property_from_patch(behavior, patch, buffers);
     }
 
     template <class D>
