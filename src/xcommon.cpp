@@ -6,15 +6,14 @@
 #include <vector>
 
 #include "xeus/xinterpreter.hpp"
-
 #include "xtarget.hpp"
 
 namespace xw
 {
     xcommon::xcommon()
-        : m_moved_from(false),
-          m_hold(nullptr),
-          m_comm(get_widget_target(), xeus::new_xguid())
+        : m_moved_from(false)
+        , m_hold(nullptr)
+        , m_comm(get_widget_target(), xeus::new_xguid())
     {
     }
 
@@ -23,25 +22,25 @@ namespace xw
     }
 
     xcommon::xcommon(xeus::xcomm&& comm)
-        : m_moved_from(false),
-          m_hold(nullptr),
-          m_comm(std::move(comm))
+        : m_moved_from(false)
+        , m_hold(nullptr)
+        , m_comm(std::move(comm))
     {
     }
 
     xcommon::xcommon(const xcommon& other)
-        : m_moved_from(false),
-          m_hold(nullptr),
-          m_comm(other.m_comm),
-          m_buffer_paths(other.m_buffer_paths)
+        : m_moved_from(false)
+        , m_hold(nullptr)
+        , m_comm(other.m_comm)
+        , m_buffer_paths(other.m_buffer_paths)
     {
     }
 
     xcommon::xcommon(xcommon&& other)
-        : m_moved_from(false),
-          m_hold(nullptr),
-          m_comm(std::move(other.m_comm)),
-          m_buffer_paths(std::move(other.m_buffer_paths))
+        : m_moved_from(false)
+        , m_hold(nullptr)
+        , m_comm(std::move(other.m_comm))
+        , m_buffer_paths(std::move(other.m_buffer_paths))
     {
         other.m_moved_from = true;
     }
@@ -84,10 +83,7 @@ namespace xw
         // text/plain
         mime_bundle["text/plain"] = "A Jupyter widget";
 
-        ::xeus::get_interpreter().display_data(
-            std::move(mime_bundle),
-            nl::json::object(),
-            nl::json::object());
+        ::xeus::get_interpreter().display_data(std::move(mime_bundle), nl::json::object(), nl::json::object());
     }
 
     void xcommon::send(nl::json&& content, xeus::buffer_sequence&& buffers) const
@@ -108,7 +104,7 @@ namespace xw
     void xcommon::handle_custom_message(const nl::json& /*content*/)
     {
     }
-    
+
     xeus::xcomm& xcommon::comm()
     {
         return m_comm;
@@ -188,13 +184,11 @@ namespace xw
     {
         // close
         m_comm.close(nl::json::object(), nl::json::object(), xeus::buffer_sequence());
-    } 
+    }
 
-    bool xcommon::same_patch(const std::string& name,
-                                    const nl::json& j1,
-                                    const xeus::buffer_sequence&,
-                                    const nl::json& j2,
-                                    const xeus::buffer_sequence&) const
+    bool
+    xcommon::same_patch(const std::string& name, const nl::json& j1, const xeus::buffer_sequence&, const nl::json& j2, const xeus::buffer_sequence&)
+        const
     {
         const auto& paths = buffer_paths();
         // For a widget with no binary buffer, compare the patches
@@ -205,9 +199,15 @@ namespace xw
         else
         {
             // For a property with no binary buffer, compare the patches
-            if (std::find_if(paths.cbegin(), paths.cend(), [name](const auto& v) {
-                return !v.empty() && v[0] == name;
-            }) == paths.cend())
+            if (std::find_if(
+                    paths.cbegin(),
+                    paths.cend(),
+                    [name](const auto& v)
+                    {
+                        return !v.empty() && v[0] == name;
+                    }
+                )
+                == paths.cend())
             {
                 return j1 == j2;
             }

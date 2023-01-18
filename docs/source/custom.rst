@@ -255,4 +255,3 @@ holding values of that type.
 
 .. _`"JSON for Modern C++"`: https://github.com/nlohmann/json/
 .. _DataView: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView
-

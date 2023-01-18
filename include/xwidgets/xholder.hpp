@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_HOLDER_HPP
 #define XWIDGETS_HOLDER_HPP
@@ -14,13 +14,10 @@
 #include <string>
 #include <utility>
 
-#include "xeus/xguid.hpp"
-
 #include "nlohmann/json.hpp"
-
+#include "xeus/xguid.hpp"
 #include "xtl/xany.hpp"
 #include "xtl/xclosure.hpp"
-
 #include "xwidgets_config.hpp"
 
 namespace nl = nlohmann;
@@ -65,8 +62,7 @@ namespace xw
         template <class D>
         xholder& operator=(xtransport<D>&& rhs);
         template <class D>
-        std::enable_if_t<std::is_base_of<xtransport<D>, D>::value, xholder&>
-        operator=(std::shared_ptr<D> ptr);
+        std::enable_if_t<std::is_base_of<xtransport<D>, D>::value, xholder&> operator=(std::shared_ptr<D> ptr);
 
         void swap(xholder& rhs);
 
@@ -74,12 +70,12 @@ namespace xw
         xeus::xguid id() const;
 
         xtl::any value() &;
-        const xtl::any value() const &;
+        const xtl::any value() const&;
 
         template <class D>
         D& get() &;
         template <class D>
-        const D& get() const &;
+        const D& get() const&;
 
     private:
 
@@ -140,7 +136,7 @@ namespace xw
             virtual xeus::xguid id() const = 0;
 
             virtual xtl::any value() & = 0;
-            virtual const xtl::any value() const & = 0;
+            virtual const xtl::any value() const& = 0;
 
         protected:
 
@@ -155,14 +151,14 @@ namespace xw
             using base_type = xholder_impl;
 
             xholder_owning(const xtransport<D>& value)
-                : base_type(),
-                  m_value(value.derived_cast())
+                : base_type()
+                , m_value(value.derived_cast())
             {
             }
 
             xholder_owning(xtransport<D>&& value)
-                : base_type(),
-                  m_value(std::move(value.derived_cast()))
+                : base_type()
+                , m_value(std::move(value.derived_cast()))
             {
             }
 
@@ -190,7 +186,7 @@ namespace xw
                 return xtl::closure(m_value);
             }
 
-            virtual const xtl::any value() const & override
+            virtual const xtl::any value() const& override
             {
                 return xtl::closure(m_value);
             }
@@ -213,8 +209,8 @@ namespace xw
             using base_type = xholder_impl;
 
             xholder_weak(xtransport<D>* ptr)
-                : base_type(),
-                  p_value(&(ptr->derived_cast()))
+                : base_type()
+                , p_value(&(ptr->derived_cast()))
             {
             }
 
@@ -243,7 +239,7 @@ namespace xw
                 return xtl::closure(*p_value);
             }
 
-            virtual const xtl::any value() const & override
+            virtual const xtl::any value() const& override
             {
                 return xtl::closure(*p_value);
             }
@@ -267,18 +263,19 @@ namespace xw
             using pointer = std::shared_ptr<D>;
 
             xholder_shared(pointer ptr)
-                : base_type(),
-                  p_value(ptr)
+                : base_type()
+                , p_value(ptr)
             {
             }
 
             xholder_shared(xtransport<D>* ptr)
-                : base_type(),
-                  p_value(&(ptr->derived_cast()))
+                : base_type()
+                , p_value(&(ptr->derived_cast()))
             {
             }
 
             virtual ~xholder_shared() = default;
+
             virtual base_type* clone() const override
             {
                 return new xholder_shared(*this);
@@ -299,7 +296,7 @@ namespace xw
                 return xtl::closure(*p_value);
             }
 
-            virtual const xtl::any value() const & override
+            virtual const xtl::any value() const& override
             {
                 return xtl::closure(*p_value);
             }
@@ -385,7 +382,7 @@ namespace xw
     }
 
     template <class D>
-    const D& xholder::get() const &
+    const D& xholder::get() const&
     {
         return xtl::any_cast<xtl::closure_wrapper<const D&>>(this->value()).get();
     }

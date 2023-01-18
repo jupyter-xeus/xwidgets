@@ -19,8 +19,8 @@ namespace xw
             using base_type = xholder_impl;
 
             xholder_id(xeus::xguid id)
-                : base_type(),
-                  m_id(id)
+                : base_type()
+                , m_id(id)
             {
             }
 
@@ -49,7 +49,7 @@ namespace xw
                 return holder.value();
             }
 
-            virtual const xtl::any value() const & override
+            virtual const xtl::any value() const& override
             {
                 const auto& holder = get_transport_registry().find(m_id);
                 return holder.value();

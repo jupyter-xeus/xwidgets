@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_MATERIALIZE_HPP
 #define XWIDGETS_MATERIALIZE_HPP
@@ -12,9 +12,8 @@
 #include <utility>
 
 #include "nlohmann/json.hpp"
-
-#include "xwidgets_config.hpp"
 #include "xcommon.hpp"
+#include "xwidgets_config.hpp"
 
 namespace nl = nlohmann;
 
@@ -71,7 +70,8 @@ namespace xw
     template <template <class> class B, class... P>
     template <class... A>
     inline xmaterialize<B, P...>::xmaterialize(bool generator, A&&... args)
-        : base_type(std::forward<A>(args)...), m_generator(generator)
+        : base_type(std::forward<A>(args)...)
+        , m_generator(generator)
     {
         if (!m_generator)
         {
@@ -138,7 +138,7 @@ namespace xw
 
     /*************
      * Generator *
-     *************/  
+     *************/
 
     template <template <class> class B, class... P, class... A>
     inline xmaterialize<B, P...> generator(A&&... args)

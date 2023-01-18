@@ -1,15 +1,16 @@
 name: xwidgets
 channels:
-  - conda-forge
+- conda-forge
 dependencies:
   # Build dependencies
-  - cmake
-  - cxx-compiler
-  - ninja
+- cmake
+- cxx-compiler
+- ninja
   # Host dependencies
-  - xeus=3.0.3
-  - cppzmq
-  - xproperty=0.11.0
-  - nlohmann_json=3.9.1
+- xeus=3.0.3
+- cppzmq
+- xproperty=0.11.0
+- nlohmann_json=3.9.1
   # Test dependencies
-  - doctest >= 2.4.6
+- doctest >= 2.4.6
+- pre-commit

@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_CONTROLLER_HPP
 #define XWIDGETS_CONTROLLER_HPP
@@ -13,10 +13,9 @@
 #include <vector>
 
 #include "nlohmann/json.hpp"
-
 #include "xfactory.hpp"
-#include "xmaterialize.hpp"
 #include "xmaker.hpp"
+#include "xmaterialize.hpp"
 #include "xwidget.hpp"
 
 namespace nl = nlohmann;
@@ -254,17 +253,11 @@ namespace xw
     template <class D>
     inline int xcontroller<D>::register_control_types()
     {
-        get_xfactory().register_maker("@jupyter-widgets/controls",
-                                      "ControllerAxisModel",
-                                      "@jupyter-widgets/controls",
-                                      "ControllerAxisView",
-                                      xmaker<xcontroller_axis>);
+        get_xfactory()
+            .register_maker("@jupyter-widgets/controls", "ControllerAxisModel", "@jupyter-widgets/controls", "ControllerAxisView", xmaker<xcontroller_axis>);
 
-        get_xfactory().register_maker("@jupyter-widgets/controls",
-                                      "ControllerButtonModel",
-                                      "@jupyter-widgets/controls",
-                                      "ControllerButtonView",
-                                      xmaker<xcontroller_button>);
+        get_xfactory()
+            .register_maker("@jupyter-widgets/controls", "ControllerButtonModel", "@jupyter-widgets/controls", "ControllerButtonView", xmaker<xcontroller_button>);
         return 0;
     }
 

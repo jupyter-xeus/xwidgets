@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_TOGGLEBUTTONS_HPP
 #define XWIDGETS_TOGGLEBUTTONS_HPP
@@ -77,7 +77,13 @@ namespace xw
         XPROPERTY(std::vector<std::string>, derived_type, tooltips);
         XPROPERTY(std::vector<std::string>, derived_type, icons);
         XPROPERTY(::xw::togglebuttons_style, derived_type, style);
-        XPROPERTY(std::string, derived_type, button_style, "", XEITHER("primary", "success", "info", "warning", "danger", ""));
+        XPROPERTY(
+            std::string,
+            derived_type,
+            button_style,
+            "",
+            XEITHER("primary", "success", "info", "warning", "danger", "")
+        );
 
     private:
 
@@ -99,7 +105,8 @@ namespace xw
     }
 
     template <class D>
-    inline void xtogglebuttons_style<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
+    inline void
+    xtogglebuttons_style<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
 

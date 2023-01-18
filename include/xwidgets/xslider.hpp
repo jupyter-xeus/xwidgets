@@ -1,23 +1,22 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_SLIDER_HPP
 #define XWIDGETS_SLIDER_HPP
 
 #include <string>
 
-#include "xtl/xoptional.hpp"
-
 #include "xcolor.hpp"
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
 #include "xstyle.hpp"
+#include "xtl/xoptional.hpp"
 
 namespace xw
 {
@@ -178,38 +177,50 @@ namespace xw
     template <class D>
     inline void xslider<D>::setup_properties()
     {
-        this->template validate<value_type>("value", [](auto& owner, auto& proposal) {
-            if (proposal > owner.max())
+        this->template validate<value_type>(
+            "value",
+            [](auto& owner, auto& proposal)
             {
-                proposal = owner.max();
+                if (proposal > owner.max())
+                {
+                    proposal = owner.max();
+                }
+                if (proposal < owner.min())
+                {
+                    proposal = owner.min();
+                }
             }
-            if (proposal < owner.min())
-            {
-                proposal = owner.min();
-            }
-        });
+        );
 
-        this->template validate<value_type>("min", [](auto& owner, auto& proposal) {
-            if (proposal > owner.max())
+        this->template validate<value_type>(
+            "min",
+            [](auto& owner, auto& proposal)
             {
-                throw std::runtime_error("setting min > max");
+                if (proposal > owner.max())
+                {
+                    throw std::runtime_error("setting min > max");
+                }
+                if (proposal > owner.value())
+                {
+                    owner.value = proposal;
+                }
             }
-            if (proposal > owner.value())
-            {
-                owner.value = proposal;
-            }
-        });
+        );
 
-        this->template validate<value_type>("max", [](auto& owner, auto& proposal) {
-            if (proposal < owner.min())
+        this->template validate<value_type>(
+            "max",
+            [](auto& owner, auto& proposal)
             {
-                throw std::runtime_error("setting max < min");
+                if (proposal < owner.min())
+                {
+                    throw std::runtime_error("setting max < min");
+                }
+                if (proposal < owner.value())
+                {
+                    owner.value = proposal;
+                }
             }
-            if (proposal < owner.value())
-            {
-                owner.value = proposal;
-            }
-        });
+        );
     }
 
     template <class D>

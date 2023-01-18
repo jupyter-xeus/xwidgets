@@ -1,16 +1,15 @@
 /***************************************************************************
-* Copyright (c) 2016, Johan Mabille and Sylvain Corlay                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
-
-#include "doctest/doctest.h"
+ * Copyright (c) 2016, Johan Mabille and Sylvain Corlay                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #include <map>
 #include <string>
 
+#include "doctest/doctest.h"
 #include "xwidgets/xbutton.hpp"
 
 namespace xw
@@ -46,9 +45,15 @@ namespace xw
         button_tester& operator=(const button_tester&) = default;
         button_tester& operator=(button_tester&&) = default;
 
-        int value() const { return m_value; }
+        int value() const
+        {
+            return m_value;
+        }
 
-        static int instance_count() { return m_instance_count; }
+        static int instance_count()
+        {
+            return m_instance_count;
+        }
 
     private:
 
@@ -57,7 +62,7 @@ namespace xw
     };
 
     int button_tester::m_instance_count = 0;
-    
+
     TEST_SUITE("xholder")
     {
         TEST_CASE("adding_in_map")
@@ -82,7 +87,10 @@ namespace xw
 
             hm1["y"] = make_shared_holder<button_tester>(std::make_shared<button_tester>(4));
             hm2["y"] = hm1["y"];
-            REQUIRE_EQ(hm1["y"].template get<button_tester>().value(), hm2["y"].template get<button_tester>().value());
+            REQUIRE_EQ(
+                hm1["y"].template get<button_tester>().value(),
+                hm2["y"].template get<button_tester>().value()
+            );
             REQUIRE_EQ(button_tester::instance_count(), 2);
 
             hm1.erase("x");

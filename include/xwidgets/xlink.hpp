@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_LINK_HPP
 #define XWIDGETS_LINK_HPP
@@ -43,7 +43,7 @@ namespace xw
 
     protected:
 
-        xlink(const xholder & s, const  std::string & sn, const xholder & t, const  std::string & tn);
+        xlink(const xholder& s, const std::string& sn, const xholder& t, const std::string& tn);
 
         template <class S, class T>
         xlink(xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn);
@@ -81,7 +81,7 @@ namespace xw
 
     protected:
 
-        xdirectional_link(const xholder & s, const  std::string & sn, const xholder & t, const  std::string & tn);
+        xdirectional_link(const xholder& s, const std::string& sn, const xholder& t, const std::string& tn);
 
         template <class S, class T>
         xdirectional_link(const xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn);
@@ -118,7 +118,7 @@ namespace xw
     }
 
     template <class D>
-    inline xlink<D>::xlink(const xholder & s, const  std::string & sn, const xholder & t, const  std::string & tn)
+    inline xlink<D>::xlink(const xholder& s, const std::string& sn, const xholder& t, const std::string& tn)
         : base_type()
     {
         set_defaults();
@@ -171,7 +171,12 @@ namespace xw
     }
 
     template <class D>
-    inline xdirectional_link<D>::xdirectional_link(const xholder & s, const  std::string & sn, const xholder & t, const  std::string & tn)
+    inline xdirectional_link<D>::xdirectional_link(
+        const xholder& s,
+        const std::string& sn,
+        const xholder& t,
+        const std::string& tn
+    )
         : base_type()
     {
         set_defaults();
@@ -183,7 +188,12 @@ namespace xw
 
     template <class D>
     template <class S, class T>
-    inline xdirectional_link<D>::xdirectional_link(const xtransport<S>& s, std::string sn, xtransport<T>& t, std::string tn)
+    inline xdirectional_link<D>::xdirectional_link(
+        const xtransport<S>& s,
+        std::string sn,
+        xtransport<T>& t,
+        std::string tn
+    )
         : base_type()
     {
         set_defaults();

@@ -16,7 +16,7 @@ namespace xw
         }
         return it->second;
     }
-    
+
     xregistry& get_transport_registry()
     {
         static xregistry instance;

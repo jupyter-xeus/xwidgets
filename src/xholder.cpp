@@ -70,7 +70,7 @@ namespace xw
         return p_holder->value();
     }
 
-    const xtl::any xholder::value() const &
+    const xtl::any xholder::value() const&
     {
         check_holder();
         return p_holder->value();

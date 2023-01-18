@@ -1,23 +1,23 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_CONFIG_HPP
 #define XWIDGETS_CONFIG_HPP
 
 // Visual C++ declspec macors
 #ifdef _WIN32
-    #ifdef XWIDGETS_EXPORTS
-        #define XWIDGETS_API __declspec(dllexport)
-    #else
-        #define XWIDGETS_API __declspec(dllimport)
-    #endif
+#ifdef XWIDGETS_EXPORTS
+#define XWIDGETS_API __declspec(dllexport)
 #else
-    #define XWIDGETS_API
+#define XWIDGETS_API __declspec(dllimport)
+#endif
+#else
+#define XWIDGETS_API
 #endif
 
 // Project version
@@ -56,21 +56,50 @@
 #define XWIDGETS_STRINGIFY(a) XWIDGETS_STRINGIFY_IMPL(a)
 #define XWIDGETS_STRINGIFY_IMPL(a) #a
 
-#define XWIDGETS_PROTOCOL_VERSION XWIDGETS_STRINGIFY(XWIDGETS_CONCATENATE(XWIDGETS_PROTOCOL_VERSION_MAJOR,   \
-                              XWIDGETS_CONCATENATE(.,XWIDGETS_CONCATENATE(XWIDGETS_PROTOCOL_VERSION_MINOR,   \
-                                                   XWIDGETS_CONCATENATE(.,XWIDGETS_PROTOCOL_VERSION_PATCH)))))
+#define XWIDGETS_PROTOCOL_VERSION                                            \
+    XWIDGETS_STRINGIFY(XWIDGETS_CONCATENATE(                                 \
+        XWIDGETS_PROTOCOL_VERSION_MAJOR,                                     \
+        XWIDGETS_CONCATENATE(                                                \
+                .,                                                           \
+                XWIDGETS_CONCATENATE(                                        \
+                    XWIDGETS_PROTOCOL_VERSION_MINOR,                         \
+                    XWIDGETS_CONCATENATE(., XWIDGETS_PROTOCOL_VERSION_PATCH) \
+                )                                                            \
+        )                                                                    \
+    ))
 
-#define XWIDGETS_BASE_VERSION XWIDGETS_STRINGIFY(XWIDGETS_CONCATENATE(XWIDGETS_BASE_VERSION_MAJOR,   \
-                          XWIDGETS_CONCATENATE(.,XWIDGETS_CONCATENATE(XWIDGETS_BASE_VERSION_MINOR,   \
-                                               XWIDGETS_CONCATENATE(.,XWIDGETS_BASE_VERSION_PATCH)))))
+#define XWIDGETS_BASE_VERSION                                                                                           \
+    XWIDGETS_STRINGIFY(XWIDGETS_CONCATENATE(                                                                            \
+        XWIDGETS_BASE_VERSION_MAJOR,                                                                                    \
+        XWIDGETS_CONCATENATE(                                                                                           \
+                .,                                                                                                      \
+                XWIDGETS_CONCATENATE(XWIDGETS_BASE_VERSION_MINOR, XWIDGETS_CONCATENATE(., XWIDGETS_BASE_VERSION_PATCH)) \
+        )                                                                                                               \
+    ))
 
-#define XWIDGETS_OUTPUT_VERSION XWIDGETS_STRINGIFY(XWIDGETS_CONCATENATE(XWIDGETS_OUTPUT_VERSION_MAJOR,   \
-                            XWIDGETS_CONCATENATE(.,XWIDGETS_CONCATENATE(XWIDGETS_OUTPUT_VERSION_MINOR,   \
-                                                 XWIDGETS_CONCATENATE(.,XWIDGETS_OUTPUT_VERSION_PATCH)))))
+#define XWIDGETS_OUTPUT_VERSION                                            \
+    XWIDGETS_STRINGIFY(XWIDGETS_CONCATENATE(                               \
+        XWIDGETS_OUTPUT_VERSION_MAJOR,                                     \
+        XWIDGETS_CONCATENATE(                                              \
+                .,                                                         \
+                XWIDGETS_CONCATENATE(                                      \
+                    XWIDGETS_OUTPUT_VERSION_MINOR,                         \
+                    XWIDGETS_CONCATENATE(., XWIDGETS_OUTPUT_VERSION_PATCH) \
+                )                                                          \
+        )                                                                  \
+    ))
 
-#define XWIDGETS_CONTROLS_VERSION XWIDGETS_STRINGIFY(XWIDGETS_CONCATENATE(XWIDGETS_CONTROLS_VERSION_MAJOR,   \
-                              XWIDGETS_CONCATENATE(.,XWIDGETS_CONCATENATE(XWIDGETS_CONTROLS_VERSION_MINOR,   \
-                                                   XWIDGETS_CONCATENATE(.,XWIDGETS_CONTROLS_VERSION_PATCH)))))
+#define XWIDGETS_CONTROLS_VERSION                                            \
+    XWIDGETS_STRINGIFY(XWIDGETS_CONCATENATE(                                 \
+        XWIDGETS_CONTROLS_VERSION_MAJOR,                                     \
+        XWIDGETS_CONCATENATE(                                                \
+                .,                                                           \
+                XWIDGETS_CONCATENATE(                                        \
+                    XWIDGETS_CONTROLS_VERSION_MINOR,                         \
+                    XWIDGETS_CONCATENATE(., XWIDGETS_CONTROLS_VERSION_PATCH) \
+                )                                                            \
+        )                                                                    \
+    ))
 
 // Load libxwidgets runtime.
 #ifdef __CLING__

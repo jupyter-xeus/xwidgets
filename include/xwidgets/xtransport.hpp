@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_TRANSPORT_HPP
 #define XWIDGETS_TRANSPORT_HPP
@@ -13,13 +13,11 @@
 #include <string>
 #include <utility>
 
+#include "xcommon.hpp"
 #include "xeus/xcomm.hpp"
 #include "xeus/xinterpreter.hpp"
-
-#include "xproperty/xobserved.hpp"
-
-#include "xcommon.hpp"
 #include "xholder.hpp"
+#include "xproperty/xobserved.hpp"
 #include "xregistry.hpp"
 #include "xwidgets_config.hpp"
 
@@ -28,7 +26,8 @@ namespace xw
     // Properties
 
     template <class P>
-    inline void set_property_from_patch(P& property, const nl::json& patch, const xeus::buffer_sequence& buffers)
+    inline void
+    set_property_from_patch(P& property, const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         auto it = patch.find(property.name());
         if (it != patch.end())
@@ -44,7 +43,8 @@ namespace xw
      **************************/
 
     template <class D>
-    class xtransport : public xcommon, public xp::xobserved<D>
+    class xtransport : public xcommon,
+                       public xp::xobserved<D>
     {
     public:
 
@@ -94,7 +94,8 @@ namespace xw
 
     template <class D>
     inline xtransport<D>::xtransport()
-        : base_type(), observed_type()
+        : base_type()
+        , observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         get_transport_registry().register_weak(this);
@@ -111,7 +112,8 @@ namespace xw
 
     template <class D>
     inline xtransport<D>::xtransport(xeus::xcomm&& comm, bool owning)
-        : xcommon(std::move(comm)), observed_type()
+        : xcommon(std::move(comm))
+        , observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         if (!owning)
@@ -122,7 +124,8 @@ namespace xw
 
     template <class D>
     inline xtransport<D>::xtransport(const xtransport& other)
-        : xcommon(other), observed_type()
+        : xcommon(other)
+        , observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         get_transport_registry().register_weak(this);
@@ -130,10 +133,12 @@ namespace xw
 
     template <class D>
     inline xtransport<D>::xtransport(xtransport&& other)
-        : xcommon(std::move(other)), observed_type()
+        : xcommon(std::move(other))
+        , observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
+        get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with
+                                                       // `this`.
     }
 
     template <class D>
@@ -152,7 +157,8 @@ namespace xw
         base_type::operator=(std::move(other));
         get_transport_registry().unregister(this->id());
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
-        get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with `this`.
+        get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with
+                                                       // `this`.
         return *this;
     }
 
@@ -165,7 +171,7 @@ namespace xw
         this->derived_cast().serialize_state(state, buffers);
 
         // open comm
-        base_type::open(std::move(state), std::move(buffers));        
+        base_type::open(std::move(state), std::move(buffers));
     }
 
     template <class D>
@@ -186,7 +192,8 @@ namespace xw
             const nl::json& state = data["state"];
             const auto& buffers = message.buffers();
             const nl::json& buffer_paths = data["buffer_paths"];
-            this->hold() = std::addressof(message);;
+            this->hold() = std::addressof(message);
+            ;
             insert_buffer_paths(const_cast<nl::json&>(state), buffer_paths);
             /*D*/
             this->derived_cast().apply_patch(state, buffers);

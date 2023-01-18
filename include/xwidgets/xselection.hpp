@@ -1,10 +1,10 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_SELECTION_HPP
 #define XWIDGETS_SELECTION_HPP
@@ -157,40 +157,56 @@ namespace xw
     template <class D>
     inline void xselection<D>::setup_properties()
     {
-        this->observe("value", [](auto& owner) {
-            const options_type& opt = owner._options_labels();
-            auto new_index = index_type(std::find(opt.cbegin(), opt.cend(), owner.value()) - opt.cbegin());
-            if (new_index != owner.index())
+        this->observe(
+            "value",
+            [](auto& owner)
             {
-                owner.index = new_index;
+                const options_type& opt = owner._options_labels();
+                auto new_index = index_type(std::find(opt.cbegin(), opt.cend(), owner.value()) - opt.cbegin());
+                if (new_index != owner.index())
+                {
+                    owner.index = new_index;
+                }
             }
-        });
+        );
 
-        this->observe("index", [](auto& owner) {
-            auto new_value = owner._options_labels()[owner.index()];
-            if (new_value != owner.value())
+        this->observe(
+            "index",
+            [](auto& owner)
             {
-                owner.value = new_value;
+                auto new_value = owner._options_labels()[owner.index()];
+                if (new_value != owner.value())
+                {
+                    owner.value = new_value;
+                }
             }
-        });
+        );
 
-        this->observe("_options_labels", [](auto& owner) {
-            const options_type& opt = owner._options_labels();
-            auto position = std::find(opt.cbegin(), opt.cend(), owner.value());
-            if (position == opt.cend())
+        this->observe(
+            "_options_labels",
+            [](auto& owner)
             {
-                position = opt.cbegin();
+                const options_type& opt = owner._options_labels();
+                auto position = std::find(opt.cbegin(), opt.cend(), owner.value());
+                if (position == opt.cend())
+                {
+                    position = opt.cbegin();
+                }
+                owner.index = position - opt.cbegin();
             }
-            owner.index = position - opt.cbegin();
-        });
+        );
 
-        this->template validate<value_type>("value", [](auto& owner, auto& proposal) {
-            const options_type& opt = owner._options_labels();
-            if (std::find(opt.cbegin(), opt.cend(), proposal) == opt.cend())
+        this->template validate<value_type>(
+            "value",
+            [](auto& owner, auto& proposal)
             {
-                throw std::runtime_error("Invalid value");
+                const options_type& opt = owner._options_labels();
+                if (std::find(opt.cbegin(), opt.cend(), proposal) == opt.cend())
+                {
+                    throw std::runtime_error("Invalid value");
+                }
             }
-        });
+        );
     }
 
     template <class D>
@@ -254,45 +270,61 @@ namespace xw
     template <class D>
     inline void xmultiple_selection<D>::setup_properties()
     {
-        this->observe("value", [](auto& owner) {
-            const options_type& opt = owner._options_labels();
-            index_type new_index;
-            for (const auto& val : owner.value())
+        this->observe(
+            "value",
+            [](auto& owner)
             {
-                new_index.push_back(std::find(opt.cbegin(), opt.cend(), val) - opt.cbegin());
-            }
-            if (new_index != owner.index())
-            {
-                owner.index = new_index;
-            }
-        });
-
-        this->observe("index", [](auto& owner) {
-            value_type new_value;
-            for (const auto& i : owner.index())
-            {
-                new_value.push_back(owner._options_labels()[i]);
-            }
-            if (new_value != owner.value())
-            {
-                owner.value = new_value;
-            }
-        });
-
-        this->observe("_options_labels", [](auto& owner) {
-            owner.index = index_type();
-        });
-
-        this->template validate<value_type>("value", [](auto& owner, auto& proposal) {
-            const options_type& opt = owner._options_labels();
-            for (const auto& val : proposal)
-            {
-                if (std::find(opt.cbegin(), opt.cend(), val) == opt.cend())
+                const options_type& opt = owner._options_labels();
+                index_type new_index;
+                for (const auto& val : owner.value())
                 {
-                    throw std::runtime_error("Invalid value");
+                    new_index.push_back(std::find(opt.cbegin(), opt.cend(), val) - opt.cbegin());
+                }
+                if (new_index != owner.index())
+                {
+                    owner.index = new_index;
                 }
             }
-        });
+        );
+
+        this->observe(
+            "index",
+            [](auto& owner)
+            {
+                value_type new_value;
+                for (const auto& i : owner.index())
+                {
+                    new_value.push_back(owner._options_labels()[i]);
+                }
+                if (new_value != owner.value())
+                {
+                    owner.value = new_value;
+                }
+            }
+        );
+
+        this->observe(
+            "_options_labels",
+            [](auto& owner)
+            {
+                owner.index = index_type();
+            }
+        );
+
+        this->template validate<value_type>(
+            "value",
+            [](auto& owner, auto& proposal)
+            {
+                const options_type& opt = owner._options_labels();
+                for (const auto& val : proposal)
+                {
+                    if (std::find(opt.cbegin(), opt.cend(), val) == opt.cend())
+                    {
+                        throw std::runtime_error("Invalid value");
+                    }
+                }
+            }
+        );
     }
 
     template <class D>
