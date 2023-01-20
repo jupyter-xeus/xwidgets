@@ -10,6 +10,9 @@
 #define XWIDGETS_OUTPUT_HPP
 
 #include <string>
+#include <vector>
+
+#include <xtl/xoptional.hpp>
 
 #include "xholder.hpp"
 #include "xmaterialize.hpp"
@@ -37,6 +40,7 @@ namespace xw
 
         XPROPERTY(std::string, derived_type, msg_id);
         XPROPERTY(std::vector<nl::json>, derived_type, outputs);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, tooltip);
 
         void capture();
         void release();
@@ -78,6 +82,7 @@ namespace xw
 
         xwidgets_serialize(msg_id(), state["msg_id"], buffers);
         xwidgets_serialize(outputs(), state["outputs"], buffers);
+        xwidgets_serialize(tooltip(), state["tooltip"], buffers);
     }
 
     template <class D>
@@ -87,6 +92,7 @@ namespace xw
 
         set_property_from_patch(msg_id, patch, buffers);
         set_property_from_patch(outputs, patch, buffers);
+        set_property_from_patch(tooltip, patch, buffers);
     }
 
     template <class D>

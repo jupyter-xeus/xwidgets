@@ -12,7 +12,9 @@
 #include <string>
 #include <vector>
 
-#include "nlohmann/json.hpp"
+#include <nlohmann/json.hpp>
+#include <xtl/xoptional.hpp>
+
 #include "xfactory.hpp"
 #include "xmaker.hpp"
 #include "xmaterialize.hpp"
@@ -37,8 +39,9 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(double, derived_type, value);
         XPROPERTY(bool, derived_type, pressed);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, tooltip);
+        XPROPERTY(double, derived_type, value);
 
     protected:
 
@@ -67,6 +70,7 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, tooltip);
         XPROPERTY(double, derived_type, value);
 
     protected:
@@ -99,13 +103,14 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(int, derived_type, index);
-        XPROPERTY(std::string, derived_type, name);
-        XPROPERTY(std::string, derived_type, mapping)
-        XPROPERTY(bool, derived_type, connected);
-        XPROPERTY(double, derived_type, timestamp);
-        XPROPERTY(xcontroller_button_list_type, derived_type, buttons);
         XPROPERTY(xcontroller_axis_list_type, derived_type, axes);
+        XPROPERTY(xcontroller_button_list_type, derived_type, buttons);
+        XPROPERTY(bool, derived_type, connected);
+        XPROPERTY(int, derived_type, index);
+        XPROPERTY(std::string, derived_type, mapping)
+        XPROPERTY(std::string, derived_type, name);
+        XPROPERTY(double, derived_type, timestamp);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, tooltip);
 
     protected:
 
@@ -130,8 +135,9 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(value(), state["value"], buffers);
         xwidgets_serialize(pressed(), state["pressed"], buffers);
+        xwidgets_serialize(tooltip(), state["tooltip"], buffers);
+        xwidgets_serialize(value(), state["value"], buffers);
     }
 
     template <class D>
@@ -139,8 +145,9 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(value, patch, buffers);
         set_property_from_patch(pressed, patch, buffers);
+        set_property_from_patch(tooltip, patch, buffers);
+        set_property_from_patch(value, patch, buffers);
     }
 
     template <class D>
@@ -170,6 +177,7 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
+        xwidgets_serialize(tooltip(), state["tooltip"], buffers);
         xwidgets_serialize(value(), state["value"], buffers);
     }
 
@@ -178,6 +186,7 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
+        set_property_from_patch(tooltip, patch, buffers);
         set_property_from_patch(value, patch, buffers);
     }
 
@@ -208,13 +217,14 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(index(), state["index"], buffers);
-        xwidgets_serialize(name(), state["name"], buffers);
-        xwidgets_serialize(mapping(), state["mapping"], buffers);
-        xwidgets_serialize(connected(), state["connected"], buffers);
-        xwidgets_serialize(timestamp(), state["timestamp"], buffers);
-        xwidgets_serialize(buttons(), state["buttons"], buffers);
         xwidgets_serialize(axes(), state["axes"], buffers);
+        xwidgets_serialize(buttons(), state["buttons"], buffers);
+        xwidgets_serialize(connected(), state["connected"], buffers);
+        xwidgets_serialize(index(), state["index"], buffers);
+        xwidgets_serialize(mapping(), state["mapping"], buffers);
+        xwidgets_serialize(name(), state["name"], buffers);
+        xwidgets_serialize(timestamp(), state["timestamp"], buffers);
+        xwidgets_serialize(tooltip(), state["tooltip"], buffers);
     }
 
     template <class D>
@@ -222,13 +232,14 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(index, patch, buffers);
-        set_property_from_patch(name, patch, buffers);
-        set_property_from_patch(mapping, patch, buffers);
-        set_property_from_patch(connected, patch, buffers);
-        set_property_from_patch(timestamp, patch, buffers);
-        set_property_from_patch(buttons, patch, buffers);
         set_property_from_patch(axes, patch, buffers);
+        set_property_from_patch(buttons, patch, buffers);
+        set_property_from_patch(connected, patch, buffers);
+        set_property_from_patch(index, patch, buffers);
+        set_property_from_patch(mapping, patch, buffers);
+        set_property_from_patch(name, patch, buffers);
+        set_property_from_patch(timestamp, patch, buffers);
+        set_property_from_patch(tooltip, patch, buffers);
     }
 
     template <class D>
