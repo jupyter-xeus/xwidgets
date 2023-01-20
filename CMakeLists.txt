@@ -82,11 +82,13 @@ endif ()
 # ============
 
 set(XWIDGETS_HEADERS
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xall.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaccordion.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xall.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaudio.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbinary.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbox.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xboolean.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbox.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbutton.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcheckbox.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcolor.hpp
@@ -102,9 +104,9 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlabel.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlayout.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlink.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmaker.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmaterialize.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmedia.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmaker.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumeral.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xobject.hpp
@@ -112,6 +114,7 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xpassword.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xplay.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprogress.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xradiobuttons.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xregistry.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselect.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselection.hpp
@@ -120,7 +123,6 @@ set(XWIDGETS_HEADERS
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xslider.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstring.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstyle.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xradiobuttons.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtab.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtext.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtextarea.hpp
@@ -142,8 +144,8 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xbutton.cpp
     ${XWIDGETS_SOURCE_DIR}/xcheckbox.cpp
     ${XWIDGETS_SOURCE_DIR}/xcolor_picker.cpp
-    ${XWIDGETS_SOURCE_DIR}/xcontroller.cpp
     ${XWIDGETS_SOURCE_DIR}/xcommon.cpp
+    ${XWIDGETS_SOURCE_DIR}/xcontroller.cpp
     ${XWIDGETS_SOURCE_DIR}/xdropdown.cpp
     ${XWIDGETS_SOURCE_DIR}/xfactory.cpp
     ${XWIDGETS_SOURCE_DIR}/xholder.cpp
@@ -153,15 +155,17 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xlabel.cpp
     ${XWIDGETS_SOURCE_DIR}/xlayout.cpp
     ${XWIDGETS_SOURCE_DIR}/xlink.cpp
+    ${XWIDGETS_SOURCE_DIR}/xmedia.cpp
     ${XWIDGETS_SOURCE_DIR}/xnumeral.cpp
     ${XWIDGETS_SOURCE_DIR}/xoutput.cpp
     ${XWIDGETS_SOURCE_DIR}/xpassword.cpp
     ${XWIDGETS_SOURCE_DIR}/xplay.cpp
     ${XWIDGETS_SOURCE_DIR}/xprogress.cpp
+    ${XWIDGETS_SOURCE_DIR}/xradiobuttons.cpp
     ${XWIDGETS_SOURCE_DIR}/xregistry.cpp
     ${XWIDGETS_SOURCE_DIR}/xselect.cpp
-    ${XWIDGETS_SOURCE_DIR}/xslider.cpp
     ${XWIDGETS_SOURCE_DIR}/xselectionslider.cpp
+    ${XWIDGETS_SOURCE_DIR}/xslider.cpp
     ${XWIDGETS_SOURCE_DIR}/xtab.cpp
     ${XWIDGETS_SOURCE_DIR}/xtarget.cpp
     ${XWIDGETS_SOURCE_DIR}/xtarget.hpp
@@ -169,7 +173,6 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xtextarea.cpp
     ${XWIDGETS_SOURCE_DIR}/xtogglebutton.cpp
     ${XWIDGETS_SOURCE_DIR}/xtogglebuttons.cpp
-    ${XWIDGETS_SOURCE_DIR}/xradiobuttons.cpp
     ${XWIDGETS_SOURCE_DIR}/xvalid.cpp
     ${XWIDGETS_SOURCE_DIR}/xvideo.cpp
 )

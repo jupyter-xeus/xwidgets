@@ -40,7 +40,13 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(xtl::xoptional<html_color>, derived_type, button_color);
-        XPROPERTY(std::string, derived_type, font_weight);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_family);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_size);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_style);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_variant);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_weight);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, text_color);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, text_decoration);
 
     protected:
 
@@ -113,7 +119,13 @@ namespace xw
         base_type::serialize_state(state, buffers);
 
         xwidgets_serialize(button_color(), state["button_color"], buffers);
+        xwidgets_serialize(font_family(), state["font_family"], buffers);
+        xwidgets_serialize(font_size(), state["font_size"], buffers);
+        xwidgets_serialize(font_style(), state["font_style"], buffers);
+        xwidgets_serialize(font_variant(), state["font_variant"], buffers);
         xwidgets_serialize(font_weight(), state["font_weight"], buffers);
+        xwidgets_serialize(text_color(), state["text_color"], buffers);
+        xwidgets_serialize(text_decoration(), state["text_decoration"], buffers);
     }
 
     template <class D>
@@ -122,7 +134,13 @@ namespace xw
         base_type::apply_patch(patch, buffers);
 
         set_property_from_patch(button_color, patch, buffers);
+        set_property_from_patch(font_family, patch, buffers);
+        set_property_from_patch(font_size, patch, buffers);
+        set_property_from_patch(font_style, patch, buffers);
+        set_property_from_patch(font_variant, patch, buffers);
         set_property_from_patch(font_weight, patch, buffers);
+        set_property_from_patch(text_color, patch, buffers);
+        set_property_from_patch(text_decoration, patch, buffers);
     }
 
     template <class D>

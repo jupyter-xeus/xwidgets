@@ -36,7 +36,7 @@
 #define XWIDGETS_PROTOCOL_VERSION_PATCH 0
 
 // Semver requirement for @jupyter-widgets/base
-#define XWIDGETS_BASE_VERSION_MAJOR 1
+#define XWIDGETS_BASE_VERSION_MAJOR 2
 #define XWIDGETS_BASE_VERSION_MINOR 0
 #define XWIDGETS_BASE_VERSION_PATCH 0
 
@@ -46,8 +46,8 @@
 #define XWIDGETS_OUTPUT_VERSION_PATCH 0
 
 // Semver requirement for @jupyter-widgets/controls
-#define XWIDGETS_CONTROLS_VERSION_MAJOR 1
-#define XWIDGETS_CONTROLS_VERSION_MINOR 4
+#define XWIDGETS_CONTROLS_VERSION_MAJOR 2
+#define XWIDGETS_CONTROLS_VERSION_MINOR 0
 #define XWIDGETS_CONTROLS_VERSION_PATCH 0
 
 // Composing the version strings from major, minor and patch

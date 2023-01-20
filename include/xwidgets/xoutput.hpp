@@ -103,6 +103,8 @@ namespace xw
         this->_view_name() = "OutputView";
         this->_view_module() = "@jupyter-widgets/output";
         this->_model_module() = "@jupyter-widgets/output";
+        this->_model_module_version() = XWIDGETS_OUTPUT_VERSION;
+        this->_view_module_version() = XWIDGETS_OUTPUT_VERSION;
     }
 
     template <class D>

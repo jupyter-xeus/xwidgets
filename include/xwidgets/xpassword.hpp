@@ -9,7 +9,6 @@
 #ifndef XWIDGETS_PASSWORD_HPP
 #define XWIDGETS_PASSWORD_HPP
 
-#include "xpassword.hpp"
 #include "xstring.hpp"
 
 namespace xw
@@ -30,6 +29,7 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(bool, derived_type, disabled);
+        XPROPERTY(bool, derived_type, continuous_update);
 
     protected:
 
@@ -53,6 +53,7 @@ namespace xw
         base_type::serialize_state(state, buffers);
 
         xwidgets_serialize(disabled(), state["disabled"], buffers);
+        xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
     }
 
     template <class D>
@@ -61,6 +62,7 @@ namespace xw
         base_type::apply_patch(patch, buffers);
 
         set_property_from_patch(disabled, patch, buffers);
+        set_property_from_patch(continuous_update, patch, buffers);
     }
 
     template <class D>

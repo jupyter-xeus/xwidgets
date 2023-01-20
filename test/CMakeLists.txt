@@ -20,6 +20,7 @@ endif ()
 # ============
 
 find_package(doctest REQUIRED)
+find_package(nlohmann_json_schema_validator REQUIRED)
 find_package(Threads)
 
 # Source files
@@ -29,6 +30,7 @@ set(XWIDGETS_TESTS
     main.cpp
     test_xholder.cpp
     test_xwidgets.cpp
+    test_widget_model.cpp
 )
 
 # Output
@@ -36,14 +38,24 @@ set(XWIDGETS_TESTS
 
 add_executable(test_xwidgets ${XWIDGETS_TESTS} ${XWIDGETS_HEADERS})
 
-target_compile_features(test_xwidgets PRIVATE cxx_std_14)
+target_compile_features(test_xwidgets PRIVATE cxx_std_17)
 
-target_link_libraries(test_xwidgets
-                      PRIVATE xwidgets
-                      PUBLIC  xtl
-                      PRIVATE xeus
-                      PRIVATE doctest::doctest
-                      PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_compile_definitions(
+    test_xwidgets
+    PRIVATE
+        XWIDGETS_MODELS_FILE="${CMAKE_CURRENT_SOURCE_DIR}/jupyterwidgetmodels.latest.json"
+)
+
+target_link_libraries(
+    test_xwidgets
+    PRIVATE
+        xwidgets
+        xtl
+        xeus
+        doctest::doctest
+        nlohmann_json_schema_validator
+        ${CMAKE_THREAD_LIBS_INIT}
+)
 target_include_directories(test_xwidgets PRIVATE XWIDGETS_INCLUDE_DIR)
 
 add_test(NAME test_xwidgets

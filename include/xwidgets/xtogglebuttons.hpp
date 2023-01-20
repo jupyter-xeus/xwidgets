@@ -36,6 +36,8 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::string, derived_type, button_width);
+        XPROPERTY(std::string, derived_type, description_width);
+        XPROPERTY(std::string, derived_type, font_weight);
 
     protected:
 
@@ -102,6 +104,8 @@ namespace xw
         base_type::serialize_state(state, buffers);
 
         xwidgets_serialize(button_width(), state["button_width"], buffers);
+        xwidgets_serialize(description_width(), state["description_width"], buffers);
+        xwidgets_serialize(font_weight(), state["font_weight"], buffers);
     }
 
     template <class D>
@@ -111,6 +115,8 @@ namespace xw
         base_type::apply_patch(patch, buffers);
 
         set_property_from_patch(button_width, patch, buffers);
+        set_property_from_patch(description_width, patch, buffers);
+        set_property_from_patch(font_weight, patch, buffers);
     }
 
     template <class D>

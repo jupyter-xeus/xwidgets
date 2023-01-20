@@ -67,12 +67,19 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(value_type, derived_type, step, value_type(1));
+        XPROPERTY(
+            std::string,
+            derived_type,
+            behavior,
+            "drag-tap",
+            XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap")
+        );
+        XPROPERTY(bool, derived_type, continuous_update, true);
+        XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
         XPROPERTY(bool, derived_type, readout, true);
         XPROPERTY(std::string, derived_type, readout_format, ".2f");
-        XPROPERTY(bool, derived_type, continuous_update, true);
-        XPROPERTY(bool, derived_type, disabled);
+        XPROPERTY(value_type, derived_type, step, value_type(1));
         XPROPERTY(::xw::slider_style, derived_type, style);
 
     protected:
@@ -142,12 +149,13 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(step(), state["step"], buffers);
+        xwidgets_serialize(behavior(), state["behavior"], buffers);
+        xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
+        xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(orientation(), state["orientation"], buffers);
         xwidgets_serialize(readout(), state["readout"], buffers);
         xwidgets_serialize(readout_format(), state["readout_format"], buffers);
-        xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
-        xwidgets_serialize(disabled(), state["disabled"], buffers);
+        xwidgets_serialize(step(), state["step"], buffers);
         xwidgets_serialize(style(), state["style"], buffers);
     }
 
@@ -156,12 +164,13 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(step, patch, buffers);
+        set_property_from_patch(behavior, patch, buffers);
+        set_property_from_patch(continuous_update, patch, buffers);
+        set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(orientation, patch, buffers);
         set_property_from_patch(readout, patch, buffers);
         set_property_from_patch(readout_format, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
+        set_property_from_patch(step, patch, buffers);
         set_property_from_patch(style, patch, buffers);
     }
 
