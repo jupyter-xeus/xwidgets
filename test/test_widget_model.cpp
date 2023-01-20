@@ -124,10 +124,8 @@ namespace xw
      */
     nl::json model_to_schema(nl::json const& model)
     {
-        static auto constexpr blacklist = std::array{
-            "style",
-            "tabbable",
-        };
+        static auto constexpr blacklist = std::array{"style"};
+
         auto blacklist_contains = [](auto const& key) -> bool
         {
             return std::find(blacklist.begin(), blacklist.end(), key) != blacklist.end();

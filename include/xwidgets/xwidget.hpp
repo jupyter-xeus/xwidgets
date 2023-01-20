@@ -36,6 +36,7 @@ namespace xw
 
         XPROPERTY(std::vector<std::string>, derived_type, _dom_classes);
         XPROPERTY(::xw::layout, derived_type, layout);
+        XPROPERTY(xtl::xoptional<bool>, derived_type, tabbable);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, tooltip);
 
     protected:
@@ -66,6 +67,7 @@ namespace xw
 
         xwidgets_serialize(_dom_classes(), state["_dom_classes"], buffers);
         xwidgets_serialize(layout(), state["layout"], buffers);
+        xwidgets_serialize(tabbable(), state["tabbable"], buffers);
         xwidgets_serialize(tooltip(), state["tooltip"], buffers);
     }
 
@@ -76,6 +78,7 @@ namespace xw
 
         set_property_from_patch(_dom_classes, patch, buffers);
         set_property_from_patch(layout, patch, buffers);
+        set_property_from_patch(tabbable, patch, buffers);
         set_property_from_patch(tooltip, patch, buffers);
     }
 
