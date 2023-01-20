@@ -127,6 +127,7 @@ namespace xw
         static auto constexpr blacklist = std::array{
             "style",
             "tabbable",
+            "tooltip",
         };
         auto blacklist_contains = [](auto const& key) -> bool
         {

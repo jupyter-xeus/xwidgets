@@ -9,11 +9,8 @@
 #ifndef XWIDGETS_BOX_HPP
 #define XWIDGETS_BOX_HPP
 
-#include <string>
 #include <utility>
 #include <vector>
-
-#include <xtl/xoptional.hpp>
 
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
@@ -38,8 +35,8 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::string, derived_type, box_style, "", XEITHER("success", "info", "warning", "danger", ""));
+
         XPROPERTY(children_list_type, derived_type, children);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, tooltip);
 
         template <class T>
         void add(const xtransport<T>& w);
@@ -124,7 +121,6 @@ namespace xw
 
         xwidgets_serialize(box_style(), state["box_style"], buffers);
         xwidgets_serialize(children(), state["children"], buffers);
-        xwidgets_serialize(tooltip(), state["tooltip"], buffers);
     }
 
     template <class D>
@@ -134,7 +130,6 @@ namespace xw
 
         set_property_from_patch(box_style, patch, buffers);
         set_property_from_patch(children, patch, buffers);
-        set_property_from_patch(tooltip, patch, buffers);
     }
 
     template <class D>

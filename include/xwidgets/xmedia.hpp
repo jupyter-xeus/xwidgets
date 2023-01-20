@@ -14,8 +14,6 @@
 #include <string>
 #include <vector>
 
-#include <xtl/xoptional.hpp>
-
 #include "xmaterialize.hpp"
 #include "xwidget.hpp"
 
@@ -38,7 +36,6 @@ namespace xw
         void serialize_state(nl::json& state, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, tooltip);
         XPROPERTY(value_type, derived_type, value);
 
     protected:
@@ -62,7 +59,6 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(tooltip(), state["tooltip"], buffers);
         xwidgets_serialize(value(), state["value"], buffers);
     }
 
@@ -71,7 +67,6 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(tooltip, patch, buffers);
         set_property_from_patch(value, patch, buffers);
     }
 

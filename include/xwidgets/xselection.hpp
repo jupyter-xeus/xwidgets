@@ -15,8 +15,6 @@
 #include <utility>
 #include <vector>
 
-#include <xtl/xoptional.hpp>
-
 #include "xwidget.hpp"
 
 namespace xw
@@ -45,7 +43,6 @@ namespace xw
         XPROPERTY(bool, derived_type, description_allow_html, false);
         XPROPERTY(bool, derived_type, disabled, false);
         XPROPERTY(index_type, derived_type, index);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, tooltip);
 
         // non-synchronized properties
         XPROPERTY(value_type, derived_type, value);
@@ -90,7 +87,6 @@ namespace xw
         XPROPERTY(bool, derived_type, description_allow_html, false);
         XPROPERTY(bool, derived_type, disabled, false);
         XPROPERTY(index_type, derived_type, index);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, tooltip);
 
         // non-synchronized properties
         XPROPERTY(value_type, derived_type, value);
@@ -124,7 +120,6 @@ namespace xw
         xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(index(), state["index"], buffers);
-        xwidgets_serialize(tooltip(), state["tooltip"], buffers);
     }
 
     template <class D>
@@ -137,7 +132,6 @@ namespace xw
         set_property_from_patch(description_allow_html, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(index, patch, buffers);
-        set_property_from_patch(tooltip, patch, buffers);
     }
 
     template <class D>
@@ -236,7 +230,6 @@ namespace xw
         xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(index(), state["index"], buffers);
-        xwidgets_serialize(tooltip(), state["tooltip"], buffers);
     }
 
     template <class D>
@@ -249,7 +242,6 @@ namespace xw
         set_property_from_patch(description_allow_html, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(index, patch, buffers);
-        set_property_from_patch(tooltip, patch, buffers);
     }
 
     template <class D>
