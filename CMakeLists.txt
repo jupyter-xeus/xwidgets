@@ -154,6 +154,7 @@ set(XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xlabel.cpp
     ${XWIDGETS_SOURCE_DIR}/xlayout.cpp
     ${XWIDGETS_SOURCE_DIR}/xlink.cpp
+    ${XWIDGETS_SOURCE_DIR}/xmedia.cpp
     ${XWIDGETS_SOURCE_DIR}/xnumeral.cpp
     ${XWIDGETS_SOURCE_DIR}/xoutput.cpp
     ${XWIDGETS_SOURCE_DIR}/xpassword.cpp
