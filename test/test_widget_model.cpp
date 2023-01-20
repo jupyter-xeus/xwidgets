@@ -125,7 +125,6 @@ namespace xw
     nl::json model_to_schema(nl::json const& model)
     {
         static auto constexpr blacklist = std::array{
-            "description",
             "description_allow_html",
             "style",
             "tabbable",
