@@ -44,3 +44,7 @@ repos:
   rev: v0.6.13
   hooks:
   - id: cmake-format
+- repo: https://github.com/python-jsonschema/check-jsonschema
+  rev: 0.20.0
+  hooks:
+  - id: check-github-workflows
