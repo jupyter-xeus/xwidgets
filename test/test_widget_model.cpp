@@ -101,7 +101,7 @@ namespace xw
     {
         p["type"] = map_types(p["type"]);
 
-        if (p["default"].is_null())
+        if (p.contains("allow_none") && p["allow_none"].get<bool>())
         {
             // The default can be `null` without the type allowing it.
             if (!p["type"].is_array())
