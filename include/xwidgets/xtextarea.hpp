@@ -11,6 +11,7 @@
 
 #include "xmaterialize.hpp"
 #include "xstring.hpp"
+#include "xtext.hpp"
 
 namespace xw
 {
@@ -32,6 +33,7 @@ namespace xw
         XPROPERTY(xtl::xoptional<int>, derived_type, rows);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(bool, derived_type, continuous_update, true);
+        XPROPERTY(::xw::text_style, derived_type, style);
 
     protected:
 
@@ -57,6 +59,7 @@ namespace xw
         xwidgets_serialize(rows(), state["rows"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
+        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
@@ -67,6 +70,7 @@ namespace xw
         set_property_from_patch(rows, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(continuous_update, patch, buffers);
+        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>
