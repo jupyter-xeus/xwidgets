@@ -155,6 +155,7 @@ namespace xw
     inline void xbutton_style<D>::set_defaults()
     {
         this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
         this->_model_name() = "ButtonStyleModel";
     }
 
