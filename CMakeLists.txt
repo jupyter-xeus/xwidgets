@@ -92,7 +92,6 @@ endif()
 
 set(
     XWIDGETS_HEADERS
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xall.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaccordion.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xall.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaudio.hpp
@@ -105,6 +104,7 @@ set(
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcolor_picker.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcommon.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcontroller.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xdescription_style.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xdropdown.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xeither.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xfactory.hpp
@@ -157,6 +157,7 @@ set(
     ${XWIDGETS_SOURCE_DIR}/xcolor_picker.cpp
     ${XWIDGETS_SOURCE_DIR}/xcommon.cpp
     ${XWIDGETS_SOURCE_DIR}/xcontroller.cpp
+    ${XWIDGETS_SOURCE_DIR}/xdescription_style.cpp
     ${XWIDGETS_SOURCE_DIR}/xdropdown.cpp
     ${XWIDGETS_SOURCE_DIR}/xfactory.cpp
     ${XWIDGETS_SOURCE_DIR}/xholder.cpp

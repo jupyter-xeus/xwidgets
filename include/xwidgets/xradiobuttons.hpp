@@ -11,6 +11,7 @@
 
 #include <utility>
 
+#include "xdescription_style.hpp"
 #include "xmaterialize.hpp"
 #include "xselection.hpp"
 
@@ -31,6 +32,8 @@ namespace xw
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
+
+        XPROPERTY(::xw::description_style, derived_type, style);
 
     protected:
 
@@ -56,12 +59,16 @@ namespace xw
     inline void xradiobuttons<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
+
+        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
     inline void xradiobuttons<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
+
+        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>

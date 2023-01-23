@@ -6,10 +6,10 @@
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
 
-#include "xwidgets/xvalid.hpp"
+#include "xwidgets/xdescription_style.hpp"
 
 namespace xw
 {
-    template class XWIDGETS_API xmaterialize<xvalid>;
-    template class XWIDGETS_API xtransport<xmaterialize<xvalid>>;
+    template class XWIDGETS_API xmaterialize<xdescription_style>;
+    template class XWIDGETS_API xtransport<xmaterialize<xdescription_style>>;
 }

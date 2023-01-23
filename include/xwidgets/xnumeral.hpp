@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_NUMERAL_HPP
 #define XWIDGETS_NUMERAL_HPP
 
+#include "xdescription_style.hpp"
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
 
@@ -34,6 +35,7 @@ namespace xw
         XPROPERTY(value_type, derived_type, step);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(bool, derived_type, continuous_update);
+        XPROPERTY(::xw::description_style, derived_type, style);
 
     protected:
 
@@ -66,6 +68,7 @@ namespace xw
         xwidgets_serialize(step(), state["step"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
+        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
@@ -76,6 +79,7 @@ namespace xw
         set_property_from_patch(step, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(continuous_update, patch, buffers);
+        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>

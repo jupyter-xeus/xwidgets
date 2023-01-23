@@ -12,6 +12,7 @@
 #include <string>
 
 #include "xboolean.hpp"
+#include "xdescription_style.hpp"
 #include "xmaterialize.hpp"
 
 namespace xw
@@ -32,6 +33,7 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::string, derived_type, readout, "Invalid");
+        XPROPERTY(::xw::description_style, derived_type, style);
 
     protected:
 
@@ -55,6 +57,7 @@ namespace xw
         base_type::serialize_state(state, buffers);
 
         xwidgets_serialize(readout(), state["readout"], buffers);
+        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
@@ -63,6 +66,7 @@ namespace xw
         base_type::apply_patch(patch, buffers);
 
         set_property_from_patch(readout, patch, buffers);
+        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>
