@@ -15,11 +15,12 @@
 #include <string>
 #include <utility>
 
+#include <xtl/xoptional.hpp>
+
 #include "xcolor.hpp"
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xstyle.hpp"
-#include "xtl/xoptional.hpp"
 #include "xwidget.hpp"
 
 namespace xw

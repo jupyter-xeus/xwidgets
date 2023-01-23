@@ -98,6 +98,7 @@ namespace xw
         checkbox_style,
         progress_style,
         slider_style,
+        text_style,
         togglebuttons_style>;
 
 }
