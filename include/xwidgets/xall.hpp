@@ -99,6 +99,7 @@ namespace xw
         progress_style,
         slider_style,
         text_style,
+        togglebutton_style,
         togglebuttons_style>;
 
 }
