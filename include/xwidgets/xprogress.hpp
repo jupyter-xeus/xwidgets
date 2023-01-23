@@ -10,6 +10,7 @@
 #define XWIDGETS_PROGRESS_HPP
 
 #include <string>
+#include <type_traits>
 
 #include "xcolor.hpp"
 #include "xeither.hpp"
@@ -161,7 +162,15 @@ namespace xw
     template <class D>
     inline void xprogress<D>::set_defaults()
     {
-        this->_model_name() = "FloatProgressModel";
+        // TODO(C++17) constexpr
+        if (std::is_integral<value_type>::value)
+        {
+            this->_model_name() = "IntProgressModel";
+        }
+        else if (std::is_floating_point<value_type>::value)
+        {
+            this->_model_name() = "FloatProgressModel";
+        }
         this->_view_name() = "ProgressView";
     }
 

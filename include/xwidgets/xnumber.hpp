@@ -9,6 +9,8 @@
 #ifndef XWIDGETS_NUMBER_HPP
 #define XWIDGETS_NUMBER_HPP
 
+#include <type_traits>
+
 #include "xwidget.hpp"
 
 namespace xw
@@ -87,8 +89,21 @@ namespace xw
     template <class D>
     inline void xnumber<D>::set_defaults()
     {
-        this->_model_name() = "BoundedFloatModel";
-        this->_view_name() = "BoundedFloatView";
+        // TODO(C++17) constexpr
+        if (std::is_integral<value_type>::value)
+        {
+            this->_model_name() = "BoundedIntTextModel";
+            this->_view_name() = "BoundedIntTextView";
+        }
+        else if (std::is_floating_point<value_type>::value)
+        {
+            this->_model_name() = "BoundedFloatTextModel";
+            this->_view_name() = "BoundedFloatTextView";
+        }
+        else
+        {
+            return;
+        }
         this->_model_module() = "@jupyter-widgets/controls";
         this->_view_module() = "@jupyter-widgets/controls";
         this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;

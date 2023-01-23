@@ -9,6 +9,8 @@
 #ifndef XWIDGETS_NUMERAL_HPP
 #define XWIDGETS_NUMERAL_HPP
 
+#include <type_traits>
+
 #include "xdescription_style.hpp"
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
@@ -92,8 +94,17 @@ namespace xw
     template <class D>
     inline void xnumeral<D>::set_defaults()
     {
-        this->_model_name() = "FloatTextModel";
-        this->_view_name() = "FloatTextView";
+        // TODO(C++17) constexpr
+        if (std::is_integral<value_type>::value)
+        {
+            this->_model_name() = "IntTextModel";
+            this->_view_name() = "IntTextView";
+        }
+        else if (std::is_floating_point<value_type>::value)
+        {
+            this->_model_name() = "FloatTextModel";
+            this->_view_name() = "FloatTextView";
+        }
     }
 
     /*********************

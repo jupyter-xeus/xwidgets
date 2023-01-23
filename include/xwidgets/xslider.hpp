@@ -10,6 +10,7 @@
 #define XWIDGETS_SLIDER_HPP
 
 #include <string>
+#include <type_traits>
 
 #include <xtl/xoptional.hpp>
 
@@ -236,8 +237,17 @@ namespace xw
     template <class D>
     inline void xslider<D>::set_defaults()
     {
-        this->_model_name() = "FloatSliderModel";
-        this->_view_name() = "FloatSliderView";
+        // TODO(C++17) constexpr
+        if (std::is_integral<value_type>::value)
+        {
+            this->_model_name() = "IntSliderModel";
+            this->_view_name() = "IntSliderView";
+        }
+        else if (std::is_floating_point<value_type>::value)
+        {
+            this->_model_name() = "FloatSliderModel";
+            this->_view_name() = "FloatSliderView";
+        }
     }
 
     /*********************
