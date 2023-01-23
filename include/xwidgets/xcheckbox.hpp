@@ -9,11 +9,46 @@
 #ifndef XWIDGETS_CHECKBOX_HPP
 #define XWIDGETS_CHECKBOX_HPP
 
+#include <string>
+
+#include <xtl/xoptional.hpp>
+
 #include "xboolean.hpp"
 #include "xmaterialize.hpp"
+#include "xstyle.hpp"
 
 namespace xw
 {
+    /********************************
+     *  checkbox_style declaration  *
+     ********************************/
+
+    template <class D>
+    class xcheckbox_style : public xstyle<D>
+    {
+    public:
+
+        using base_type = xstyle<D>;
+        using derived_type = D;
+
+        void serialize_state(nl::json&, xeus::buffer_sequence&) const;
+        void apply_patch(const nl::json&, const xeus::buffer_sequence&);
+
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, background);
+        XPROPERTY(std::string, derived_type, description_width);
+
+    protected:
+
+        xcheckbox_style();
+        using base_type::base_type;
+
+    private:
+
+        void set_defaults();
+    };
+
+    using checkbox_style = xmaterialize<xcheckbox_style>;
+
     /************************
      * checkbox declaration *
      ************************/
@@ -30,6 +65,7 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(bool, derived_type, indent, true);
+        XPROPERTY(::xw::checkbox_style, derived_type, style);
 
     protected:
 
@@ -44,6 +80,42 @@ namespace xw
 
     using checkbox = xmaterialize<xcheckbox>;
 
+    /************************************
+     *  xcheckbox_style implementation  *
+     ************************************/
+
+    template <class D>
+    inline void xcheckbox_style<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
+    {
+        base_type::serialize_state(state, buffers);
+
+        xwidgets_serialize(background(), state["background"], buffers);
+        xwidgets_serialize(description_width(), state["description_width"], buffers);
+    }
+
+    template <class D>
+    inline void xcheckbox_style<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
+    {
+        base_type::apply_patch(patch, buffers);
+
+        set_property_from_patch(background, patch, buffers);
+        set_property_from_patch(description_width, patch, buffers);
+    }
+
+    template <class D>
+    inline xcheckbox_style<D>::xcheckbox_style()
+        : base_type()
+    {
+        set_defaults();
+    }
+
+    template <class D>
+    inline void xcheckbox_style<D>::set_defaults()
+    {
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_name() = "CheckboxStyleModel";
+    }
+
     /****************************
      * xcheckbox implementation *
      ****************************/
@@ -54,6 +126,7 @@ namespace xw
         base_type::serialize_state(state, buffers);
 
         xwidgets_serialize(indent(), state["indent"], buffers);
+        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
@@ -62,6 +135,7 @@ namespace xw
         base_type::apply_patch(patch, buffers);
 
         set_property_from_patch(indent, patch, buffers);
+        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>
@@ -81,6 +155,9 @@ namespace xw
     /*********************
      * precompiled types *
      *********************/
+
+    extern template class xmaterialize<xcheckbox_style>;
+    extern template class xtransport<xmaterialize<xcheckbox_style>>;
 
     extern template class xmaterialize<xcheckbox>;
     extern template class xtransport<xmaterialize<xcheckbox>>;

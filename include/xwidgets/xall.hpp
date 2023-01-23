@@ -95,6 +95,7 @@ namespace xw
 
     using AllStyles = std::tuple<  //
         button_style,
+        checkbox_style,
         progress_style,
         slider_style,
         togglebuttons_style>;
