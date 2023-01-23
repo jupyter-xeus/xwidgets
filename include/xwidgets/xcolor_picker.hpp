@@ -32,9 +32,11 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(value_type, derived_type, value, "black");
+        XPROPERTY(std::string, derived_type, description);
+        XPROPERTY(bool, derived_type, description_allow_html, false);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(bool, derived_type, concise);
+        XPROPERTY(value_type, derived_type, value, "black");
 
     protected:
 
@@ -57,9 +59,11 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(value(), state["value"], buffers);
-        xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(concise(), state["concise"], buffers);
+        xwidgets_serialize(description(), state["description"], buffers);
+        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
+        xwidgets_serialize(disabled(), state["disabled"], buffers);
+        xwidgets_serialize(value(), state["value"], buffers);
     }
 
     template <class D>
@@ -67,9 +71,11 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(value, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(concise, patch, buffers);
+        set_property_from_patch(description, patch, buffers);
+        set_property_from_patch(description_allow_html, patch, buffers);
+        set_property_from_patch(disabled, patch, buffers);
+        set_property_from_patch(value, patch, buffers);
     }
 
     template <class D>

@@ -31,8 +31,9 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::string, derived_type, description);
-        XPROPERTY(std::string, derived_type, value);
+        XPROPERTY(bool, derived_type, description_allow_html, false);
         XPROPERTY(std::string, derived_type, placeholder, "\u00A0");
+        XPROPERTY(std::string, derived_type, value);
 
     protected:
 
@@ -53,8 +54,10 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(value(), state["value"], buffers);
+        xwidgets_serialize(description(), state["description"], buffers);
+        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(placeholder(), state["placeholder"], buffers);
+        xwidgets_serialize(value(), state["value"], buffers);
     }
 
     template <class D>
@@ -62,8 +65,10 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(value, patch, buffers);
+        set_property_from_patch(description, patch, buffers);
+        set_property_from_patch(description_allow_html, patch, buffers);
         set_property_from_patch(placeholder, patch, buffers);
+        set_property_from_patch(value, patch, buffers);
     }
 
     template <class D>

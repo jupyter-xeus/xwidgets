@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include <xtl/xoptional.hpp>
+
 #include "xlayout.hpp"
 #include "xobject.hpp"
 
@@ -32,8 +34,10 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(::xw::layout, derived_type, layout);
         XPROPERTY(std::vector<std::string>, derived_type, _dom_classes);
+        XPROPERTY(::xw::layout, derived_type, layout);
+        XPROPERTY(xtl::xoptional<bool>, derived_type, tabbable);
+        XPROPERTY(xtl::xoptional<std::string>, derived_type, tooltip);
 
     protected:
 
@@ -61,8 +65,10 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(layout(), state["layout"], buffers);
         xwidgets_serialize(_dom_classes(), state["_dom_classes"], buffers);
+        xwidgets_serialize(layout(), state["layout"], buffers);
+        xwidgets_serialize(tabbable(), state["tabbable"], buffers);
+        xwidgets_serialize(tooltip(), state["tooltip"], buffers);
     }
 
     template <class D>
@@ -70,8 +76,10 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(layout, patch, buffers);
         set_property_from_patch(_dom_classes, patch, buffers);
+        set_property_from_patch(layout, patch, buffers);
+        set_property_from_patch(tabbable, patch, buffers);
+        set_property_from_patch(tooltip, patch, buffers);
     }
 
     template <class D>

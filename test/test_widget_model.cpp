@@ -101,7 +101,7 @@ namespace xw
     {
         p["type"] = map_types(p["type"]);
 
-        if (p["default"].is_null())
+        if (p.contains("allow_none") && p["allow_none"].get<bool>())
         {
             // The default can be `null` without the type allowing it.
             if (!p["type"].is_array())
@@ -124,13 +124,8 @@ namespace xw
      */
     nl::json model_to_schema(nl::json const& model)
     {
-        static auto constexpr blacklist = std::array{
-            "description",
-            "description_allow_html",
-            "style",
-            "tabbable",
-            "tooltip",
-        };
+        static auto constexpr blacklist = std::array{"style"};
+
         auto blacklist_contains = [](auto const& key) -> bool
         {
             return std::find(blacklist.begin(), blacklist.end(), key) != blacklist.end();
