@@ -94,10 +94,11 @@ namespace xw
         vbox,
         video>;
 
-    using AllStyles = std::tuple<  //
+    using AllStyles = std::tuple<
         button_style,
         checkbox_style,
         description_style,
+        html_style,
         progress_style,
         slider_style,
         text_style,
