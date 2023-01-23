@@ -36,7 +36,15 @@ repos:
   - id: conda_envfile_parse
     files: environment.yaml
 - repo: https://github.com/pre-commit/mirrors-clang-format
-  rev: v15.0.6
+  rev: v15.0.7
   hooks:
   - id: clang-format
     files: .*\.[hc]pp$
+- repo: https://github.com/cheshirekow/cmake-format-precommit
+  rev: v0.6.13
+  hooks:
+  - id: cmake-format
+- repo: https://github.com/python-jsonschema/check-jsonschema
+  rev: 0.20.0
+  hooks:
+  - id: check-github-workflows
