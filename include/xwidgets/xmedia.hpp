@@ -83,9 +83,10 @@ namespace xw
         this->buffer_paths() = {{"value"}};
 
         this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module() = "@jupyter-widgets/controls";
         this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_name() = {};
     }
 
     inline std::vector<char> read_file(const std::string& filename)

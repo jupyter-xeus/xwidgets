@@ -22,6 +22,7 @@
 #include "xcolor_picker.hpp"
 #include "xcommon.hpp"
 #include "xcontroller.hpp"
+#include "xdescription_style.hpp"
 #include "xdropdown.hpp"
 #include "xhtml.hpp"
 #include "ximage.hpp"
@@ -93,10 +94,15 @@ namespace xw
         vbox,
         video>;
 
-    using AllStyles = std::tuple<  //
+    using AllStyles = std::tuple<
         button_style,
+        checkbox_style,
+        description_style,
+        html_style,
         progress_style,
         slider_style,
+        text_style,
+        togglebutton_style,
         togglebuttons_style>;
 
 }

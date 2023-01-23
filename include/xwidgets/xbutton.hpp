@@ -15,11 +15,12 @@
 #include <string>
 #include <utility>
 
+#include <xtl/xoptional.hpp>
+
 #include "xcolor.hpp"
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xstyle.hpp"
-#include "xtl/xoptional.hpp"
 #include "xwidget.hpp"
 
 namespace xw
@@ -154,6 +155,7 @@ namespace xw
     inline void xbutton_style<D>::set_defaults()
     {
         this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
         this->_model_name() = "ButtonStyleModel";
     }
 

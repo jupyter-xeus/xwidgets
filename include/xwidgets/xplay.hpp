@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_PLAY_HPP
 #define XWIDGETS_PLAY_HPP
 
+#include "xdescription_style.hpp"
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
 
@@ -37,6 +38,7 @@ namespace xw
         XPROPERTY(bool, derived_type, playing);
         XPROPERTY(bool, derived_type, repeat);
         XPROPERTY(bool, derived_type, show_repeat, true);
+        XPROPERTY(::xw::description_style, derived_type, style);
 
     protected:
 
@@ -71,6 +73,7 @@ namespace xw
         xwidgets_serialize(playing(), state["playing"], buffers);
         xwidgets_serialize(repeat(), state["repeat"], buffers);
         xwidgets_serialize(show_repeat(), state["show_repeat"], buffers);
+        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
@@ -84,6 +87,7 @@ namespace xw
         set_property_from_patch(playing, patch, buffers);
         set_property_from_patch(repeat, patch, buffers);
         set_property_from_patch(show_repeat, patch, buffers);
+        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>

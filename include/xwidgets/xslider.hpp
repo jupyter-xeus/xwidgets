@@ -11,12 +11,13 @@
 
 #include <string>
 
+#include <xtl/xoptional.hpp>
+
 #include "xcolor.hpp"
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xnumber.hpp"
 #include "xstyle.hpp"
-#include "xtl/xoptional.hpp"
 
 namespace xw
 {

@@ -12,6 +12,7 @@
 #include <fstream>
 #include <iterator>
 #include <map>
+#include <string>
 
 #include <doctest/doctest.h>
 #include <nlohmann/json-schema.hpp>
@@ -39,13 +40,43 @@ namespace xw
 
     TEST_SUITE("xwidgets")
     {
-        TEST_CASE_TEMPLATE_DEFINE("schema", Widget, all_widgets)
+        /**
+         * Test that all widgets abide by the model schema.
+         */
+        TEST_CASE_TEMPLATE_DEFINE("schema", Widget, schema_widgets)
         {
             validate_schema(schemas.at(model_name<Widget>()), serialize<Widget>());
         }
 
-        TEST_CASE_TEMPLATE_APPLY(all_widgets, AllWidgets);
-        TEST_CASE_TEMPLATE_APPLY(all_widgets, AllStyles);
+        TEST_CASE_TEMPLATE_APPLY(schema_widgets, AllWidgets);
+        TEST_CASE_TEMPLATE_APPLY(schema_widgets, AllStyles);
+
+        /**
+         * Check that default JS package match that of the schema.
+         */
+        TEST_CASE_TEMPLATE_DEFINE("packages", Widget, packages_widgets)
+        {
+            auto const& schema_prop = schemas.at(model_name<Widget>())["properties"];
+            auto const obj = serialize<Widget>();
+
+            // Using non-constexpr std::string so that doctest INFO can properly show the value
+            static auto const packages = std::array<std::string, 6>{
+                "_model_module",
+                "_model_module_version",
+                "_model_name",
+                "_view_module",
+                "_view_module_version",
+                "_view_name",
+            };
+            for (auto const& attr : packages)
+            {
+                INFO("Checking attribute ", attr);
+                CHECK_EQ(obj[attr], schema_prop[attr]["default"]);
+            }
+        }
+
+        TEST_CASE_TEMPLATE_APPLY(packages_widgets, AllWidgets);
+        TEST_CASE_TEMPLATE_APPLY(packages_widgets, AllStyles);
     }
 
     /***************************************
@@ -124,24 +155,14 @@ namespace xw
      */
     nl::json model_to_schema(nl::json const& model)
     {
-        static auto constexpr blacklist = std::array{"style"};
-
-        auto blacklist_contains = [](auto const& key) -> bool
-        {
-            return std::find(blacklist.begin(), blacklist.end(), key) != blacklist.end();
-        };
-
         auto required = nl::json::array();
         auto properties = nl::json::object();
 
         for (auto const& attr : model["attributes"])
         {
             std::string name = attr["name"];
-            if (!blacklist_contains(name))
-            {
-                required.push_back(name);
-                properties[name] = properties_schema(attr);
-            }
+            properties[name] = properties_schema(attr);
+            required.push_back(std::move(name));
         }
 
         nl::json schema = nl::json::object({{"type", "object"}});

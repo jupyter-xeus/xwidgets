@@ -16,6 +16,7 @@
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
 #include "xselection.hpp"
+#include "xslider.hpp"
 
 namespace xw
 {
@@ -46,6 +47,7 @@ namespace xw
             "drag-tap",
             XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap")
         );
+        XPROPERTY(::xw::slider_style, derived_type, style);
 
     protected:
 
@@ -92,6 +94,7 @@ namespace xw
             "drag-tap",
             XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap")
         );
+        XPROPERTY(::xw::slider_style, derived_type, style);
 
     protected:
 
@@ -121,6 +124,7 @@ namespace xw
         xwidgets_serialize(readout(), state["readout"], buffers);
         xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
         xwidgets_serialize(behavior(), state["behavior"], buffers);
+        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
@@ -132,6 +136,7 @@ namespace xw
         set_property_from_patch(readout, patch, buffers);
         set_property_from_patch(continuous_update, patch, buffers);
         set_property_from_patch(behavior, patch, buffers);
+        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>
@@ -189,6 +194,7 @@ namespace xw
         xwidgets_serialize(readout(), state["readout"], buffers);
         xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
         xwidgets_serialize(behavior(), state["behavior"], buffers);
+        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
@@ -201,6 +207,7 @@ namespace xw
         set_property_from_patch(readout, patch, buffers);
         set_property_from_patch(continuous_update, patch, buffers);
         set_property_from_patch(behavior, patch, buffers);
+        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>

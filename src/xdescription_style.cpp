@@ -6,13 +6,10 @@
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
 
-#include "xwidgets/xcheckbox.hpp"
+#include "xwidgets/xdescription_style.hpp"
 
 namespace xw
 {
-    template class XWIDGETS_API xmaterialize<xcheckbox>;
-    template class XWIDGETS_API xtransport<xmaterialize<xcheckbox>>;
-
-    template class XWIDGETS_API xmaterialize<xcheckbox_style>;
-    template class XWIDGETS_API xtransport<xmaterialize<xcheckbox_style>>;
+    template class XWIDGETS_API xmaterialize<xdescription_style>;
+    template class XWIDGETS_API xtransport<xmaterialize<xdescription_style>>;
 }
