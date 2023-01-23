@@ -124,24 +124,14 @@ namespace xw
      */
     nl::json model_to_schema(nl::json const& model)
     {
-        static auto constexpr blacklist = std::array{"style"};
-
-        auto blacklist_contains = [](auto const& key) -> bool
-        {
-            return std::find(blacklist.begin(), blacklist.end(), key) != blacklist.end();
-        };
-
         auto required = nl::json::array();
         auto properties = nl::json::object();
 
         for (auto const& attr : model["attributes"])
         {
             std::string name = attr["name"];
-            if (!blacklist_contains(name))
-            {
-                required.push_back(name);
-                properties[name] = properties_schema(attr);
-            }
+            properties[name] = properties_schema(attr);
+            required.push_back(std::move(name));
         }
 
         nl::json schema = nl::json::object({{"type", "object"}});
