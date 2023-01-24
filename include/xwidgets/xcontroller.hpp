@@ -101,7 +101,7 @@ namespace xw
 
         XPROPERTY(int, derived_type, index);
         XPROPERTY(std::string, derived_type, name);
-        XPROPERTY(std::string, derived_type, mapping)
+        XPROPERTY(std::string, derived_type, mapping);
         XPROPERTY(bool, derived_type, connected);
         XPROPERTY(double, derived_type, timestamp);
         XPROPERTY(xcontroller_button_list_type, derived_type, buttons);
