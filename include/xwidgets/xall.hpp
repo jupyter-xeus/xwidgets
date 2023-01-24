@@ -30,6 +30,7 @@
 #include "xlayout.hpp"
 #include "xlink.hpp"
 #include "xmedia.hpp"
+#include "xnumber.hpp"
 #include "xnumeral.hpp"
 #include "xoutput.hpp"
 #include "xpassword.hpp"
@@ -68,6 +69,9 @@ namespace xw
         layout,
         link,
         media,
+        number<int>,
+        number<float>,
+        number<double>,
         numeral<int>,
         numeral<float>,
         numeral<double>,

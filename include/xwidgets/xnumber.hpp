@@ -109,6 +109,19 @@ namespace xw
         this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
         this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
+
+    /*********************
+     * precompiled types *
+     *********************/
+
+    extern template class xmaterialize<xnumber, int>;
+    extern template class xtransport<xmaterialize<xnumber, int>>;
+
+    extern template class xmaterialize<xnumber, float>;
+    extern template class xtransport<xmaterialize<xnumber, float>>;
+
+    extern template class xmaterialize<xnumber, double>;
+    extern template class xtransport<xmaterialize<xnumber, double>>;
 }
 
 #endif
