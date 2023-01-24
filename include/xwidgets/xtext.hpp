@@ -173,12 +173,12 @@ namespace xw
     template <class D>
     inline void xtext<D>::handle_custom_message(const nl::json& content)
     {
-        auto it = content.find("event");
-        if (it != content.end() && it.value() == "submit")
+        auto const event_it = content.find("event");
+        if (event_it != content.end() && event_it.value() == "submit")
         {
-            for (auto it = m_submit_callbacks.begin(); it != m_submit_callbacks.end(); ++it)
+            for (auto& callback : m_submit_callbacks)
             {
-                it->operator()();
+                callback();
             }
         }
     }
