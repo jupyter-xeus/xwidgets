@@ -62,7 +62,12 @@ jobs:
     - name: Test notebook
       if: ${{ startsWith(matrix.os, 'ubuntu') }}
       shell: bash -l -eo pipefail {0}
-      run: papermill notebooks/xwidgets.ipynb "$(mktemp -d)/out.ipynb"
+      run: >
+        jupyter nbconvert
+        --to notebook
+        --output-dir "$(mktemp -d)/out.ipynb"
+        --execute
+        notebooks/xwidgets.ipynb
 
   win:
     runs-on: ${{ matrix.os }}
