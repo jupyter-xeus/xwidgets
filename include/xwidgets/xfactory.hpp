@@ -13,8 +13,9 @@
 #include <string>
 #include <unordered_map>
 
-#include "nlohmann/json.hpp"
-#include "xeus/xcomm.hpp"
+#include <nlohmann/json.hpp>
+#include <xeus/xcomm.hpp>
+
 #include "xwidgets/xwidgets_config.hpp"
 
 namespace nl = nlohmann;

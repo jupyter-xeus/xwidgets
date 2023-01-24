@@ -17,7 +17,8 @@
 #include <doctest/doctest.h>
 #include <nlohmann/json-schema.hpp>
 #include <xeus/xmessage.hpp>
-#include <xwidgets/xall.hpp>
+
+#include "xwidgets/xall.hpp"
 
 namespace xw
 {
