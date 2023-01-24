@@ -9,6 +9,8 @@
 #include "xwidgets/xbinary.hpp"
 
 #include <sstream>
+#include <string>
+#include <utility>
 
 namespace nl = nlohmann;
 
@@ -26,11 +28,12 @@ namespace xw
         return arg.size() > prefix.size() && std::equal(prefix.cbegin(), prefix.cend(), arg.cbegin());
     }
 
-    int buffer_index(const std::string& v)
+    std::size_t buffer_index(const std::string& v)
     {
         std::stringstream stream(v);
-        stream.ignore(xbuffer_reference_prefix().size());
-        int index = 0;
+        auto const prefix_size = xbuffer_reference_prefix().size();
+        stream.ignore(static_cast<std::streamsize>(prefix_size));
+        std::size_t index = 0;
         stream >> index;
         return index;
     }
