@@ -9,7 +9,7 @@
 #ifndef XWIDGETS_TARGET_HPP
 #define XWIDGETS_TARGET_HPP
 
-#include "xeus/xcomm.hpp"
+#include <xeus/xcomm.hpp>
 
 namespace xw
 {
