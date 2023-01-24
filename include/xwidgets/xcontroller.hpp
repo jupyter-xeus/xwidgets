@@ -117,7 +117,7 @@ namespace xw
 
         void set_defaults();
 
-        static int register_control_types();
+        static void register_control_types();
     };
 
     using controller = xmaterialize<xcontroller>;
@@ -236,7 +236,7 @@ namespace xw
     inline xcontroller<D>::xcontroller()
         : base_type()
     {
-        static int init = register_control_types();
+        register_control_types();
         set_defaults();
     }
 
@@ -252,14 +252,13 @@ namespace xw
     }
 
     template <class D>
-    inline int xcontroller<D>::register_control_types()
+    inline void xcontroller<D>::register_control_types()
     {
         get_xfactory()
             .register_maker("@jupyter-widgets/controls", "ControllerAxisModel", "@jupyter-widgets/controls", "ControllerAxisView", xmaker<xcontroller_axis>);
 
         get_xfactory()
             .register_maker("@jupyter-widgets/controls", "ControllerButtonModel", "@jupyter-widgets/controls", "ControllerButtonView", xmaker<xcontroller_button>);
-        return 0;
     }
 
     /*********************
