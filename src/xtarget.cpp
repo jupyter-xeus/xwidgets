@@ -37,7 +37,7 @@ namespace xw
             {
                 version = metadata.at("version").get<std::string>();
             }
-            catch (std::out_of_range)
+            catch (std::out_of_range const&)
             {
                 version = "";
             }
