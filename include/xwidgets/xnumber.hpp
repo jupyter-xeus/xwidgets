@@ -93,12 +93,12 @@ namespace xw
         if (std::is_integral<value_type>::value)
         {
             this->_model_name() = "BoundedIntTextModel";
-            this->_view_name() = "BoundedIntTextView";
+            this->_view_name() = "IntTextView";
         }
         else if (std::is_floating_point<value_type>::value)
         {
             this->_model_name() = "BoundedFloatTextModel";
-            this->_view_name() = "BoundedFloatTextView";
+            this->_view_name() = "FloatTextView";
         }
         else
         {
