@@ -11,6 +11,7 @@
 
 #include <type_traits>
 
+#include "xnumeral.hpp"
 #include "xwidget.hpp"
 
 namespace xw
@@ -20,26 +21,19 @@ namespace xw
      ***********************/
 
     template <class D>
-    struct xnumber_traits;
-
-    template <class D>
-    class xnumber : public xwidget<D>
+    class xnumber : public xnumeral<D>
     {
     public:
 
-        using base_type = xwidget<D>;
+        using base_type = xnumeral<D>;
         using derived_type = D;
+        using value_type = typename base_type::value_type;
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        using value_type = typename xnumber_traits<derived_type>::value_type;
-
-        XPROPERTY(std::string, derived_type, description);
-        XPROPERTY(bool, derived_type, description_allow_html, false);
         XPROPERTY(value_type, derived_type, max, value_type(100));
         XPROPERTY(value_type, derived_type, min);
-        XPROPERTY(value_type, derived_type, value);
 
     protected:
 
@@ -51,6 +45,15 @@ namespace xw
         void set_defaults();
     };
 
+    template <class T>
+    using number = xmaterialize<xnumber, T>;
+
+    template <class T>
+    struct xnumber_traits<number<T>>
+    {
+        using value_type = T;
+    };
+
     /**************************
      * xnumber implementation *
      **************************/
@@ -60,11 +63,8 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(description(), state["description"], buffers);
-        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(max(), state["max"], buffers);
         xwidgets_serialize(min(), state["min"], buffers);
-        xwidgets_serialize(value(), state["value"], buffers);
     }
 
     template <class D>
@@ -72,11 +72,8 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(description, patch, buffers);
-        set_property_from_patch(description_allow_html, patch, buffers);
         set_property_from_patch(max, patch, buffers);
         set_property_from_patch(min, patch, buffers);
-        set_property_from_patch(value, patch, buffers);
     }
 
     template <class D>
