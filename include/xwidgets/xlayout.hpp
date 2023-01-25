@@ -125,20 +125,6 @@ namespace xw
             {},
             XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset")
         );
-        XPROPERTY(
-            xtl::xoptional<std::string>,
-            derived_type,
-            overflow_x,
-            {},
-            XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset")
-        );
-        XPROPERTY(
-            xtl::xoptional<std::string>,
-            derived_type,
-            overflow_y,
-            {},
-            XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset")
-        );
         XPROPERTY(xtl::xoptional<std::string>, derived_type, padding);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, right);
         XPROPERTY(xtl::xoptional<std::string>, derived_type, top);
@@ -206,8 +192,6 @@ namespace xw
         xwidgets_serialize(object_position(), state["object_position"], buffers);
         xwidgets_serialize(order(), state["order"], buffers);
         xwidgets_serialize(overflow(), state["overflow"], buffers);
-        xwidgets_serialize(overflow_x(), state["overflow_x"], buffers);
-        xwidgets_serialize(overflow_y(), state["overflow_y"], buffers);
         xwidgets_serialize(padding(), state["padding"], buffers);
         xwidgets_serialize(right(), state["right"], buffers);
         xwidgets_serialize(top(), state["top"], buffers);
@@ -254,8 +238,6 @@ namespace xw
         set_property_from_patch(object_position, patch, buffers);
         set_property_from_patch(order, patch, buffers);
         set_property_from_patch(overflow, patch, buffers);
-        set_property_from_patch(overflow_x, patch, buffers);
-        set_property_from_patch(overflow_y, patch, buffers);
         set_property_from_patch(padding, patch, buffers);
         set_property_from_patch(right, patch, buffers);
         set_property_from_patch(top, patch, buffers);
@@ -265,7 +247,6 @@ namespace xw
 
     template <class D>
     inline xlayout<D>::xlayout()
-        : base_type()
     {
         set_defaults();
     }
@@ -273,8 +254,6 @@ namespace xw
     template <class D>
     inline void xlayout<D>::set_defaults()
     {
-        this->_model_module() = "@jupyter-widgets/base";
-        this->_view_module() = "@jupyter-widgets/base";
         this->_model_name() = "LayoutModel";
         this->_view_name() = "LayoutView";
     }
