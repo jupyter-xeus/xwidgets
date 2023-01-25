@@ -11,9 +11,10 @@
 
 #include <type_traits>
 
+#include "mixin/xnumeric.hpp"
 #include "xdescription_style.hpp"
 #include "xmaterialize.hpp"
-#include "xnumber_impl.hpp"
+#include "xwidget.hpp"
 
 namespace xw
 {
@@ -22,16 +23,15 @@ namespace xw
      **********************/
 
     template <class D>
-    struct xnumber_traits;
-
-    template <class D>
-    class xnumber : public xnumber_impl<D>
+    class xnumber : public xwidget<D>,
+                    public mixin::xnumeric<D>
     {
     public:
 
-        using base_type = xnumber_impl<D>;
         using derived_type = D;
-        using typename base_type::value_type;
+        using base_type = xwidget<D>;
+        using mixin_numeric_type = mixin::xnumeric<D>;
+        using typename mixin_numeric_type::value_type;
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
@@ -46,7 +46,6 @@ namespace xw
     protected:
 
         xnumber();
-        using base_type::base_type;
 
     private:
 
@@ -70,10 +69,11 @@ namespace xw
     inline void xnumber<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
+        mixin_numeric_type::serialize_state(state, buffers);
 
         xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
-        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(description(), state["description"], buffers);
+        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(step(), state["step"], buffers);
         xwidgets_serialize(style(), state["style"], buffers);
@@ -83,10 +83,11 @@ namespace xw
     inline void xnumber<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
+        mixin_numeric_type::apply_patch(patch, buffers);
 
+        set_property_from_patch(continuous_update, patch, buffers);
         set_property_from_patch(description, patch, buffers);
         set_property_from_patch(description_allow_html, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(step, patch, buffers);
         set_property_from_patch(style, patch, buffers);
@@ -94,7 +95,6 @@ namespace xw
 
     template <class D>
     inline xnumber<D>::xnumber()
-        : base_type()
     {
         set_defaults();
     }
