@@ -37,11 +37,11 @@ IncludeBlocks: Regroup
 IncludeCategories:
 - Regex: <[^.]+>
   Priority: 1
-- Regex: <xtensor/.+>
+- Regex: <xwidgets/.+>
   Priority: 3
 - Regex: <.+>
   Priority: 2
-- Regex: '"xtensor/.+"'
+- Regex: '"xwidgets/.+"'
   Priority: 4
 - Regex: '".+"'
   Priority: 5

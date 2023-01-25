@@ -9,7 +9,8 @@
 #include <map>
 #include <string>
 
-#include "doctest/doctest.h"
+#include <doctest/doctest.h>
+
 #include "xwidgets/xbutton.hpp"
 
 namespace xw

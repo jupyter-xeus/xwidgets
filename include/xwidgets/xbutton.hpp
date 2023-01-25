@@ -216,12 +216,12 @@ namespace xw
     template <class D>
     inline void xbutton<D>::handle_custom_message(const nl::json& content)
     {
-        auto it = content.find("event");
-        if (it != content.end() && it.value() == "click")
+        auto const event_it = content.find("event");
+        if (event_it != content.end() && event_it.value() == "click")
         {
-            for (auto it = m_click_callbacks.begin(); it != m_click_callbacks.end(); ++it)
+            for (auto& callback : m_click_callbacks)
             {
-                it->operator()();
+                callback();
             }
         }
     }

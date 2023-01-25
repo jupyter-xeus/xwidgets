@@ -126,9 +126,6 @@ namespace xw
         public:
 
             xholder_impl() = default;
-            xholder_impl(xholder_impl&&) = delete;
-            xholder_impl& operator=(const xholder_impl&) = delete;
-            xholder_impl& operator=(xholder_impl&&) = delete;
             virtual xholder_impl* clone() const = 0;
             virtual ~xholder_impl() = default;
 
@@ -141,6 +138,9 @@ namespace xw
         protected:
 
             xholder_impl(const xholder_impl&) = default;
+            xholder_impl(xholder_impl&&) = default;
+            xholder_impl& operator=(const xholder_impl&) = default;
+            xholder_impl& operator=(xholder_impl&&) = default;
         };
 
         template <class D>

@@ -12,8 +12,9 @@
 #include <string>
 #include <vector>
 
-#include "nlohmann/json.hpp"
-#include "xeus/xmessage.hpp"
+#include <nlohmann/json.hpp>
+#include <xeus/xmessage.hpp>
+
 #include "xwidgets_config.hpp"
 
 namespace nl = nlohmann;
@@ -35,7 +36,7 @@ namespace xw
 
     XWIDGETS_API bool is_buffer_reference(const std::string& arg);
 
-    XWIDGETS_API int buffer_index(const std::string& v);
+    XWIDGETS_API std::size_t buffer_index(const std::string& v);
 }
 
 #endif
