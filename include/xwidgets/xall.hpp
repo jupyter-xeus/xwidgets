@@ -31,7 +31,7 @@
 #include "xlink.hpp"
 #include "xmedia.hpp"
 #include "xnumber.hpp"
-#include "xnumeral.hpp"
+#include "xnumber_bounded.hpp"
 #include "xoutput.hpp"
 #include "xpassword.hpp"
 #include "xplay.hpp"
@@ -69,12 +69,12 @@ namespace xw
         layout,
         link,
         media,
+        number_bounded<int>,
+        number_bounded<float>,
+        number_bounded<double>,
         number<int>,
         number<float>,
         number<double>,
-        numeral<int>,
-        numeral<float>,
-        numeral<double>,
         output,
         password,
         play,

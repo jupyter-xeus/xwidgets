@@ -98,11 +98,19 @@ namespace xw
             REQUIRE_EQ("bottom", l.bottom());
         }
 
-        TEST_CASE("numeral")
+        TEST_CASE("number")
         {
-            numeral<double> n;
+            number<double> n;
             n.value = 12.;
             REQUIRE_EQ(12., n.value());
+        }
+
+        TEST_CASE("number_bounded")
+        {
+            number_bounded<double> n;
+            n.max = 10.;
+            n.value = n.max() + 1.;
+            REQUIRE_EQ(n.max(), n.value());
         }
 
         TEST_CASE("password")

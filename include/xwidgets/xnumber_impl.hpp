@@ -13,9 +13,9 @@
 
 namespace xw
 {
-    /***********************
-     * numeral declaration *
-     ***********************/
+    /****************************
+     * xnumber_impl declaration *
+     ****************************/
 
     template <class D>
     struct xnumber_traits;
@@ -39,8 +39,12 @@ namespace xw
         xnumber_impl() = default;
     };
 
+    /************************************
+     * xnumber_bounded_impl declaration *
+     ************************************/
+
     template <class D>
-    class xbounded_number_impl : public xnumber_impl<D>
+    class xnumber_bounded_impl : public xnumber_impl<D>
     {
     public:
 
@@ -56,7 +60,7 @@ namespace xw
 
     protected:
 
-        xbounded_number_impl();
+        xnumber_bounded_impl();
 
     private:
 
@@ -88,7 +92,7 @@ namespace xw
      *****************************************/
 
     template <class D>
-    inline void xbounded_number_impl<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
+    inline void xnumber_bounded_impl<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
 
@@ -98,7 +102,7 @@ namespace xw
 
     template <class D>
     inline void
-    xbounded_number_impl<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
+    xnumber_bounded_impl<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
 
@@ -107,14 +111,14 @@ namespace xw
     }
 
     template <class D>
-    inline xbounded_number_impl<D>::xbounded_number_impl()
+    inline xnumber_bounded_impl<D>::xnumber_bounded_impl()
         : base_type()
     {
         setup_properties();
     }
 
     template <class D>
-    inline void xbounded_number_impl<D>::setup_properties()
+    inline void xnumber_bounded_impl<D>::setup_properties()
     {
         this->template validate<value_type>(
             "value",
