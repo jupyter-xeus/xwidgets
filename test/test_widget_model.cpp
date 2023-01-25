@@ -169,6 +169,7 @@ namespace xw
         nl::json schema = nl::json::object({{"type", "object"}});
         schema["required"] = std::move(required);
         schema["properties"] = std::move(properties);
+        schema["additionalProperties"] = false;
         return schema;
     }
 

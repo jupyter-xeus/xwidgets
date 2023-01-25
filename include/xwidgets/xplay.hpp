@@ -11,7 +11,7 @@
 
 #include "xdescription_style.hpp"
 #include "xmaterialize.hpp"
-#include "xnumber.hpp"
+#include "xnumber_impl.hpp"
 
 namespace xw
 {
@@ -20,30 +20,30 @@ namespace xw
      ********************/
 
     template <class D>
-    class xplay : public xnumber<D>
+    class xplay : public xbounded_number_impl<D>
     {
     public:
 
-        using base_type = xnumber<D>;
+        using base_type = xbounded_number_impl<D>;
         using derived_type = D;
-
-        using value_type = typename base_type::value_type;
+        using typename base_type::value_type;
 
         void serialize_state(nl::json& state, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(value_type, derived_type, interval, value_type(100));
-        XPROPERTY(value_type, derived_type, step, value_type(1));
+        XPROPERTY(std::string, derived_type, description);
+        XPROPERTY(bool, derived_type, description_allow_html, false);
         XPROPERTY(bool, derived_type, disabled);
+        XPROPERTY(value_type, derived_type, interval, value_type(100));
         XPROPERTY(bool, derived_type, playing);
         XPROPERTY(bool, derived_type, repeat);
         XPROPERTY(bool, derived_type, show_repeat, true);
+        XPROPERTY(value_type, derived_type, step, value_type(1));
         XPROPERTY(::xw::description_style, derived_type, style);
 
     protected:
 
         xplay();
-        using base_type::base_type;
 
     private:
 
@@ -67,12 +67,14 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(interval(), state["interval"], buffers);
-        xwidgets_serialize(step(), state["step"], buffers);
+        xwidgets_serialize(description(), state["description"], buffers);
+        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
+        xwidgets_serialize(interval(), state["interval"], buffers);
         xwidgets_serialize(playing(), state["playing"], buffers);
         xwidgets_serialize(repeat(), state["repeat"], buffers);
         xwidgets_serialize(show_repeat(), state["show_repeat"], buffers);
+        xwidgets_serialize(step(), state["step"], buffers);
         xwidgets_serialize(style(), state["style"], buffers);
     }
 
@@ -81,12 +83,14 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(interval, patch, buffers);
-        set_property_from_patch(step, patch, buffers);
+        set_property_from_patch(description, patch, buffers);
+        set_property_from_patch(description_allow_html, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
+        set_property_from_patch(interval, patch, buffers);
         set_property_from_patch(playing, patch, buffers);
         set_property_from_patch(repeat, patch, buffers);
         set_property_from_patch(show_repeat, patch, buffers);
+        set_property_from_patch(step, patch, buffers);
         set_property_from_patch(style, patch, buffers);
     }
 
@@ -100,7 +104,11 @@ namespace xw
     template <class D>
     inline void xplay<D>::set_defaults()
     {
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
         this->_model_name() = "PlayModel";
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
         this->_view_name() = "PlayView";
     }
 

@@ -10,13 +10,15 @@
 #define XWIDGETS_PROGRESS_HPP
 
 #include <string>
+#include <type_traits>
+
+#include <xtl/xoptional.hpp>
 
 #include "xcolor.hpp"
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
-#include "xnumber.hpp"
+#include "xnumber_impl.hpp"
 #include "xstyle.hpp"
-#include "xtl/xoptional.hpp"
 
 namespace xw
 {
@@ -41,7 +43,6 @@ namespace xw
     protected:
 
         xprogress_style();
-        using base_type::base_type;
 
     private:
 
@@ -55,26 +56,26 @@ namespace xw
      ***********************/
 
     template <class D>
-    class xprogress : public xnumber<D>
+    class xprogress : public xbounded_number_impl<D>
     {
     public:
 
-        using base_type = xnumber<D>;
+        using base_type = xbounded_number_impl<D>;
         using derived_type = D;
-
-        using value_type = typename base_type::value_type;
+        using typename base_type::value_type;
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
+        XPROPERTY(std::string, derived_type, description);
+        XPROPERTY(bool, derived_type, description_allow_html, false);
         XPROPERTY(std::string, derived_type, bar_style, "", XEITHER("success", "info", "warning", "danger", ""));
+        XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
         XPROPERTY(::xw::progress_style, derived_type, style);
 
     protected:
 
         xprogress();
-        using base_type::base_type;
 
     private:
 
@@ -114,7 +115,6 @@ namespace xw
 
     template <class D>
     inline xprogress_style<D>::xprogress_style()
-        : base_type()
     {
         set_defaults();
     }
@@ -136,8 +136,10 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(orientation(), state["orientation"], buffers);
         xwidgets_serialize(bar_style(), state["bar_style"], buffers);
+        xwidgets_serialize(description(), state["description"], buffers);
+        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
+        xwidgets_serialize(orientation(), state["orientation"], buffers);
         xwidgets_serialize(style(), state["style"], buffers);
     }
 
@@ -146,14 +148,14 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(orientation, patch, buffers);
         set_property_from_patch(bar_style, patch, buffers);
+        set_property_from_patch(description, patch, buffers);
+        set_property_from_patch(orientation, patch, buffers);
         set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>
     inline xprogress<D>::xprogress()
-        : base_type()
     {
         set_defaults();
     }
@@ -161,7 +163,23 @@ namespace xw
     template <class D>
     inline void xprogress<D>::set_defaults()
     {
-        this->_model_name() = "FloatProgressModel";
+        // TODO(C++17) constexpr
+        if (std::is_integral<value_type>::value)
+        {
+            this->_model_name() = "IntProgressModel";
+        }
+        else if (std::is_floating_point<value_type>::value)
+        {
+            this->_model_name() = "FloatProgressModel";
+        }
+        else
+        {
+            return;
+        }
+        this->_model_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module() = "@jupyter-widgets/controls";
+        this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
         this->_view_name() = "ProgressView";
     }
 
