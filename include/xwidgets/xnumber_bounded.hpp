@@ -11,8 +11,8 @@
 
 #include <type_traits>
 
+#include "mixin/xdescription.hpp"
 #include "mixin/xnumeric.hpp"
-#include "xdescription_style.hpp"
 #include "xmaterialize.hpp"
 #include "xwidget.hpp"
 
@@ -24,12 +24,14 @@ namespace xw
 
     template <class D>
     class xnumber_bounded : public xwidget<D>,
+                            public mixin::xdescription<D>,
                             public mixin::xnumeric_bounded<D>
     {
     public:
 
         using derived_type = D;
         using base_type = xwidget<D>;
+        using mixin_description_type = mixin::xdescription<D>;
         using mixin_numeric_type = mixin::xnumeric_bounded<D>;
         using typename mixin_numeric_type::value_type;
 
@@ -37,11 +39,8 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(bool, derived_type, continuous_update);
-        XPROPERTY(std::string, derived_type, description);
-        XPROPERTY(bool, derived_type, description_allow_html, false);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(value_type, derived_type, step);
-        XPROPERTY(::xw::description_style, derived_type, style);
 
     protected:
 
@@ -69,28 +68,24 @@ namespace xw
     inline void xnumber_bounded<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
+        mixin_description_type::serialize_state(state, buffers);
         mixin_numeric_type::serialize_state(state, buffers);
 
         xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
-        xwidgets_serialize(description(), state["description"], buffers);
-        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(step(), state["step"], buffers);
-        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
     inline void xnumber_bounded<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
+        mixin_description_type::apply_patch(patch, buffers);
         mixin_numeric_type::apply_patch(patch, buffers);
 
         set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(description, patch, buffers);
-        set_property_from_patch(description_allow_html, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(step, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>

@@ -101,7 +101,6 @@ set(
     ${XWIDGETS_SOURCE_DIR}/xcolor_picker.cpp
     ${XWIDGETS_SOURCE_DIR}/xcommon.cpp
     ${XWIDGETS_SOURCE_DIR}/xcontroller.cpp
-    ${XWIDGETS_SOURCE_DIR}/xdescription_style.cpp
     ${XWIDGETS_SOURCE_DIR}/xdropdown.cpp
     ${XWIDGETS_SOURCE_DIR}/xfactory.cpp
     ${XWIDGETS_SOURCE_DIR}/xholder.cpp
@@ -132,6 +131,7 @@ set(
     ${XWIDGETS_SOURCE_DIR}/xtogglebuttons.cpp
     ${XWIDGETS_SOURCE_DIR}/xvalid.cpp
     ${XWIDGETS_SOURCE_DIR}/xvideo.cpp
+    ${XWIDGETS_SOURCE_DIR}/mixin/xdescription.cpp
 )
 
 # Targets and link

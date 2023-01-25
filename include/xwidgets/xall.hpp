@@ -22,7 +22,6 @@
 #include "xcolor_picker.hpp"
 #include "xcommon.hpp"
 #include "xcontroller.hpp"
-#include "xdescription_style.hpp"
 #include "xdropdown.hpp"
 #include "xhtml.hpp"
 #include "ximage.hpp"
