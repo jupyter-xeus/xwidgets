@@ -76,12 +76,9 @@ namespace xw
             "drag-tap",
             XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap")
         );
-        XPROPERTY(bool, derived_type, continuous_update, true);
-        XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
         XPROPERTY(bool, derived_type, readout, true);
         XPROPERTY(std::string, derived_type, readout_format, ".2f");
-        XPROPERTY(value_type, derived_type, step, value_type(1));
         XPROPERTY(::xw::slider_style, derived_type, style);
 
     protected:
@@ -92,8 +89,6 @@ namespace xw
     private:
 
         void set_defaults();
-
-        void setup_properties();
     };
 
     template <class T>
@@ -152,12 +147,9 @@ namespace xw
         base_type::serialize_state(state, buffers);
 
         xwidgets_serialize(behavior(), state["behavior"], buffers);
-        xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
-        xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(orientation(), state["orientation"], buffers);
         xwidgets_serialize(readout(), state["readout"], buffers);
         xwidgets_serialize(readout_format(), state["readout_format"], buffers);
-        xwidgets_serialize(step(), state["step"], buffers);
         xwidgets_serialize(style(), state["style"], buffers);
     }
 
@@ -167,12 +159,9 @@ namespace xw
         base_type::apply_patch(patch, buffers);
 
         set_property_from_patch(behavior, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(orientation, patch, buffers);
         set_property_from_patch(readout, patch, buffers);
         set_property_from_patch(readout_format, patch, buffers);
-        set_property_from_patch(step, patch, buffers);
         set_property_from_patch(style, patch, buffers);
     }
 
@@ -181,57 +170,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-
-        this->setup_properties();
-    }
-
-    template <class D>
-    inline void xslider<D>::setup_properties()
-    {
-        this->template validate<value_type>(
-            "value",
-            [](auto& owner, auto& proposal)
-            {
-                if (proposal > owner.max())
-                {
-                    proposal = owner.max();
-                }
-                if (proposal < owner.min())
-                {
-                    proposal = owner.min();
-                }
-            }
-        );
-
-        this->template validate<value_type>(
-            "min",
-            [](auto& owner, auto& proposal)
-            {
-                if (proposal > owner.max())
-                {
-                    throw std::runtime_error("setting min > max");
-                }
-                if (proposal > owner.value())
-                {
-                    owner.value = proposal;
-                }
-            }
-        );
-
-        this->template validate<value_type>(
-            "max",
-            [](auto& owner, auto& proposal)
-            {
-                if (proposal < owner.min())
-                {
-                    throw std::runtime_error("setting max < min");
-                }
-                if (proposal < owner.value())
-                {
-                    owner.value = proposal;
-                }
-            }
-        );
     }
 
     template <class D>

@@ -11,8 +11,9 @@
 
 #include <type_traits>
 
-#include "xnumeral.hpp"
-#include "xwidget.hpp"
+#include "xdescription_style.hpp"
+#include "xmaterialize.hpp"
+#include "xnumber_impl.hpp"
 
 namespace xw
 {
@@ -21,24 +22,27 @@ namespace xw
      ***********************/
 
     template <class D>
-    class xnumber : public xnumeral<D>
+    class xnumber : public xbounded_number_impl<D>
     {
     public:
 
-        using base_type = xnumeral<D>;
+        using base_type = xbounded_number_impl<D>;
         using derived_type = D;
-        using value_type = typename base_type::value_type;
+        using typename base_type::value_type;
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(value_type, derived_type, max, value_type(100));
-        XPROPERTY(value_type, derived_type, min);
+        XPROPERTY(bool, derived_type, continuous_update);
+        XPROPERTY(std::string, derived_type, description);
+        XPROPERTY(bool, derived_type, description_allow_html, false);
+        XPROPERTY(bool, derived_type, disabled);
+        XPROPERTY(value_type, derived_type, step);
+        XPROPERTY(::xw::description_style, derived_type, style);
 
     protected:
 
         xnumber();
-        using base_type::base_type;
 
     private:
 
@@ -63,8 +67,12 @@ namespace xw
     {
         base_type::serialize_state(state, buffers);
 
-        xwidgets_serialize(max(), state["max"], buffers);
-        xwidgets_serialize(min(), state["min"], buffers);
+        xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
+        xwidgets_serialize(description(), state["description"], buffers);
+        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
+        xwidgets_serialize(disabled(), state["disabled"], buffers);
+        xwidgets_serialize(step(), state["step"], buffers);
+        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
@@ -72,13 +80,16 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(max, patch, buffers);
-        set_property_from_patch(min, patch, buffers);
+        set_property_from_patch(continuous_update, patch, buffers);
+        set_property_from_patch(description, patch, buffers);
+        set_property_from_patch(description_allow_html, patch, buffers);
+        set_property_from_patch(disabled, patch, buffers);
+        set_property_from_patch(step, patch, buffers);
+        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>
     inline xnumber<D>::xnumber()
-        : base_type()
     {
         set_defaults();
     }
@@ -102,8 +113,8 @@ namespace xw
             return;
         }
         this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module() = "@jupyter-widgets/controls";
         this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 

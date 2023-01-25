@@ -13,7 +13,7 @@
 
 #include "xdescription_style.hpp"
 #include "xmaterialize.hpp"
-#include "xwidget.hpp"
+#include "xnumber_impl.hpp"
 
 namespace xw
 {
@@ -25,13 +25,13 @@ namespace xw
     struct xnumber_traits;
 
     template <class D>
-    class xnumeral : public xwidget<D>
+    class xnumeral : public xnumber_impl<D>
     {
     public:
 
-        using base_type = xwidget<D>;
+        using base_type = xnumber_impl<D>;
         using derived_type = D;
-        using value_type = typename xnumber_traits<derived_type>::value_type;
+        using typename base_type::value_type;
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
@@ -42,7 +42,6 @@ namespace xw
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(value_type, derived_type, step);
         XPROPERTY(::xw::description_style, derived_type, style);
-        XPROPERTY(value_type, derived_type, value);
 
     protected:
 
@@ -78,7 +77,6 @@ namespace xw
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(step(), state["step"], buffers);
         xwidgets_serialize(style(), state["style"], buffers);
-        xwidgets_serialize(value(), state["value"], buffers);
     }
 
     template <class D>
@@ -92,7 +90,6 @@ namespace xw
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(step, patch, buffers);
         set_property_from_patch(style, patch, buffers);
-        set_property_from_patch(value, patch, buffers);
     }
 
     template <class D>

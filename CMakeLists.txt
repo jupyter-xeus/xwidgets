@@ -118,6 +118,7 @@ set(
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmaterialize.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmedia.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber.hpp
+    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber_impl.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumeral.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xobject.hpp
     ${XWIDGETS_INCLUDE_DIR}/xwidgets/xoutput.hpp
