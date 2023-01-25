@@ -6,8 +6,8 @@
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
 
-#ifndef XWIDGETS_NUMERAL_HPP
-#define XWIDGETS_NUMERAL_HPP
+#ifndef XWIDGETS_NUMBER_HPP
+#define XWIDGETS_NUMBER_HPP
 
 #include <type_traits>
 
@@ -17,19 +17,16 @@
 
 namespace xw
 {
-    /***********************
-     * numeral declaration *
-     ***********************/
+    /*********************************
+     *  xnumber_bounded declaration  *
+     *********************************/
 
     template <class D>
-    struct xnumber_traits;
-
-    template <class D>
-    class xnumeral : public xnumber_impl<D>
+    class xnumber_bounded : public xnumber_bounded_impl<D>
     {
     public:
 
-        using base_type = xnumber_impl<D>;
+        using base_type = xnumber_bounded_impl<D>;
         using derived_type = D;
         using typename base_type::value_type;
 
@@ -45,8 +42,7 @@ namespace xw
 
     protected:
 
-        xnumeral();
-        using base_type::base_type;
+        xnumber_bounded();
 
     private:
 
@@ -54,63 +50,62 @@ namespace xw
     };
 
     template <class T>
-    using numeral = xmaterialize<xnumeral, T>;
+    using number_bounded = xmaterialize<xnumber_bounded, T>;
 
     template <class T>
-    struct xnumber_traits<numeral<T>>
+    struct xnumber_traits<number_bounded<T>>
     {
         using value_type = T;
     };
 
-    /***************************
-     * xnumeral implementation *
-     ***************************/
+    /**************************
+     * xnumber implementation *
+     **************************/
 
     template <class D>
-    inline void xnumeral<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
+    inline void xnumber_bounded<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
 
         xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
-        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(description(), state["description"], buffers);
+        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(step(), state["step"], buffers);
         xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
-    inline void xnumeral<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
+    inline void xnumber_bounded<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
 
+        set_property_from_patch(continuous_update, patch, buffers);
         set_property_from_patch(description, patch, buffers);
         set_property_from_patch(description_allow_html, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(step, patch, buffers);
         set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>
-    inline xnumeral<D>::xnumeral()
-        : base_type()
+    inline xnumber_bounded<D>::xnumber_bounded()
     {
         set_defaults();
     }
 
     template <class D>
-    inline void xnumeral<D>::set_defaults()
+    inline void xnumber_bounded<D>::set_defaults()
     {
         // TODO(C++17) constexpr
         if (std::is_integral<value_type>::value)
         {
-            this->_model_name() = "IntTextModel";
+            this->_model_name() = "BoundedIntTextModel";
             this->_view_name() = "IntTextView";
         }
         else if (std::is_floating_point<value_type>::value)
         {
-            this->_model_name() = "FloatTextModel";
+            this->_model_name() = "BoundedFloatTextModel";
             this->_view_name() = "FloatTextView";
         }
         else
@@ -118,8 +113,8 @@ namespace xw
             return;
         }
         this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_module() = "@jupyter-widgets/controls";
         this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 
@@ -127,14 +122,14 @@ namespace xw
      * precompiled types *
      *********************/
 
-    extern template class xmaterialize<xnumeral, int>;
-    extern template class xtransport<xmaterialize<xnumeral, int>>;
+    extern template class xmaterialize<xnumber_bounded, int>;
+    extern template class xtransport<xmaterialize<xnumber_bounded, int>>;
 
-    extern template class xmaterialize<xnumeral, float>;
-    extern template class xtransport<xmaterialize<xnumeral, float>>;
+    extern template class xmaterialize<xnumber_bounded, float>;
+    extern template class xtransport<xmaterialize<xnumber_bounded, float>>;
 
-    extern template class xmaterialize<xnumeral, double>;
-    extern template class xtransport<xmaterialize<xnumeral, double>>;
+    extern template class xmaterialize<xnumber_bounded, double>;
+    extern template class xtransport<xmaterialize<xnumber_bounded, double>>;
 }
 
 #endif

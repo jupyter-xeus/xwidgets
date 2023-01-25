@@ -6,8 +6,8 @@
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
 
-#ifndef XWIDGETS_NUMBER_HPP
-#define XWIDGETS_NUMBER_HPP
+#ifndef XWIDGETS_NUMERAL_HPP
+#define XWIDGETS_NUMERAL_HPP
 
 #include <type_traits>
 
@@ -17,16 +17,19 @@
 
 namespace xw
 {
-    /***********************
-     * xnumber declaration *
-     ***********************/
+    /**********************
+     * number declaration *
+     **********************/
 
     template <class D>
-    class xnumber : public xbounded_number_impl<D>
+    struct xnumber_traits;
+
+    template <class D>
+    class xnumber : public xnumber_impl<D>
     {
     public:
 
-        using base_type = xbounded_number_impl<D>;
+        using base_type = xnumber_impl<D>;
         using derived_type = D;
         using typename base_type::value_type;
 
@@ -43,6 +46,7 @@ namespace xw
     protected:
 
         xnumber();
+        using base_type::base_type;
 
     private:
 
@@ -68,8 +72,8 @@ namespace xw
         base_type::serialize_state(state, buffers);
 
         xwidgets_serialize(continuous_update(), state["continuous_update"], buffers);
-        xwidgets_serialize(description(), state["description"], buffers);
         xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
+        xwidgets_serialize(description(), state["description"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(step(), state["step"], buffers);
         xwidgets_serialize(style(), state["style"], buffers);
@@ -80,9 +84,9 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(continuous_update, patch, buffers);
         set_property_from_patch(description, patch, buffers);
         set_property_from_patch(description_allow_html, patch, buffers);
+        set_property_from_patch(continuous_update, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(step, patch, buffers);
         set_property_from_patch(style, patch, buffers);
@@ -90,6 +94,7 @@ namespace xw
 
     template <class D>
     inline xnumber<D>::xnumber()
+        : base_type()
     {
         set_defaults();
     }
@@ -100,12 +105,12 @@ namespace xw
         // TODO(C++17) constexpr
         if (std::is_integral<value_type>::value)
         {
-            this->_model_name() = "BoundedIntTextModel";
+            this->_model_name() = "IntTextModel";
             this->_view_name() = "IntTextView";
         }
         else if (std::is_floating_point<value_type>::value)
         {
-            this->_model_name() = "BoundedFloatTextModel";
+            this->_model_name() = "FloatTextModel";
             this->_view_name() = "FloatTextView";
         }
         else
@@ -113,8 +118,8 @@ namespace xw
             return;
         }
         this->_model_module() = "@jupyter-widgets/controls";
-        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
         this->_view_module() = "@jupyter-widgets/controls";
+        this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
         this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
     }
 

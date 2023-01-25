@@ -17,7 +17,7 @@
 #include "xcolor.hpp"
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
-#include "xnumber.hpp"
+#include "xnumber_bounded.hpp"
 #include "xstyle.hpp"
 
 namespace xw
@@ -57,11 +57,11 @@ namespace xw
      **********************/
 
     template <class D>
-    class xslider : public xnumber<D>
+    class xslider : public xnumber_bounded<D>
     {
     public:
 
-        using base_type = xnumber<D>;
+        using base_type = xnumber_bounded<D>;
         using derived_type = D;
 
         using value_type = typename base_type::value_type;

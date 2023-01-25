@@ -160,8 +160,7 @@ In this example, we validate the proposed values for a numerical text. Negative 
 
 .. code:: cpp
 
-    xw::numeral<double> number;
-    number.min = -100
+    xw::number<double> number;
     number.display()
     XVALIDATE(number, value, [](const auto&, double proposal) {
         std::cout << "Validator: Proposal: " << proposal << std::endl;

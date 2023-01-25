@@ -56,11 +56,11 @@ namespace xw
      ***********************/
 
     template <class D>
-    class xprogress : public xbounded_number_impl<D>
+    class xprogress : public xnumber_bounded_impl<D>
     {
     public:
 
-        using base_type = xbounded_number_impl<D>;
+        using base_type = xnumber_bounded_impl<D>;
         using derived_type = D;
         using typename base_type::value_type;
 
