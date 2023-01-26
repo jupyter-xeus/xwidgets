@@ -91,63 +91,6 @@ endif()
 # ============
 
 set(
-    XWIDGETS_HEADERS
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaccordion.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xall.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xaudio.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbinary.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xboolean.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbox.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xbutton.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcheckbox.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcolor.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcolor_picker.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcommon.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xcontroller.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xdescription_style.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xdropdown.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xeither.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xfactory.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xholder.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xhtml.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/ximage.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlabel.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlayout.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xlink.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmaker.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmaterialize.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xmedia.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber_bounded.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xnumber_impl.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xobject.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xoutput.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xpassword.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xplay.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xprogress.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xradiobuttons.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xregistry.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselect.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselection.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselection_container.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xselectionslider.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xslider.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstring.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xstyle.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtab.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtext.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtextarea.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtogglebutton.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtogglebuttons.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xtransport.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvalid.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xvideo.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidget.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config.hpp
-    ${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config_cling.hpp
-)
-
-set(
     XWIDGETS_SOURCES
     ${XWIDGETS_SOURCE_DIR}/xaccordion.cpp
     ${XWIDGETS_SOURCE_DIR}/xaudio.cpp
@@ -212,7 +155,7 @@ macro(xwidgets_create_target target_name linkage output_name)
     # Output
     # ======
 
-    add_library(${target_name} ${linkage_upper} ${XWIDGETS_SOURCES} ${XWIDGETS_HEADERS})
+    add_library(${target_name} ${linkage_upper} ${XWIDGETS_SOURCES})
     target_include_directories(
         ${target_name} PUBLIC $<BUILD_INTERFACE:${XWIDGETS_INCLUDE_DIR}> $<INSTALL_INTERFACE:include>
     )
@@ -222,7 +165,6 @@ macro(xwidgets_create_target target_name linkage output_name)
     set_target_properties(
         ${target_name}
         PROPERTIES
-            PUBLIC_HEADER "${XWIDGETS_HEADERS}"
             COMPILE_DEFINITIONS "XWIDGETS_EXPORTS"
             PREFIX ""
             VERSION ${XWIDGETS_BINARY_VERSION}
@@ -310,7 +252,14 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/xwidgets
+)
+
+# Install headers and generated headers
+install(
+    DIRECTORY "${XWIDGETS_INCLUDE_DIR}/xwidgets"
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+    FILES_MATCHING
+    PATTERN "*.hpp"
 )
 
 # Makes the project importable from the build directory

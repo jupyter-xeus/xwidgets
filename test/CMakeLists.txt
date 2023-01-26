@@ -31,7 +31,7 @@ set(XWIDGETS_TESTS main.cpp test_xholder.cpp test_xwidgets.cpp test_widget_model
 # Output
 # ======
 
-add_executable(test_xwidgets ${XWIDGETS_TESTS} ${XWIDGETS_HEADERS})
+add_executable(test_xwidgets ${XWIDGETS_TESTS})
 
 target_compile_features(test_xwidgets PRIVATE cxx_std_17)
 
