@@ -53,6 +53,7 @@ namespace xw
     using AllWidgets = std::tuple<
         accordion,
         audio,
+        box,
         button,
         checkbox,
         color_picker,
