@@ -74,8 +74,8 @@ namespace xw
     template <class D>
     inline void xlabel<D>::set_defaults()
     {
-        this->_model_name() = "HTMLModel";
-        this->_view_name() = "HTMLView";
+        this->_model_name() = "LabelModel";
+        this->_view_name() = "LabelView";
     }
 
     /*********************
