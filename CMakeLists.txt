@@ -113,6 +113,7 @@ set(
     ${XWIDGETS_SOURCE_DIR}/xmedia.cpp
     ${XWIDGETS_SOURCE_DIR}/xnumber.cpp
     ${XWIDGETS_SOURCE_DIR}/xnumber_bounded.cpp
+    ${XWIDGETS_SOURCE_DIR}/xmixin_description.cpp
     ${XWIDGETS_SOURCE_DIR}/xoutput.cpp
     ${XWIDGETS_SOURCE_DIR}/xpassword.cpp
     ${XWIDGETS_SOURCE_DIR}/xplay.cpp
@@ -131,7 +132,6 @@ set(
     ${XWIDGETS_SOURCE_DIR}/xtogglebuttons.cpp
     ${XWIDGETS_SOURCE_DIR}/xvalid.cpp
     ${XWIDGETS_SOURCE_DIR}/xvideo.cpp
-    ${XWIDGETS_SOURCE_DIR}/mixin/xdescription.cpp
 )
 
 # Targets and link

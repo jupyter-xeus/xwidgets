@@ -6,7 +6,7 @@
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
 
-#include "xwidgets/mixin/xdescription.hpp"
+#include "xwidgets/xmixin_description.hpp"
 
 namespace xw
 {

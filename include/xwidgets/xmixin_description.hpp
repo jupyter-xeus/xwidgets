@@ -15,9 +15,9 @@
 #include <xeus/xmessage.hpp>
 #include <xproperty/xobserved.hpp>
 
-#include "../xcommon.hpp"
-#include "../xmaterialize.hpp"
-#include "../xstyle.hpp"
+#include "xcommon.hpp"
+#include "xmaterialize.hpp"
+#include "xstyle.hpp"
 
 namespace xw
 {

@@ -11,9 +11,9 @@
 
 #include <type_traits>
 
-#include "mixin/xdescription.hpp"
-#include "mixin/xnumeric.hpp"
 #include "xmaterialize.hpp"
+#include "xmixin_description.hpp"
+#include "xmixin_numeric.hpp"
 #include "xwidget.hpp"
 
 namespace xw

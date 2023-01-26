@@ -9,9 +9,9 @@
 #ifndef XWIDGETS_COLOR_PICKER_HPP
 #define XWIDGETS_COLOR_PICKER_HPP
 
-#include "mixin/xdescription.hpp"
 #include "xcolor.hpp"
 #include "xmaterialize.hpp"
+#include "xmixin_description.hpp"
 #include "xwidget.hpp"
 
 namespace xw

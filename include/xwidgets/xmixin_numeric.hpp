@@ -13,7 +13,7 @@
 #include <xeus/xmessage.hpp>
 #include <xproperty/xobserved.hpp>
 
-#include "../xcommon.hpp"
+#include "xcommon.hpp"
 
 namespace xw
 {

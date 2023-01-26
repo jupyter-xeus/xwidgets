@@ -9,9 +9,9 @@
 #ifndef XWIDGETS_PLAY_HPP
 #define XWIDGETS_PLAY_HPP
 
-#include "mixin/xdescription.hpp"
-#include "mixin/xnumeric.hpp"
 #include "xmaterialize.hpp"
+#include "xmixin_description.hpp"
+#include "xmixin_numeric.hpp"
 #include "xwidget.hpp"
 
 namespace xw

@@ -14,10 +14,10 @@
 
 #include <xtl/xoptional.hpp>
 
-#include "mixin/xnumeric.hpp"
 #include "xcolor.hpp"
 #include "xeither.hpp"
 #include "xmaterialize.hpp"
+#include "xmixin_numeric.hpp"
 #include "xstyle.hpp"
 #include "xwidget.hpp"
 

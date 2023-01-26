@@ -11,7 +11,7 @@
 
 #include <string>
 
-#include "mixin/xdescription.hpp"
+#include "xmixin_description.hpp"
 #include "xwidget.hpp"
 
 namespace xw
