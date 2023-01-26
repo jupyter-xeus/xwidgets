@@ -31,7 +31,6 @@ namespace xw
     protected:
 
         xstyle();
-        using base_type::base_type;
 
     private:
 
@@ -56,7 +55,6 @@ namespace xw
 
     template <class D>
     inline xstyle<D>::xstyle()
-        : base_type()
     {
         set_defaults();
     }
