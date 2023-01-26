@@ -11,9 +11,10 @@
 
 #include <string>
 
+#include <xtl/xjson.hpp>
+#include <xtl/xoptional.hpp>
+
 #include "xmaterialize.hpp"
-#include "xtl/xjson.hpp"
-#include "xtl/xoptional.hpp"
 #include "xtransport.hpp"
 
 namespace xw

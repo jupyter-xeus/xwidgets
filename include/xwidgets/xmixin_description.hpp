@@ -6,15 +6,23 @@
  * The full license is in the file LICENSE, distributed with this software. *
  ****************************************************************************/
 
-#ifndef XWIDGETS_DESCRIPTION_HPP
-#define XWIDGETS_DESCRIPTION_HPP
+#ifndef XWIDGETS_MIXIN_DESCRIPTION_HPP
+#define XWIDGETS_MIXIN_DESCRIPTION_HPP
 
 #include <string>
 
+#include <nlohmann/json.hpp>
+#include <xeus/xmessage.hpp>
+#include <xproperty/xobserved.hpp>
+
+#include "xcommon.hpp"
+#include "xmaterialize.hpp"
 #include "xstyle.hpp"
 
 namespace xw
 {
+    namespace nl = nlohmann;
+
     /*********************************
      * description_style declaration *
      *********************************/
@@ -44,9 +52,35 @@ namespace xw
 
     using description_style = xmaterialize<xdescription_style>;
 
-    /********************************
+    namespace mixin
+    {
+        /******************************
+         *  xdescription declaration  *
+         ******************************/
+
+        template <class D>
+        class xdescription
+        {
+        public:
+
+            using derived_type = D;
+
+            void serialize_state(nl::json&, xeus::buffer_sequence&) const;
+            void apply_patch(const nl::json&, const xeus::buffer_sequence&);
+
+            XPROPERTY(std::string, derived_type, description);
+            XPROPERTY(bool, derived_type, description_allow_html, false);
+            XPROPERTY(::xw::description_style, derived_type, style);
+
+        protected:
+
+            xdescription() = default;
+        };
+    }
+
+    /*************************************
      * xdescription_style implementation *
-     ********************************/
+     *************************************/
 
     template <class D>
     inline void xdescription_style<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
@@ -85,5 +119,28 @@ namespace xw
     extern template class xmaterialize<xdescription_style>;
     extern template class xtransport<xmaterialize<xdescription_style>>;
 
+    namespace mixin
+    {
+        /*********************************
+         *  xdescription implementation  *
+         *********************************/
+
+        template <class D>
+        inline void xdescription<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
+        {
+            xwidgets_serialize(description(), state["description"], buffers);
+            xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
+            xwidgets_serialize(style(), state["style"], buffers);
+        }
+
+        template <class D>
+        inline void xdescription<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
+        {
+            set_property_from_patch(description, patch, buffers);
+            set_property_from_patch(description_allow_html, patch, buffers);
+            set_property_from_patch(style, patch, buffers);
+        }
+    }
 }
+
 #endif

@@ -10,8 +10,8 @@
 #define XWIDGETS_COLOR_PICKER_HPP
 
 #include "xcolor.hpp"
-#include "xdescription_style.hpp"
 #include "xmaterialize.hpp"
+#include "xmixin_description.hpp"
 #include "xwidget.hpp"
 
 namespace xw
@@ -21,29 +21,26 @@ namespace xw
      ****************************/
 
     template <class D>
-    class xcolor_picker : public xwidget<D>
+    class xcolor_picker : public xwidget<D>,
+                          public mixin::xdescription<D>
     {
     public:
 
-        using base_type = xwidget<D>;
         using derived_type = D;
-
+        using base_type = xwidget<D>;
+        using mixin_description_type = mixin::xdescription<D>;
         using value_type = html_color;
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, description);
-        XPROPERTY(bool, derived_type, description_allow_html, false);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(bool, derived_type, concise);
-        XPROPERTY(::xw::description_style, derived_type, style);
         XPROPERTY(value_type, derived_type, value, "black");
 
     protected:
 
         xcolor_picker();
-        using base_type::base_type;
 
     private:
 
@@ -60,12 +57,10 @@ namespace xw
     inline void xcolor_picker<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
+        mixin_description_type::serialize_state(state, buffers);
 
         xwidgets_serialize(concise(), state["concise"], buffers);
-        xwidgets_serialize(description(), state["description"], buffers);
-        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
-        xwidgets_serialize(style(), state["style"], buffers);
         xwidgets_serialize(value(), state["value"], buffers);
     }
 
@@ -73,18 +68,15 @@ namespace xw
     inline void xcolor_picker<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
+        mixin_description_type::apply_patch(patch, buffers);
 
         set_property_from_patch(concise, patch, buffers);
-        set_property_from_patch(description, patch, buffers);
-        set_property_from_patch(description_allow_html, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
         set_property_from_patch(value, patch, buffers);
     }
 
     template <class D>
     inline xcolor_picker<D>::xcolor_picker()
-        : base_type()
     {
         set_defaults();
     }

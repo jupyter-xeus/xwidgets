@@ -15,7 +15,7 @@
 #include <utility>
 #include <vector>
 
-#include "xdescription_style.hpp"
+#include "xmixin_description.hpp"
 #include "xwidget.hpp"
 
 namespace xw
@@ -25,12 +25,14 @@ namespace xw
      **************************/
 
     template <class D>
-    class xselection : public xwidget<D>
+    class xselection : public xwidget<D>,
+                       public mixin::xdescription<D>
     {
     public:
 
-        using base_type = xwidget<D>;
         using derived_type = D;
+        using base_type = xwidget<D>;
+        using mixin_description_type = mixin::xdescription<D>;
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
@@ -40,11 +42,8 @@ namespace xw
         using index_type = options_type::size_type;
 
         XPROPERTY(options_type, derived_type, _options_labels);
-        XPROPERTY(std::string, derived_type, description);
-        XPROPERTY(bool, derived_type, description_allow_html, false);
         XPROPERTY(bool, derived_type, disabled, false);
         XPROPERTY(index_type, derived_type, index);
-        XPROPERTY(::xw::description_style, derived_type, style);
 
         // non-synchronized properties
         XPROPERTY(value_type, derived_type, value);
@@ -61,7 +60,6 @@ namespace xw
     private:
 
         void set_defaults();
-
         void setup_properties();
     };
 
@@ -70,12 +68,14 @@ namespace xw
      ***********************************/
 
     template <class D>
-    class xmultiple_selection : public xwidget<D>
+    class xmultiple_selection : public xwidget<D>,
+                                public mixin::xdescription<D>
     {
     public:
 
-        using base_type = xwidget<D>;
         using derived_type = D;
+        using base_type = xwidget<D>;
+        using mixin_description_type = mixin::xdescription<D>;
 
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
@@ -85,11 +85,8 @@ namespace xw
         using index_type = std::vector<options_type::size_type>;
 
         XPROPERTY(options_type, derived_type, _options_labels);
-        XPROPERTY(std::string, derived_type, description);
-        XPROPERTY(bool, derived_type, description_allow_html, false);
         XPROPERTY(bool, derived_type, disabled, false);
         XPROPERTY(index_type, derived_type, index);
-        XPROPERTY(::xw::description_style, derived_type, style);
 
         // non-synchronized properties
         XPROPERTY(value_type, derived_type, value);
@@ -100,12 +97,9 @@ namespace xw
         explicit xmultiple_selection(options_type&& options);
         explicit xmultiple_selection(const options_type& options);
 
-        using base_type::base_type;
-
     private:
 
         void set_defaults();
-
         void setup_properties();
     };
 
@@ -117,35 +111,29 @@ namespace xw
     inline void xselection<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
+        mixin_description_type::serialize_state(state, buffers);
 
         xwidgets_serialize(_options_labels(), state["_options_labels"], buffers);
-        xwidgets_serialize(description(), state["description"], buffers);
-        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(index(), state["index"], buffers);
-        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
     inline void xselection<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
+        mixin_description_type::apply_patch(patch, buffers);
 
         set_property_from_patch(_options_labels, patch, buffers);
-        set_property_from_patch(description, patch, buffers);
-        set_property_from_patch(description_allow_html, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(index, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>
     inline xselection<D>::xselection()
-        : base_type()
     {
         set_defaults();
-
-        this->setup_properties();
+        setup_properties();
     }
 
     template <class D>
@@ -229,26 +217,22 @@ namespace xw
     inline void xmultiple_selection<D>::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
     {
         base_type::serialize_state(state, buffers);
+        mixin_description_type::serialize_state(state, buffers);
 
         xwidgets_serialize(_options_labels(), state["_options_labels"], buffers);
-        xwidgets_serialize(description(), state["description"], buffers);
-        xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
         xwidgets_serialize(disabled(), state["disabled"], buffers);
         xwidgets_serialize(index(), state["index"], buffers);
-        xwidgets_serialize(style(), state["style"], buffers);
     }
 
     template <class D>
     inline void xmultiple_selection<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
+        mixin_description_type::apply_patch(patch, buffers);
 
         set_property_from_patch(_options_labels, patch, buffers);
-        set_property_from_patch(description, patch, buffers);
-        set_property_from_patch(description_allow_html, patch, buffers);
         set_property_from_patch(disabled, patch, buffers);
         set_property_from_patch(index, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>

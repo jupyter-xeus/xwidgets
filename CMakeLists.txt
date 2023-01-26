@@ -101,7 +101,6 @@ set(
     ${XWIDGETS_SOURCE_DIR}/xcolor_picker.cpp
     ${XWIDGETS_SOURCE_DIR}/xcommon.cpp
     ${XWIDGETS_SOURCE_DIR}/xcontroller.cpp
-    ${XWIDGETS_SOURCE_DIR}/xdescription_style.cpp
     ${XWIDGETS_SOURCE_DIR}/xdropdown.cpp
     ${XWIDGETS_SOURCE_DIR}/xfactory.cpp
     ${XWIDGETS_SOURCE_DIR}/xholder.cpp
@@ -114,6 +113,7 @@ set(
     ${XWIDGETS_SOURCE_DIR}/xmedia.cpp
     ${XWIDGETS_SOURCE_DIR}/xnumber.cpp
     ${XWIDGETS_SOURCE_DIR}/xnumber_bounded.cpp
+    ${XWIDGETS_SOURCE_DIR}/xmixin_description.cpp
     ${XWIDGETS_SOURCE_DIR}/xoutput.cpp
     ${XWIDGETS_SOURCE_DIR}/xpassword.cpp
     ${XWIDGETS_SOURCE_DIR}/xplay.cpp

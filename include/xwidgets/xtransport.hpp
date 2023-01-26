@@ -13,11 +13,12 @@
 #include <string>
 #include <utility>
 
+#include <xeus/xcomm.hpp>
+#include <xeus/xinterpreter.hpp>
+#include <xproperty/xobserved.hpp>
+
 #include "xcommon.hpp"
-#include "xeus/xcomm.hpp"
-#include "xeus/xinterpreter.hpp"
 #include "xholder.hpp"
-#include "xproperty/xobserved.hpp"
 #include "xregistry.hpp"
 #include "xwidgets_config.hpp"
 
