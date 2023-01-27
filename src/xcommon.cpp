@@ -1,3 +1,11 @@
+/***************************************************************************
+ * Copyright (c) 2022, QuantStack and XWidgets contributors                 *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+
 #include "xwidgets/xcommon.hpp"
 
 #include <algorithm>
@@ -140,7 +148,7 @@ namespace xw
         return m_buffer_paths;
     }
 
-    void xcommon::send_patch(nl::json&& patch, xeus::buffer_sequence&& buffers) const
+    void xcommon::send_patch(nl::json&& patch, xeus::buffer_sequence&& buffers, const char* method) const
     {
         // extract buffer paths
         auto paths = nl::json::array();
@@ -152,7 +160,7 @@ namespace xw
 
         // data
         nl::json data;
-        data["method"] = "update";
+        data["method"] = method;
         data["state"] = std::move(patch);
         data["buffer_paths"] = std::move(paths);
 

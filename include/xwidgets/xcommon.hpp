@@ -81,7 +81,7 @@ namespace xw
         template <class T>
         void notify(const std::string& name, const T& value) const;
         void send(nl::json&&, xeus::buffer_sequence&&) const;
-        void send_patch(nl::json&&, xeus::buffer_sequence&&) const;
+        void send_patch(nl::json&&, xeus::buffer_sequence&&, const char* method = "update") const;
 
     private:
 
@@ -117,6 +117,7 @@ namespace xw
         nl::json state;
         xeus::buffer_sequence buffers;
         xwidgets_serialize(value, state[name], buffers);
+        const char* method = "update";
 
         // A current message is set, which implies that this change is triggered due to
         // a change from the frontend.
@@ -126,19 +127,20 @@ namespace xw
             const auto& hold_buffers = m_hold->buffers();
 
             // The change that triggered this function is the same as the change coming from
-            // the frontend so we need not send back an update to the frontend
+            // the frontend so we need not send back an update but only an "echo_update" since
+            // protocol 2.1.0
             auto const it = hold_state.find(name);
             if ((it != hold_state.end()) && same_patch(name, *it, hold_buffers, state[name], buffers))
             {
-                return;
+                method = "echo_update";
             }
             // On the contrary, the update could differ from the change in the frontend.
             // For instance, if a validator adjusted the value of a property from the one
             // recieved from the frontend.
-            // In this case, we need to send an update back to the frontend.
+            // In this case, we need to send a regular "update" back to the frontend.
         }
 
-        send_patch(std::move(state), std::move(buffers));
+        send_patch(std::move(state), std::move(buffers), method);
     }
 }
 
