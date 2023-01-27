@@ -118,19 +118,24 @@ namespace xw
         xeus::buffer_sequence buffers;
         xwidgets_serialize(value, state[name], buffers);
 
+        // A current message is set, which implies that this change is triggered due to
+        // a change from the frontend.
         if (m_hold != nullptr)
         {
             const auto& hold_state = m_hold->content()["data"]["state"];
             const auto& hold_buffers = m_hold->buffers();
 
-            auto it = hold_state.find(name);
-            if (it != hold_state.end())
+            // The change that triggered this function is the same as the change coming from
+            // the frontend so we need not send back an update to the frontend
+            auto const it = hold_state.find(name);
+            if ((it != hold_state.end()) && same_patch(name, *it, hold_buffers, state[name], buffers))
             {
-                if (same_patch(name, *it, hold_buffers, state[name], buffers))
-                {
-                    return;
-                }
+                return;
             }
+            // On the contrary, the update could differ from the change in the frontend.
+            // For instance, if a validator adjusted the value of a property from the one
+            // recieved from the frontend.
+            // In this case, we need to send an update back to the frontend.
         }
 
         send_patch(std::move(state), std::move(buffers));

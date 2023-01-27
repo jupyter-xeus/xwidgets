@@ -193,12 +193,16 @@ namespace xw
             const nl::json& state = data["state"];
             const auto& buffers = message.buffers();
             const nl::json& buffer_paths = data["buffer_paths"];
+            // Set the current message in ``xcommom::hold()``
+            // As a result ``x::commom`` will know that the change is coming from the frontend
             this->hold() = std::addressof(message);
-            ;
             insert_buffer_paths(const_cast<nl::json&>(state), buffer_paths);
+            // This will potentially change the properties of the widget.
+            // As a result, ``xp::observed`` will call ``xcommon::notify`
             /*D*/
             this->derived_cast().apply_patch(state, buffers);
             /*D*/
+            // Clear current message.
             this->hold() = nullptr;
         }
         else if (method == "request_state")
