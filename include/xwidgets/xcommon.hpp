@@ -13,8 +13,10 @@
 #include <utility>
 #include <vector>
 
+#include <xeus/xcomm.hpp>
+#include <xtl/xoptional.hpp>
+
 #include "xbinary.hpp"
-#include "xeus/xcomm.hpp"
 #include "xwidgets_config.hpp"
 
 namespace xw
@@ -85,6 +87,13 @@ namespace xw
 
     private:
 
+        /**
+         * Indicate whether a global setting activates or deactivates ``echo_update`` messages.
+         *
+         * If the optional is empty, then no setting is set explicitly.
+         */
+        static xtl::xoptional<bool> global_echo_update();
+
         bool
         same_patch(const std::string&, const nl::json&, const xeus::buffer_sequence&, const nl::json&, const xeus::buffer_sequence&)
             const;
@@ -132,6 +141,14 @@ namespace xw
             auto const it = hold_state.find(name);
             if ((it != hold_state.end()) && same_patch(name, *it, hold_buffers, state[name], buffers))
             {
+                // If the "echo_update" is explicitly deactivated we do not send the message
+                auto const echo_update = global_echo_update();
+                if (echo_update.has_value() && !echo_update.value())
+                {
+                    return;
+                }
+                // If the "echo_update" is explicitly activated or unspecified, we continue and
+                // send message
                 method = "echo_update";
             }
             // On the contrary, the update could differ from the change in the frontend.
