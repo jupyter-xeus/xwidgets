@@ -109,8 +109,13 @@ namespace xw
         {
             number_bounded<double> n;
             n.max = 10.;
+            REQUIRE_EQ(n.max(), 10.);
             n.value = n.max() + 1.;
             REQUIRE_EQ(n.max(), n.value());
+            n.value = n.min() - 1.;
+            REQUIRE_EQ(n.min(), n.value());
+            REQUIRE_THROWS_AS(n.min = n.max() + 1., std::runtime_error);
+            REQUIRE_THROWS_AS(n.max = n.min() - 1., std::runtime_error);
         }
 
         TEST_CASE("password")
