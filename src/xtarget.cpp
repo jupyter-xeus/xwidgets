@@ -27,6 +27,12 @@ namespace xw
             return "jupyter.widget";
         }
 
+        /**
+         * Check frontend widget version and instanciate widget.
+         *
+         * This callback function is called by Xeus when a comm channel is open by the frontend
+         * to create a companion widget in the kernel.
+         */
         void xobject_comm_opened(xeus::xcomm&& comm, const xeus::xmessage& msg)
         {
             const nl::json& content = msg.content();
@@ -58,7 +64,9 @@ namespace xw
         void register_widget_target()
         {
             xeus::get_interpreter().comm_manager().register_comm_target(
+                /** The target name */
                 get_widget_target_name(),
+                /** Callback for comm opened by the frontend on this target, one per widget */
                 xobject_comm_opened
             );
         }
