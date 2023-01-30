@@ -236,7 +236,12 @@ namespace xw
     inline xcontroller<D>::xcontroller()
         : base_type()
     {
-        register_control_types();
+        // Making a dummy static variable to only call the registration once.
+        static const auto initialized = []()
+        {
+            register_control_types();
+            return true;
+        }();
         set_defaults();
     }
 

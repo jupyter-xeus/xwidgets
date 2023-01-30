@@ -66,7 +66,12 @@ namespace xw
 
     xeus::xtarget* get_widget_target()
     {
-        register_widget_target();
+        // Making a dummy static variable to only call the registration once.
+        static const auto initialized = []()
+        {
+            register_widget_target();
+            return true;
+        }();
         return ::xeus::get_interpreter().comm_manager().target(get_widget_target_name());
     }
 }
