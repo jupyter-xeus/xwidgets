@@ -166,36 +166,34 @@ namespace xw
             {
             }
 
-            virtual ~xholder_owning()
-            {
-            }
+            ~xholder_owning() override = default;
 
-            virtual base_type* clone() const override
+            base_type* clone() const override
             {
                 return new xholder_owning(*this);
             }
 
-            virtual void display() const override
+            void display() const override
             {
                 m_value.display();
             }
 
-            virtual xeus::xguid id() const override
+            xeus::xguid id() const override
             {
                 return m_value.id();
             }
 
-            virtual void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
+            void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
             {
                 return m_value.serialize_state(state, buffers);
             }
 
-            virtual xtl::any value() & override
+            xtl::any value() & override
             {
                 return xtl::closure(m_value);
             }
 
-            virtual const xtl::any value() const& override
+            const xtl::any value() const& override
             {
                 return xtl::closure(m_value);
             }
@@ -223,37 +221,37 @@ namespace xw
             {
             }
 
-            virtual ~xholder_weak()
+            ~xholder_weak() override
             {
                 p_value = nullptr;
             }
 
-            virtual base_type* clone() const override
+            base_type* clone() const override
             {
                 return new xholder_weak(*this);
             }
 
-            virtual void display() const override
+            void display() const override
             {
                 p_value->display();
             }
 
-            virtual xeus::xguid id() const override
+            xeus::xguid id() const override
             {
                 return p_value->id();
             }
 
-            virtual void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
+            void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
             {
                 return p_value->serialize_state(state, buffers);
             }
 
-            virtual xtl::any value() & override
+            xtl::any value() & override
             {
                 return xtl::closure(*p_value);
             }
 
-            virtual const xtl::any value() const& override
+            const xtl::any value() const& override
             {
                 return xtl::closure(*p_value);
             }
@@ -288,34 +286,34 @@ namespace xw
             {
             }
 
-            virtual ~xholder_shared() = default;
+            ~xholder_shared() override = default;
 
-            virtual base_type* clone() const override
+            base_type* clone() const override
             {
                 return new xholder_shared(*this);
             }
 
-            virtual void display() const override
+            void display() const override
             {
                 p_value->display();
             }
 
-            virtual xeus::xguid id() const override
+            xeus::xguid id() const override
             {
                 return p_value->id();
             }
 
-            virtual void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
+            void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
             {
                 return p_value->serialize_state(state, buffers);
             }
 
-            virtual xtl::any value() & override
+            xtl::any value() & override
             {
                 return xtl::closure(*p_value);
             }
 
-            virtual const xtl::any value() const& override
+            const xtl::any value() const& override
             {
                 return xtl::closure(*p_value);
             }
