@@ -14,10 +14,12 @@
 #include <string>
 #include <utility>
 
-#include "nlohmann/json.hpp"
-#include "xeus/xguid.hpp"
-#include "xtl/xany.hpp"
-#include "xtl/xclosure.hpp"
+#include <nlohmann/json.hpp>
+#include <xeus/xguid.hpp>
+#include <xeus/xmessage.hpp>
+#include <xtl/xany.hpp>
+#include <xtl/xclosure.hpp>
+
 #include "xwidgets_config.hpp"
 
 namespace nl = nlohmann;
@@ -68,6 +70,7 @@ namespace xw
 
         void display() const;
         xeus::xguid id() const;
+        void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const;
 
         xtl::any value() &;
         const xtl::any value() const&;
@@ -131,6 +134,7 @@ namespace xw
 
             virtual void display() const = 0;
             virtual xeus::xguid id() const = 0;
+            virtual void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const = 0;
 
             virtual xtl::any value() & = 0;
             virtual const xtl::any value() const& = 0;
@@ -179,6 +183,11 @@ namespace xw
             virtual xeus::xguid id() const override
             {
                 return m_value.id();
+            }
+
+            virtual void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
+            {
+                return m_value.serialize_state(state, buffers);
             }
 
             virtual xtl::any value() & override
@@ -232,6 +241,11 @@ namespace xw
             virtual xeus::xguid id() const override
             {
                 return p_value->id();
+            }
+
+            virtual void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
+            {
+                return p_value->serialize_state(state, buffers);
             }
 
             virtual xtl::any value() & override
@@ -289,6 +303,11 @@ namespace xw
             virtual xeus::xguid id() const override
             {
                 return p_value->id();
+            }
+
+            virtual void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
+            {
+                return p_value->serialize_state(state, buffers);
             }
 
             virtual xtl::any value() & override

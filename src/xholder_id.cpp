@@ -51,6 +51,11 @@ namespace xw
                 return holder.id();
             }
 
+            virtual void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
+            {
+                return get_transport_registry().find(m_id).serialize_state(state, buffers);
+            }
+
             virtual xtl::any value() & override
             {
                 auto& holder = get_transport_registry().find(m_id);

@@ -64,6 +64,12 @@ namespace xw
         return p_holder->id();
     }
 
+    void xholder::serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const
+    {
+        check_holder();
+        return p_holder->serialize_state(state, buffers);
+    }
+
     xtl::any xholder::value() &
     {
         check_holder();
