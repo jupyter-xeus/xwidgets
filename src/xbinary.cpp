@@ -99,23 +99,34 @@ namespace xw
         }
     }
 
-    void extract_buffer_paths(
-        const std::vector<xjson_path_type>& to_check,
+    void reorder_buffer_paths(
+        const std::vector<xjson_path_type>& buffer_paths,
         const nl::json& patch,
-        const xeus::buffer_sequence& buffers,
-        nl::json& buffer_paths
+        std::vector<nl::json>& out
     )
     {
-        buffer_paths = nl::json(buffers.size(), nullptr);
-        for (const auto& path : to_check)
+        auto ensure_out_size = [&out](std::size_t size)
+        {
+            if (out.size() < size)
+            {
+                out.resize(size, nullptr);
+            }
+        };
+
+        ensure_out_size(buffer_paths.size());
+        for (const auto& path : buffer_paths)
         {
             const nl::json* item = detail::get_buffers(patch, path);
             if (item != nullptr && item->is_string())
             {
-                const std::string leaf = item->get<std::string>();
+                const auto& leaf = item->get<std::string>();
                 if (is_buffer_reference(leaf))
                 {
-                    buffer_paths[buffer_index(leaf)] = path;
+                    auto const idx = buffer_index(leaf);
+                    // Idx may be greater than to_check.size() when the buffers are used with
+                    // multiple states
+                    ensure_out_size(idx + 1);
+                    out[idx] = path;
                 }
             }
         }

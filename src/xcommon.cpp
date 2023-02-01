@@ -154,8 +154,8 @@ namespace xw
     void xcommon::send_patch(nl::json&& patch, xeus::buffer_sequence&& buffers, const char* method) const
     {
         // extract buffer paths
-        auto paths = nl::json::array();
-        extract_buffer_paths(buffer_paths(), patch, buffers, paths);
+        std::vector<nl::json> paths{};
+        reorder_buffer_paths(buffer_paths(), patch, paths);
 
         // metadata
         nl::json metadata;
@@ -174,8 +174,8 @@ namespace xw
     void xcommon::open(nl::json&& patch, xeus::buffer_sequence&& buffers)
     {
         // extract buffer paths
-        auto paths = nl::json::array();
-        extract_buffer_paths(buffer_paths(), patch, buffers, paths);
+        std::vector<nl::json> paths{};
+        reorder_buffer_paths(buffer_paths(), patch, paths);
 
         // metadata
         nl::json metadata;
