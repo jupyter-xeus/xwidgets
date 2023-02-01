@@ -70,6 +70,12 @@ namespace xw
         return p_holder->serialize_state(state, buffers);
     }
 
+    const std::vector<xjson_path_type>& xholder::buffer_paths() const
+    {
+        check_holder();
+        return p_holder->buffer_paths();
+    }
+
     xtl::any xholder::value() &
     {
         check_holder();

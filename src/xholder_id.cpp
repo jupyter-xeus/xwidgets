@@ -54,6 +54,11 @@ namespace xw
                 return get_transport_registry().find(m_id).serialize_state(state, buffers);
             }
 
+            const std::vector<xjson_path_type>& buffer_paths() const override
+            {
+                return get_transport_registry().find(m_id).buffer_paths();
+            }
+
             xtl::any value() & override
             {
                 return get_transport_registry().find(m_id).value();

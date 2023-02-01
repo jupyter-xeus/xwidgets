@@ -57,6 +57,8 @@ namespace xw
 
         xeus::xguid id() const noexcept;
         void display() const;
+        std::vector<xjson_path_type>& buffer_paths();
+        const std::vector<xjson_path_type>& buffer_paths() const;
 
     protected:
 
@@ -74,8 +76,6 @@ namespace xw
         const xeus::xcomm& comm() const;
         const xeus::xmessage*& hold();
         const xeus::xmessage* const& hold() const;
-        std::vector<xjson_path_type>& buffer_paths();
-        const std::vector<xjson_path_type>& buffer_paths() const;
 
         void open(nl::json&& patch, xeus::buffer_sequence&& buffers);
         void close();

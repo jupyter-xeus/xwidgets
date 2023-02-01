@@ -20,6 +20,7 @@
 #include <xtl/xany.hpp>
 #include <xtl/xclosure.hpp>
 
+#include "xbinary.hpp"
 #include "xwidgets_config.hpp"
 
 namespace nl = nlohmann;
@@ -71,6 +72,7 @@ namespace xw
         void display() const;
         xeus::xguid id() const;
         void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const;
+        const std::vector<xjson_path_type>& buffer_paths() const;
 
         xtl::any value() &;
         const xtl::any value() const&;
@@ -135,6 +137,7 @@ namespace xw
             virtual void display() const = 0;
             virtual xeus::xguid id() const = 0;
             virtual void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const = 0;
+            virtual const std::vector<xjson_path_type>& buffer_paths() const = 0;
 
             virtual xtl::any value() & = 0;
             virtual const xtl::any value() const& = 0;
@@ -186,6 +189,11 @@ namespace xw
             void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
             {
                 return m_value.serialize_state(state, buffers);
+            }
+
+            const std::vector<xjson_path_type>& buffer_paths() const override
+            {
+                return m_value.buffer_paths();
             }
 
             xtl::any value() & override
@@ -244,6 +252,11 @@ namespace xw
             void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
             {
                 return p_value->serialize_state(state, buffers);
+            }
+
+            const std::vector<xjson_path_type>& buffer_paths() const override
+            {
+                return p_value->buffer_paths();
             }
 
             xtl::any value() & override
@@ -306,6 +319,11 @@ namespace xw
             void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
             {
                 return p_value->serialize_state(state, buffers);
+            }
+
+            const std::vector<xjson_path_type>& buffer_paths() const override
+            {
+                return p_value->buffer_paths();
             }
 
             xtl::any value() & override
