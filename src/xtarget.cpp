@@ -181,9 +181,11 @@ namespace xw
             );
 
             registered_comm.on_close(
-                [](const ::xeus::xmessage&)
+                [&](const ::xeus::xmessage&)
                 {
-                    // TODO need to remove from registry otherwise it is leaking
+                    // This is not trivial. The comm is destructed from within one of its method.
+                    // This works because no other instruction are executed by Xeus afterwards.
+                    comm_registry.erase(registered_comm.id());
                 }
             );
         }
