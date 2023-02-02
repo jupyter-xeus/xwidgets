@@ -77,6 +77,20 @@ namespace xw
             CHECK_EQ(true, c.indent());
         }
 
+        TEST_CASE("checkbox.style")
+        {
+            checkbox c;
+            c.style = checkbox_style::initialize()  //
+                          .background("black")
+                          .description_width("3")
+                          .finalize();
+            REQUIRE_EQ("black", c.style().background());
+            REQUIRE_EQ("3", c.style().description_width());
+
+            c.style().description_width = "50";
+            REQUIRE_EQ("50", c.style().description_width());
+        }
+
         TEST_CASE("html")
         {
             html h;

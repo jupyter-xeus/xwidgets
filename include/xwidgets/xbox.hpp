@@ -57,12 +57,13 @@ namespace xw
     protected:
 
         xbox();
-        using base_type::base_type;
 
     private:
 
         void set_defaults();
     };
+
+    using box = xmaterialize<xbox>;
 
     /********************
      * hbox declaration *
@@ -216,12 +217,12 @@ namespace xw
     template <class D>
     inline void xbox<D>::set_defaults()
     {
-        this->_model_name() = "BoxModel";
-        this->_view_name() = "BoxView";
         this->_model_module() = "@jupyter-widgets/controls";
-        this->_view_module() = "@jupyter-widgets/controls";
         this->_model_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_model_name() = "BoxModel";
+        this->_view_module() = "@jupyter-widgets/controls";
         this->_view_module_version() = XWIDGETS_CONTROLS_VERSION;
+        this->_view_name() = "BoxView";
     }
 
     /************************
@@ -230,7 +231,6 @@ namespace xw
 
     template <class D>
     inline xhbox<D>::xhbox()
-        : base_type()
     {
         set_defaults();
     }
@@ -248,7 +248,6 @@ namespace xw
 
     template <class D>
     inline xvbox<D>::xvbox()
-        : base_type()
     {
         set_defaults();
     }

@@ -13,6 +13,7 @@
 #include <iterator>
 #include <map>
 #include <string>
+#include <tuple>
 
 #include <doctest/doctest.h>
 #include <nlohmann/json-schema.hpp>
@@ -31,6 +32,8 @@ namespace xw
     nl::json serialize();
     template <typename Widget>
     std::string model_name();
+    auto all_widget_model_names() -> std::array<std::string, std::tuple_size_v<AllWidgets>>;
+    auto all_style_model_names() -> std::array<std::string, std::tuple_size_v<AllStyles>>;
 
 #ifndef XWIDGETS_MODELS_FILE
 #error "XWIDGETS_MODELS_FILE must be defined pointing to model file"
@@ -78,6 +81,56 @@ namespace xw
 
         TEST_CASE_TEMPLATE_APPLY(packages_widgets, AllWidgets);
         TEST_CASE_TEMPLATE_APPLY(packages_widgets, AllStyles);
+
+        TEST_CASE("missing")
+        {
+            auto widgets_contains = [](auto const& val)
+            {
+                static auto const all_widgets = all_widget_model_names();
+                return std::find(all_widgets.begin(), all_widgets.end(), val) < all_widgets.end();
+            };
+
+            auto styles_contains = [](auto const& val)
+            {
+                static auto const all_styles = all_style_model_names();
+                return std::find(all_styles.begin(), all_styles.end(), val) < all_styles.end();
+            };
+
+            // Missing widgets tracked in https://github.com/jupyter-xeus/xwidgets/issues/249
+            // This test is still useful even with the todo so that we don't get model names
+            // wrong.
+            auto todo_contains = [](auto const& val)
+            {
+                static auto const todo = std::array{
+                    "ColorsInputModel",
+                    "ComboboxModel",
+                    "DatePickerModel",
+                    "DatetimeModel",
+                    "FileUploadModel",
+                    "FloatLogSliderModel",
+                    "FloatRangeSliderModel",
+                    "FloatsInputModel",
+                    "GridBoxModel",
+                    "HTMLMathModel",
+                    "HTMLMathStyleModel",
+                    "IntRangeSliderModel",
+                    "IntsInputModel",
+                    "NaiveDatetimeModel",
+                    "StackModel",
+                    "TagsInputModel",
+                    "TimeModel",
+                };
+                return std::find(todo.begin(), todo.end(), val) < todo.end();
+            };
+
+            for (auto const& [model, _] : schemas)
+            {
+                // Somehow using `model` directly in the macro does not compile on clang 15.0.7
+                auto const& model_that_pleases_clang = model;
+                INFO("Checking for model ", model_that_pleases_clang);
+                CHECK((widgets_contains(model) || styles_contains(model) || todo_contains(model)));
+            }
+        }
     }
 
     /***************************************
@@ -253,4 +306,25 @@ namespace xw
         throw std::invalid_argument("Widget does not have a model name");
     }
 
+    template <typename>
+    struct all_model_names_impl;
+
+    template <typename... Widgets>
+    struct all_model_names_impl<std::tuple<Widgets...>>
+    {
+        static auto get()
+        {
+            return std::array{model_name<Widgets>()...};
+        }
+    };
+
+    auto all_widget_model_names() -> std::array<std::string, std::tuple_size_v<AllWidgets>>
+    {
+        return all_model_names_impl<AllWidgets>{}.get();
+    }
+
+    auto all_style_model_names() -> std::array<std::string, std::tuple_size_v<AllStyles>>
+    {
+        return all_model_names_impl<AllStyles>{}.get();
+    }
 }
