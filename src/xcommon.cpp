@@ -236,11 +236,39 @@ namespace xw
             return s;
         }
 
+        bool is_zero_number(std::string const& s)
+        {
+            try
+            {
+                auto val = std::stod(s);
+                return val == decltype(val)(0);
+            }
+            catch (std::invalid_argument const&)
+            {
+                return false;
+            }
+            catch (std::out_of_range const&)
+            {
+                return false;
+            }
+        }
+
+        /**
+         * Check if a string is true.
+         *
+         * A string is true, if it does not contain a negative value, such as "false" or 0.
+         * This is the convention adopted in Jupyter
+         * https://github.com/jupyter/jupyter_core/blob/98ab1ef453956333a85bb6eee494ad0a9bab2c02/jupyter_core/paths.py#L47
+         */
         bool is_true_string(const char* str)
         {
             const std::string s = tolower(trim(str));
-            static const auto trues = {"true", "on", "yes", "1"};
-            return std::find(trues.begin(), trues.end(), s) < trues.end();
+            if (is_zero_number(str))
+            {
+                return false;
+            }
+            static constexpr auto falses = {"no", "n", "false", "off"};
+            return std::find(falses.begin(), falses.end(), s) == falses.end();
         }
 
         xtl::xoptional<bool> get_tristate_env(const char* name)
