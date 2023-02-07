@@ -32,7 +32,7 @@
 
 // Protocol version
 #define XWIDGETS_PROTOCOL_VERSION_MAJOR 2
-#define XWIDGETS_PROTOCOL_VERSION_MINOR 0
+#define XWIDGETS_PROTOCOL_VERSION_MINOR 1
 #define XWIDGETS_PROTOCOL_VERSION_PATCH 0
 
 // Semver requirement for @jupyter-widgets/base

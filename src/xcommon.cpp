@@ -1,9 +1,20 @@
+/***************************************************************************
+ * Copyright (c) 2022, QuantStack and XWidgets contributors                 *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
+
 #include "xwidgets/xcommon.hpp"
 
 #include <algorithm>
+#include <cstdlib>
 #include <string>
 #include <utility>
 #include <vector>
+
+#include <xtl/xoptional.hpp>
 
 #include "xeus/xinterpreter.hpp"
 #include "xtarget.hpp"
@@ -140,7 +151,7 @@ namespace xw
         return m_buffer_paths;
     }
 
-    void xcommon::send_patch(nl::json&& patch, xeus::buffer_sequence&& buffers) const
+    void xcommon::send_patch(nl::json&& patch, xeus::buffer_sequence&& buffers, const char* method) const
     {
         // extract buffer paths
         auto paths = nl::json::array();
@@ -152,7 +163,7 @@ namespace xw
 
         // data
         nl::json data;
-        data["method"] = "update";
+        data["method"] = method;
         data["state"] = std::move(patch);
         data["buffer_paths"] = std::move(paths);
 
@@ -184,6 +195,69 @@ namespace xw
     {
         // close
         m_comm.close(nl::json::object(), nl::json::object(), xeus::buffer_sequence());
+    }
+
+    namespace
+    {
+        std::string tolower(std::string s)
+        {
+            auto safe_tolower = [](unsigned char c)
+            {
+                return std::tolower(c);
+            };
+            std::transform(s.begin(), s.end(), s.begin(), safe_tolower);
+            return s;
+        }
+
+        std::string ltrim(std::string s)
+        {
+            auto const safe_isnotspace = [](unsigned char ch)
+            {
+                return !std::isspace(ch);
+            };
+            s.erase(s.begin(), std::find_if(s.begin(), s.end(), safe_isnotspace));
+            return s;
+        }
+
+        std::string rtrim(std::string s)
+        {
+            auto const safe_isnotspace = [](unsigned char ch)
+            {
+                return !std::isspace(ch);
+            };
+            s.erase(std::find_if(s.rbegin(), s.rend(), safe_isnotspace).base(), s.end());
+            return s;
+        }
+
+        std::string trim(std::string s)
+        {
+            rtrim(s);
+            ltrim(s);
+            return s;
+        }
+
+        bool is_true_string(const char* str)
+        {
+            const std::string s = tolower(trim(str));
+            static const auto trues = {"true", "on", "yes", "1"};
+            return std::find(trues.begin(), trues.end(), s) < trues.end();
+        }
+
+        xtl::xoptional<bool> get_tristate_env(const char* name)
+        {
+            const char* const val = std::getenv(name);
+            if (val == nullptr)
+            {
+                return {};
+            }
+            return is_true_string(val);
+        }
+    }
+
+    xtl::xoptional<bool> xcommon::global_echo_update()
+    {
+        static const auto out = get_tristate_env("JUPYTER_WIDGETS_ECHO");
+        return out;
     }
 
     bool
