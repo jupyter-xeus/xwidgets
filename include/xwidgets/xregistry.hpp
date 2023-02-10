@@ -30,6 +30,13 @@ namespace xw
 
         using holder_type = xholder;
         using storage_type = std::unordered_map<xeus::xguid, holder_type>;
+        using mapped_type = typename storage_type::mapped_type;
+        using const_iterator = typename storage_type::const_iterator;
+
+        XWIDGETS_API const_iterator begin() const;
+        XWIDGETS_API const_iterator cbegin() const;
+        XWIDGETS_API const_iterator end() const;
+        XWIDGETS_API const_iterator cend() const;
 
         template <class D>
         void register_weak(xtransport<D>* ptr);
@@ -39,7 +46,7 @@ namespace xw
 
         XWIDGETS_API void unregister(xeus::xguid id);
 
-        XWIDGETS_API typename storage_type::mapped_type& find(xeus::xguid id);
+        XWIDGETS_API mapped_type& find(xeus::xguid id);
 
     private:
 

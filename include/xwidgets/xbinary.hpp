@@ -23,11 +23,10 @@ namespace xw
 {
     using xjson_path_type = std::vector<std::string>;
 
-    XWIDGETS_API void extract_buffer_paths(
-        const std::vector<xjson_path_type>& to_check,
+    XWIDGETS_API void reorder_buffer_paths(
+        const std::vector<xjson_path_type>& buffer_paths,
         const nl::json& patch,
-        const xeus::buffer_sequence& buffers,
-        nl::json& buffer_paths
+        std::vector<nl::json>& out
     );
 
     XWIDGETS_API void insert_buffer_paths(nl::json& patch, const nl::json& buffer_paths);

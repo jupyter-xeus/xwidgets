@@ -13,6 +13,13 @@
 
 namespace xw
 {
+    /**
+     * Return the ``jupyter.widget`` Xeus target.
+     *
+     * This target is used by the comms of the widgets to synchronize state between the frontend
+     * (_e.g._ jupyterlab) and the backend (kernel).
+     * This function will register the target with Xeus upon first call.
+     */
     xeus::xtarget* get_widget_target();
 }
 

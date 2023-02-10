@@ -32,35 +32,41 @@ namespace xw
             {
             }
 
-            virtual ~xholder_id() = default;
+            ~xholder_id() override = default;
 
-            virtual base_type* clone() const override
+            base_type* clone() const override
             {
                 return new xholder_id(*this);
             }
 
-            virtual void display() const override
+            void display() const override
             {
-                auto& holder = get_transport_registry().find(m_id);
-                holder.display();
+                return get_transport_registry().find(m_id).display();
             }
 
-            virtual xeus::xguid id() const override
+            xeus::xguid id() const override
             {
-                auto& holder = get_transport_registry().find(m_id);
-                return holder.id();
+                return get_transport_registry().find(m_id).id();
             }
 
-            virtual xtl::any value() & override
+            void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const override
             {
-                auto& holder = get_transport_registry().find(m_id);
-                return holder.value();
+                return get_transport_registry().find(m_id).serialize_state(state, buffers);
             }
 
-            virtual const xtl::any value() const& override
+            const std::vector<xjson_path_type>& buffer_paths() const override
             {
-                const auto& holder = get_transport_registry().find(m_id);
-                return holder.value();
+                return get_transport_registry().find(m_id).buffer_paths();
+            }
+
+            xtl::any value() & override
+            {
+                return get_transport_registry().find(m_id).value();
+            }
+
+            const xtl::any value() const& override
+            {
+                return get_transport_registry().find(m_id).value();
             }
 
         private:
