@@ -8,6 +8,10 @@ on:
     branches:
     - main
 
+defaults:
+  run:
+    shell: bash -l {0}
+
 jobs:
 
   pre-commit:
@@ -22,13 +26,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04, ubuntu-20.04, macos-10.15, macos-11]
+        os: [ubuntu-20.04, ubuntu-22.04, macos-11, macos-12]
 
     steps:
     - uses: actions/checkout@v3
 
     - name: Install mamba
-      uses: mamba-org/provision-with-micromamba@v14
+      uses: mamba-org/provision-with-micromamba@main
       with:
         environment-file: environment-dev.yml
         environment-name: xwidgets
