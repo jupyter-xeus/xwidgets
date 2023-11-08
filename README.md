@@ -45,16 +45,6 @@ or JupyterLab.
 mamba install widgetsnbextension -c conda-forge
 ```
 
-- Installing the JupyterLab extension
-
-```
-jupyter labextension install @jupyter-widgets/jupyterlab-manager
-```
-
-This command defaults to installing the latest version of the JupyterLab
-extension. Depending on the version of `xwidgets` and `jupyterlab` you have
-installed you may need an older version.
-
 ## Installation from sources
 
 Or you can directly install it from the sources if you have all the
