@@ -7,10 +7,10 @@ dependencies:
 - cxx-compiler
 - ninja
   # Host dependencies
-- xeus=3.0.3
+- xeus<4
 - cppzmq
 - xproperty=0.11.0
-- nlohmann_json=3.9.1
+- nlohmann_json
   # Test dependencies
 - doctest >= 2.4.6
 - json_schema_validator
