@@ -13,7 +13,7 @@ import sphinx_rtd_theme
 
 
 def setup(app):
-    app.add_stylesheet("main_stylesheet.css")
+    app.add_css_file("main_stylesheet.css")
 
 html_theme = "sphinx_rtd_theme"
 
