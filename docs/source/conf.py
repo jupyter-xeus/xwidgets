@@ -22,7 +22,7 @@ html_theme = "sphinx_rtd_theme"
 
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
-extensions = ['breathe']
+extensions = ['breathe', 'sphinx_rtd_theme']
 breathe_projects = { 'xwidgets': '../xml' }
 templates_path = ['_templates']
 html_static_path = ['_static']
