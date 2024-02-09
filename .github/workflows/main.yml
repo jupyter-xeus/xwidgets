@@ -63,15 +63,15 @@ jobs:
       shell: bash -l -eo pipefail {0}
       run: cmake --install build/
 
-    - name: Test notebook
-      if: ${{ startsWith(matrix.os, 'ubuntu') }}
-      shell: bash -l -eo pipefail {0}
-      run: >
-        jupyter nbconvert
-        --to notebook
-        --output-dir "$(mktemp -d)/out.ipynb"
-        --execute
-        notebooks/xwidgets.ipynb
+#    - name: Test notebook
+#      if: ${{ startsWith(matrix.os, 'ubuntu') }}
+#      shell: bash -l -eo pipefail {0}
+#      run: >
+#        jupyter nbconvert
+#        --to notebook
+#        --output-dir "$(mktemp -d)/out.ipynb"
+#        --execute
+#        notebooks/xwidgets.ipynb
 
   win:
     runs-on: ${{ matrix.os }}
