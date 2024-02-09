@@ -72,7 +72,7 @@ option(XWIDGETS_BUILD_STATIC_LIBS "Build xwidgets static library (default if BUI
 # ============
 
 set(xtl_REQUIRED_VERSION 0.7.0)
-set(xeus_REQUIRED_VERSION 3.0.3)
+set(xeus_REQUIRED_VERSION 3.2.0)
 set(xproperty_REQUIRED_VERSION 0.11.0)
 
 if(NOT TARGET xtl)
@@ -177,9 +177,9 @@ macro(xwidgets_create_target target_name linkage output_name)
 
     string(TOUPPER "${CMAKE_BUILD_TYPE}" U_CMAKE_BUILD_TYPE)
 
-    set_target_properties(${target_name} PROPERTIES CXX_EXTENSIONS OFF CXX_STANDARD_REQUIRED 14)
+    set_target_properties(${target_name} PROPERTIES CXX_EXTENSIONS OFF CXX_STANDARD_REQUIRED 17)
 
-    target_compile_features(${target_name} PRIVATE cxx_std_14)
+    target_compile_features(${target_name} PRIVATE cxx_std_17)
 
     if(
         CMAKE_CXX_COMPILER_ID MATCHES "Clang"
