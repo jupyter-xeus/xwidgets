@@ -16,6 +16,3 @@ dependencies:
 - json_schema_validator
 - pre-commit
 - cmake-format
-# Cling not available on Win and downgrade Clang compiler on MacOS
-- sel(linux): xeus-cling
-- sel(linux): nbconvert
