@@ -76,13 +76,13 @@ namespace xw
         return p_holder->buffer_paths();
     }
 
-    xtl::any xholder::value() &
+    std::any xholder::value() &
     {
         check_holder();
         return p_holder->value();
     }
 
-    const xtl::any xholder::value() const&
+    const std::any xholder::value() const&
     {
         check_holder();
         return p_holder->value();

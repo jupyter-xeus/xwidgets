@@ -59,12 +59,12 @@ namespace xw
                 return get_transport_registry().find(m_id).buffer_paths();
             }
 
-            xtl::any value() & override
+            std::any value() & override
             {
                 return get_transport_registry().find(m_id).value();
             }
 
-            const xtl::any value() const& override
+            const std::any value() const& override
             {
                 return get_transport_registry().find(m_id).value();
             }
