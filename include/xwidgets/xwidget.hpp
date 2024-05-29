@@ -9,10 +9,9 @@
 #ifndef XWIDGETS_WIDGET_HPP
 #define XWIDGETS_WIDGET_HPP
 
+#include <optional>
 #include <string>
 #include <vector>
-
-#include <xtl/xoptional.hpp>
 
 #include "xlayout.hpp"
 #include "xobject.hpp"
@@ -36,8 +35,8 @@ namespace xw
 
         XPROPERTY(std::vector<std::string>, derived_type, _dom_classes);
         XPROPERTY(::xw::layout, derived_type, layout);
-        XPROPERTY(xtl::xoptional<bool>, derived_type, tabbable);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, tooltip);
+        XPROPERTY(std::optional<bool>, derived_type, tabbable);
+        XPROPERTY(std::optional<std::string>, derived_type, tooltip);
 
     protected:
 

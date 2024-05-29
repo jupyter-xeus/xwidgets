@@ -11,11 +11,9 @@
 
 #include <functional>
 #include <list>
+#include <optional>
 #include <stdexcept>
 #include <string>
-#include <utility>
-
-#include <xtl/xoptional.hpp>
 
 #include "xcolor.hpp"
 #include "xeither.hpp"
@@ -40,14 +38,14 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(xtl::xoptional<html_color>, derived_type, button_color);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_family);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_size);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_style);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_variant);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_weight);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, text_color);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, text_decoration);
+        XPROPERTY(std::optional<html_color>, derived_type, button_color);
+        XPROPERTY(std::optional<std::string>, derived_type, font_family);
+        XPROPERTY(std::optional<std::string>, derived_type, font_size);
+        XPROPERTY(std::optional<std::string>, derived_type, font_style);
+        XPROPERTY(std::optional<std::string>, derived_type, font_variant);
+        XPROPERTY(std::optional<std::string>, derived_type, font_weight);
+        XPROPERTY(std::optional<std::string>, derived_type, text_color);
+        XPROPERTY(std::optional<std::string>, derived_type, text_decoration);
 
     protected:
 

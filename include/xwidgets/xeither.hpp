@@ -9,11 +9,10 @@
 #ifndef XWIDGETS_EITHER_HPP
 #define XWIDGETS_EITHER_HPP
 
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <unordered_set>
-
-#include "xtl/xoptional.hpp"
 
 template <typename... T>
 auto XEITHER(T... vals)
@@ -35,9 +34,9 @@ auto XEITHER_OPTIONAL(T... vals)
     const std::unordered_set<std::string> options({vals...});
     return [options](const auto& proposal)
     {
-        if (xtl::has_value(proposal))
+        if (proposal.has_value())
         {
-            auto position = options.find(xtl::value(proposal));
+            auto position = options.find(proposal.value());
             if (position == options.end())
             {
                 throw std::runtime_error("Invalid proposal for optional string enum");

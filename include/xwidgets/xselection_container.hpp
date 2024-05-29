@@ -9,12 +9,12 @@
 #ifndef XWIDGETS_SELECTION_CONTAINER_HPP
 #define XWIDGETS_SELECTION_CONTAINER_HPP
 
+#include <optional>
 #include <string>
 #include <vector>
 
 #include "xbox.hpp"
 #include "xmaterialize.hpp"
-#include "xtl/xoptional.hpp"
 
 namespace xw
 {
@@ -36,7 +36,7 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(titles_type, derived_type, titles);
-        XPROPERTY(xtl::xoptional<int>, derived_type, selected_index, 0);
+        XPROPERTY(std::optional<int>, derived_type, selected_index, 0);
 
         void set_title(typename titles_type::size_type i, std::string title);
 

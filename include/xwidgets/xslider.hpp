@@ -9,10 +9,9 @@
 #ifndef XWIDGETS_SLIDER_HPP
 #define XWIDGETS_SLIDER_HPP
 
+#include <optional>
 #include <string>
 #include <type_traits>
-
-#include <xtl/xoptional.hpp>
 
 #include "xcolor.hpp"
 #include "xeither.hpp"
@@ -38,7 +37,7 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::string, derived_type, description_width);
-        XPROPERTY(xtl::xoptional<html_color>, derived_type, handle_color);
+        XPROPERTY(std::optional<html_color>, derived_type, handle_color);
 
     protected:
 
