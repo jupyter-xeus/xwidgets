@@ -17,7 +17,6 @@
 #include <xeus/xcomm.hpp>
 
 #include "xbinary.hpp"
-#include "xjson.hpp"
 #include "xwidgets_config.hpp"
 
 namespace xw

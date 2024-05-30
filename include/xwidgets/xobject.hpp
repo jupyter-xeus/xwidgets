@@ -12,8 +12,7 @@
 #include <optional>
 #include <string>
 
-#include <xtl/xjson.hpp>
-
+#include "xjson.hpp"
 #include "xmaterialize.hpp"
 #include "xtransport.hpp"
 

@@ -18,7 +18,6 @@
 #include <nlohmann/json.hpp>
 #include <xeus/xguid.hpp>
 #include <xeus/xmessage.hpp>
-#include <xtl/xclosure.hpp>
 
 #include "xbinary.hpp"
 #include "xwidgets_config.hpp"
@@ -198,12 +197,12 @@ namespace xw
 
             std::any value() & override
             {
-                return xtl::closure(m_value);
+                return std::ref(m_value);
             }
 
             const std::any value() const& override
             {
-                return xtl::closure(m_value);
+                return std::cref(m_value);
             }
 
         private:
@@ -261,12 +260,12 @@ namespace xw
 
             std::any value() & override
             {
-                return xtl::closure(*p_value);
+                return std::ref(*p_value);
             }
 
             const std::any value() const& override
             {
-                return xtl::closure(*p_value);
+                return std::cref(*p_value);
             }
 
         private:
@@ -328,12 +327,12 @@ namespace xw
 
             std::any value() & override
             {
-                return xtl::closure(*p_value);
+                return std::ref(*p_value);
             }
 
             const std::any value() const& override
             {
-                return xtl::closure(*p_value);
+                return std::cref(*p_value);
             }
 
         private:
@@ -413,13 +412,13 @@ namespace xw
     template <class D>
     D& xholder::get() &
     {
-        return std::any_cast<xtl::closure_wrapper<D&>>(this->value()).get();
+        return std::any_cast<std::reference_wrapper<D>>(this->value()).get();
     }
 
     template <class D>
     const D& xholder::get() const&
     {
-        return std::any_cast<xtl::closure_wrapper<const D&>>(this->value()).get();
+        return std::any_cast<std::reference_wrapper<const D>>(this->value()).get();
     }
 }
 
