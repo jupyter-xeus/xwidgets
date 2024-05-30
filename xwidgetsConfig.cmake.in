@@ -18,7 +18,6 @@
 @XWIDGETS_CONFIG_CODE@
 
 include(CMakeFindDependencyMacro)
-find_dependency(xtl @xtl_REQUIRED_VERSION@)
 find_dependency(xeus @xeus_REQUIRED_VERSION@)
 find_dependency(xproperty @xproperty_REQUIRED_VERSION@)
 

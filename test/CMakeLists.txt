@@ -12,7 +12,6 @@ if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     project(xwidgets-test)
 
     find_package(xwidgets REQUIRED CONFIG)
-    find_package(xtl REQUIRED CONFIG)
     set(XWIDGETS_INCLUDE_DIR ${xwidgets_INCLUDE_DIRS})
 endif()
 
@@ -41,7 +40,7 @@ target_compile_definitions(
 
 target_link_libraries(
     test_xwidgets
-    PRIVATE xwidgets xtl xeus doctest::doctest nlohmann_json_schema_validator ${CMAKE_THREAD_LIBS_INIT}
+    PRIVATE xwidgets xeus doctest::doctest nlohmann_json_schema_validator ${CMAKE_THREAD_LIBS_INIT}
 )
 target_include_directories(test_xwidgets PRIVATE XWIDGETS_INCLUDE_DIR)
 

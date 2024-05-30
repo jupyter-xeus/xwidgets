@@ -67,17 +67,13 @@ message(STATUS "xwidgets binary version: v${XWIDGETS_BINARY_VERSION}")
 
 option(XWIDGETS_BUILD_SHARED_LIBS "Build xwidgets shared library." ON)
 option(XWIDGETS_BUILD_STATIC_LIBS "Build xwidgets static library (default if BUILD_SHARED_LIBS is OFF)." ON)
+option(XWIDGETS_BUILD_TESTS "xwidgets test suite" OFF)
 
 # Dependencies
 # ============
 
-set(xtl_REQUIRED_VERSION 0.7.0)
 set(xeus_REQUIRED_VERSION 5.0.0)
 set(xproperty_REQUIRED_VERSION 0.11.0)
-
-if(NOT TARGET xtl)
-    find_package(xtl ${xtl_REQUIRED_VERSION} REQUIRED)
-endif()
 
 if(NOT TARGET xeus)
     find_package(xeus ${xeus_REQUIRED_VERSION} REQUIRED)
@@ -160,7 +156,7 @@ macro(xwidgets_create_target target_name linkage output_name)
         ${target_name} PUBLIC $<BUILD_INTERFACE:${XWIDGETS_INCLUDE_DIR}> $<INSTALL_INTERFACE:include>
     )
 
-    target_link_libraries(${target_name} PUBLIC xtl ${XEUS_TARGET_NAME} xproperty)
+    target_link_libraries(${target_name} PUBLIC ${XEUS_TARGET_NAME} xproperty)
 
     set_target_properties(
         ${target_name}
@@ -227,8 +223,6 @@ if(XWIDGETS_BUILD_STATIC_LIBS)
 endif()
 
 # Tests =====
-
-option(XWIDGETS_BUILD_TESTS "xwidgets test suite" OFF)
 
 include(CTest)
 
