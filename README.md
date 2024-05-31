@@ -71,6 +71,13 @@ http://xwidgets.readthedocs.io/
 
 All the dependencies of xwidgets are available for the mamba (or conda) package manager.
 
+| `xwidgets` | `jupyterlab_widgets` | `widgetsnbextension` | `xproperty`    | `xeus`         | `nlohmann_json` |
+|------------|----------------------|----------------------|----------------|----------------|-----------------|
+|  main      | ^3.0.0               | ^4.0.0               | >=0.11.0,<0.12 | >=5.0,<6.0     | >=3.11.3,<3.12  |
+|  0.29.0    | ^3.0.0               | ^4.0.0               | >=0.11.0,<0.12 | >=5.0,<6.0     | >=3.11.3,<3.12  |
+
+Versions prior to 0.29 also depend on the xtl:
+
 | `xwidgets` | `jupyterlab_widgets` | `widgetsnbextension` | `xtl`          | `xproperty`    | `xeus`         | `nlohmann_json` |
 |------------|----------------------|----------------------|----------------|----------------|----------------|-----------------|
 |  master    | ^3.0.0               | ^4.0.0               | >=0.7,<0.8     | >=0.11.0,<0.12 | >=3.2,<4.0     | >=3.9.1,<3.10   |
