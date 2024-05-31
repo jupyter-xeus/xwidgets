@@ -9,6 +9,8 @@
 #ifndef XWIDGETS_TEXTAREA_HPP
 #define XWIDGETS_TEXTAREA_HPP
 
+#include <optional>
+
 #include "xmaterialize.hpp"
 #include "xstring.hpp"
 #include "xtext.hpp"
@@ -30,7 +32,7 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(xtl::xoptional<int>, derived_type, rows);
+        XPROPERTY(std::optional<int>, derived_type, rows);
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(bool, derived_type, continuous_update, true);
         XPROPERTY(::xw::text_style, derived_type, style);

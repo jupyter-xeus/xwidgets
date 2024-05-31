@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_HOLDER_HPP
 #define XWIDGETS_HOLDER_HPP
 
+#include <any>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -17,8 +18,6 @@
 #include <nlohmann/json.hpp>
 #include <xeus/xguid.hpp>
 #include <xeus/xmessage.hpp>
-#include <xtl/xany.hpp>
-#include <xtl/xclosure.hpp>
 
 #include "xbinary.hpp"
 #include "xwidgets_config.hpp"
@@ -74,8 +73,8 @@ namespace xw
         void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const;
         const std::vector<xjson_path_type>& buffer_paths() const;
 
-        xtl::any value() &;
-        const xtl::any value() const&;
+        std::any value() &;
+        const std::any value() const&;
 
         template <class D>
         D& get() &;
@@ -139,8 +138,8 @@ namespace xw
             virtual void serialize_state(nl::json& state, xeus::buffer_sequence& buffers) const = 0;
             virtual const std::vector<xjson_path_type>& buffer_paths() const = 0;
 
-            virtual xtl::any value() & = 0;
-            virtual const xtl::any value() const& = 0;
+            virtual std::any value() & = 0;
+            virtual const std::any value() const& = 0;
 
         protected:
 
@@ -196,14 +195,14 @@ namespace xw
                 return m_value.buffer_paths();
             }
 
-            xtl::any value() & override
+            std::any value() & override
             {
-                return xtl::closure(m_value);
+                return std::ref(m_value);
             }
 
-            const xtl::any value() const& override
+            const std::any value() const& override
             {
-                return xtl::closure(m_value);
+                return std::cref(m_value);
             }
 
         private:
@@ -259,14 +258,14 @@ namespace xw
                 return p_value->buffer_paths();
             }
 
-            xtl::any value() & override
+            std::any value() & override
             {
-                return xtl::closure(*p_value);
+                return std::ref(*p_value);
             }
 
-            const xtl::any value() const& override
+            const std::any value() const& override
             {
-                return xtl::closure(*p_value);
+                return std::cref(*p_value);
             }
 
         private:
@@ -326,14 +325,14 @@ namespace xw
                 return p_value->buffer_paths();
             }
 
-            xtl::any value() & override
+            std::any value() & override
             {
-                return xtl::closure(*p_value);
+                return std::ref(*p_value);
             }
 
-            const xtl::any value() const& override
+            const std::any value() const& override
             {
-                return xtl::closure(*p_value);
+                return std::cref(*p_value);
             }
 
         private:
@@ -413,13 +412,13 @@ namespace xw
     template <class D>
     D& xholder::get() &
     {
-        return xtl::any_cast<xtl::closure_wrapper<D&>>(this->value()).get();
+        return std::any_cast<std::reference_wrapper<D>>(this->value()).get();
     }
 
     template <class D>
     const D& xholder::get() const&
     {
-        return xtl::any_cast<xtl::closure_wrapper<const D&>>(this->value()).get();
+        return std::any_cast<std::reference_wrapper<const D>>(this->value()).get();
     }
 }
 

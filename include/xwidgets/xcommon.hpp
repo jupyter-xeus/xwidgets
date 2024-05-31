@@ -9,12 +9,12 @@
 #ifndef XWIDGETS_COMMON_HPP
 #define XWIDGETS_COMMON_HPP
 
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
 
 #include <xeus/xcomm.hpp>
-#include <xtl/xoptional.hpp>
 
 #include "xbinary.hpp"
 #include "xwidgets_config.hpp"
@@ -92,7 +92,7 @@ namespace xw
          *
          * If the optional is empty, then no setting is set explicitly.
          */
-        static xtl::xoptional<bool> global_echo_update();
+        static std::optional<bool> global_echo_update();
 
         bool
         same_patch(const std::string&, const nl::json&, const xeus::buffer_sequence&, const nl::json&, const xeus::buffer_sequence&)

@@ -9,9 +9,8 @@
 #ifndef XWIDGETS_HTML_HPP
 #define XWIDGETS_HTML_HPP
 
+#include <optional>
 #include <string>
-
-#include <xtl/xoptional.hpp>
 
 #include "xmaterialize.hpp"
 #include "xstring.hpp"
@@ -34,10 +33,10 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, background);
+        XPROPERTY(std::optional<std::string>, derived_type, background);
         XPROPERTY(std::string, derived_type, description_width);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_size);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, text_color);
+        XPROPERTY(std::optional<std::string>, derived_type, font_size);
+        XPROPERTY(std::optional<std::string>, derived_type, text_color);
 
     protected:
 

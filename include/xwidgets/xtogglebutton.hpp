@@ -9,9 +9,8 @@
 #ifndef XWIDGETS_TOGGLE_HPP
 #define XWIDGETS_TOGGLE_HPP
 
+#include <optional>
 #include <string>
-
-#include <xtl/xoptional.hpp>
 
 #include "xboolean.hpp"
 #include "xeither.hpp"
@@ -36,13 +35,13 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(std::string, derived_type, description_width);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_family);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_size);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_style);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_variant);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, font_weight);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, text_color);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, text_decoration);
+        XPROPERTY(std::optional<std::string>, derived_type, font_family);
+        XPROPERTY(std::optional<std::string>, derived_type, font_size);
+        XPROPERTY(std::optional<std::string>, derived_type, font_style);
+        XPROPERTY(std::optional<std::string>, derived_type, font_variant);
+        XPROPERTY(std::optional<std::string>, derived_type, font_weight);
+        XPROPERTY(std::optional<std::string>, derived_type, text_color);
+        XPROPERTY(std::optional<std::string>, derived_type, text_decoration);
 
     protected:
 

@@ -9,6 +9,7 @@
 #ifndef XWIDGETS_LAYOUT_HPP
 #define XWIDGETS_LAYOUT_HPP
 
+#include <optional>
 #include <string>
 
 #include "xeither.hpp"
@@ -33,7 +34,7 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         XPROPERTY(
-            xtl::xoptional<std::string>,
+            std::optional<std::string>,
             derived_type,
             align_content,
             {},
@@ -51,91 +52,91 @@ namespace xw
             )
         );
         XPROPERTY(
-            xtl::xoptional<std::string>,
+            std::optional<std::string>,
             derived_type,
             align_items,
             {},
             XEITHER_OPTIONAL("flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset")
         );
         XPROPERTY(
-            xtl::xoptional<std::string>,
+            std::optional<std::string>,
             derived_type,
             align_self,
             {},
             XEITHER_OPTIONAL("auto", "flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset")
         );
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, border_bottom);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, border_left);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, border_right);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, border_top);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, bottom);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, display);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, flex);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, flex_flow);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, grid_area);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, grid_auto_columns);
+        XPROPERTY(std::optional<std::string>, derived_type, border_bottom);
+        XPROPERTY(std::optional<std::string>, derived_type, border_left);
+        XPROPERTY(std::optional<std::string>, derived_type, border_right);
+        XPROPERTY(std::optional<std::string>, derived_type, border_top);
+        XPROPERTY(std::optional<std::string>, derived_type, bottom);
+        XPROPERTY(std::optional<std::string>, derived_type, display);
+        XPROPERTY(std::optional<std::string>, derived_type, flex);
+        XPROPERTY(std::optional<std::string>, derived_type, flex_flow);
+        XPROPERTY(std::optional<std::string>, derived_type, grid_area);
+        XPROPERTY(std::optional<std::string>, derived_type, grid_auto_columns);
         XPROPERTY(
-            xtl::xoptional<std::string>,
+            std::optional<std::string>,
             derived_type,
             grid_auto_flow,
             {},
             XEITHER_OPTIONAL("column", "row", "row dense", "column dense", "inherit", "initial", "unset")
         );
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, grid_auto_rows);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, grid_column);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, grid_gap);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, grid_row);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, grid_template_areas);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, grid_template_columns);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, grid_template_rows);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, height);
+        XPROPERTY(std::optional<std::string>, derived_type, grid_auto_rows);
+        XPROPERTY(std::optional<std::string>, derived_type, grid_column);
+        XPROPERTY(std::optional<std::string>, derived_type, grid_gap);
+        XPROPERTY(std::optional<std::string>, derived_type, grid_row);
+        XPROPERTY(std::optional<std::string>, derived_type, grid_template_areas);
+        XPROPERTY(std::optional<std::string>, derived_type, grid_template_columns);
+        XPROPERTY(std::optional<std::string>, derived_type, grid_template_rows);
+        XPROPERTY(std::optional<std::string>, derived_type, height);
         XPROPERTY(
-            xtl::xoptional<std::string>,
+            std::optional<std::string>,
             derived_type,
             justify_content,
             {},
             XEITHER_OPTIONAL("flex-start", "flex-end", "center", "space-between", "space-around", "inherit", "inital", "unset")
         );
         XPROPERTY(
-            xtl::xoptional<std::string>,
+            std::optional<std::string>,
             derived_type,
             justify_items,
             {},
             XEITHER_OPTIONAL("flex-start", "flex-end", "center", "inherit", "initial", "unset")
         );
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, left);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, margin);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, max_height);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, max_width);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, min_height);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, min_width);
+        XPROPERTY(std::optional<std::string>, derived_type, left);
+        XPROPERTY(std::optional<std::string>, derived_type, margin);
+        XPROPERTY(std::optional<std::string>, derived_type, max_height);
+        XPROPERTY(std::optional<std::string>, derived_type, max_width);
+        XPROPERTY(std::optional<std::string>, derived_type, min_height);
+        XPROPERTY(std::optional<std::string>, derived_type, min_width);
         XPROPERTY(
-            xtl::xoptional<std::string>,
+            std::optional<std::string>,
             derived_type,
             object_fit,
             {},
             XEITHER_OPTIONAL("contain", "cover", "fill", "scale-down", "none")
         );
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, object_position);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, order);
+        XPROPERTY(std::optional<std::string>, derived_type, object_position);
+        XPROPERTY(std::optional<std::string>, derived_type, order);
         XPROPERTY(
-            xtl::xoptional<std::string>,
+            std::optional<std::string>,
             derived_type,
             overflow,
             {},
             XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset")
         );
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, padding);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, right);
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, top);
+        XPROPERTY(std::optional<std::string>, derived_type, padding);
+        XPROPERTY(std::optional<std::string>, derived_type, right);
+        XPROPERTY(std::optional<std::string>, derived_type, top);
         XPROPERTY(
-            xtl::xoptional<std::string>,
+            std::optional<std::string>,
             derived_type,
             visibility,
             {},
             XEITHER_OPTIONAL("visible", "hidden", "inherit", "initial", "unset")
         );
-        XPROPERTY(xtl::xoptional<std::string>, derived_type, width);
+        XPROPERTY(std::optional<std::string>, derived_type, width);
 
     protected:
 

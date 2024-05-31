@@ -10,11 +10,10 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
-
-#include <xtl/xoptional.hpp>
 
 #include "xeus/xinterpreter.hpp"
 #include "xtarget.hpp"
@@ -271,7 +270,7 @@ namespace xw
             return std::find(falses.begin(), falses.end(), s) == falses.end();
         }
 
-        xtl::xoptional<bool> get_tristate_env(const char* name)
+        std::optional<bool> get_tristate_env(const char* name)
         {
             const char* const val = std::getenv(name);
             if (val == nullptr)
@@ -282,7 +281,7 @@ namespace xw
         }
     }
 
-    xtl::xoptional<bool> xcommon::global_echo_update()
+    std::optional<bool> xcommon::global_echo_update()
     {
         static const auto out = get_tristate_env("JUPYTER_WIDGETS_ECHO");
         return out;
