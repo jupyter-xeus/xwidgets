@@ -17,7 +17,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: pre-commit/action@v3.0.0
 
   unix:
@@ -29,26 +29,26 @@ jobs:
         os: [ubuntu-20.04, ubuntu-22.04, macos-11, macos-12]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Install mamba
-      uses: mamba-org/provision-with-micromamba@main
+    - name: Get number of CPU cores
+      uses: SimenB/github-actions-cpu-cores@v2
+
+    - name: Install micromamba
+      uses: mamba-org/setup-micromamba@v1
       with:
         environment-file: environment-dev.yml
-        environment-name: xwidgets
 
     - name: Cmake configure
-      shell: bash -l -eo pipefail {0}
-      run: >
-        cmake -B build -Werror=dev
-        ${CMAKE_ARGS}
-        -D CMAKE_BUILD_TYPE=Release
-        -D XWIDGETS_BUILD_TESTS=ON
-        -D CMAKE_PREFIX_PATH="${CONDA_PREFIX}"
+      run: |
+        cmake -B build -Werror=dev \
+        ${CMAKE_ARGS} \
+        -D CMAKE_BUILD_TYPE=Release \
+        -D XWIDGETS_BUILD_TESTS=ON \
+        -D CMAKE_PREFIX_PATH="${CONDA_PREFIX}" \
         -D CMAKE_INSTALL_PREFIX="${CONDA_PREFIX}"
 
     - name: Build
-      shell: bash -l -eo pipefail {0}
       run: cmake --build build/ --parallel 2
 
     - name: Test xwidgets
@@ -82,18 +82,13 @@ jobs:
         os: [windows-2019, windows-2022]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
-    - name: install mamba
-      uses: mamba-org/provision-with-micromamba@main
+    - name: Install micromamba
+      uses: mamba-org/setup-micromamba@v1
       with:
+        init-shell: cmd.exe
         environment-file: environment-dev.yml
-        environment-name: xwidgets
-
-    - name: micromamba shell hook
-      shell: powershell
-      run: |
-        micromamba shell hook -s cmd.exe -p C:\Users\runneradmin\micromamba-root
 
     - name: Make build directory
       run: mkdir build
@@ -101,8 +96,6 @@ jobs:
     - name: Cmake configure
       shell: cmd /C call {0}
       run: |
-        call micromamba activate xwidgets
-        if %errorlevel% neq 0 exit /b %errorlevel%
         cmake -B build -Werror=dev ^
          -G Ninja ^
          -D CMAKE_BUILD_TYPE=Release ^
@@ -125,6 +118,5 @@ jobs:
         max_attempts: 4
         shell: cmd
         command: |
-          call C:\Users\runneradmin\micromamba-root\condabin\micromamba.bat activate xwidgets
           set PATH=%CONDA_PREFIX%;%CONDA_PREFIX%\\Scripts;%CONDA_PREFIX%\\Library;%CONDA_PREFIX%\\Library\\bin;%PATH%
           ctest --test-dir build/test --output-on-failure

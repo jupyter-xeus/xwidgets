@@ -1,7 +1,6 @@
 # ![xwidgets](docs/source/xwidgets.svg)
 
-[![Azure Pipelines](https://dev.azure.com/jupyter-xeus/jupyter-xeus/_apis/build/status/jupyter-xeus.xwidgets?branchName=master)](https://dev.azure.com/jupyter-xeus/jupyter-xeus/_build/latest?definitionId=6&branchName=master)
-[![Appveyor](https://ci.appveyor.com/api/projects/status/kjoatvulm28dpr3r?svg=true)](https://ci.appveyor.com/project/jupyter-xeus/xwidgets)
+[![GithubActions](https://github.com/jupyter-xeus/xwidgets/actions/workflows/main.yml/badge.svg)](https://github.com/jupyter-xeus/xwidgets/actions/workflows/main.yml)
 [![Documentation](http://readthedocs.org/projects/xwidgets/badge/?version=latest)](https://xwidgets.readthedocs.io/en/latest/?badge=latest)
 [![Binder](https://img.shields.io/badge/launch-binder-brightgreen.svg)](https://mybinder.org/v2/gh/jupyter-xeus/xwidgets/stable?filepath=notebooks/xwidgets.ipynb)
 [![Join the Gitter Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/QuantStack/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
