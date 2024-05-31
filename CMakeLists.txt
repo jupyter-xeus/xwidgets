@@ -73,7 +73,7 @@ option(XWIDGETS_BUILD_TESTS "xwidgets test suite" OFF)
 # ============
 
 set(xeus_REQUIRED_VERSION 5.0.0)
-set(xproperty_REQUIRED_VERSION 0.11.0)
+set(xproperty_REQUIRED_VERSION 0.12.0)
 
 if(NOT TARGET xeus)
     find_package(xeus ${xeus_REQUIRED_VERSION} REQUIRED)

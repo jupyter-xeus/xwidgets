@@ -45,4 +45,3 @@ namespace nlohmann
 }
 
 #endif
-
