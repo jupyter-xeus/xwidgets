@@ -106,4 +106,8 @@
 #include "xwidgets_config_cling.hpp"
 #endif
 
+#if defined(__CLANG_REPL__) && defined(__EMSCRIPTEN__)
+#include "xwidgets_config_cling.hpp"
+#endif
+
 #endif

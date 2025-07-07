@@ -9,7 +9,19 @@
 #ifndef XWIDGETS_CONFIG_CLING_HPP
 #define XWIDGETS_CONFIG_CLING_HPP
 
+#ifdef __CLING__
+
 #pragma cling add_library_path(@XWIDGETS_INSTALL_LIBRARY_DIR@)
 #pragma cling load("libxwidgets")
 
+#elif defined(__EMSCRIPTEN__) && defined(__CLANG_REPL__)
+
+#include <clang/Interpreter/CppInterOp.h>
+static bool _xwidgets_loaded = []() {
+    Cpp::LoadLibrary("/lib/@CMAKE_SHARED_LIBRARY_PREFIX@xwidgets@CMAKE_SHARED_LIBRARY_SUFFIX@", false);
+    return true;
+}();
+
 #endif
+
+#endif // XWIDGETS_CONFIG_CLING_HPP

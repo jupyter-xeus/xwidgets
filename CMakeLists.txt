@@ -182,7 +182,11 @@ macro(xwidgets_create_target target_name linkage output_name)
         OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
         OR CMAKE_CXX_COMPILER_ID MATCHES "Intel"
     )
-        target_compile_options(${target_name} PUBLIC -Wunused-parameter -Wextra -Wreorder)
+        if(EMSCRIPTEN)
+            target_compile_options(${target_name} PRIVATE -fPIC)
+        else()
+            target_compile_options(${target_name} PUBLIC -Wunused-parameter -Wextra -Wreorder)
+        endif()
 
         message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
     endif()
