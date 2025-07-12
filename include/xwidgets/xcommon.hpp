@@ -94,9 +94,13 @@ namespace xw
          */
         static std::optional<bool> global_echo_update();
 
-        bool
-        same_patch(const std::string&, const nl::json&, const xeus::buffer_sequence&, const nl::json&, const xeus::buffer_sequence&)
-            const;
+        bool same_patch(
+            const std::string&,
+            const nl::json&,
+            const xeus::buffer_sequence&,
+            const nl::json&,
+            const xeus::buffer_sequence&
+        ) const;
 
         bool m_moved_from;
         const xeus::xmessage* m_hold;

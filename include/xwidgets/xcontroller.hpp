@@ -259,11 +259,21 @@ namespace xw
     template <class D>
     inline void xcontroller<D>::register_control_types()
     {
-        get_xfactory()
-            .register_maker("@jupyter-widgets/controls", "ControllerAxisModel", "@jupyter-widgets/controls", "ControllerAxisView", xmaker<xcontroller_axis>);
+        get_xfactory().register_maker(
+            "@jupyter-widgets/controls",
+            "ControllerAxisModel",
+            "@jupyter-widgets/controls",
+            "ControllerAxisView",
+            xmaker<xcontroller_axis>
+        );
 
-        get_xfactory()
-            .register_maker("@jupyter-widgets/controls", "ControllerButtonModel", "@jupyter-widgets/controls", "ControllerButtonView", xmaker<xcontroller_button>);
+        get_xfactory().register_maker(
+            "@jupyter-widgets/controls",
+            "ControllerButtonModel",
+            "@jupyter-widgets/controls",
+            "ControllerButtonView",
+            xmaker<xcontroller_button>
+        );
     }
 
     /*********************
