@@ -287,9 +287,13 @@ namespace xw
         return out;
     }
 
-    bool
-    xcommon::same_patch(const std::string& name, const nl::json& j1, const xeus::buffer_sequence&, const nl::json& j2, const xeus::buffer_sequence&)
-        const
+    bool xcommon::same_patch(
+        const std::string& name,
+        const nl::json& j1,
+        const xeus::buffer_sequence&,
+        const nl::json& j2,
+        const xeus::buffer_sequence&
+    ) const
     {
         const auto& paths = buffer_paths();
         // For a widget with no binary buffer, compare the patches
