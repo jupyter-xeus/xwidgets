@@ -77,6 +77,7 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         void on_click(click_callback_type);
+        void click();
 
         XPROPERTY(std::string, derived_type, description);
 
@@ -194,6 +195,15 @@ namespace xw
     }
 
     template <class D>
+    inline void xbutton<D>::click()
+    {
+        for (auto& callback : m_click_callbacks)
+        {
+            callback();
+        }
+    }
+
+    template <class D>
     inline xbutton<D>::xbutton()
         : base_type()
     {
@@ -217,10 +227,7 @@ namespace xw
         auto const event_it = content.find("event");
         if (event_it != content.end() && event_it.value() == "click")
         {
-            for (auto& callback : m_click_callbacks)
-            {
-                callback();
-            }
+            click();
         }
     }
 
