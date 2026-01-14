@@ -65,6 +65,7 @@ namespace xw
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
         void on_submit(submit_callback_type);
+        void submit();
 
         XPROPERTY(bool, derived_type, disabled);
         XPROPERTY(bool, derived_type, continuous_update, true);
@@ -157,6 +158,15 @@ namespace xw
     }
 
     template <class D>
+    inline void xtext<D>::submit()
+    {
+        for (auto& callback : m_submit_callbacks)
+        {
+            callback();
+        }
+    }
+
+    template <class D>
     inline xtext<D>::xtext()
         : base_type()
     {
@@ -176,10 +186,7 @@ namespace xw
         auto const event_it = content.find("event");
         if (event_it != content.end() && event_it.value() == "submit")
         {
-            for (auto& callback : m_submit_callbacks)
-            {
-                callback();
-            }
+            submit();
         }
     }
 
