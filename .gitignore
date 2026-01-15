@@ -48,6 +48,11 @@ docs/build/
 # Jupyter artefacts
 .ipynb_checkpoints/
 
+# Jupyterlite artefacts
+.jupyterlite.doit.db
+_output/
+dist/
+
 # Generated files
 *.pc
 
