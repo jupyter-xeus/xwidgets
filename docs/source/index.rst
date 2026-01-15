@@ -13,9 +13,12 @@ Introduction
 
 ``xwidgets`` is a C++ implementation of the Jupyter interactive widgets protocol. The Python reference implementation is available in the ipywidgets_ project.
 
-xwidgets enables the use of the Jupyter interactive widgets in the C++ notebook, powered by the cling_ C++ interpreter and the xeus-cling_ kernel. xwidgets can also be used to create applications making use of the Jupyter interactive widgets without the C++ kernel per se.
+xwidgets enables the use of the Jupyter interactive widgets in the C++ notebook, powered by the
+clang-repl_ C++ interpreter and the xeus-cpp_ kernel.
+``xwidgets`` can also be used to create applications making use of the Jupyter interactive widgets without the C++ kernel per se.
 
-``xwidgets`` and its dependencies require a modern C++ compiler supporting C++14. The following C++ compilers are supported:
+``xwidgets`` and its dependencies require a modern C++ compiler supporting C++14.
+The following C++ compilers are supported:
 
 - On Windows platforms, Visual C++ 2015 Update 2, or more recent
 - On Unix platforms, gcc 4.9 or a recent version of Clang
@@ -39,6 +42,7 @@ This software is licensed under the BSD-3-Clause license. See the LICENSE file f
    :maxdepth: 2
 
    usage
+   Demo notebook <https://jupyter-xeus.github.io/xwidgets/lab?path=xwidgets.ipynb>
 
 .. toctree::
    :caption: AUTHORING CUSTOM WIDGETS
@@ -58,5 +62,5 @@ This software is licensed under the BSD-3-Clause license. See the LICENSE file f
    related_projects
 
 .. _ipywidgets: https://github.com/jupyter-widgets/ipywidgets
-.. _xeus-cling: https://github.com/jupyter-xeus/xeus-cling
-.. _cling: https://root.cern.ch/cling
+.. _xeus-cpp: https://github.com/compiler-research/xeus-cpp/
+.. _clang-repl: https://clang.llvm.org/docs/ClangRepl.html
