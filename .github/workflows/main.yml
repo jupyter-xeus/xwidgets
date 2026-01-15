@@ -17,8 +17,8 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: pre-commit/action@v3.0.0
+    - uses: actions/checkout@v6
+    - uses: pre-commit/action@v3.0.1
 
   unix:
     runs-on: ${{ matrix.os }}
@@ -29,7 +29,7 @@ jobs:
         os: [ubuntu-22.04, ubuntu-24.04, macos-14, macos-15]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Get number of CPU cores
       uses: SimenB/github-actions-cpu-cores@v2
@@ -82,7 +82,7 @@ jobs:
         os: [windows-2022, windows-2025]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Install micromamba
       uses: mamba-org/setup-micromamba@v2
@@ -112,7 +112,7 @@ jobs:
         micromamba run -n xwidgets cmake --build build/ --parallel
 
     - name: Test xwidgets
-      uses: nick-invision/retry@v2
+      uses: nick-invision/retry@v3
       with:
         timeout_minutes: 4
         max_attempts: 4
