@@ -15,3 +15,7 @@ dependencies:
 - json_schema_validator
 - pre-commit
 - cmake-format
+# Jupyterlite build dependencies
+- jupyter_server
+- jupyterlite-core
+- jupyterlite-xeus

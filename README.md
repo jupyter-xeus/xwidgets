@@ -2,8 +2,12 @@
 
 [![GithubActions](https://github.com/jupyter-xeus/xwidgets/actions/workflows/main.yml/badge.svg)](https://github.com/jupyter-xeus/xwidgets/actions/workflows/main.yml)
 [![Documentation](http://readthedocs.org/projects/xwidgets/badge/?version=latest)](https://xwidgets.readthedocs.io/en/latest/?badge=latest)
+[![Jupyterlite](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://jupyter-xeus.github.io/xwidgets/lab?path=xwidgets.ipynb)
 [![Binder](https://img.shields.io/badge/launch-binder-brightgreen.svg)](https://mybinder.org/v2/gh/jupyter-xeus/xwidgets/stable?filepath=notebooks/xwidgets.ipynb)
-[![Zulip](https://img.shields.io/badge/social_chat-zulip-blue.svg)](https://jupyter.zulipchat.com/#narrow/channel/539737-Jupyter-Kernels)
+[![Zulip](https://img.shields.io/badge/social_chat-zulip-blue.svg?logo=zulip)](https://jupyter.zulipchat.com/#narrow/channel/539737-Jupyter-Kernels)
+
+https://antoineprv.github.io/fork-jupyter-xeus-xwidgets/lab?path=xwidgets.ipynb
+
 
 A C++ backend for Jupyter interactive widgets.
 

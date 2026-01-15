@@ -1,7 +1,7 @@
-name: xwidgets
+name: xwidgets-demo
 channels:
 - conda-forge
 dependencies:
-- xeus-cling=0.13.0
-- xwidgets=0.26.1
-- widgetsnbextension >=3.0.0
+- xeus-cpp=0.8.0
+- xwidgets=0.29.2
+- jupyterlab_widgets=3.*

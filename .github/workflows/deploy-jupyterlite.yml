@@ -1,0 +1,57 @@
+name: Jupyterlite deployment
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+    - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+    - name: Setup mamba
+      uses: mamba-org/setup-micromamba@v2
+      with:
+        environment-file: environment-dev.yml
+    - name: Download WASM dependencies
+      run: |
+        micromamba create -p ./wasm-env -f environment.yml \
+          --platform=emscripten-wasm32 \
+          --channel https://prefix.dev/emscripten-forge-4x \
+          --channel https://prefix.dev/conda-forge
+    - name: Build Jupyterlite distribution
+      shell: bash -l -eo pipefail {0}
+      run: |
+        jupyter lite build \
+          --XeusAddon.prefix="${PWD}/wasm-env" \
+          --contents README.md \
+          --contents notebooks/ \
+          --output-dir dist/
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./dist
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
