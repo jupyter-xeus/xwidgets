@@ -14,10 +14,10 @@ A C++ backend for Jupyter interactive widgets.
 The Python reference implementation is available in the
 [ipywidgets](https://github.com/jupyter-widgets/ipywidgets) project.
 
-`xwidgets` enables the use of the Jupyter interactive widgets in the C++
-notebook, powered by the `xeus-cling` kernel and the `cling` C++ interpreter
-from CERN. `xwidgets` can also be used to create applications making use of the
-Jupyter interactive widgets without the C++ kernel *per se*.
+`xwidgets` enables the use of the Jupyter interactive widgets in the C++ notebook, powered by the
+`xeus-cpp` kernel and the `clang-repl` C++ interpreter.
+`xwidgets` can also be used to create applications making use of the Jupyter interactive widgets
+without the C++ kernel *per se*.
 
 ## Usage
 
@@ -29,21 +29,22 @@ notebook by selecting the **xeus C++14** kernel in the *new* dropdown.
 ## Installation
 
 We provide a package for the mamba (or conda) package manager.
-
-- Installing `xwidgets` and the C++ kernel
+Installing `xwidgets` and the C++ kernel
 
 ```bash
-mamba install xeus-cling xwidgets -c conda-forge
+mamba install -c conda-forge xeus-cpp xwidget
 ```
 
-Then, the front-end extension must be installed for either the classic notebook
-or JupyterLab.
+Then, the front-end extension must be installed for either the classic notebook or JupyterLab.
 
+- Installing the extension for JupyterLab
+  ```bash
+  mamba install -c conda-forge jupyterlab_widgets
+  ```
 - Installing the extension for the classic notebook
-
-```
-mamba install widgetsnbextension -c conda-forge
-```
+  ```bash
+  mamba install -c conda-forge widgetsnbextension
+  ```
 
 ## Installation from sources
 
@@ -51,14 +52,23 @@ Or you can directly install it from the sources if you have all the
 dependencies already installed:
 
 ```bash
-cmake -D CMAKE_INSTALL_PREFIX=your_install_prefix
-make install
+cmake -B build/ -D CMAKE_INSTALL_PREFIX=/path/to/prefix -D CMAKE_BUILD_TYPE=Release
+cmake --build build/
+cmake --install build/
 ```
 
 ## Trying it online
 
-To try out xwidgets interactively in your web browser, just click on the binder
-link:
+There is two deployment to try xwidgets online without any installation.
+
+The JupyterLite deployment uses a [Web Assembly](https://webassembly.org/) architecture and runs
+entirely in your browser.
+Click on the badge below to launch it.
+
+[![Jupyterlite](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://jupyter-xeus.github.io/xwidgets/lab?path=xwidgets.ipynb)
+
+The binder deployment uses public servers on Linux to serve the notebook.
+To try out xwidgets interactively in your web browser, just click on the following binder link.
 
 [![Binder](binder-logo.svg)](https://mybinder.org/v2/gh/jupyter-xeus/xwidgets/stable?filepath=notebooks/xwidgets.ipynb)
 

@@ -22,38 +22,42 @@ Installation
 ============
 
 .. image:: conda.svg
+  :height: 50px
 
 Using the conda-forge package
 -----------------------------
+We provide a package for the mamba (or conda) package manager.
+Installing `xwidgets` and the C++ kernel
 
-A package for xwidgets is available on the mamba (or conda) package manager.
-The package will also pull all the dependencies.
+.. code:: bash
 
-.. code::
+   mamba install -c conda-forge xeus-cpp xwidget
 
-    mamba install xwidgets -c conda-forge
+Then, the front-end extension must be installed for either the classic notebook or JupyterLab.
+
+- Installing the extension for JupyterLab
+  .. code:: bash
+
+     mamba install -c conda-forge jupyterlab_widgets
+
+- Installing the extension for the classic notebook
+  .. code::
+
+     mamba install -c conda-forge widgetsnbextension
 
 .. image:: cmake.svg
+  :height: 50px
 
 From source with cmake
 ----------------------
 
-You can also install ``xwidgets`` from source with cmake. On Unix platforms, from the source directory:
+You can also install ``xwidgets`` from source with cmake.
 However, you need to make sure to have the required libraries available on your machine.
+See `environment-dev.yml <https://github.com/jupyter-xeus/xwidgets/blob/main/environment-dev.yml>`_
+for the development dependencies on Conda-Forge.
 
 .. code::
 
-    mkdir build
-    cd build
-    cmake -DCMAKE_INSTALL_PREFIX=/path/to/prefix ..
-    make install
-
-On Windows platforms, from the source directory:
-
-.. code::
-
-    mkdir build
-    cd build
-    cmake -G "NMake Makefiles" -DCMAKE_INSTALL_PREFIX=/path/to/prefix ..
-    nmake
-    nmake install
+    cmake -B build/ -G Ninja -D CMAKE_INSTALL_PREFIX=/path/to/prefix -D CMAKE_BUILD_TYPE=Release
+    cmake --build build/
+    cmake --install build/
