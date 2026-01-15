@@ -1,7 +1,7 @@
 name: xwidgets-demo
 channels:
-  - conda-forge
+- conda-forge
 dependencies:
-  - xeus-cpp=0.8.0
-  - xwidgets=0.29.2
-  - jupyterlab_widgets=3.*
+- xeus-cpp=0.8.0
+- xwidgets=0.29.2
+- jupyterlab_widgets=3.*
