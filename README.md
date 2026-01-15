@@ -6,9 +6,6 @@
 [![Binder](https://img.shields.io/badge/launch-binder-brightgreen.svg)](https://mybinder.org/v2/gh/jupyter-xeus/xwidgets/stable?filepath=notebooks/xwidgets.ipynb)
 [![Zulip](https://img.shields.io/badge/social_chat-zulip-blue.svg?logo=zulip)](https://jupyter.zulipchat.com/#narrow/channel/539737-Jupyter-Kernels)
 
-https://antoineprv.github.io/fork-jupyter-xeus-xwidgets/lab?path=xwidgets.ipynb
-
-
 A C++ backend for Jupyter interactive widgets.
 
 ## Introduction
