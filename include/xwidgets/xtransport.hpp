@@ -53,8 +53,15 @@ namespace xw
         using derived_type = D;
         using observed_type = xp::xobserved;
 
-        derived_type& derived_cast() noexcept { return *static_cast<derived_type*>(this); }
-        const derived_type& derived_cast() const noexcept { return *static_cast<const derived_type*>(this); }
+        derived_type& derived_cast() noexcept
+        {
+            return *static_cast<derived_type*>(this);
+        }
+
+        const derived_type& derived_cast() const noexcept
+        {
+            return *static_cast<const derived_type*>(this);
+        }
 
         using base_type::notify;
 
