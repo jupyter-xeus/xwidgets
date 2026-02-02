@@ -123,10 +123,12 @@ namespace xw
         template <class D>
         inline void xnumeric_bounded<D>::setup_properties()
         {
-            static_cast<derived_type*>(this)->template validate<value_type>(
+            static_cast<derived_type*>(this)->validate(
                 "value",
-                [](auto& owner, auto& proposal)
+                [](std::any owner_any, std::any& proposal_any)
                 {
+                    auto& owner = std::any_cast<std::reference_wrapper<derived_type>>(owner_any).get();
+                    auto& proposal = std::any_cast<value_type&>(proposal_any);
                     if (proposal > owner.max())
                     {
                         proposal = owner.max();
@@ -138,10 +140,12 @@ namespace xw
                 }
             );
 
-            static_cast<derived_type*>(this)->template validate<value_type>(
+            static_cast<derived_type*>(this)->validate(
                 "min",
-                [](auto& owner, auto& proposal)
+                [](std::any owner_any, std::any& proposal_any)
                 {
+                    auto& owner = std::any_cast<std::reference_wrapper<derived_type>>(owner_any).get();
+                    auto& proposal = std::any_cast<value_type&>(proposal_any);
                     if (proposal > owner.max())
                     {
                         throw std::runtime_error("setting min > max");
@@ -153,10 +157,12 @@ namespace xw
                 }
             );
 
-            static_cast<derived_type*>(this)->template validate<value_type>(
+            static_cast<derived_type*>(this)->validate(
                 "max",
-                [](auto& owner, auto& proposal)
+                [](std::any owner_any, std::any& proposal_any)
                 {
+                    auto& owner = std::any_cast<std::reference_wrapper<derived_type>>(owner_any).get();
+                    auto& proposal = std::any_cast<value_type&>(proposal_any);
                     if (proposal < owner.min())
                     {
                         throw std::runtime_error("setting max < min");

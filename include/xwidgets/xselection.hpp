@@ -154,8 +154,9 @@ namespace xw
     {
         this->observe(
             "value",
-            [](auto& owner)
+            [](std::any owner_any)
             {
+                auto& owner = std::any_cast<derived_type&>(owner_any);
                 const options_type& opt = owner._options_labels();
                 auto new_index = index_type(std::find(opt.cbegin(), opt.cend(), owner.value()) - opt.cbegin());
                 if (new_index != owner.index())
@@ -167,8 +168,9 @@ namespace xw
 
         this->observe(
             "index",
-            [](auto& owner)
+            [](std::any owner_any)
             {
+                auto& owner = std::any_cast<derived_type&>(owner_any);
                 auto new_value = owner._options_labels()[owner.index()];
                 if (new_value != owner.value())
                 {
@@ -179,8 +181,9 @@ namespace xw
 
         this->observe(
             "_options_labels",
-            [](auto& owner)
+            [](std::any owner_any)
             {
+                auto& owner = std::any_cast<derived_type&>(owner_any);
                 const options_type& opt = owner._options_labels();
                 auto position = std::find(opt.cbegin(), opt.cend(), owner.value());
                 if (position == opt.cend())
@@ -191,10 +194,12 @@ namespace xw
             }
         );
 
-        this->template validate<value_type>(
+        this->validate(
             "value",
-            [](auto& owner, auto& proposal)
+            [](std::any owner_any, std::any& proposal_any)
             {
+                auto& owner = std::any_cast<std::reference_wrapper<derived_type>>(owner_any).get();
+                auto& proposal = std::any_cast<value_type&>(proposal_any);
                 const options_type& opt = owner._options_labels();
                 if (std::find(opt.cbegin(), opt.cend(), proposal) == opt.cend())
                 {
@@ -267,8 +272,9 @@ namespace xw
     {
         this->observe(
             "value",
-            [](auto& owner)
+            [](std::any owner_any)
             {
+                auto& owner = std::any_cast<derived_type&>(owner_any);
                 const options_type& opt = owner._options_labels();
                 index_type new_index;
                 for (const auto& val : owner.value())
@@ -284,8 +290,9 @@ namespace xw
 
         this->observe(
             "index",
-            [](auto& owner)
+            [](std::any owner_any)
             {
+                auto& owner = std::any_cast<derived_type&>(owner_any);
                 value_type new_value;
                 for (const auto& i : owner.index())
                 {
@@ -300,16 +307,19 @@ namespace xw
 
         this->observe(
             "_options_labels",
-            [](auto& owner)
+            [](std::any owner_any)
             {
+                auto& owner = std::any_cast<derived_type&>(owner_any);
                 owner.index = index_type();
             }
         );
 
-        this->template validate<value_type>(
+        this->validate(
             "value",
-            [](auto& owner, auto& proposal)
+            [](std::any owner_any, std::any& proposal_any)
             {
+                auto& owner = std::any_cast<std::reference_wrapper<derived_type>>(owner_any).get();
+                auto& proposal = std::any_cast<value_type&>(proposal_any);
                 const options_type& opt = owner._options_labels();
                 for (const auto& val : proposal)
                 {
