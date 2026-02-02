@@ -39,6 +39,16 @@ jobs:
       with:
         environment-file: environment-dev.yml
 
+    - name: Build and install xproperty from GitHub branch
+      run: |
+        git clone --branch fix_xobserved https://github.com/Hind-M/xproperty.git
+        cmake -S xproperty -B xproperty-build \
+        -D CMAKE_BUILD_TYPE=Release \
+        -D CMAKE_PREFIX_PATH="${CONDA_PREFIX}" \
+        -D CMAKE_INSTALL_PREFIX="${CONDA_PREFIX}"
+        cmake --build xproperty-build --parallel
+        cmake --install xproperty-build
+
     - name: Cmake configure
       run: |
         cmake -B build -Werror=dev \
@@ -89,6 +99,18 @@ jobs:
       with:
         init-shell: cmd.exe
         environment-file: environment-dev.yml
+
+    - name: Build and install xproperty from GitHub branch
+      shell: cmd /C call {0}
+      run: |
+        git clone --branch fix_xobserved https://github.com/Hind-M/xproperty.git
+        cmake -S xproperty -B xproperty-build ^
+        -G Ninja ^
+        -D CMAKE_BUILD_TYPE=Release ^
+        -D CMAKE_PREFIX_PATH="%CONDA_PREFIX%\Library" ^
+        -D CMAKE_INSTALL_PREFIX="%CONDA_PREFIX%"
+        cmake --build xproperty-build --parallel
+        cmake --install xproperty-build
 
     - name: Make build directory
       run: mkdir build
