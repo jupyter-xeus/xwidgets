@@ -1,27 +1,45 @@
 /***************************************************************************
-* Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
-*                                                                          *
-* Distributed under the terms of the BSD 3-Clause License.                 *
-*                                                                          *
-* The full license is in the file LICENSE, distributed with this software. *
-****************************************************************************/
+ * Copyright (c) 2017, Sylvain Corlay and Johan Mabille                     *
+ *                                                                          *
+ * Distributed under the terms of the BSD 3-Clause License.                 *
+ *                                                                          *
+ * The full license is in the file LICENSE, distributed with this software. *
+ ****************************************************************************/
 
 #ifndef XWIDGETS_CONFIG_CLING_HPP
 #define XWIDGETS_CONFIG_CLING_HPP
 
 #ifdef __CLING__
 
-#pragma cling add_library_path(@XWIDGETS_INSTALL_LIBRARY_DIR@)
+#pragma cling add_library_path(@XWIDGETS_INSTALL_LIBRARY_DIR @)
 #pragma cling load("libxwidgets")
 
-#elif defined(__EMSCRIPTEN__) && defined(__CLANG_REPL__)
+#endif  // __CLING__
 
+#ifdef __CLANG_REPL__
+
+#if defined(__has_include)
+// Newer CppInterop>=1.8.0
+#if __has_include("CppInterOp/CppInterOp.h")
+#include <CppInterOp/CppInterOp.h>
+// Older
+#else
 #include <clang/Interpreter/CppInterOp.h>
-static bool _xwidgets_loaded = []() {
-    Cpp::LoadLibrary("/lib/@CMAKE_SHARED_LIBRARY_PREFIX@xwidgets@CMAKE_SHARED_LIBRARY_SUFFIX@", false);
+#endif
+#endif  // __has_include
+
+static bool _xwidgets_loaded = []()
+{
+    Cpp::LoadLibrary(
+#ifdef __EMSCRIPTEN__
+        "/lib/@CMAKE_SHARED_LIBRARY_PREFIX@xwidgets@CMAKE_SHARED_LIBRARY_SUFFIX@"
+#else
+        "libxwidgets"
+#endif
+    );
     return true;
 }();
 
-#endif
+#endif  // __CLANG_REPL__
 
-#endif // XWIDGETS_CONFIG_CLING_HPP
+#endif  // XWIDGETS_CONFIG_CLING_HPP
