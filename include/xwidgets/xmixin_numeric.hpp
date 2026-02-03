@@ -123,12 +123,10 @@ namespace xw
         template <class D>
         inline void xnumeric_bounded<D>::setup_properties()
         {
-            static_cast<derived_type*>(this)->validate(
+            static_cast<derived_type*>(this)->template validate<derived_type, value_type>(
                 "value",
-                [](std::any owner_any, std::any& proposal_any)
+                [](auto& owner, auto& proposal)
                 {
-                    auto& owner = std::any_cast<std::reference_wrapper<derived_type>>(owner_any).get();
-                    auto& proposal = std::any_cast<value_type&>(proposal_any);
                     if (proposal > owner.max())
                     {
                         proposal = owner.max();
@@ -140,12 +138,10 @@ namespace xw
                 }
             );
 
-            static_cast<derived_type*>(this)->validate(
+            static_cast<derived_type*>(this)->template validate<derived_type, value_type>(
                 "min",
-                [](std::any owner_any, std::any& proposal_any)
+                [](auto& owner, auto& proposal)
                 {
-                    auto& owner = std::any_cast<std::reference_wrapper<derived_type>>(owner_any).get();
-                    auto& proposal = std::any_cast<value_type&>(proposal_any);
                     if (proposal > owner.max())
                     {
                         throw std::runtime_error("setting min > max");
@@ -157,12 +153,10 @@ namespace xw
                 }
             );
 
-            static_cast<derived_type*>(this)->validate(
+            static_cast<derived_type*>(this)->template validate<derived_type, value_type>(
                 "max",
-                [](std::any owner_any, std::any& proposal_any)
+                [](auto& owner, auto& proposal)
                 {
-                    auto& owner = std::any_cast<std::reference_wrapper<derived_type>>(owner_any).get();
-                    auto& proposal = std::any_cast<value_type&>(proposal_any);
                     if (proposal < owner.min())
                     {
                         throw std::runtime_error("setting max < min");
