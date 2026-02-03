@@ -158,10 +158,11 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<options_type>(
+        this->validate(
             "_options_labels",
-            [](auto&, auto& proposal)
+            [](std::any, std::any& proposal_any)
             {
+                auto& proposal = std::any_cast<options_type&>(proposal_any);
                 if (proposal.empty())
                 {
                     throw std::runtime_error("Empty collection passed to selection slider");
@@ -228,10 +229,11 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<value_type>(
+        this->validate(
             "value",
-            [](auto&, auto& proposal)
+            [](std::any, std::any& proposal_any)
             {
+                auto& proposal = std::any_cast<value_type&>(proposal_any);
                 if (proposal.empty())
                 {
                     throw std::runtime_error("Empty collection passed to selection slider");
@@ -251,10 +253,11 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<options_type>(
+        this->validate(
             "_options_labels",
-            [](auto&, auto& proposal)
+            [](std::any, std::any& proposal_any)
             {
+                auto& proposal = std::any_cast<options_type&>(proposal_any);
                 if (proposal.empty())
                 {
                     throw std::runtime_error("Empty collection passed to selection slider");
