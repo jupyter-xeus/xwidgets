@@ -11,7 +11,7 @@
 
 #ifdef __CLING__
 
-#pragma cling add_library_path(@XWIDGETS_INSTALL_LIBRARY_DIR @)
+#pragma cling add_library_path(@XWIDGETS_INSTALL_LIBRARY_DIR@)
 #pragma cling load("libxwidgets")
 
 #endif  // __CLING__
