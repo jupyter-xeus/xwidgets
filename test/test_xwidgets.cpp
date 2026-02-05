@@ -80,10 +80,10 @@ namespace xw
         TEST_CASE("checkbox.style")
         {
             checkbox c;
-            c.style = checkbox_style::initialize()  //
-                          .background("black")
-                          .description_width("3")
-                          .finalize();
+            auto style_widget = checkbox_style::initialize();
+            style_widget.background = "black";
+            style_widget.description_width = "3";
+            c.style = std::move(style_widget).finalize();
             REQUIRE_EQ("black", c.style().background());
             REQUIRE_EQ("3", c.style().description_width());
 

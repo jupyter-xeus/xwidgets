@@ -34,9 +34,9 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, box_style, "", XEITHER("success", "info", "warning", "danger", ""));
+        XPROPERTY(std::string, xcommon, box_style, "", XEITHER("success", "info", "warning", "danger", ""));
 
-        XPROPERTY(children_list_type, derived_type, children);
+        XPROPERTY(children_list_type, xcommon, children);
 
         template <class T>
         void add(const xtransport<T>& w);

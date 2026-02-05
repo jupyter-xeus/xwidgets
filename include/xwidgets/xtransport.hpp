@@ -15,7 +15,6 @@
 
 #include <xeus/xcomm.hpp>
 #include <xeus/xinterpreter.hpp>
-#include <xproperty/xobserved.hpp>
 
 #include "xcommon.hpp"
 #include "xholder.hpp"
@@ -44,14 +43,12 @@ namespace xw
      **************************/
 
     template <class D>
-    class xtransport : public xcommon,
-                       public xp::xobserved
+    class xtransport : public xcommon
     {
     public:
 
         using base_type = xcommon;
         using derived_type = D;
-        using observed_type = xp::xobserved;
 
         derived_type& derived_cast() noexcept
         {
@@ -106,7 +103,6 @@ namespace xw
     template <class D>
     inline xtransport<D>::xtransport()
         : base_type()
-        , observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         get_transport_registry().register_weak(this);
@@ -124,7 +120,6 @@ namespace xw
     template <class D>
     inline xtransport<D>::xtransport(xeus::xcomm&& comm, bool owning)
         : xcommon(std::move(comm))
-        , observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         if (!owning)
@@ -136,7 +131,6 @@ namespace xw
     template <class D>
     inline xtransport<D>::xtransport(const xtransport& other)
         : xcommon(other)
-        , observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         get_transport_registry().register_weak(this);
@@ -145,7 +139,6 @@ namespace xw
     template <class D>
     inline xtransport<D>::xtransport(xtransport&& other)
         : xcommon(std::move(other))
-        , observed_type()
     {
         this->comm().on_message(std::bind(&xtransport::handle_message, this, std::placeholders::_1));
         get_transport_registry().register_weak(this);  // Replacing the address of the moved transport with
