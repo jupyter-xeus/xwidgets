@@ -33,10 +33,10 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::vector<std::string>, derived_type, _dom_classes);
-        XPROPERTY(::xw::layout, derived_type, layout);
-        XPROPERTY(std::optional<bool>, derived_type, tabbable);
-        XPROPERTY(std::optional<std::string>, derived_type, tooltip);
+        XPROPERTY(std::vector<std::string>, xcommon, _dom_classes);
+        XPROPERTY(::xw::layout, xcommon, layout);
+        XPROPERTY(std::optional<bool>, xcommon, tabbable);
+        XPROPERTY(std::optional<std::string>, xcommon, tooltip);
 
     protected:
 

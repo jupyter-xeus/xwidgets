@@ -36,7 +36,7 @@ namespace xw
         void serialize_state(nl::json& state, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(value_type, derived_type, value);
+        XPROPERTY(value_type, xcommon, value);
 
     protected:
 
@@ -94,6 +94,26 @@ namespace xw
         const char* cstr = filename.c_str();
         std::basic_ifstream<char> file(cstr, std::ios::binary);
         return std::vector<char>((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    }
+
+    /**********************
+     * custom serializers *
+     **********************/
+
+    inline void set_property_from_patch(
+        decltype(media::value)& property,
+        const nl::json& patch,
+        const xeus::buffer_sequence& buffers
+    )
+    {
+        auto it = patch.find(property.name());
+        if (it != patch.end())
+        {
+            using value_type = typename decltype(media::value)::value_type;
+            std::size_t index = buffer_index(patch[property.name()].template get<std::string>());
+            const auto& value_buffer = buffers[index];
+            property = value_type(value_buffer.data(), value_buffer.data() + value_buffer.size());
+        }
     }
 
     /*********************

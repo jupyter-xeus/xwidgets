@@ -16,6 +16,8 @@
 
 #include <xeus/xcomm.hpp>
 
+#include <xproperty/xobserved.hpp>
+
 #include "xbinary.hpp"
 #include "xwidgets_config.hpp"
 
@@ -51,9 +53,13 @@ namespace xw
      * xcommon declaration *
      ***********************/
 
-    class XWIDGETS_API xcommon
+    class XWIDGETS_API xcommon : public xp::xobserved
     {
     public:
+
+        using observed_type = xp::xobserved;
+
+        ~xcommon();
 
         xeus::xguid id() const noexcept;
         void display() const;
@@ -64,7 +70,6 @@ namespace xw
 
         xcommon();
         xcommon(xeus::xcomm&&);
-        ~xcommon();
         xcommon(const xcommon&);
         xcommon(xcommon&&);
         xcommon& operator=(const xcommon&);
@@ -86,6 +91,9 @@ namespace xw
         void send_patch(nl::json&&, xeus::buffer_sequence&&, const char* method = "update") const;
 
     private:
+
+        template <class X, class Y>
+        friend class xp::xproperty;
 
         /**
          * Indicate whether a global setting activates or deactivates ``echo_update`` messages.

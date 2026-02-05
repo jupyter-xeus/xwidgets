@@ -149,7 +149,7 @@ In this example, we register an observer for a slider value, triggering the prin
 
     xw::slider<double> slider;
     slider.display()
-    XOBSERVE(slider, value, [](const auto& s) {
+    slider.observe<decltype(slider)>(slider.value.name(), [](const auto& s) {
         std::cout << "Observer: New Slider value: " << s.value << std::endl;
     });
 
@@ -162,7 +162,7 @@ In this example, we validate the proposed values for a numerical text. Negative 
 
     xw::number<double> number;
     number.display()
-    XVALIDATE(number, value, [](const auto&, double proposal) {
+    number.validate<decltype(number), double>(number.value.name(), [](const auto&, double& proposal) {
         std::cout << "Validator: Proposal: " << proposal << std::endl;
         if (proposal < 0)
         {

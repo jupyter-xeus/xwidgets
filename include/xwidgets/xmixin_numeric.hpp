@@ -123,7 +123,7 @@ namespace xw
         template <class D>
         inline void xnumeric_bounded<D>::setup_properties()
         {
-            static_cast<derived_type*>(this)->template validate<value_type>(
+            static_cast<derived_type*>(this)->template validate<derived_type, value_type>(
                 "value",
                 [](auto& owner, auto& proposal)
                 {
@@ -138,7 +138,7 @@ namespace xw
                 }
             );
 
-            static_cast<derived_type*>(this)->template validate<value_type>(
+            static_cast<derived_type*>(this)->template validate<derived_type, value_type>(
                 "min",
                 [](auto& owner, auto& proposal)
                 {
@@ -153,7 +153,7 @@ namespace xw
                 }
             );
 
-            static_cast<derived_type*>(this)->template validate<value_type>(
+            static_cast<derived_type*>(this)->template validate<derived_type, value_type>(
                 "max",
                 [](auto& owner, auto& proposal)
                 {
