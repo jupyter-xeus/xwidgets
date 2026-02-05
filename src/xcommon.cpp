@@ -21,7 +21,8 @@
 namespace xw
 {
     xcommon::xcommon()
-        : m_moved_from(false)
+        : observed_type()
+        , m_moved_from(false)
         , m_hold(nullptr)
         , m_comm(get_widget_target(), xeus::new_xguid())
     {
@@ -32,14 +33,16 @@ namespace xw
     }
 
     xcommon::xcommon(xeus::xcomm&& comm)
-        : m_moved_from(false)
+        : observed_type()
+        , m_moved_from(false)
         , m_hold(nullptr)
         , m_comm(std::move(comm))
     {
     }
 
     xcommon::xcommon(const xcommon& other)
-        : m_moved_from(false)
+        : observed_type()
+        , m_moved_from(false)
         , m_hold(nullptr)
         , m_comm(other.m_comm)
         , m_buffer_paths(other.m_buffer_paths)
@@ -47,7 +50,8 @@ namespace xw
     }
 
     xcommon::xcommon(xcommon&& other)
-        : m_moved_from(false)
+        : observed_type()
+        , m_moved_from(false)
         , m_hold(nullptr)
         , m_comm(std::move(other.m_comm))
         , m_buffer_paths(std::move(other.m_buffer_paths))

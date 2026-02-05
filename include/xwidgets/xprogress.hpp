@@ -37,8 +37,8 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, description_width);
-        XPROPERTY(std::optional<html_color>, derived_type, bar_color);
+        XPROPERTY(std::string, xcommon, description_width);
+        XPROPERTY(std::optional<html_color>, xcommon, bar_color);
 
     protected:
 
@@ -69,11 +69,11 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, description);
-        XPROPERTY(bool, derived_type, description_allow_html, false);
-        XPROPERTY(std::string, derived_type, bar_style, "", XEITHER("success", "info", "warning", "danger", ""));
-        XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
-        XPROPERTY(::xw::progress_style, derived_type, style);
+        XPROPERTY(std::string, xcommon, description);
+        XPROPERTY(bool, xcommon, description_allow_html, false);
+        XPROPERTY(std::string, xcommon, bar_style, "", XEITHER("success", "info", "warning", "danger", ""));
+        XPROPERTY(std::string, xcommon, orientation, "horizontal", XEITHER("horizontal", "vertical"));
+        XPROPERTY(::xw::progress_style, xcommon, style);
 
     protected:
 

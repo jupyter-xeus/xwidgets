@@ -35,8 +35,8 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(titles_type, derived_type, titles);
-        XPROPERTY(std::optional<int>, derived_type, selected_index, 0);
+        XPROPERTY(titles_type, xcommon, titles);
+        XPROPERTY(std::optional<int>, xcommon, selected_index, 0);
 
         void set_title(typename titles_type::size_type i, std::string title);
 

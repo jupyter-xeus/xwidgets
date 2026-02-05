@@ -31,7 +31,7 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, readout, "Invalid");
+        XPROPERTY(std::string, xcommon, readout, "Invalid");
 
     protected:
 

@@ -41,12 +41,12 @@ namespace xw
         using value_type = options_type::value_type;
         using index_type = options_type::size_type;
 
-        XPROPERTY(options_type, derived_type, _options_labels);
-        XPROPERTY(bool, derived_type, disabled, false);
-        XPROPERTY(index_type, derived_type, index);
+        XPROPERTY(options_type, xcommon, _options_labels);
+        XPROPERTY(bool, xcommon, disabled, false);
+        XPROPERTY(index_type, xcommon, index);
 
         // non-synchronized properties
-        XPROPERTY(value_type, derived_type, value);
+        XPROPERTY(value_type, xcommon, value);
 
     protected:
 
@@ -84,12 +84,12 @@ namespace xw
         using value_type = options_type;
         using index_type = std::vector<options_type::size_type>;
 
-        XPROPERTY(options_type, derived_type, _options_labels);
-        XPROPERTY(bool, derived_type, disabled, false);
-        XPROPERTY(index_type, derived_type, index);
+        XPROPERTY(options_type, xcommon, _options_labels);
+        XPROPERTY(bool, xcommon, disabled, false);
+        XPROPERTY(index_type, xcommon, index);
 
         // non-synchronized properties
-        XPROPERTY(value_type, derived_type, value);
+        XPROPERTY(value_type, xcommon, value);
 
     protected:
 

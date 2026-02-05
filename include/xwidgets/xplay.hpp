@@ -36,12 +36,12 @@ namespace xw
         void serialize_state(nl::json& state, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(value_type, derived_type, interval, value_type(100));
-        XPROPERTY(bool, derived_type, playing);
-        XPROPERTY(bool, derived_type, repeat);
-        XPROPERTY(bool, derived_type, show_repeat, true);
-        XPROPERTY(value_type, derived_type, step, value_type(1));
+        XPROPERTY(bool, xcommon, disabled);
+        XPROPERTY(value_type, xcommon, interval, value_type(100));
+        XPROPERTY(bool, xcommon, playing);
+        XPROPERTY(bool, xcommon, repeat);
+        XPROPERTY(bool, xcommon, show_repeat, true);
+        XPROPERTY(value_type, xcommon, step, value_type(1));
 
     protected:
 
