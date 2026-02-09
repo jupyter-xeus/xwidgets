@@ -56,6 +56,14 @@ namespace xw
         value = j.template get<T>();
     }
 
+    template <>
+    inline void xwidgets_deserialize(std::vector<char>& value, const nl::json& j, const xeus::buffer_sequence& buffers)
+    {
+        std::size_t index = buffer_index(j.template get<std::string>());
+        const auto& value_buffer = buffers[index];
+        value.assign(value_buffer.data(), value_buffer.data() + value_buffer.size());
+    }
+
     /***********************
      * xcommon declaration *
      ***********************/

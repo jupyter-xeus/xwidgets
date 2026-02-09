@@ -44,7 +44,10 @@ namespace xw
 
         protected:
 
-            xnumeric() = default;
+            xnumeric()
+            {
+                REGISTER_PROPERTIES(value);
+            }
         };
 
         /********************************
@@ -85,12 +88,6 @@ namespace xw
             xwidgets_serialize(value(), state["value"], buffers);
         }
 
-        template <class D>
-        inline void xnumeric<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
-        {
-            set_property_from_patch(value, patch, buffers);
-        }
-
         /***********************************
          * xnumeric_bounded implementation *
          ***********************************/
@@ -105,18 +102,9 @@ namespace xw
         }
 
         template <class D>
-        inline void
-        xnumeric_bounded<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
-        {
-            base_type::apply_patch(patch, buffers);
-
-            set_property_from_patch(max, patch, buffers);
-            set_property_from_patch(min, patch, buffers);
-        }
-
-        template <class D>
         inline xnumeric_bounded<D>::xnumeric_bounded()
         {
+            REGISTER_PROPERTIES(max, min);
             setup_properties();
         }
 
