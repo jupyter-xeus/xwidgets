@@ -80,9 +80,6 @@ namespace xw
     inline void xnumber_bounded<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-        mixin_description_type::apply_patch(patch, buffers);
-        mixin_numeric_type::apply_patch(patch, buffers);
-
         this->apply_patch_to_registered_properties(patch, buffers);
     }
 

@@ -74,7 +74,10 @@ namespace xw
 
         protected:
 
-            xdescription() = default;
+            xdescription()
+            {
+                REGISTER_PROPERTIES(description, description_allow_html, style);
+            }
         };
     }
 
@@ -131,14 +134,6 @@ namespace xw
             xwidgets_serialize(description(), state["description"], buffers);
             xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
             xwidgets_serialize(style(), state["style"], buffers);
-        }
-
-        template <class D>
-        inline void xdescription<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
-        {
-            set_property_from_patch(description, patch, buffers);
-            set_property_from_patch(description_allow_html, patch, buffers);
-            set_property_from_patch(style, patch, buffers);
         }
     }
 }

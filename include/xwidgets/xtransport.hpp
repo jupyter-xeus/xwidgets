@@ -25,18 +25,6 @@ namespace xw
 {
     // Properties
 
-    template <class P>
-    inline void
-    set_property_from_patch(P& property, const nl::json& patch, const xeus::buffer_sequence& buffers)
-    {
-        auto it = patch.find(property.name());
-        if (it != patch.end())
-        {
-            typename P::value_type value;
-            xwidgets_deserialize(value, *it, buffers);
-            property = value;
-        }
-    }
 
     /**************************
      * xtransport declaration *
