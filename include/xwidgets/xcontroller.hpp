@@ -139,9 +139,7 @@ namespace xw
     inline void xcontroller_button<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(value, patch, buffers);
-        set_property_from_patch(pressed, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -149,6 +147,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(value, pressed);
     }
 
     template <class D>
@@ -178,8 +177,7 @@ namespace xw
     inline void xcontroller_axis<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(value, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -187,6 +185,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(value);
     }
 
     template <class D>
@@ -222,14 +221,7 @@ namespace xw
     inline void xcontroller<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(index, patch, buffers);
-        set_property_from_patch(name, patch, buffers);
-        set_property_from_patch(mapping, patch, buffers);
-        set_property_from_patch(connected, patch, buffers);
-        set_property_from_patch(timestamp, patch, buffers);
-        set_property_from_patch(buttons, patch, buffers);
-        set_property_from_patch(axes, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -243,6 +235,7 @@ namespace xw
             return true;
         }();
         set_defaults();
+        REGISTER_PROPERTIES(index, name, mapping, connected, timestamp, buttons, axes);
     }
 
     template <class D>

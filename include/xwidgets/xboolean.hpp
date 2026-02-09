@@ -65,15 +65,14 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
         mixin_description_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(value, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
     inline xboolean<D>::xboolean()
     {
         set_defaults();
+        REGISTER_PROPERTIES(disabled, value);
     }
 
     template <class D>

@@ -131,12 +131,7 @@ namespace xw
     inline void xselectionslider<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(readout, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(behavior, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -144,6 +139,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(tooltips, orientation, readout, continuous_update, behavior, style);
     }
 
     template <class D>
@@ -152,6 +148,7 @@ namespace xw
         : base_type(std::forward<O>(options), std::forward<T>(value))
     {
         set_defaults();
+        REGISTER_PROPERTIES(tooltips, orientation, readout, continuous_update, behavior, style);
 
         if (this->_options_labels().empty())
         {
@@ -202,12 +199,7 @@ namespace xw
     xselection_rangeslider<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(readout, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(behavior, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -215,6 +207,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(tooltips, orientation, readout, continuous_update, behavior, style);
     }
 
     template <class D>
@@ -222,6 +215,7 @@ namespace xw
         : base_type(std::move(options))
     {
         set_defaults();
+        REGISTER_PROPERTIES(tooltips, orientation, readout, continuous_update, behavior, style);
 
         if (this->_options_labels().empty())
         {
@@ -245,6 +239,7 @@ namespace xw
         : base_type(options)
     {
         set_defaults();
+        REGISTER_PROPERTIES(tooltips, orientation, readout, continuous_update, behavior, style);
 
         if (this->_options_labels().empty())
         {

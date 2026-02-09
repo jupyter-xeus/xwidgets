@@ -328,6 +328,24 @@ namespace xw
         }
     }
 
+    void xcommon::register_patch_applier(const std::string& name, patch_applier_type&& applier)
+    {
+        m_patch_appliers[name] = std::move(applier);
+    }
+
+    void xcommon::apply_patch_to_registered_properties(const nl::json& patch, const xeus::buffer_sequence& buffers)
+    {
+        for (auto it = patch.begin(); it != patch.end(); ++it)
+        {
+            const auto& key = it.key();
+            auto applier_it = m_patch_appliers.find(key);
+            if (applier_it != m_patch_appliers.end())
+            {
+                applier_it->second(*it, buffers);
+            }
+        }
+    }
+
     void to_json(nl::json& j, const xcommon& o)
     {
         j = "IPY_MODEL_" + std::string(o.id());

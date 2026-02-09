@@ -116,9 +116,7 @@ namespace xw
     inline void xslider_style<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(description_width, patch, buffers);
-        set_property_from_patch(handle_color, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -126,6 +124,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(description_width, handle_color);
     }
 
     template <class D>
@@ -156,12 +155,7 @@ namespace xw
     inline void xslider<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(behavior, patch, buffers);
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(readout, patch, buffers);
-        set_property_from_patch(readout_format, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -169,6 +163,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(behavior, orientation, readout, readout_format, style);
     }
 
     template <class D>

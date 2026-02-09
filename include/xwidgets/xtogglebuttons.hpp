@@ -113,10 +113,7 @@ namespace xw
     xtogglebuttons_style<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(button_width, patch, buffers);
-        set_property_from_patch(description_width, patch, buffers);
-        set_property_from_patch(font_weight, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -124,6 +121,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(button_width, description_width, font_weight);
     }
 
     template <class D>
@@ -153,11 +151,7 @@ namespace xw
     inline void xtogglebuttons<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(tooltips, patch, buffers);
-        set_property_from_patch(icons, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
-        set_property_from_patch(button_style, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -165,6 +159,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(tooltips, icons, style, button_style);
     }
 
     template <class D>
@@ -173,6 +168,7 @@ namespace xw
         : base_type(std::forward<O>(options), std::forward<T>(value))
     {
         set_defaults();
+        REGISTER_PROPERTIES(tooltips, icons, style, button_style);
     }
 
     template <class D>

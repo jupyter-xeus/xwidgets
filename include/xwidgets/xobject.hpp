@@ -44,6 +44,11 @@ namespace xw
 
     protected:
 
+        xobject()
+        {
+            REGISTER_PROPERTIES(_model_module, _model_module_version, _model_name,
+                                _view_module, _view_module_version, _view_name);
+        }
         using base_type::base_type;
     };
 
@@ -65,12 +70,7 @@ namespace xw
     template <class D>
     inline void xobject<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
-        set_property_from_patch(_model_module, patch, buffers);
-        set_property_from_patch(_model_module_version, patch, buffers);
-        set_property_from_patch(_model_name, patch, buffers);
-        set_property_from_patch(_view_module, patch, buffers);
-        set_property_from_patch(_view_module_version, patch, buffers);
-        set_property_from_patch(_view_name, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 }
 

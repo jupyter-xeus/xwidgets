@@ -110,15 +110,14 @@ namespace xw
     inline void xprogress_style<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(description_width, patch, buffers);
-        set_property_from_patch(bar_color, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
     inline xprogress_style<D>::xprogress_style()
     {
         set_defaults();
+        REGISTER_PROPERTIES(description_width, bar_color);
     }
 
     template <class D>
@@ -151,17 +150,14 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
         mixin_numeric_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(bar_style, patch, buffers);
-        set_property_from_patch(description, patch, buffers);
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
     inline xprogress<D>::xprogress()
     {
         set_defaults();
+        REGISTER_PROPERTIES(bar_style, description, orientation, style);
     }
 
     template <class D>
