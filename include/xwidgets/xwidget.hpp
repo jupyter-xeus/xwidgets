@@ -57,6 +57,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(_dom_classes, layout, tabbable, tooltip);
     }
 
     template <class D>
@@ -74,11 +75,7 @@ namespace xw
     inline void xwidget<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(_dom_classes, patch, buffers);
-        set_property_from_patch(layout, patch, buffers);
-        set_property_from_patch(tabbable, patch, buffers);
-        set_property_from_patch(tooltip, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>

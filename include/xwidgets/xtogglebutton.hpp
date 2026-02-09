@@ -116,15 +116,7 @@ namespace xw
     inline void xtogglebutton_style<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(description_width, patch, buffers);
-        set_property_from_patch(font_family, patch, buffers);
-        set_property_from_patch(font_size, patch, buffers);
-        set_property_from_patch(font_style, patch, buffers);
-        set_property_from_patch(font_variant, patch, buffers);
-        set_property_from_patch(font_weight, patch, buffers);
-        set_property_from_patch(text_color, patch, buffers);
-        set_property_from_patch(text_decoration, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -132,6 +124,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(description_width, font_family, font_size, font_style, font_variant, font_weight, text_color, text_decoration);
     }
 
     template <class D>
@@ -150,6 +143,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(tooltip, icon, button_style, style);
     }
 
     template <class D>
@@ -167,11 +161,7 @@ namespace xw
     inline void xtogglebutton<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(tooltip, patch, buffers);
-        set_property_from_patch(icon, patch, buffers);
-        set_property_from_patch(button_style, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>

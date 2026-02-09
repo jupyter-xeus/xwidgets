@@ -83,15 +83,14 @@ namespace xw
         mixin_description_type::apply_patch(patch, buffers);
         mixin_numeric_type::apply_patch(patch, buffers);
 
-        set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(step, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
     inline xnumber_bounded<D>::xnumber_bounded()
     {
         set_defaults();
+        REGISTER_PROPERTIES(continuous_update, disabled, step);
     }
 
     template <class D>

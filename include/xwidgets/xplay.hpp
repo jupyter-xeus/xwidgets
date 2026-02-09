@@ -85,19 +85,14 @@ namespace xw
         base_type::apply_patch(patch, buffers);
         mixin_description_type::apply_patch(patch, buffers);
         mixin_numeric_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(interval, patch, buffers);
-        set_property_from_patch(playing, patch, buffers);
-        set_property_from_patch(repeat, patch, buffers);
-        set_property_from_patch(show_repeat, patch, buffers);
-        set_property_from_patch(step, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
     inline xplay<D>::xplay()
     {
         set_defaults();
+        REGISTER_PROPERTIES(disabled, interval, playing, repeat, show_repeat, step);
     }
 
     template <class D>

@@ -204,52 +204,54 @@ namespace xw
     inline void xlayout<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(align_content, patch, buffers);
-        set_property_from_patch(align_items, patch, buffers);
-        set_property_from_patch(align_self, patch, buffers);
-        set_property_from_patch(border_bottom, patch, buffers);
-        set_property_from_patch(border_left, patch, buffers);
-        set_property_from_patch(border_right, patch, buffers);
-        set_property_from_patch(border_top, patch, buffers);
-        set_property_from_patch(bottom, patch, buffers);
-        set_property_from_patch(display, patch, buffers);
-        set_property_from_patch(flex, patch, buffers);
-        set_property_from_patch(flex_flow, patch, buffers);
-        set_property_from_patch(grid_area, patch, buffers);
-        set_property_from_patch(grid_auto_columns, patch, buffers);
-        set_property_from_patch(grid_auto_flow, patch, buffers);
-        set_property_from_patch(grid_auto_rows, patch, buffers);
-        set_property_from_patch(grid_column, patch, buffers);
-        set_property_from_patch(grid_gap, patch, buffers);
-        set_property_from_patch(grid_row, patch, buffers);
-        set_property_from_patch(grid_template_areas, patch, buffers);
-        set_property_from_patch(grid_template_columns, patch, buffers);
-        set_property_from_patch(grid_template_rows, patch, buffers);
-        set_property_from_patch(height, patch, buffers);
-        set_property_from_patch(justify_content, patch, buffers);
-        set_property_from_patch(justify_items, patch, buffers);
-        set_property_from_patch(left, patch, buffers);
-        set_property_from_patch(margin, patch, buffers);
-        set_property_from_patch(max_height, patch, buffers);
-        set_property_from_patch(max_width, patch, buffers);
-        set_property_from_patch(min_height, patch, buffers);
-        set_property_from_patch(min_width, patch, buffers);
-        set_property_from_patch(object_fit, patch, buffers);
-        set_property_from_patch(object_position, patch, buffers);
-        set_property_from_patch(order, patch, buffers);
-        set_property_from_patch(overflow, patch, buffers);
-        set_property_from_patch(padding, patch, buffers);
-        set_property_from_patch(right, patch, buffers);
-        set_property_from_patch(top, patch, buffers);
-        set_property_from_patch(visibility, patch, buffers);
-        set_property_from_patch(width, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
     inline xlayout<D>::xlayout()
     {
         set_defaults();
+        REGISTER_PROPERTIES(
+            align_content,
+            align_items,
+            align_self,
+            border_bottom,
+            border_left,
+            border_right,
+            border_top,
+            bottom,
+            display,
+            flex,
+            flex_flow,
+            grid_area,
+            grid_auto_columns,
+            grid_auto_flow,
+            grid_auto_rows,
+            grid_column,
+            grid_gap,
+            grid_row,
+            grid_template_areas,
+            grid_template_columns,
+            grid_template_rows,
+            height,
+            justify_content,
+            justify_items,
+            left,
+            margin,
+            max_height,
+            max_width,
+            min_height,
+            min_width,
+            object_fit,
+            object_position,
+            order,
+            overflow,
+            padding,
+            right,
+            top,
+            visibility,
+            width
+        );
     }
 
     template <class D>

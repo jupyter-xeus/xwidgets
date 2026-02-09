@@ -69,16 +69,14 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
         mixin_description_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(concise, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(value, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
     inline xcolor_picker<D>::xcolor_picker()
     {
         set_defaults();
+        REGISTER_PROPERTIES(disabled, concise, value);
     }
 
     template <class D>

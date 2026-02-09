@@ -64,11 +64,7 @@ namespace xw
     inline void xstring<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(description, patch, buffers);
-        set_property_from_patch(description_allow_html, patch, buffers);
-        set_property_from_patch(placeholder, patch, buffers);
-        set_property_from_patch(value, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -76,6 +72,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(description, description_allow_html, placeholder, value);
     }
 
     template <class D>

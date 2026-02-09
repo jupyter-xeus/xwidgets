@@ -112,9 +112,7 @@ namespace xw
     inline void xlink<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(source, patch, buffers);
-        set_property_from_patch(target, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -122,6 +120,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(source, target);
         std::get<0>(this->source()) = s;
         std::get<1>(this->source()) = sn;
         std::get<0>(this->target()) = t;
@@ -134,6 +133,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(source, target);
         std::get<0>(this->source()) = s;
         std::get<1>(this->source()) = sn;
         std::get<0>(this->target()) = t;
@@ -168,9 +168,7 @@ namespace xw
     inline void xdirectional_link<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(source, patch, buffers);
-        set_property_from_patch(target, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -183,6 +181,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(source, target);
         std::get<0>(this->source()) = s;
         std::get<1>(this->source()) = sn;
         std::get<0>(this->target()) = t;
@@ -200,6 +199,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(source, target);
         std::get<0>(this->source()) = s;
         std::get<1>(this->source()) = sn;
         std::get<0>(this->target()) = t;

@@ -123,16 +123,14 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
         mixin_description_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(_options_labels, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(index, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
     inline xselection<D>::xselection()
     {
         set_defaults();
+        REGISTER_PROPERTIES(_options_labels, disabled, index);
         setup_properties();
     }
 
@@ -146,6 +144,7 @@ namespace xw
         this->_options_labels() = std::forward<O>(options);
         this->value() = std::forward<T>(v);
 
+        REGISTER_PROPERTIES(_options_labels, disabled, index);
         this->setup_properties();
     }
 
@@ -229,10 +228,7 @@ namespace xw
     {
         base_type::apply_patch(patch, buffers);
         mixin_description_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(_options_labels, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(index, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -240,6 +236,7 @@ namespace xw
         : base_type()
     {
         set_defaults();
+        REGISTER_PROPERTIES(_options_labels, disabled, index);
         this->setup_properties();
     }
 
@@ -249,6 +246,7 @@ namespace xw
     {
         set_defaults();
         this->_options_labels() = std::move(options);
+        REGISTER_PROPERTIES(_options_labels, disabled, index);
         this->setup_properties();
     }
 
@@ -259,6 +257,7 @@ namespace xw
         set_defaults();
 
         this->_options_labels() = options;
+        REGISTER_PROPERTIES(_options_labels, disabled, index);
         this->setup_properties();
     }
 
