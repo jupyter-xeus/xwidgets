@@ -333,7 +333,8 @@ namespace xw
         m_patch_appliers[name] = std::move(applier);
     }
 
-    void xcommon::apply_patch_to_registered_properties(const nl::json& patch, const xeus::buffer_sequence& buffers)
+    void
+    xcommon::apply_patch_to_registered_properties(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         for (auto it = patch.begin(); it != patch.end(); ++it)
         {
