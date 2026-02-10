@@ -55,6 +55,7 @@ namespace xw
                 _view_name
             );
         }
+
         using base_type::base_type;
     };
 
