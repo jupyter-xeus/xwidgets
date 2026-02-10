@@ -17,7 +17,6 @@
 #include <vector>
 
 #include <xeus/xcomm.hpp>
-
 #include <xproperty/xobserved.hpp>
 
 #include "xbinary.hpp"
@@ -25,10 +24,10 @@
 
 namespace xw
 {
-    #define REGISTER_PROPERTIES(...) \
-        ([](auto* self, auto&&... args){ \
-            (self->register_property(args), ...); \
-        })(static_cast<derived_type*>(this), __VA_ARGS__);
+#define REGISTER_PROPERTIES(...) \
+    ([](auto* self, auto&&... args){ \
+        (self->register_property(args), ...); \
+    })(static_cast<derived_type*>(this), __VA_ARGS__);
 
     /**********************************************
      * property serialization and deserialization *
@@ -57,7 +56,8 @@ namespace xw
     }
 
     template <>
-    inline void xwidgets_deserialize(std::vector<char>& value, const nl::json& j, const xeus::buffer_sequence& buffers)
+    inline void
+    xwidgets_deserialize(std::vector<char>& value, const nl::json& j, const xeus::buffer_sequence& buffers)
     {
         std::size_t index = buffer_index(j.template get<std::string>());
         const auto& value_buffer = buffers[index];

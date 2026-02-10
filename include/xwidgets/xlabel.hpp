@@ -114,7 +114,17 @@ namespace xw
     inline xlabel_style<D>::xlabel_style()
     {
         set_defaults();
-        REGISTER_PROPERTIES(background, description_width, font_family, font_size, font_style, font_variant, font_weight, text_color, text_decoration);
+        REGISTER_PROPERTIES(
+            background,
+            description_width,
+            font_family,
+            font_size,
+            font_style,
+            font_variant,
+            font_weight,
+            text_color,
+            text_decoration
+        );
     }
 
     template <class D>
