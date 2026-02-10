@@ -68,13 +68,7 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(
-            std::string,
-            xcommon,
-            behavior,
-            "drag-tap",
-            XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap")
-        );
+        XPROPERTY(std::string, xcommon, behavior, "drag-tap", XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap"));
         XPROPERTY(std::string, xcommon, orientation, "horizontal", XEITHER("horizontal", "vertical"));
         XPROPERTY(bool, xcommon, readout, true);
         XPROPERTY(std::string, xcommon, readout_format, ".2f");

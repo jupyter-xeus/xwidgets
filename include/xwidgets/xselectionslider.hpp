@@ -40,13 +40,7 @@ namespace xw
         XPROPERTY(std::string, xcommon, orientation, "horizontal", XEITHER("horizontal", "vertical"));
         XPROPERTY(bool, xcommon, readout, true);
         XPROPERTY(bool, xcommon, continuous_update, true);
-        XPROPERTY(
-            std::string,
-            xcommon,
-            behavior,
-            "drag-tap",
-            XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap")
-        );
+        XPROPERTY(std::string, xcommon, behavior, "drag-tap", XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap"));
         XPROPERTY(::xw::slider_style, xcommon, style);
 
     protected:
@@ -87,13 +81,7 @@ namespace xw
         XPROPERTY(std::string, xcommon, orientation, "horizontal", XEITHER("horizontal", "vertical"));
         XPROPERTY(bool, xcommon, readout, true);
         XPROPERTY(bool, xcommon, continuous_update, true);
-        XPROPERTY(
-            std::string,
-            xcommon,
-            behavior,
-            "drag-tap",
-            XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap")
-        );
+        XPROPERTY(std::string, xcommon, behavior, "drag-tap", XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap"));
         XPROPERTY(::xw::slider_style, xcommon, style);
 
     protected:
