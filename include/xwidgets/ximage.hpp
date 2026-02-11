@@ -86,7 +86,9 @@ namespace xw
 
     inline auto image_from_file(const std::string& filename)
     {
-        return image::initialize().value(read_file(filename));
+        auto image_widget = image::initialize();
+        image_widget.value = read_file(filename);
+        return image_widget;
     }
 
     inline auto image_from_url(const std::string& url)

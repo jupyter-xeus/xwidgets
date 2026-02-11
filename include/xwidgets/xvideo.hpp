@@ -96,7 +96,9 @@ namespace xw
 
     inline auto video_from_file(const std::string& filename)
     {
-        return video::initialize().value(read_file(filename));
+        auto video_widget = video::initialize();
+        video_widget.value = read_file(filename);
+        return video_widget;
     }
 
     inline auto video_from_url(const std::string& url)
