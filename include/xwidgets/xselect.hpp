@@ -30,7 +30,7 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(int, derived_type, rows, 5);
+        XPROPERTY(int, xcommon, rows, 5);
 
     protected:
 
@@ -64,7 +64,7 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(int, derived_type, rows, 5);
+        XPROPERTY(int, xcommon, rows, 5);
 
     protected:
 
@@ -97,8 +97,7 @@ namespace xw
     inline void xselect<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(rows, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -143,8 +142,7 @@ namespace xw
     inline void xselect_multiple<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(rows, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>

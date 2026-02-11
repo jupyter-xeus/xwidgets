@@ -36,7 +36,7 @@ namespace xw
         void serialize_state(nl::json& state, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(value_type, derived_type, value);
+        XPROPERTY(value_type, xcommon, value);
 
     protected:
 
@@ -66,8 +66,7 @@ namespace xw
     inline void xmedia<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(value, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>

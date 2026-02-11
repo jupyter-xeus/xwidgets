@@ -33,10 +33,10 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::vector<std::string>, derived_type, _dom_classes);
-        XPROPERTY(::xw::layout, derived_type, layout);
-        XPROPERTY(std::optional<bool>, derived_type, tabbable);
-        XPROPERTY(std::optional<std::string>, derived_type, tooltip);
+        XPROPERTY(std::vector<std::string>, xcommon, _dom_classes);
+        XPROPERTY(::xw::layout, xcommon, layout);
+        XPROPERTY(std::optional<bool>, xcommon, tabbable);
+        XPROPERTY(std::optional<std::string>, xcommon, tooltip);
 
     protected:
 
@@ -74,11 +74,7 @@ namespace xw
     inline void xwidget<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(_dom_classes, patch, buffers);
-        set_property_from_patch(layout, patch, buffers);
-        set_property_from_patch(tabbable, patch, buffers);
-        set_property_from_patch(tooltip, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>

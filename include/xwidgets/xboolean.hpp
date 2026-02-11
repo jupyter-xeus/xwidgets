@@ -34,8 +34,8 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(bool, derived_type, value);
+        XPROPERTY(bool, xcommon, disabled);
+        XPROPERTY(bool, xcommon, value);
 
     protected:
 
@@ -64,10 +64,7 @@ namespace xw
     inline void xboolean<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-        mixin_description_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(value, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>

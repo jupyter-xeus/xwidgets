@@ -33,12 +33,12 @@ namespace xw
         void serialize_state(nl::json& state, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, format, "mp4");
-        XPROPERTY(std::string, derived_type, width, "");
-        XPROPERTY(std::string, derived_type, height, "");
-        XPROPERTY(bool, derived_type, autoplay, true);
-        XPROPERTY(bool, derived_type, loop, true);
-        XPROPERTY(bool, derived_type, controls, true);
+        XPROPERTY(std::string, xcommon, format, "mp4");
+        XPROPERTY(std::string, xcommon, width, "");
+        XPROPERTY(std::string, xcommon, height, "");
+        XPROPERTY(bool, xcommon, autoplay, true);
+        XPROPERTY(bool, xcommon, loop, true);
+        XPROPERTY(bool, xcommon, controls, true);
 
     protected:
 
@@ -73,13 +73,7 @@ namespace xw
     inline void xvideo<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(format, patch, buffers);
-        set_property_from_patch(width, patch, buffers);
-        set_property_from_patch(height, patch, buffers);
-        set_property_from_patch(autoplay, patch, buffers);
-        set_property_from_patch(loop, patch, buffers);
-        set_property_from_patch(controls, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -100,31 +94,20 @@ namespace xw
      * custom serializers *
      **********************/
 
-    inline void set_property_from_patch(
-        decltype(video::value)& property,
-        const nl::json& patch,
-        const xeus::buffer_sequence& buffers
-    )
-    {
-        auto it = patch.find(property.name());
-        if (it != patch.end())
-        {
-            using value_type = typename decltype(video::value)::value_type;
-            std::size_t index = buffer_index(patch[property.name()].template get<std::string>());
-            const auto& value_buffer = buffers[index];
-            property = value_type(value_buffer.data(), value_buffer.data() + value_buffer.size());
-        }
-    }
-
     inline auto video_from_file(const std::string& filename)
     {
-        return video::initialize().value(read_file(filename));
+        auto video_widget = video::initialize();
+        video_widget.value = read_file(filename);
+        return video_widget;
     }
 
     inline auto video_from_url(const std::string& url)
     {
         std::vector<char> value(url.cbegin(), url.cend());
-        return video::initialize().value(value).format("url");
+        auto video_widget = video::initialize();
+        video_widget.value = value;
+        video_widget.format = "url";
+        return video_widget;
     }
 
     /*********************

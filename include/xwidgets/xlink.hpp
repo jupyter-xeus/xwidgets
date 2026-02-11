@@ -38,8 +38,8 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(pair_type, derived_type, source);
-        XPROPERTY(pair_type, derived_type, target);
+        XPROPERTY(pair_type, xcommon, source);
+        XPROPERTY(pair_type, xcommon, target);
 
     protected:
 
@@ -76,8 +76,8 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(pair_type, derived_type, source);
-        XPROPERTY(pair_type, derived_type, target);
+        XPROPERTY(pair_type, xcommon, source);
+        XPROPERTY(pair_type, xcommon, target);
 
     protected:
 
@@ -112,9 +112,7 @@ namespace xw
     inline void xlink<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(source, patch, buffers);
-        set_property_from_patch(target, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -168,9 +166,7 @@ namespace xw
     inline void xdirectional_link<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(source, patch, buffers);
-        set_property_from_patch(target, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>

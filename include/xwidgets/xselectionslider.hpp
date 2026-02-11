@@ -36,18 +36,12 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::vector<std::string>, derived_type, tooltips);
-        XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
-        XPROPERTY(bool, derived_type, readout, true);
-        XPROPERTY(bool, derived_type, continuous_update, true);
-        XPROPERTY(
-            std::string,
-            derived_type,
-            behavior,
-            "drag-tap",
-            XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap")
-        );
-        XPROPERTY(::xw::slider_style, derived_type, style);
+        XPROPERTY(std::vector<std::string>, xcommon, tooltips);
+        XPROPERTY(std::string, xcommon, orientation, "horizontal", XEITHER("horizontal", "vertical"));
+        XPROPERTY(bool, xcommon, readout, true);
+        XPROPERTY(bool, xcommon, continuous_update, true);
+        XPROPERTY(std::string, xcommon, behavior, "drag-tap", XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap"));
+        XPROPERTY(::xw::slider_style, xcommon, style);
 
     protected:
 
@@ -82,19 +76,13 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::vector<std::string>, derived_type, tooltips);
+        XPROPERTY(std::vector<std::string>, xcommon, tooltips);
 
-        XPROPERTY(std::string, derived_type, orientation, "horizontal", XEITHER("horizontal", "vertical"));
-        XPROPERTY(bool, derived_type, readout, true);
-        XPROPERTY(bool, derived_type, continuous_update, true);
-        XPROPERTY(
-            std::string,
-            derived_type,
-            behavior,
-            "drag-tap",
-            XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap")
-        );
-        XPROPERTY(::xw::slider_style, derived_type, style);
+        XPROPERTY(std::string, xcommon, orientation, "horizontal", XEITHER("horizontal", "vertical"));
+        XPROPERTY(bool, xcommon, readout, true);
+        XPROPERTY(bool, xcommon, continuous_update, true);
+        XPROPERTY(std::string, xcommon, behavior, "drag-tap", XEITHER("drag-tap", "drag-snap", "tap", "drag", "snap"));
+        XPROPERTY(::xw::slider_style, xcommon, style);
 
     protected:
 
@@ -131,12 +119,7 @@ namespace xw
     inline void xselectionslider<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(readout, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(behavior, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -158,7 +141,7 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<options_type>(
+        this->template validate<xcommon, options_type>(
             "_options_labels",
             [](auto&, auto& proposal)
             {
@@ -202,12 +185,7 @@ namespace xw
     xselection_rangeslider<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(readout, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(behavior, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -228,7 +206,7 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<value_type>(
+        this->template validate<xcommon, options_type>(
             "value",
             [](auto&, auto& proposal)
             {
@@ -251,7 +229,7 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<options_type>(
+        this->template validate<xcommon, options_type>(
             "_options_labels",
             [](auto&, auto& proposal)
             {

@@ -38,7 +38,7 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, description_width);
+        XPROPERTY(std::string, xcommon, description_width);
 
     protected:
 
@@ -94,8 +94,7 @@ namespace xw
     inline void xdescription_style<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(description_width, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -131,14 +130,6 @@ namespace xw
             xwidgets_serialize(description(), state["description"], buffers);
             xwidgets_serialize(description_allow_html(), state["description_allow_html"], buffers);
             xwidgets_serialize(style(), state["style"], buffers);
-        }
-
-        template <class D>
-        inline void xdescription<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
-        {
-            set_property_from_patch(description, patch, buffers);
-            set_property_from_patch(description_allow_html, patch, buffers);
-            set_property_from_patch(style, patch, buffers);
         }
     }
 }

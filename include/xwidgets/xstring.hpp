@@ -30,10 +30,10 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, description);
-        XPROPERTY(bool, derived_type, description_allow_html, false);
-        XPROPERTY(std::string, derived_type, placeholder, "\u00A0");
-        XPROPERTY(std::string, derived_type, value);
+        XPROPERTY(std::string, xcommon, description);
+        XPROPERTY(bool, xcommon, description_allow_html, false);
+        XPROPERTY(std::string, xcommon, placeholder, "\u00A0");
+        XPROPERTY(std::string, xcommon, value);
 
     protected:
 
@@ -64,11 +64,7 @@ namespace xw
     inline void xstring<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(description, patch, buffers);
-        set_property_from_patch(description_allow_html, patch, buffers);
-        set_property_from_patch(placeholder, patch, buffers);
-        set_property_from_patch(value, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>

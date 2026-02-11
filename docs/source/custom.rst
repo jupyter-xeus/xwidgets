@@ -169,73 +169,22 @@ holding values of that type.
 
 **Deserialization**
 
-The deserialization is handled by the free function
+The deserialization of properties from the patch is handled by calling `apply_patch_to_registered_properties` on the widget instance.
 
-``set_property_from_patch(property, patch, buffers);``
+This member function is responsible for deserializing the patch by iterating over the registered properties.
+These properties self-register upon construction in the class.
 
-where
+A property that defines a custom serialization / deserialization should use
+the `xwidgets_serialize` / `xwidgets_deserialize` functions.
 
-- the first argument is a reference to the property,
-- the second argument (``patch``) holds a const reference to the JSON patch
-  being read.
-- the third argument (``buffers``) holds a const reference to the sequence of
-  buffers being read.
-
-``set_property_from_patch`` is called for each property of the widget.
-
-The default behavior of ``set_property_from_patch`` is to invoke the JSON
-deserialization for each property and it can be specialized for a specific
-property type.
-
-For example, the overload of ``set_property_from_patch`` for the ``value``
-property of the image widget reads:
+The default implementation of `xwidgets_deserialize` reads:
 
 .. code::
 
-    inline void set_property_from_patch(decltype(image::value)& property,
-                                        const nl::json& patch,
-                                        const xeus::buffer_sequence& buffers)
+    template <class T>
+    inline void xwidgets_deserialize(T& value, const nl::json& j, const xeus::buffer_sequence& buffers)
     {
-        auto it = patch.find(property.name());
-        if (it != patch.end())
-        {
-            using value_type = typename decltype(image::value)::value_type;
-            std::size_t index = buffer_index(patch[property.name()].template get<std::string>());
-            const auto& value_buffer = buffers[index];
-            const char* value_buf = value_buffer.data<const char>();
-            property = value_type(value_buf, value_buf + value_buffer.size());
-        }
-    }
-
-.. note::
-
-    ``decltype(image::value)`` is the type of the ``value`` property of the
-    image widget, which is unique to the image widget, (more specifically, its
-    type is an internal class of the image class).
-
-    This specialization is a better match than the default one and is picked-up
-    by argument-dependent lookup, however, this will not apply to properties of
-    other widgets or other properties of this widget also holding a
-    ``std::vector<char>``.
-
-**Overloading** ``xwidgets_deserialize``
-
-The default implementation of ``set_property_from_patch`` reads:
-
-.. code::
-
-    template <class P>
-    inline void set_property_from_patch(P& property,
-                                        const nl::json& patch,
-                                        const xeus::buffer_sequence& buffers)
-    {
-        auto it = patch.find(property.name());
-        if (it != patch.end())
-        {
-            typename P::value_type value;
-            xwidgets_deserialize(value, *it, buffers);
-            property = value;
-        }
+        value = j.template get<T>();
     }
 
 which means that the default behavior is to call into ``xwidgets_deserialize``
@@ -249,7 +198,7 @@ holding values of that type.
 
     The default implementation of ``xwidgets_deserialize`` simply invokes the
     JSON deserialization for that type. In most cases, overloading
-    ``xwidgets_deserialize`` or ``set_property_from_patch`` is not necessary.
+    ``xwidgets_deserialize`` or a custom `xwidgets_deserialize` is not necessary.
     This is mostly relevant for properties for which one wants to bypass JSON
     deserialization or make use of binary deserialization.
 

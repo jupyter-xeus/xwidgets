@@ -9,18 +9,22 @@
 #ifndef XWIDGETS_COMMON_HPP
 #define XWIDGETS_COMMON_HPP
 
+#include <functional>
 #include <optional>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
 #include <xeus/xcomm.hpp>
+#include <xproperty/xobserved.hpp>
 
 #include "xbinary.hpp"
 #include "xwidgets_config.hpp"
 
 namespace xw
 {
+
     /**********************************************
      * property serialization and deserialization *
      **********************************************/
@@ -47,13 +51,27 @@ namespace xw
         value = j.template get<T>();
     }
 
+    template <>
+    inline void
+    xwidgets_deserialize(std::vector<char>& value, const nl::json& j, const xeus::buffer_sequence& buffers)
+    {
+        std::size_t index = buffer_index(j.template get<std::string>());
+        const auto& value_buffer = buffers[index];
+        value.assign(value_buffer.data(), value_buffer.data() + value_buffer.size());
+    }
+
     /***********************
      * xcommon declaration *
      ***********************/
 
-    class XWIDGETS_API xcommon
+    class XWIDGETS_API xcommon : public xp::xobserved
     {
     public:
+
+        using observed_type = xp::xobserved;
+        using patch_applier_type = std::function<void(const nl::json&, const xeus::buffer_sequence&)>;
+
+        ~xcommon();
 
         xeus::xguid id() const noexcept;
         void display() const;
@@ -64,7 +82,6 @@ namespace xw
 
         xcommon();
         xcommon(xeus::xcomm&&);
-        ~xcommon();
         xcommon(const xcommon&);
         xcommon(xcommon&&);
         xcommon& operator=(const xcommon&);
@@ -72,6 +89,7 @@ namespace xw
 
         bool moved_from() const noexcept;
         void handle_custom_message(const nl::json&);
+        void apply_patch_to_registered_properties(const nl::json& patch, const xeus::buffer_sequence& buffers);
         xeus::xcomm& comm();
         const xeus::xcomm& comm() const;
         const xeus::xmessage*& hold();
@@ -85,7 +103,17 @@ namespace xw
         void send(nl::json&&, xeus::buffer_sequence&&) const;
         void send_patch(nl::json&&, xeus::buffer_sequence&&, const char* method = "update") const;
 
+        void register_patch_applier(const std::string& name, patch_applier_type&& applier);
+
+        template <class P>
+        void register_property(P& prop);
+
+        std::unordered_map<std::string, patch_applier_type> m_patch_appliers;
+
     private:
+
+        template <class X, class Y>
+        friend class xp::xproperty;
 
         /**
          * Indicate whether a global setting activates or deactivates ``echo_update`` messages.
@@ -162,6 +190,20 @@ namespace xw
         }
 
         send_patch(std::move(state), std::move(buffers), method);
+    }
+
+    template <class P>
+    void xcommon::register_property(P& prop)
+    {
+        register_patch_applier(
+            prop.name(),
+            [&prop](const nl::json& value_json, const xeus::buffer_sequence& buffers)
+            {
+                typename P::value_type value;
+                xwidgets_deserialize(value, value_json, buffers);
+                prop = value;
+            }
+        );
     }
 }
 

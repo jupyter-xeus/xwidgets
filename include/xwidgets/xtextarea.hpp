@@ -32,10 +32,10 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::optional<int>, derived_type, rows);
-        XPROPERTY(bool, derived_type, disabled);
-        XPROPERTY(bool, derived_type, continuous_update, true);
-        XPROPERTY(::xw::text_style, derived_type, style);
+        XPROPERTY(std::optional<int>, xcommon, rows);
+        XPROPERTY(bool, xcommon, disabled);
+        XPROPERTY(bool, xcommon, continuous_update, true);
+        XPROPERTY(::xw::text_style, xcommon, style);
 
     protected:
 
@@ -68,11 +68,7 @@ namespace xw
     inline void xtextarea<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(rows, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>

@@ -41,12 +41,12 @@ namespace xw
         using value_type = options_type::value_type;
         using index_type = options_type::size_type;
 
-        XPROPERTY(options_type, derived_type, _options_labels);
-        XPROPERTY(bool, derived_type, disabled, false);
-        XPROPERTY(index_type, derived_type, index);
+        XPROPERTY(options_type, xcommon, _options_labels);
+        XPROPERTY(bool, xcommon, disabled, false);
+        XPROPERTY(index_type, xcommon, index);
 
         // non-synchronized properties
-        XPROPERTY(value_type, derived_type, value);
+        XPROPERTY(value_type, xcommon, value);
 
     protected:
 
@@ -84,12 +84,12 @@ namespace xw
         using value_type = options_type;
         using index_type = std::vector<options_type::size_type>;
 
-        XPROPERTY(options_type, derived_type, _options_labels);
-        XPROPERTY(bool, derived_type, disabled, false);
-        XPROPERTY(index_type, derived_type, index);
+        XPROPERTY(options_type, xcommon, _options_labels);
+        XPROPERTY(bool, xcommon, disabled, false);
+        XPROPERTY(index_type, xcommon, index);
 
         // non-synchronized properties
-        XPROPERTY(value_type, derived_type, value);
+        XPROPERTY(value_type, xcommon, value);
 
     protected:
 
@@ -122,11 +122,7 @@ namespace xw
     inline void xselection<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-        mixin_description_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(_options_labels, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(index, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -152,7 +148,7 @@ namespace xw
     template <class D>
     inline void xselection<D>::setup_properties()
     {
-        this->observe(
+        this->template observe<derived_type>(
             "value",
             [](auto& owner)
             {
@@ -165,7 +161,7 @@ namespace xw
             }
         );
 
-        this->observe(
+        this->template observe<derived_type>(
             "index",
             [](auto& owner)
             {
@@ -177,7 +173,7 @@ namespace xw
             }
         );
 
-        this->observe(
+        this->template observe<derived_type>(
             "_options_labels",
             [](auto& owner)
             {
@@ -191,7 +187,7 @@ namespace xw
             }
         );
 
-        this->template validate<value_type>(
+        this->template validate<derived_type, value_type>(
             "value",
             [](auto& owner, auto& proposal)
             {
@@ -228,11 +224,7 @@ namespace xw
     inline void xmultiple_selection<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-        mixin_description_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(_options_labels, patch, buffers);
-        set_property_from_patch(disabled, patch, buffers);
-        set_property_from_patch(index, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -265,7 +257,7 @@ namespace xw
     template <class D>
     inline void xmultiple_selection<D>::setup_properties()
     {
-        this->observe(
+        this->template observe<derived_type>(
             "value",
             [](auto& owner)
             {
@@ -282,7 +274,7 @@ namespace xw
             }
         );
 
-        this->observe(
+        this->template observe<derived_type>(
             "index",
             [](auto& owner)
             {
@@ -298,7 +290,7 @@ namespace xw
             }
         );
 
-        this->observe(
+        this->template observe<derived_type>(
             "_options_labels",
             [](auto& owner)
             {
@@ -306,7 +298,7 @@ namespace xw
             }
         );
 
-        this->template validate<value_type>(
+        this->template validate<derived_type, value_type>(
             "value",
             [](auto& owner, auto& proposal)
             {

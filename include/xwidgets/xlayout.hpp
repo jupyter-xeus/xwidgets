@@ -35,7 +35,7 @@ namespace xw
 
         XPROPERTY(
             std::optional<std::string>,
-            derived_type,
+            xcommon,
             align_content,
             {},
             XEITHER_OPTIONAL(
@@ -53,90 +53,90 @@ namespace xw
         );
         XPROPERTY(
             std::optional<std::string>,
-            derived_type,
+            xcommon,
             align_items,
             {},
             XEITHER_OPTIONAL("flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset")
         );
         XPROPERTY(
             std::optional<std::string>,
-            derived_type,
+            xcommon,
             align_self,
             {},
             XEITHER_OPTIONAL("auto", "flex-start", "flex-end", "center", "baseline", "stretch", "inherit", "inital", "unset")
         );
-        XPROPERTY(std::optional<std::string>, derived_type, border_bottom);
-        XPROPERTY(std::optional<std::string>, derived_type, border_left);
-        XPROPERTY(std::optional<std::string>, derived_type, border_right);
-        XPROPERTY(std::optional<std::string>, derived_type, border_top);
-        XPROPERTY(std::optional<std::string>, derived_type, bottom);
-        XPROPERTY(std::optional<std::string>, derived_type, display);
-        XPROPERTY(std::optional<std::string>, derived_type, flex);
-        XPROPERTY(std::optional<std::string>, derived_type, flex_flow);
-        XPROPERTY(std::optional<std::string>, derived_type, grid_area);
-        XPROPERTY(std::optional<std::string>, derived_type, grid_auto_columns);
+        XPROPERTY(std::optional<std::string>, xcommon, border_bottom);
+        XPROPERTY(std::optional<std::string>, xcommon, border_left);
+        XPROPERTY(std::optional<std::string>, xcommon, border_right);
+        XPROPERTY(std::optional<std::string>, xcommon, border_top);
+        XPROPERTY(std::optional<std::string>, xcommon, bottom);
+        XPROPERTY(std::optional<std::string>, xcommon, display);
+        XPROPERTY(std::optional<std::string>, xcommon, flex);
+        XPROPERTY(std::optional<std::string>, xcommon, flex_flow);
+        XPROPERTY(std::optional<std::string>, xcommon, grid_area);
+        XPROPERTY(std::optional<std::string>, xcommon, grid_auto_columns);
         XPROPERTY(
             std::optional<std::string>,
-            derived_type,
+            xcommon,
             grid_auto_flow,
             {},
             XEITHER_OPTIONAL("column", "row", "row dense", "column dense", "inherit", "initial", "unset")
         );
-        XPROPERTY(std::optional<std::string>, derived_type, grid_auto_rows);
-        XPROPERTY(std::optional<std::string>, derived_type, grid_column);
-        XPROPERTY(std::optional<std::string>, derived_type, grid_gap);
-        XPROPERTY(std::optional<std::string>, derived_type, grid_row);
-        XPROPERTY(std::optional<std::string>, derived_type, grid_template_areas);
-        XPROPERTY(std::optional<std::string>, derived_type, grid_template_columns);
-        XPROPERTY(std::optional<std::string>, derived_type, grid_template_rows);
-        XPROPERTY(std::optional<std::string>, derived_type, height);
+        XPROPERTY(std::optional<std::string>, xcommon, grid_auto_rows);
+        XPROPERTY(std::optional<std::string>, xcommon, grid_column);
+        XPROPERTY(std::optional<std::string>, xcommon, grid_gap);
+        XPROPERTY(std::optional<std::string>, xcommon, grid_row);
+        XPROPERTY(std::optional<std::string>, xcommon, grid_template_areas);
+        XPROPERTY(std::optional<std::string>, xcommon, grid_template_columns);
+        XPROPERTY(std::optional<std::string>, xcommon, grid_template_rows);
+        XPROPERTY(std::optional<std::string>, xcommon, height);
         XPROPERTY(
             std::optional<std::string>,
-            derived_type,
+            xcommon,
             justify_content,
             {},
             XEITHER_OPTIONAL("flex-start", "flex-end", "center", "space-between", "space-around", "inherit", "inital", "unset")
         );
         XPROPERTY(
             std::optional<std::string>,
-            derived_type,
+            xcommon,
             justify_items,
             {},
             XEITHER_OPTIONAL("flex-start", "flex-end", "center", "inherit", "initial", "unset")
         );
-        XPROPERTY(std::optional<std::string>, derived_type, left);
-        XPROPERTY(std::optional<std::string>, derived_type, margin);
-        XPROPERTY(std::optional<std::string>, derived_type, max_height);
-        XPROPERTY(std::optional<std::string>, derived_type, max_width);
-        XPROPERTY(std::optional<std::string>, derived_type, min_height);
-        XPROPERTY(std::optional<std::string>, derived_type, min_width);
+        XPROPERTY(std::optional<std::string>, xcommon, left);
+        XPROPERTY(std::optional<std::string>, xcommon, margin);
+        XPROPERTY(std::optional<std::string>, xcommon, max_height);
+        XPROPERTY(std::optional<std::string>, xcommon, max_width);
+        XPROPERTY(std::optional<std::string>, xcommon, min_height);
+        XPROPERTY(std::optional<std::string>, xcommon, min_width);
         XPROPERTY(
             std::optional<std::string>,
-            derived_type,
+            xcommon,
             object_fit,
             {},
             XEITHER_OPTIONAL("contain", "cover", "fill", "scale-down", "none")
         );
-        XPROPERTY(std::optional<std::string>, derived_type, object_position);
-        XPROPERTY(std::optional<std::string>, derived_type, order);
+        XPROPERTY(std::optional<std::string>, xcommon, object_position);
+        XPROPERTY(std::optional<std::string>, xcommon, order);
         XPROPERTY(
             std::optional<std::string>,
-            derived_type,
+            xcommon,
             overflow,
             {},
             XEITHER_OPTIONAL("visible", "hidden", "scroll", "auto", "inherit", "inital", "unset")
         );
-        XPROPERTY(std::optional<std::string>, derived_type, padding);
-        XPROPERTY(std::optional<std::string>, derived_type, right);
-        XPROPERTY(std::optional<std::string>, derived_type, top);
+        XPROPERTY(std::optional<std::string>, xcommon, padding);
+        XPROPERTY(std::optional<std::string>, xcommon, right);
+        XPROPERTY(std::optional<std::string>, xcommon, top);
         XPROPERTY(
             std::optional<std::string>,
-            derived_type,
+            xcommon,
             visibility,
             {},
             XEITHER_OPTIONAL("visible", "hidden", "inherit", "initial", "unset")
         );
-        XPROPERTY(std::optional<std::string>, derived_type, width);
+        XPROPERTY(std::optional<std::string>, xcommon, width);
 
     protected:
 
@@ -204,46 +204,7 @@ namespace xw
     inline void xlayout<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(align_content, patch, buffers);
-        set_property_from_patch(align_items, patch, buffers);
-        set_property_from_patch(align_self, patch, buffers);
-        set_property_from_patch(border_bottom, patch, buffers);
-        set_property_from_patch(border_left, patch, buffers);
-        set_property_from_patch(border_right, patch, buffers);
-        set_property_from_patch(border_top, patch, buffers);
-        set_property_from_patch(bottom, patch, buffers);
-        set_property_from_patch(display, patch, buffers);
-        set_property_from_patch(flex, patch, buffers);
-        set_property_from_patch(flex_flow, patch, buffers);
-        set_property_from_patch(grid_area, patch, buffers);
-        set_property_from_patch(grid_auto_columns, patch, buffers);
-        set_property_from_patch(grid_auto_flow, patch, buffers);
-        set_property_from_patch(grid_auto_rows, patch, buffers);
-        set_property_from_patch(grid_column, patch, buffers);
-        set_property_from_patch(grid_gap, patch, buffers);
-        set_property_from_patch(grid_row, patch, buffers);
-        set_property_from_patch(grid_template_areas, patch, buffers);
-        set_property_from_patch(grid_template_columns, patch, buffers);
-        set_property_from_patch(grid_template_rows, patch, buffers);
-        set_property_from_patch(height, patch, buffers);
-        set_property_from_patch(justify_content, patch, buffers);
-        set_property_from_patch(justify_items, patch, buffers);
-        set_property_from_patch(left, patch, buffers);
-        set_property_from_patch(margin, patch, buffers);
-        set_property_from_patch(max_height, patch, buffers);
-        set_property_from_patch(max_width, patch, buffers);
-        set_property_from_patch(min_height, patch, buffers);
-        set_property_from_patch(min_width, patch, buffers);
-        set_property_from_patch(object_fit, patch, buffers);
-        set_property_from_patch(object_position, patch, buffers);
-        set_property_from_patch(order, patch, buffers);
-        set_property_from_patch(overflow, patch, buffers);
-        set_property_from_patch(padding, patch, buffers);
-        set_property_from_patch(right, patch, buffers);
-        set_property_from_patch(top, patch, buffers);
-        set_property_from_patch(visibility, patch, buffers);
-        set_property_from_patch(width, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>

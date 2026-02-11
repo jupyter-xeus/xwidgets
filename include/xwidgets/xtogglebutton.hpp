@@ -34,14 +34,14 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, description_width);
-        XPROPERTY(std::optional<std::string>, derived_type, font_family);
-        XPROPERTY(std::optional<std::string>, derived_type, font_size);
-        XPROPERTY(std::optional<std::string>, derived_type, font_style);
-        XPROPERTY(std::optional<std::string>, derived_type, font_variant);
-        XPROPERTY(std::optional<std::string>, derived_type, font_weight);
-        XPROPERTY(std::optional<std::string>, derived_type, text_color);
-        XPROPERTY(std::optional<std::string>, derived_type, text_decoration);
+        XPROPERTY(std::string, xcommon, description_width);
+        XPROPERTY(std::optional<std::string>, xcommon, font_family);
+        XPROPERTY(std::optional<std::string>, xcommon, font_size);
+        XPROPERTY(std::optional<std::string>, xcommon, font_style);
+        XPROPERTY(std::optional<std::string>, xcommon, font_variant);
+        XPROPERTY(std::optional<std::string>, xcommon, font_weight);
+        XPROPERTY(std::optional<std::string>, xcommon, text_color);
+        XPROPERTY(std::optional<std::string>, xcommon, text_decoration);
 
     protected:
 
@@ -70,16 +70,16 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::string, derived_type, tooltip);
-        XPROPERTY(std::string, derived_type, icon);
+        XPROPERTY(std::string, xcommon, tooltip);
+        XPROPERTY(std::string, xcommon, icon);
         XPROPERTY(
             std::string,
-            derived_type,
+            xcommon,
             button_style,
             "",
             XEITHER("primary", "success", "info", "warning", "danger", "")
         );
-        XPROPERTY(::xw::togglebutton_style, derived_type, style);
+        XPROPERTY(::xw::togglebutton_style, xcommon, style);
 
     protected:
 
@@ -116,15 +116,7 @@ namespace xw
     inline void xtogglebutton_style<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(description_width, patch, buffers);
-        set_property_from_patch(font_family, patch, buffers);
-        set_property_from_patch(font_size, patch, buffers);
-        set_property_from_patch(font_style, patch, buffers);
-        set_property_from_patch(font_variant, patch, buffers);
-        set_property_from_patch(font_weight, patch, buffers);
-        set_property_from_patch(text_color, patch, buffers);
-        set_property_from_patch(text_decoration, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -167,11 +159,7 @@ namespace xw
     inline void xtogglebutton<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(tooltip, patch, buffers);
-        set_property_from_patch(icon, patch, buffers);
-        set_property_from_patch(button_style, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
