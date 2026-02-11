@@ -75,7 +75,6 @@ namespace xw
     inline xcolor_picker<D>::xcolor_picker()
     {
         set_defaults();
-        REGISTER_PROPERTIES(disabled, concise, value);
     }
 
     template <class D>

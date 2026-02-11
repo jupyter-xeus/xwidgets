@@ -117,7 +117,6 @@ namespace xw
     inline xprogress_style<D>::xprogress_style()
     {
         set_defaults();
-        REGISTER_PROPERTIES(description_width, bar_color);
     }
 
     template <class D>
@@ -156,7 +155,6 @@ namespace xw
     inline xprogress<D>::xprogress()
     {
         set_defaults();
-        REGISTER_PROPERTIES(bar_style, description, orientation, style);
     }
 
     template <class D>

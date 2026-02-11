@@ -129,7 +129,6 @@ namespace xw
     inline xselection<D>::xselection()
     {
         set_defaults();
-        REGISTER_PROPERTIES(_options_labels, disabled, index);
         setup_properties();
     }
 
@@ -143,7 +142,6 @@ namespace xw
         this->_options_labels() = std::forward<O>(options);
         this->value() = std::forward<T>(v);
 
-        REGISTER_PROPERTIES(_options_labels, disabled, index);
         this->setup_properties();
     }
 
@@ -234,7 +232,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(_options_labels, disabled, index);
         this->setup_properties();
     }
 
@@ -244,7 +241,6 @@ namespace xw
     {
         set_defaults();
         this->_options_labels() = std::move(options);
-        REGISTER_PROPERTIES(_options_labels, disabled, index);
         this->setup_properties();
     }
 
@@ -255,7 +251,6 @@ namespace xw
         set_defaults();
 
         this->_options_labels() = options;
-        REGISTER_PROPERTIES(_options_labels, disabled, index);
         this->setup_properties();
     }
 

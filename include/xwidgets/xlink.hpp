@@ -120,7 +120,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(source, target);
         std::get<0>(this->source()) = s;
         std::get<1>(this->source()) = sn;
         std::get<0>(this->target()) = t;
@@ -133,7 +132,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(source, target);
         std::get<0>(this->source()) = s;
         std::get<1>(this->source()) = sn;
         std::get<0>(this->target()) = t;
@@ -181,7 +179,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(source, target);
         std::get<0>(this->source()) = s;
         std::get<1>(this->source()) = sn;
         std::get<0>(this->target()) = t;
@@ -199,7 +196,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(source, target);
         std::get<0>(this->source()) = s;
         std::get<1>(this->source()) = sn;
         std::get<0>(this->target()) = t;

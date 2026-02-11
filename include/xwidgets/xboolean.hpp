@@ -71,7 +71,6 @@ namespace xw
     inline xboolean<D>::xboolean()
     {
         set_defaults();
-        REGISTER_PROPERTIES(disabled, value);
     }
 
     template <class D>

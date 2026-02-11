@@ -172,8 +172,7 @@ holding values of that type.
 The deserialization of properties from the patch is handled by calling `apply_patch_to_registered_properties` on the widget instance.
 
 This member function is responsible for deserializing the patch by iterating over the registered properties.
-
-The properties are registered in the constructor by calling `REGISTER_PROPERTIES`.
+These properties self-register upon construction in the class.
 
 A property that defines a custom serialization / deserialization should use
 the `xwidgets_serialize` / `xwidgets_deserialize` functions.

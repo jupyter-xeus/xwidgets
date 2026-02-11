@@ -104,7 +104,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(background, description_width);
     }
 
     template <class D>
@@ -139,7 +138,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(indent, style);
     }
 
     template <class D>

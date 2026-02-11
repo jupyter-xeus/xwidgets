@@ -44,10 +44,7 @@ namespace xw
 
         protected:
 
-            xnumeric()
-            {
-                REGISTER_PROPERTIES(value);
-            }
+            xnumeric() = default;
         };
 
         /********************************
@@ -104,7 +101,6 @@ namespace xw
         template <class D>
         inline xnumeric_bounded<D>::xnumeric_bounded()
         {
-            REGISTER_PROPERTIES(max, min);
             setup_properties();
         }
 

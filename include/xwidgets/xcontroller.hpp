@@ -147,7 +147,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(value, pressed);
     }
 
     template <class D>
@@ -185,7 +184,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(value);
     }
 
     template <class D>
@@ -235,7 +233,6 @@ namespace xw
             return true;
         }();
         set_defaults();
-        REGISTER_PROPERTIES(index, name, mapping, connected, timestamp, buttons, axes);
     }
 
     template <class D>

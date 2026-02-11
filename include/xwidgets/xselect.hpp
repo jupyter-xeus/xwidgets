@@ -105,7 +105,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(rows);
     }
 
     template <class D>
@@ -114,7 +113,6 @@ namespace xw
         : base_type(std::forward<O>(options), std::forward<T>(value))
     {
         set_defaults();
-        REGISTER_PROPERTIES(rows);
     }
 
     template <class D>
@@ -152,7 +150,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(rows);
     }
 
     template <class D>
@@ -160,7 +157,6 @@ namespace xw
         : base_type(std::move(options))
     {
         set_defaults();
-        REGISTER_PROPERTIES(rows);
     }
 
     template <class D>
@@ -168,7 +164,6 @@ namespace xw
         : base_type(options)
     {
         set_defaults();
-        REGISTER_PROPERTIES(rows);
     }
 
     template <class D>

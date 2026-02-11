@@ -210,7 +210,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(box_style, children);
     }
 
     template <class D>

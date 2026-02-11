@@ -140,16 +140,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(
-            button_color,
-            font_family,
-            font_size,
-            font_style,
-            font_variant,
-            font_weight,
-            text_color,
-            text_decoration
-        );
     }
 
     template <class D>
@@ -204,7 +194,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(description, tooltip, disabled, icon, button_style, style);
     }
 
     template <class D>

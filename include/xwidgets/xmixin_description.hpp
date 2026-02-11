@@ -74,10 +74,7 @@ namespace xw
 
         protected:
 
-            xdescription()
-            {
-                REGISTER_PROPERTIES(description, description_allow_html, style);
-            }
+            xdescription() = default;
         };
     }
 
@@ -105,7 +102,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(description_width);
     }
 
     template <class D>

@@ -211,47 +211,6 @@ namespace xw
     inline xlayout<D>::xlayout()
     {
         set_defaults();
-        REGISTER_PROPERTIES(
-            align_content,
-            align_items,
-            align_self,
-            border_bottom,
-            border_left,
-            border_right,
-            border_top,
-            bottom,
-            display,
-            flex,
-            flex_flow,
-            grid_area,
-            grid_auto_columns,
-            grid_auto_flow,
-            grid_auto_rows,
-            grid_column,
-            grid_gap,
-            grid_row,
-            grid_template_areas,
-            grid_template_columns,
-            grid_template_rows,
-            height,
-            justify_content,
-            justify_items,
-            left,
-            margin,
-            max_height,
-            max_width,
-            min_height,
-            min_width,
-            object_fit,
-            object_position,
-            order,
-            overflow,
-            padding,
-            right,
-            top,
-            visibility,
-            width
-        );
     }
 
     template <class D>

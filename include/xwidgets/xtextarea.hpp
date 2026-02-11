@@ -76,7 +76,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(rows, disabled, continuous_update, style);
     }
 
     template <class D>

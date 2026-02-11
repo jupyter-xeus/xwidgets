@@ -69,7 +69,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(readout);
     }
 
     template <class D>
