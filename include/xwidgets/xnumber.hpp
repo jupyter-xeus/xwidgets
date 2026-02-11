@@ -87,7 +87,6 @@ namespace xw
     inline xnumber<D>::xnumber()
     {
         set_defaults();
-        REGISTER_PROPERTIES(continuous_update, disabled, step);
     }
 
     template <class D>

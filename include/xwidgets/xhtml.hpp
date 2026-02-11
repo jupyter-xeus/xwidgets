@@ -106,7 +106,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(background, description_width, font_size, text_color);
     }
 
     template <class D>
@@ -141,7 +140,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(style);
     }
 
     template <class D>

@@ -87,7 +87,6 @@ namespace xw
     inline xnumber_bounded<D>::xnumber_bounded()
     {
         set_defaults();
-        REGISTER_PROPERTIES(continuous_update, disabled, step);
     }
 
     template <class D>

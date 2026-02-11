@@ -90,7 +90,6 @@ namespace xw
     inline xplay<D>::xplay()
     {
         set_defaults();
-        REGISTER_PROPERTIES(disabled, interval, playing, repeat, show_repeat, step);
     }
 
     template <class D>

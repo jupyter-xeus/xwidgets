@@ -44,17 +44,7 @@ namespace xw
 
     protected:
 
-        xobject()
-        {
-            REGISTER_PROPERTIES(
-                _model_module,
-                _model_module_version,
-                _model_name,
-                _view_module,
-                _view_module_version,
-                _view_name
-            );
-        }
+        xobject() = default;
 
         using base_type::base_type;
     };

@@ -76,7 +76,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(titles, selected_index);
     }
 
     template <class D>

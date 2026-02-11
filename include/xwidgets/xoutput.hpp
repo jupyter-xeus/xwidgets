@@ -92,7 +92,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(msg_id, outputs);
     }
 
     template <class D>

@@ -57,7 +57,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(_dom_classes, layout, tabbable, tooltip);
     }
 
     template <class D>

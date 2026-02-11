@@ -81,7 +81,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(format, width, height, autoplay, loop, controls);
     }
 
     template <class D>

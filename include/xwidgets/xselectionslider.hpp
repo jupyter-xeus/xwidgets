@@ -127,7 +127,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(tooltips, orientation, readout, continuous_update, behavior, style);
     }
 
     template <class D>
@@ -136,7 +135,6 @@ namespace xw
         : base_type(std::forward<O>(options), std::forward<T>(value))
     {
         set_defaults();
-        REGISTER_PROPERTIES(tooltips, orientation, readout, continuous_update, behavior, style);
 
         if (this->_options_labels().empty())
         {
@@ -195,7 +193,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(tooltips, orientation, readout, continuous_update, behavior, style);
     }
 
     template <class D>
@@ -203,7 +200,6 @@ namespace xw
         : base_type(std::move(options))
     {
         set_defaults();
-        REGISTER_PROPERTIES(tooltips, orientation, readout, continuous_update, behavior, style);
 
         if (this->_options_labels().empty())
         {
@@ -227,7 +223,6 @@ namespace xw
         : base_type(options)
     {
         set_defaults();
-        REGISTER_PROPERTIES(tooltips, orientation, readout, continuous_update, behavior, style);
 
         if (this->_options_labels().empty())
         {

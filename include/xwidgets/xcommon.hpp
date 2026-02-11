@@ -24,10 +24,6 @@
 
 namespace xw
 {
-#define REGISTER_PROPERTIES(...) \
-    ([](auto* self, auto&&... args){ \
-        (self->register_property(args), ...); \
-    })(static_cast<derived_type*>(this), __VA_ARGS__);
 
     /**********************************************
      * property serialization and deserialization *
@@ -81,22 +77,6 @@ namespace xw
         void display() const;
         std::vector<xjson_path_type>& buffer_paths();
         const std::vector<xjson_path_type>& buffer_paths() const;
-        void register_patch_applier(const std::string& name, patch_applier_type&& applier);
-
-        template <class P>
-        void register_property(P& prop)
-        {
-            register_patch_applier(
-                prop.name(),
-                [&prop](const nl::json& value_json, const xeus::buffer_sequence& buffers)
-                {
-                    typename P::value_type value;
-                    xwidgets_deserialize(value, value_json, buffers);
-                    prop = value;
-                }
-            );
-        }
-
 
     protected:
 
@@ -122,6 +102,11 @@ namespace xw
         void notify(const std::string& name, const T& value) const;
         void send(nl::json&&, xeus::buffer_sequence&&) const;
         void send_patch(nl::json&&, xeus::buffer_sequence&&, const char* method = "update") const;
+
+        void register_patch_applier(const std::string& name, patch_applier_type&& applier);
+
+        template <class P>
+        void register_property(P& prop);
 
         std::unordered_map<std::string, patch_applier_type> m_patch_appliers;
 
@@ -205,6 +190,20 @@ namespace xw
         }
 
         send_patch(std::move(state), std::move(buffers), method);
+    }
+
+    template <class P>
+    void xcommon::register_property(P& prop)
+    {
+        register_patch_applier(
+            prop.name(),
+            [&prop](const nl::json& value_json, const xeus::buffer_sequence& buffers)
+            {
+                typename P::value_type value;
+                xwidgets_deserialize(value, value_json, buffers);
+                prop = value;
+            }
+        );
     }
 }
 

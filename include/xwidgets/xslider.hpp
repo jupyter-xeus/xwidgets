@@ -118,7 +118,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(description_width, handle_color);
     }
 
     template <class D>
@@ -157,7 +156,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(behavior, orientation, readout, readout_format, style);
     }
 
     template <class D>

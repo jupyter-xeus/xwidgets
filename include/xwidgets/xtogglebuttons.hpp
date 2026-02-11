@@ -121,7 +121,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(button_width, description_width, font_weight);
     }
 
     template <class D>
@@ -159,7 +158,6 @@ namespace xw
         : base_type()
     {
         set_defaults();
-        REGISTER_PROPERTIES(tooltips, icons, style, button_style);
     }
 
     template <class D>
@@ -168,7 +166,6 @@ namespace xw
         : base_type(std::forward<O>(options), std::forward<T>(value))
     {
         set_defaults();
-        REGISTER_PROPERTIES(tooltips, icons, style, button_style);
     }
 
     template <class D>
