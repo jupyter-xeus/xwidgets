@@ -92,7 +92,9 @@ namespace xw
 
     inline auto audio_from_file(const std::string& filename)
     {
-        return audio::initialize().value(read_file(filename));
+        auto audio_widget = audio::initialize();
+        audio_widget.value = read_file(filename);
+        return audio_widget;
     }
 
     inline auto audio_from_url(const std::string& url)
