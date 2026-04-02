@@ -8,7 +8,7 @@ dependencies:
 - ninja
   # Host dependencies
 - xeus>=6,<7
-#- xproperty=0.12.1
+- xproperty=0.13.0
 - nlohmann_json=3.12.0
   # Test dependencies
 - doctest >= 2.4.6
