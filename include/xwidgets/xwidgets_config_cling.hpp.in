@@ -11,7 +11,7 @@
 
 #ifdef __CLING__
 
-#pragma cling add_library_path(@XWIDGETS_INSTALL_LIBRARY_DIR@)
+#pragma cling add_library_path("@XWIDGETS_INSTALL_LIBRARY_DIR@")
 #pragma cling load("libxwidgets")
 
 #endif  // __CLING__
@@ -34,7 +34,7 @@ static bool _xwidgets_loaded = []()
 #ifdef __EMSCRIPTEN__
         "/lib/@CMAKE_SHARED_LIBRARY_PREFIX@xwidgets@CMAKE_SHARED_LIBRARY_SUFFIX@"
 #else
-        @XWIDGETS_LOAD_LIBRARY_NAME@
+        "@XWIDGETS_LOAD_LIBRARY_NAME@"
 #endif
     );
     return true;
