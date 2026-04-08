@@ -27,6 +27,7 @@ endif()
 set(
     XWIDGETS_LOAD_LIBRARY_NAME
     "${XWIDGETS_INSTALL_LIBRARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}xwidgets${CMAKE_SHARED_LIBRARY_SUFFIX}"
+    CACHE STRING "Path to the xwidgets shared library"
 )
 
 configure_file(
