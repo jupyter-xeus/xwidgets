@@ -4,5 +4,4 @@ channels:
 dependencies:
 - xeus-cpp=0.10.0
 - xwidgets=0.30.0
-- jupyterlab # or `notebook` (for classic jupyter notebook)
-- jupyterlab_widgets=3.* # or `widgetsnbextension` with `notebook`
+- jupyterlab_widgets=3.*
