@@ -19,6 +19,9 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 set(XWIDGETS_INSTALL_LIBRARY_DIR "\"${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}\"")
+set(XWIDGETS_LOAD_LIBRARY_NAME
+    "\"${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${CMAKE_SHARED_LIBRARY_PREFIX}xwidgets${CMAKE_SHARED_LIBRARY_SUFFIX}\""
+)
 
 configure_file(
     "${XWIDGETS_INCLUDE_DIR}/xwidgets/xwidgets_config_cling.hpp.in"
