@@ -22,7 +22,7 @@ without the C++ kernel *per se*.
 ## Usage
 
 Launch the jupyter notebook with `jupyter notebook` and launch a new C++
-notebook by selecting the **xeus C++14** kernel in the *new* dropdown.
+notebook by selecting the **xeus C++17** kernel in the *new* dropdown.
 
 ![Widgets](widgets.gif)
 
