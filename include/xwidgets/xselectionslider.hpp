@@ -206,7 +206,7 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<xcommon, options_type>(
+        this->template validate<xcommon, value_type>(
             "value",
             [](auto&, auto& proposal)
             {
