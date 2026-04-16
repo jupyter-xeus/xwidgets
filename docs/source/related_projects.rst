@@ -54,15 +54,15 @@ xplot_ if the C++ backend for the bqplot_ 2-D plotting library
     xpl::linear_scale scale_x, scale_y;
     xpl::linear_scale scale_size;
 
-    auto scatter = xpl::scatter::initialize(scale_x, scale_y, scale_size)
-        .x(data_x)
-        .y(data_y)
-        .size(data_c)
-        .stroke("black")
-        .default_size(128)
-        .enable_move(true)
-        .colors(std::vector<xtl::xoptional<std::string>>{"orangered"})
-        .finalize();
+    auto scatter = xpl::scatter::initialize(scale_x, scale_y, scale_size);
+    scatter.x = data_x;
+    scatter.y = data_y;
+    scatter.size = data_c;
+    scatter.stroke = "black";
+    scatter.default_size = 128;
+    scatter.enable_move = true;
+    scatter.colors = std::vector<xtl::xoptional<std::string>>{"orangered"};
+    scatter.finalize();
 
     xpl::axis axis_x(scale_x), axis_y(scale_y);
     axis_x.label = "x";
@@ -78,9 +78,10 @@ xplot_ if the C++ backend for the bqplot_ 2-D plotting library
 
     xpl::toolbar tb(fig);
 
-    xw::vbox b = xw::vbox::initialize()
-        .children({fig, tb})
-        .finalize();
+    xw::vbox b = xw::vbox::initialize();
+    b.children = {fig, tb};
+    b.finalize();
+
     b
 
 **Output**
@@ -110,22 +111,22 @@ xleaflet_ is the C++ backend for the leaflet maps visualization library. The Pyt
     #include "xleaflet/xmap.hpp"
     #include "xleaflet/xmarker.hpp"
 
-    auto html = xw::html::initialize()
-        .value("Hello from an <b>xwidget</b> in an <b>xmarker</b>!")
-        .finalize();
+    auto html = xw::html::initialize();
+    html.value = "Hello from an <b>xwidget</b> in an <b>xmarker</b>!";
+    html.finalize();
 
     std::array<double, 2> center = {52.204793, 360.121558};
 
-    auto map = xlf::map::initialize()
-        .center(center)
-        .zoom(15)
-        .finalize();
+    auto map = xlf::map::initialize();
+    map.center = center;
+    map.zoom = 15;
+    map.finalize();
 
-    auto marker = xlf::marker::initialize()
-        .location(center)
-        .draggable(false)
-        .popup(html)
-        .finalize();
+    auto marker = xlf::marker::initialize();
+    marker.location = center;
+    marker.draggable = false;
+    marker.popup = html;
+    marker.finalize();
     map.add_layer(marker);
 
     map

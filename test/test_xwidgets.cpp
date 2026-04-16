@@ -83,10 +83,10 @@ namespace xw
         TEST_CASE("checkbox.style")
         {
             checkbox c;
-            auto style_widget = checkbox_style::initialize();
-            style_widget.background = "black";
-            style_widget.description_width = "3";
-            c.style = std::move(style_widget).finalize();
+            c.style = checkbox_style::initialize();
+            c.style().background = "black";
+            c.style().description_width = "3";
+            c.style().finalize();
             REQUIRE_EQ("black", c.style().background());
             REQUIRE_EQ("3", c.style().description_width());
 
@@ -212,10 +212,10 @@ namespace xw
             slider1.min = -1.0;
             slider1.max = 1.0;
             slider1.description = "Another slider";
-            auto result = std::move(slider1).finalize();
-            CHECK_EQ("Another slider", result.description());
-            CHECK_EQ(-1.0, result.min());
-            CHECK_EQ(1.0, result.max());
+            slider1.finalize();
+            CHECK_EQ("Another slider", slider1.description());
+            CHECK_EQ(-1.0, slider1.min());
+            CHECK_EQ(1.0, slider1.max());
         }
 
         TEST_CASE("slider_change_val_print")

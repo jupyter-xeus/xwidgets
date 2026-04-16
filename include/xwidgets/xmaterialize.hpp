@@ -45,6 +45,7 @@ namespace xw
         xmaterialize(xmaterialize&&);
         xmaterialize& operator=(xmaterialize&&);
 
+        xmaterialize<B, P...>& finalize() &;
         xmaterialize<B, P...> finalize() &&;
 
     private:
@@ -121,9 +122,21 @@ namespace xw
     inline xmaterialize<B, P...>& xmaterialize<B, P...>::operator=(xmaterialize&& rhs) = default;
 
     template <template <class> class B, class... P>
+    inline xmaterialize<B, P...>& xmaterialize<B, P...>::finalize() &
+    {
+        if (m_generator)
+        {
+            m_generator = false;
+            this->open();
+        }
+        return *this;
+    }
+
+    template <template <class> class B, class... P>
     inline xmaterialize<B, P...> xmaterialize<B, P...>::finalize() &&
     {
-        return *this;
+        this->finalize();
+        return std::move(*this);
     }
 
     /**********************************************************
