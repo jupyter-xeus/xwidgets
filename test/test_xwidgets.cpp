@@ -308,6 +308,22 @@ namespace xw
             CHECK_EQ(std::vector<std::string>({"foo", "bar"}), mul_sel.value());
         }
 
+        TEST_CASE("select_slider")
+        {
+            selectionslider sslid(std::vector<std::string>({"foo", "bar", "baz", "taz"}), "foo");
+            CHECK_EQ("foo", sslid.value());
+            sslid.value = "bar";
+            CHECK_EQ("bar", sslid.value());
+        }
+
+        TEST_CASE("range_slider")
+        {
+            selection_rangeslider range_sslid(std::vector<std::string>({"foo", "bar", "baz", "taz"}));
+            CHECK_EQ(std::vector<std::string>{}, range_sslid.value());
+            range_sslid.value = std::vector<std::string>({"foo", "bar"});
+            CHECK_EQ(std::vector<std::string>({"foo", "bar"}), range_sslid.value());
+        }
+
         TEST_CASE("valid")
         {
             valid v;
