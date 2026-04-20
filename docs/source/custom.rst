@@ -169,7 +169,7 @@ holding values of that type.
 
 **Deserialization**
 
-The deserialization of properties from the patch is handled by calling `apply_patch_to_registered_properties` on the widget instance.
+The deserialization of properties from the patch is handled by calling `apply_patch_to_registered_properties` on the base widget instance.
 
 This member function is responsible for deserializing the patch by iterating over the registered properties.
 These properties self-register upon construction in the class.

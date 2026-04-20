@@ -110,7 +110,6 @@ namespace xw
     inline void xslider_style<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
@@ -148,7 +147,6 @@ namespace xw
     inline void xslider<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-        this->apply_patch_to_registered_properties(patch, buffers);
     }
 
     template <class D>
