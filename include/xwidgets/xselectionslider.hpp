@@ -131,12 +131,6 @@ namespace xw
     inline void xselectionslider<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(readout, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(behavior, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>
@@ -158,7 +152,7 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<options_type>(
+        this->template validate<derived_type, options_type>(
             "_options_labels",
             [](auto&, auto& proposal)
             {
@@ -202,12 +196,6 @@ namespace xw
     xselection_rangeslider<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
         base_type::apply_patch(patch, buffers);
-
-        set_property_from_patch(orientation, patch, buffers);
-        set_property_from_patch(readout, patch, buffers);
-        set_property_from_patch(continuous_update, patch, buffers);
-        set_property_from_patch(behavior, patch, buffers);
-        set_property_from_patch(style, patch, buffers);
     }
 
     template <class D>
@@ -228,7 +216,7 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<value_type>(
+        this->template validate<derived_type, value_type>(
             "value",
             [](auto&, auto& proposal)
             {
@@ -251,7 +239,7 @@ namespace xw
             throw std::runtime_error("Empty collection passed to selection slider");
         }
 
-        this->template validate<options_type>(
+        this->template validate<derived_type, options_type>(
             "_options_labels",
             [](auto&, auto& proposal)
             {

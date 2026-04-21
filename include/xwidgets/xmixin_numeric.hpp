@@ -85,12 +85,6 @@ namespace xw
             xwidgets_serialize(value(), state["value"], buffers);
         }
 
-        template <class D>
-        inline void xnumeric<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
-        {
-            set_property_from_patch(value, patch, buffers);
-        }
-
         /***********************************
          * xnumeric_bounded implementation *
          ***********************************/
@@ -105,16 +99,6 @@ namespace xw
         }
 
         template <class D>
-        inline void
-        xnumeric_bounded<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
-        {
-            base_type::apply_patch(patch, buffers);
-
-            set_property_from_patch(max, patch, buffers);
-            set_property_from_patch(min, patch, buffers);
-        }
-
-        template <class D>
         inline xnumeric_bounded<D>::xnumeric_bounded()
         {
             setup_properties();
@@ -123,7 +107,7 @@ namespace xw
         template <class D>
         inline void xnumeric_bounded<D>::setup_properties()
         {
-            static_cast<derived_type*>(this)->template validate<value_type>(
+            static_cast<derived_type*>(this)->template validate<derived_type, value_type>(
                 "value",
                 [](auto& owner, auto& proposal)
                 {
@@ -138,7 +122,7 @@ namespace xw
                 }
             );
 
-            static_cast<derived_type*>(this)->template validate<value_type>(
+            static_cast<derived_type*>(this)->template validate<derived_type, value_type>(
                 "min",
                 [](auto& owner, auto& proposal)
                 {
@@ -153,7 +137,7 @@ namespace xw
                 }
             );
 
-            static_cast<derived_type*>(this)->template validate<value_type>(
+            static_cast<derived_type*>(this)->template validate<derived_type, value_type>(
                 "max",
                 [](auto& owner, auto& proposal)
                 {

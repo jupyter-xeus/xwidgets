@@ -21,7 +21,8 @@
 namespace xw
 {
     xcommon::xcommon()
-        : m_moved_from(false)
+        : observed_type()
+        , m_moved_from(false)
         , m_hold(nullptr)
         , m_comm(get_widget_target(), xeus::new_xguid())
     {
@@ -32,14 +33,16 @@ namespace xw
     }
 
     xcommon::xcommon(xeus::xcomm&& comm)
-        : m_moved_from(false)
+        : observed_type()
+        , m_moved_from(false)
         , m_hold(nullptr)
         , m_comm(std::move(comm))
     {
     }
 
     xcommon::xcommon(const xcommon& other)
-        : m_moved_from(false)
+        : observed_type()
+        , m_moved_from(false)
         , m_hold(nullptr)
         , m_comm(other.m_comm)
         , m_buffer_paths(other.m_buffer_paths)
@@ -47,7 +50,8 @@ namespace xw
     }
 
     xcommon::xcommon(xcommon&& other)
-        : m_moved_from(false)
+        : observed_type()
+        , m_moved_from(false)
         , m_hold(nullptr)
         , m_comm(std::move(other.m_comm))
         , m_buffer_paths(std::move(other.m_buffer_paths))
@@ -320,6 +324,25 @@ namespace xw
             {
                 // TODO: handle the comparison of binary buffers.
                 return true;
+            }
+        }
+    }
+
+    void xcommon::register_patch_applier(const std::string& name, patch_applier_type&& applier)
+    {
+        m_patch_appliers[name] = std::move(applier);
+    }
+
+    void
+    xcommon::apply_patch_to_registered_properties(const nl::json& patch, const xeus::buffer_sequence& buffers)
+    {
+        for (auto it = patch.begin(); it != patch.end(); ++it)
+        {
+            const auto& key = it.key();
+            auto applier_it = m_patch_appliers.find(key);
+            if (applier_it != m_patch_appliers.end())
+            {
+                applier_it->second(*it, buffers);
             }
         }
     }

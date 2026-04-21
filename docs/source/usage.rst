@@ -94,20 +94,25 @@ The ``xmaterialize`` class only implements the final inheritance closing the CRT
 Generator classes
 ~~~~~~~~~~~~~~~~~
 
-Simple widget types such as ``slider`` may have a large number of attributes that can be set by the user, such as ``handle_color``, ``orientation``, ``min``, ``max``, ``value``, ``step``, ``readout_format``.
+By default, creating a widget (e.g., ``xw::slider<double> s;``) immediately opens a communication channel with the Jupyter front-end. Any subsequent property assignment sends a separate update message over the network.
 
-Providing a constructor for ``slider`` with a large number of such attributes would make the use of ``xwidgets`` very cumbersome, because users would need to know all the positional arguments to modify only one value. Instead, we mimick a keyword argument initialization with a method-chaining mechanism.
+To avoid unnecessary network traffic, ``xwidgets`` provides a **generator state**. In this state, the widget is created locally but its communication channel is not yet open.
 
 .. code:: cpp
 
-    auto button = xw::slider<double>::initialize()
-        .min(1.0)
-        .max(9.0)
-        .value(4.0)
-        .orientation("vertical")
-        .finalize();
+    // 1. Create the widget in "generator state" (no communication yet)
+    auto s = xw::slider<double>::initialize();
 
-This is a classical approach: calls to ``min``, ``max``, ``value`` and ``orientation`` all return the ``slider`` instance (by rvalue reference, which is optimized with C++ move semantics and copy ellision). The ``finalize()`` triggers the creation of the front-end object with the data.
+    // 2. Configure properties locally (no network messages sent)
+    s.min = 1.0;
+    s.max = 9.0;
+    s.value = 4.0;
+    s.orientation = "vertical";
+
+    // 3. Finalize: open the channel and send all data in one single message
+    s.finalize();
+
+In this approach, ``initialize()`` creates a widget in a "generator" state where communication with the front-end is not yet open. Each property assignment (``min``, ``max``, etc.) updates the local C++ state without sending network messages. Finally, calling ``finalize()`` triggers a single message to create the front-end object with all the provided data at once. This is more efficient than sending a separate message for every property change during setup.
 
 Widget Events
 -------------
@@ -149,7 +154,7 @@ In this example, we register an observer for a slider value, triggering the prin
 
     xw::slider<double> slider;
     slider.display()
-    XOBSERVE(slider, value, [](const auto& s) {
+    slider.observe<decltype(slider)>(slider.value.name(), [](const auto& s) {
         std::cout << "Observer: New Slider value: " << s.value << std::endl;
     });
 
@@ -162,7 +167,7 @@ In this example, we validate the proposed values for a numerical text. Negative 
 
     xw::number<double> number;
     number.display()
-    XVALIDATE(number, value, [](const auto&, double proposal) {
+    number.validate<decltype(number), double>(number.value.name(), [](const auto&, double& proposal) {
         std::cout << "Validator: Proposal: " << proposal << std::endl;
         if (proposal < 0)
         {

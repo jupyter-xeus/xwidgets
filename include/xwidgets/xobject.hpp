@@ -35,14 +35,16 @@ namespace xw
         void serialize_state(nl::json&, xeus::buffer_sequence&) const;
         void apply_patch(const nl::json&, const xeus::buffer_sequence&);
 
-        XPROPERTY(std::optional<std::string>, derived_type, _model_module, "@jupyter-widgets/base");
-        XPROPERTY(std::optional<std::string>, derived_type, _model_module_version, XWIDGETS_BASE_VERSION);
-        XPROPERTY(std::optional<std::string>, derived_type, _model_name, "WidgetModel");
-        XPROPERTY(std::optional<std::string>, derived_type, _view_module, "@jupyter-widgets/base");
-        XPROPERTY(std::optional<std::string>, derived_type, _view_module_version, XWIDGETS_BASE_VERSION);
-        XPROPERTY(std::optional<std::string>, derived_type, _view_name, "WidgetView");
+        XPROPERTY(std::optional<std::string>, xcommon, _model_module, "@jupyter-widgets/base");
+        XPROPERTY(std::optional<std::string>, xcommon, _model_module_version, XWIDGETS_BASE_VERSION);
+        XPROPERTY(std::optional<std::string>, xcommon, _model_name, "WidgetModel");
+        XPROPERTY(std::optional<std::string>, xcommon, _view_module, "@jupyter-widgets/base");
+        XPROPERTY(std::optional<std::string>, xcommon, _view_module_version, XWIDGETS_BASE_VERSION);
+        XPROPERTY(std::optional<std::string>, xcommon, _view_name, "WidgetView");
 
     protected:
+
+        xobject() = default;
 
         using base_type::base_type;
     };
@@ -65,12 +67,7 @@ namespace xw
     template <class D>
     inline void xobject<D>::apply_patch(const nl::json& patch, const xeus::buffer_sequence& buffers)
     {
-        set_property_from_patch(_model_module, patch, buffers);
-        set_property_from_patch(_model_module_version, patch, buffers);
-        set_property_from_patch(_model_name, patch, buffers);
-        set_property_from_patch(_view_module, patch, buffers);
-        set_property_from_patch(_view_module_version, patch, buffers);
-        set_property_from_patch(_view_name, patch, buffers);
+        this->apply_patch_to_registered_properties(patch, buffers);
     }
 }
 
