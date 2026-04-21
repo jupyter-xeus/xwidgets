@@ -71,8 +71,6 @@ namespace xw
         using observed_type = xp::xobserved;
         using patch_applier_type = std::function<void(const nl::json&, const xeus::buffer_sequence&)>;
 
-        ~xcommon();
-
         xeus::xguid id() const noexcept;
         void display() const;
         std::vector<xjson_path_type>& buffer_paths();
@@ -84,6 +82,9 @@ namespace xw
         xcommon(xeus::xcomm&&);
         xcommon(const xcommon&);
         xcommon(xcommon&&);
+
+        ~xcommon();
+
         xcommon& operator=(const xcommon&);
         xcommon& operator=(xcommon&&);
 
