@@ -79,6 +79,17 @@ option(XWIDGETS_BUILD_SHARED_LIBS "Build xwidgets shared library." ON)
 option(XWIDGETS_BUILD_STATIC_LIBS "Build xwidgets static library (default if BUILD_SHARED_LIBS is OFF)." ON)
 option(XWIDGETS_BUILD_TESTS "xwidgets test suite" OFF)
 
+# Emscripten wasm build configuration
+# ===================================
+
+if(EMSCRIPTEN)
+    if(XWIDGETS_BUILD_SHARED_LIBS)
+        set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS TRUE)
+        set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS "-s SIDE_MODULE=1")
+        set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "-s SIDE_MODULE=1")
+    endif()
+endif()
+
 # Dependencies
 # ============
 
