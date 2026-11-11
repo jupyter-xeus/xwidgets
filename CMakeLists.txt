@@ -179,15 +179,31 @@ macro(xwidgets_create_target target_name linkage output_name)
 
     target_link_libraries(${target_name} PUBLIC ${XEUS_TARGET_NAME} xproperty)
 
-    set_target_properties(
-        ${target_name}
-        PROPERTIES
-            COMPILE_DEFINITIONS "XWIDGETS_EXPORTS"
-            PREFIX ""
-            VERSION ${XWIDGETS_BINARY_VERSION}
-            SOVERSION ${XWIDGETS_BINARY_CURRENT}
-            OUTPUT_NAME "lib${output_name}"
-    )
+    if(UNIX)
+        # CMake does not compute the version number of so files as libtool does on Linux. Strictly speaking,
+        # we should exclude FreeBSD and Apple from this, but that would require having different version
+        # numbers depending on the platform. We prefer to follow the libtool pattern everywhere.
+        math(EXPR XWIDGETS_BINARY_COMPATIBLE "${XWIDGETS_BINARY_CURRENT} - ${XWIDGETS_BINARY_AGE}")
+        set_target_properties(
+            ${target_name}
+            PROPERTIES
+                COMPILE_DEFINITIONS "XWIDGETS_EXPORTS"
+                PREFIX ""
+                VERSION "${XWIDGETS_BINARY_COMPATIBLE}.${XWIDGETS_BINARY_AGE}.${XWIDGETS_BINARY_REVISION}"
+                SOVERSION ${XWIDGETS_BINARY_COMPATIBLE}
+                OUTPUT_NAME "lib${output_name}"
+        )
+    else()
+        set_target_properties(
+            ${target_name}
+            PROPERTIES
+                COMPILE_DEFINITIONS "XWIDGETS_EXPORTS"
+                PREFIX ""
+                VERSION ${XWIDGETS_BINARY_VERSION}
+                SOVERSION ${XWIDGETS_BINARY_CURRENT}
+                OUTPUT_NAME "lib${output_name}"
+        )
+    endif()
 
     # Compilation flags
     # =================
