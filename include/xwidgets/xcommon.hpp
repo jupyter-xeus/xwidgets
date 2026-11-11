@@ -202,7 +202,7 @@ namespace xw
             {
                 typename P::value_type value;
                 xwidgets_deserialize(value, value_json, buffers);
-                prop = value;
+                prop = std::move(value);
             }
         );
     }
